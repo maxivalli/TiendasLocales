@@ -1,13 +1,13 @@
 .background {
-    position: fixed;
-    left: 15%;
-    display: inline-flex;
-    top: 15px;
-    z-index: 9999;
+  position: fixed;
+  left: 15%;
+  display: inline-flex;
+  top: 15px;
+  z-index: 9999;
 }
 
 .background .logo {
-    display: none;
+  display: none;
 }
 
 .background button {
@@ -19,13 +19,14 @@
   position: fixed;
   top: 0;
   margin-top: 10px;
-  justify-self: center;
+  right: 30vw;
+  left: 40vw;
   display: inline-flex;
   z-index: 999;
 }
 
 .searchBar input {
-  width: 300px;
+  width: 250px;
   height: 40px;
   padding-left: 10px;
   outline: none;
@@ -46,7 +47,8 @@
 .modal {
   display: grid;
   position: fixed;
-  right: 70%;
+  left: 0;
+  margin-left: 30px;
   top: 60px;
   width: 400px;
   height: auto;
@@ -72,6 +74,7 @@
 .modal .notifAcces p {
   align-self: center;
   padding-left: 10px;
+  color: grey;
 }
 
 .modal .close {
@@ -109,6 +112,12 @@
     margin-right: 20px;
   }
 
+  .searchBar {
+    left: 20vw;
+    right: 20vw;
+    justify-self: center;
+  }
+
   .searchBar input {
     width: 220px;
     font-size: 14px;
@@ -121,6 +130,7 @@
   .modal {
     width: 300px;
     right: 0;
+    left: auto;
     margin: 0;
     border-radius: 0px 0px 0px 5px;
   }
