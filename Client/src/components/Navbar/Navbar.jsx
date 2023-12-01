@@ -9,12 +9,13 @@ const Navbar = () => {
     <>
     <SearchBar />
     <div className={style.navbar}>
+      <Link to="/home" className={style.toHome}>
       <div className={style.logo}>
         <img src={Logo} alt="logo" />
       </div>
+      </Link>
       <div className={style.search}>
-        
-      </div>
+        </div>
       <div className={style.directAccess}>
         <Link to="/home">
         <button>

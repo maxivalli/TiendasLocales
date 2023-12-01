@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
+import Landing from "./views/Landing/Landing";
 import Home from "./views/Home/Home";
 import Favorites from './views/Favorites/Favorites'
 import Messages from './views/Messages/Messages'
@@ -17,6 +18,7 @@ function App() {
     <>
       <Navbar />
       <Routes>
+        <Route path="/" element={<Landing/>} />
         <Route path="/home" element={<Home/>} />
         <Route path="favorites" element={<Favorites/>} />
         <Route path="/messages" element={<Messages/>} />
