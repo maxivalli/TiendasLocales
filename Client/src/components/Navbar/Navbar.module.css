@@ -10,6 +10,10 @@
   background-color: red;
 }
 
+.navbar .toHome {
+  margin-left: 20px;
+}
+
 .navbar a {
   align-self: center;
 }
@@ -71,6 +75,10 @@
   }
 
   .logo {
+    display: none;
+  }
+
+  .navbar .toHome {
     display: none;
   }
 }

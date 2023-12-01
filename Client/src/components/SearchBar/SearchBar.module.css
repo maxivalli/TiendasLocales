@@ -10,6 +10,11 @@
     display: none;
 }
 
+.background button {
+  background-color: transparent;
+  border: none;
+}
+
 .searchBar {
   position: fixed;
   top: 0;
@@ -38,11 +43,52 @@
   align-self: center;
 }
 
+.modal {
+  display: grid;
+  position: fixed;
+  right: 70%;
+  top: 60px;
+  width: 400px;
+  height: auto;
+  background-color: white;
+  box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.3);
+  border-radius: 0px 0px 10px 10px;
+  z-index: 999999;
+}
+
+.modal .notifAcces {
+  display: flex;
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+}
+
+.modal .notifAcces img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.modal .notifAcces p {
+  align-self: center;
+  padding-left: 10px;
+}
+
+.modal .close {
+  justify-self: center;
+  width: 90px;
+  height: 40px;
+  margin-bottom: 10px;
+  background-color: red;
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+
 @media (max-width: 768px) {
   .background {
     display: inline-flex;
     justify-content: space-between;
-    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
@@ -65,9 +111,17 @@
 
   .searchBar input {
     width: 220px;
+    font-size: 14px;
   }
 
   .searchBar button {
     display: none;
+  }
+
+  .modal {
+    width: 300px;
+    right: 0;
+    margin: 0;
+    border-radius: 0px 0px 0px 5px;
   }
 }
