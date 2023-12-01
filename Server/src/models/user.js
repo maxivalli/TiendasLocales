@@ -40,6 +40,10 @@ module.exports = (sequelize) => {
       type: DataTypes.FLOAT,
       defaultValue: 0, 
     },
+    origin: {
+      type: DataTypes.STRING,
+      defaultValue: "DB"
+    },
   },
   {
     paranoid: true,

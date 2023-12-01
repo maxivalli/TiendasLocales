@@ -20,7 +20,6 @@ router.use('/matches', matchRoutes)
 router.use('/messages', messageRoutes)
 router.use('/plans', plansRoutes)
 router.use('/chats', chatsRoutes)
-router.use('/envios', enviosRoutes)
 router.use('/reviews', reviewsRoutes)
 
 
