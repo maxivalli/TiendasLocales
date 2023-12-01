@@ -1,0 +1,11 @@
+.banners {
+    display: grid;
+    position: absolute;
+    left: 0;
+    top: 60px;
+}
+
+.banners img{
+    width: 100vw;
+}
+

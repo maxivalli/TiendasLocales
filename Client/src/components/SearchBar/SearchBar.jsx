@@ -16,7 +16,7 @@ const SearchBar = () => {
         />
       </div>
       <div className={style.searchBar}>
-        <input type="text" placeholder="Ingresa una tienda o producto" />
+        <input type="text" placeholder="Busca una tienda o producto" />
         <button>
           <img
             width="32"
