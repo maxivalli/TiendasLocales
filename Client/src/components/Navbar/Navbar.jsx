@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import SearchBar from "../SearchBar/SearchBar";
 import Logo from "../../assets/TLlogoAlpha.png";
 import style from "./Navbar.module.css";
@@ -8,13 +9,15 @@ const Navbar = () => {
     <>
     <SearchBar />
     <div className={style.navbar}>
+      <Link to="/home" className={style.toHome}>
       <div className={style.logo}>
         <img src={Logo} alt="logo" />
       </div>
+      </Link>
       <div className={style.search}>
-        
-      </div>
+        </div>
       <div className={style.directAccess}>
+        <Link to="/home">
         <button>
           <img
             width="28"
@@ -23,6 +26,8 @@ const Navbar = () => {
             alt="experimental-home-puffy"
           />
         </button>
+        </Link>
+        <Link to="/favorites">
         <button>
           <img
             width="28"
@@ -31,6 +36,8 @@ const Navbar = () => {
             alt="like--v1"
           />
         </button>
+        </Link>
+        <Link to="/messages">
         <button>
           <img
             width="32"
@@ -39,6 +46,8 @@ const Navbar = () => {
             alt="chat"
           />
         </button>
+        </Link>
+        <Link to="/account">
         <button>
           <img
             width="28"
@@ -47,6 +56,8 @@ const Navbar = () => {
             alt="user--v1"
           />
         </button>
+        </Link>
+        <Link to="/more">
         <button>
           <img
             width="32"
@@ -55,6 +66,7 @@ const Navbar = () => {
             alt="connection-status-off"
           />
         </button>
+        </Link>
       </div>
     </div>
     </>

@@ -1,3 +1,4 @@
+
 import axios from "axios";
 import Swal from 'sweetalert2';
 import { useAuth0 } from "@auth0/auth0-react";
@@ -7,7 +8,18 @@ import Navbar from "./components/Navbar/Navbar";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Home from "./components/Home/Home"
-
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
+import Landing from "./views/Landing/Landing";
+import Home from "./views/Home/Home";
+import Favorites from './views/Favorites/Favorites'
+import Messages from './views/Messages/Messages'
+import Account from './views/Account/Account'
+import More from './views/More/More'
+import CreateStore from './views/CreateStore/CreateStore'
+import MyStore from "./views/MyStore/MyStore";
+import Queries from './views/Queries/Queries'
+import Faq from "./views/FAQ/Faq";
 import "./App.css";
 
 function App() {
@@ -143,6 +155,7 @@ useEffect(() => {
 
   return (
     <>
+
       <Navbar isAuthenticated={isAuthenticated} setAuth={setAuth} userData={userData}></Navbar>
       <Routes>
       <Route path="/" element={isAuthenticated ? (userData ? (<Home userData={userData} setAuth={setAuth}/>

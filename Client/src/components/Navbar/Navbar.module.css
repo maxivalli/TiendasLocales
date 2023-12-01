@@ -10,6 +10,14 @@
   background-color: red;
 }
 
+.navbar .toHome {
+  margin-left: 20px;
+}
+
+.navbar a {
+  align-self: center;
+}
+
 .logo {
   display: grid;
   height: 60px;
@@ -67,6 +75,10 @@
   }
 
   .logo {
+    display: none;
+  }
+
+  .navbar .toHome {
     display: none;
   }
 }
