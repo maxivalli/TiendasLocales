@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;1,800&display=swap');
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Noto Sans', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -33,6 +35,27 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+button {
+  transition: 300ms;
+  cursor: pointer;
+}
+
+button:focus {
+  animation: push 0.3s ease-in-out;
+}
+
+@keyframes push {
+  0% {
+    scale: 1;
+  }
+  50% {
+    scale: 0.9;
+  }
+  100% {
+    scale: 1;
+  }
 }
 
 @media (prefers-color-scheme: light) {
