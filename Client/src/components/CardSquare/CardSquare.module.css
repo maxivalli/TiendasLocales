@@ -20,7 +20,7 @@
   text-align: left;
   padding-left: 20px;
   margin: 0;
-  margin-top: -200px;
+  margin-top: -190px;
   color: white;
   font-weight: 800;
   font-style: italic;
@@ -37,12 +37,13 @@
   font-style: italic;
 }
 
-.cardSquare button {
+.cardSquare .ver {
+  position: absolute;
   justify-self: right;
+  bottom: 20px;
+  margin-left: 80px;
   width: 90px;
   height: 40px;
-  margin-right: -250px;
-  margin-top: 40px;
   background-color: red;
   color: white;
   border-radius: 5px;
@@ -57,7 +58,7 @@
         width: 340px;
     }
 
-    .cardSquare button {
-        margin-right: -200px;
+    .cardSquare .ver {
+      margin-left: 50px;
     }
 }

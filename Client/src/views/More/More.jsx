@@ -6,6 +6,7 @@ import style from './More.module.css'
 const More = () => {
   return (
     <>
+    <div className={style.section}></div>
     <div className={style.more}>
     <CardWide textButton={"Crear Tienda"} logo={<img width="60" height="60" src="https://img.icons8.com/parakeet/96/add-shop.png" alt="add-shop"/>} link={"/createstore"}/>
     <CardWide textButton={"Mi Tienda"} logo={<img width="60" height="60" src="https://img.icons8.com/parakeet/96/online-order.png" alt="online-order"/>} link={"/mystore"} />

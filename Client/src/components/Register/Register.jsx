@@ -1,4 +1,4 @@
-import Logo from '../../assets/TLlogoAlpha.png'
+import Logo from '../../assets/logo.png'
 import React, { useState, useEffect } from "react";
 import style from "./Register.module.css";
 import axios from "axios";
