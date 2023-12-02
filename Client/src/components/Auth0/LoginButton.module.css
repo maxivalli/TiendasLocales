@@ -2,19 +2,23 @@
     display: grid;
     margin: 0;
 }
-.login button {
+.login .google {
+    justify-self: center;
+    border: none;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 13px;
     display: grid;
     align-content: center;
     grid-template-columns: 3fr 1fr;
     width: 120px;
-    height: 35px;
-    background-color: white;
-    color: grey;
+    height: 40px;
+    background-color: rgb(211, 210, 210);
+    color: rgb(45, 45, 45);
     padding: 0;
     padding-right: 2px;
     border-radius: 5px;
     margin: 0px;
-    font-size: 14px;
+    margin-top: 10px;
     text-align: right;
 }
 

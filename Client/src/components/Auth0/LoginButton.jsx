@@ -7,7 +7,7 @@ const LoginButton = () => {
 
   return (
     <div className={style.login}>
-    <button onClick={() => loginWithRedirect()} >
+    <button onClick={() => loginWithRedirect()} className={style.google}>
       Ingresa con{" "}
      { <img
         width="24"

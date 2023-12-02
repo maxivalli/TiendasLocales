@@ -1,15 +1,14 @@
 import React from "react";
-import hambur from "../../assets/hambur.jpg";
 import style from "./CardSquare.module.css";
 
-const CardSquare = () => {
+const CardSquare = ({image, title, price}) => {
   return (
     <>
       <div className={style.cardSquare}>
-        <img src={hambur} alt="" />
-        <h2>Hamburguesa Completa</h2>
-        <h3>$2500</h3>
-        <button>Ver</button>
+        <img src={image} alt="image" />
+        <h2>{title}</h2>
+        <h3>{price}</h3>
+        <button className={style.ver}>Ver</button>
       </div>
     </>
   );

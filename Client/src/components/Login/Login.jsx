@@ -1,62 +1,70 @@
-import Logo from '../../assets/TLlogoAlpha.png'
-import React, { useState } from 'react'
-import style from './Login.module.css'
+import Logo from "../../assets/logo.png";
+import React, { useState, useEffect } from "react";
+import style from "./Login.module.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Swal from 'sweetalert2'; 
-
-import LoginButton from '../Auth0/LoginButton';
+import Swal from "sweetalert2";
+import LoginButton from "../Auth0/LoginButton";
 
 const Login = ({ setAuth, userData }) => {
+  const [showModal, setShowModal] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowModal(false);
+    }, 2000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   const [input, setInput] = useState({
     username: "",
     password: "",
   });
 
-  const [error, setErrors] = useState("")
+  const [error, setErrors] = useState("");
 
   const handleInputChange = (e) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
-    })
-    
-  }
+    });
+  };
 
   const handleSumbit = async (e) => {
     e.preventDefault();
-  
+
     try {
       let loginUser = {
         username: input.username,
         password: input.password,
       };
       const response = await axios.post("/users/login", loginUser);
-  
+
       if (response.data && response.data.token) {
         const token = await localStorage.setItem("token", response.data.token);
         setAuth(true, userData); // Set auth to true and pass user data
 
         const Toast = Swal.mixin({
           toast: true,
-          position: 'top-end',
+          position: "top-end",
           showConfirmButton: false,
           timer: 1000,
           timerProgressBar: true,
           didOpen: (toast) => {
-            toast.addEventListener('mouseleave', Swal.resumeTimer);
-          }
-        });
-  
-        Toast.fire({
-          icon: 'success',
-          title: 'Login exitoso',
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
         });
 
+        Toast.fire({
+          icon: "success",
+          title: "Login exitoso",
+        });
       } else {
         console.log("Hubo un error al iniciar sesión.");
-        setErrors("Usuario o contraseña incorrectos")
+        setErrors("Usuario o contraseña incorrectos");
       }
     } catch (error) {
       if (error.response) {
@@ -66,48 +74,67 @@ const Login = ({ setAuth, userData }) => {
         setErrors(`Error: ${error.response.data.message}`);
       } else if (error.request) {
         console.log(error.request);
-        setErrors('Error: No response received from server');
+        setErrors("Error: No response received from server");
       }
       console.error("Error al enviar los datos al servidor:", error);
       // console.log("Hubo un error al iniciar sesión.");
-      setErrors("Usuario o contraseña incorrectos")
-
+      setErrors("Usuario o contraseña incorrectos");
     }
   };
 
   return (
-    <div className={style.container}>
-      <img src={Logo}/>
+    <>
+      {showModal && (
+        <div className={style.modal}>
+          <img src={Logo} alt="" />
+        </div>
+      )}
+      <div className={style.container}>
+        <img src={Logo} />
         <div>
           <h2>Iniciar sesión</h2>
         </div>
         <div className={style.form}>
           <form>
-              <div>
-                <input type="text" name="username" placeholder='Usuario' onChange={handleInputChange}
-                  value={input.username}/>
-              </div>
-              <div>
-                <input type="password"name="password" placeholder='Contraseña'onChange={handleInputChange}
-                  value={input.password}/>
-              </div>
-              
-              {error && <div className={style.error}>{error}</div> }
-              <button onClick={handleSumbit} className={style.iniciar}>Iniciar sesión</button>
+            <div>
+              <input
+                type="text"
+                name="username"
+                placeholder="Usuario"
+                onChange={handleInputChange}
+                value={input.username}
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                name="password"
+                placeholder="Contraseña"
+                onChange={handleInputChange}
+                value={input.password}
+              />
+            </div>
+
+            {error && <div className={style.error}>{error}</div>}
+            <button onClick={handleSumbit} className={style.iniciar}>
+              Iniciar sesión
+            </button>
           </form>
         </div>
 
         <div className={style.buttons}>
           <span>
-          ¿No tienes una cuenta? 
-          <Link to='/register' className={style.register}>Regístrate</Link>
+            ¿No tienes una cuenta?
+            <Link to="/register" className={style.register}>
+              Regístrate
+            </Link>
           </span>
         </div>
 
         <div className={style.buttons}>
           <span>
-          o 
-          <LoginButton/>
+            o
+            <LoginButton />
           </span>
         </div>
         {/* <div className={style.buttons}>
@@ -116,9 +143,9 @@ const Login = ({ setAuth, userData }) => {
           <Link to='/forgotpassword' className={style.register}>Recuperar</Link>
           </span>
         </div> */}
-    </div>
-    
-  )
-}
+      </div>
+    </>
+  );
+};
 
-export default Login
+export default Login;

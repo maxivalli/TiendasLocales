@@ -18,4 +18,12 @@
     .more {
         grid-template-columns: 1fr;
     }
+
+    .section {
+        margin-top: 100px;
+    }
+
+    .more .pdp {
+        margin-bottom: 100px;
+    }
 }
