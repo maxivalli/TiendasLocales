@@ -18,8 +18,8 @@ const SearchBar = () => {
         <img src={Logo} alt="logo" className={style.logo} />
         <button className={style.notifications} onClick={toggleNotifications}>
           <img
-            width="30"
-            height="30"
+            width="28"
+            height="28"
             src="https://img.icons8.com/ios-filled/50/FFFFFF/appointment-reminders--v1.png"
             alt="appointment-reminders--v1"
             className={style.bell}
