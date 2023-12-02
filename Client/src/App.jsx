@@ -4,11 +4,8 @@ import Swal from 'sweetalert2';
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar/Navbar";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
-import Home from "./components/Home/Home"
-import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Landing from "./views/Landing/Landing";
 import Home from "./views/Home/Home";
