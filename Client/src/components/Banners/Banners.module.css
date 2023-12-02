@@ -1,8 +1,9 @@
 .banners {
     display: grid;
     position: absolute;
+    top: 0;
     left: 0;
-    top: 60px;
+    margin-top: 60px;
 }
 
 .banners img{

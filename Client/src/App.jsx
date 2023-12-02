@@ -4,8 +4,10 @@ import Swal from 'sweetalert2';
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
+
 import Navbar from "./components/Navbar/Navbar";
 import Landing from "./views/Landing/Landing";
 import Home from "./views/Home/Home";
@@ -155,7 +157,7 @@ useEffect(() => {
 
       <Navbar isAuthenticated={isAuthenticated} setAuth={setAuth} userData={userData}></Navbar>
       <Routes>
-      <Route path="/" element={isAuthenticated ? (userData ? (<Home userData={userData} setAuth={setAuth}/>
+      {/* <Route path="/" element={isAuthenticated ? (userData ? (<Home userData={userData} setAuth={setAuth}/>
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -176,7 +178,18 @@ useEffect(() => {
               <Login setAuth={setAuth} />)}/>
 
               
-      <Route path="/register" element={isAuthenticated ? (userData && <Home userData={userData} setAuth={setAuth}/>) : (<Register setAuth={setAuth}/>)}/>
+      <Route path="/register" element={isAuthenticated ? (userData && <Home userData={userData} setAuth={setAuth}/>) : (<Register setAuth={setAuth}/>)}/> */}
+      <Route path="/" element={<Landing/>} />
+        <Route path="/home" element={<Home/>} />
+        <Route path="favorites" element={<Favorites/>} />
+        <Route path="/messages" element={<Messages/>} />
+        <Route path="/account" element={<Account/>} />
+        <Route path="/more" element={<More/>} />
+
+        <Route path="/createstore" element={<CreateStore/>} />
+        <Route path="/mystore" element={<MyStore/>} />
+        <Route path="/queries" element={<Queries/>} />
+        <Route path="/faq" element={<Faq/>} />
       </Routes>
     </>
   );
