@@ -17,16 +17,14 @@
 
 .searchBar {
   position: fixed;
-  top: 0;
-  margin-top: 10px;
-  right: 30vw;
-  left: 40vw;
-  display: inline-flex;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 10px;
   z-index: 999;
 }
 
 .searchBar input {
-  width: 250px;
+  width: 320px;
   height: 40px;
   padding-left: 10px;
   outline: none;
@@ -52,7 +50,7 @@
   top: 60px;
   width: 400px;
   height: auto;
-  background-color: white;
+  background-color: whitesmoke;
   box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.3);
   border-radius: 0px 0px 10px 10px;
   z-index: 999999;
@@ -86,9 +84,10 @@
   border: none;
   border-radius: 5px;
   color: white;
+  font-weight: 800;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .background {
     display: inline-flex;
     justify-content: space-between;
@@ -110,12 +109,6 @@
   .background .bell {
     align-self: center;
     margin-right: 20px;
-  }
-
-  .searchBar {
-    left: 20vw;
-    right: 20vw;
-    justify-self: center;
   }
 
   .searchBar input {

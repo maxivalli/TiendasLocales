@@ -26,6 +26,11 @@ const SearchBar = () => {
           />
         </button>
       </div>
+
+      <div className={style.searchBar}>
+        <input type="search" placeholder="Busca una tienda o producto" />
+      </div>
+
       {showNotifications && (
         <div className={style.modal}>
           <div>
@@ -51,17 +56,6 @@ const SearchBar = () => {
           </button>
         </div>
       )}
-      <div className={style.searchBar}>
-        <input type="search" placeholder="Busca una tienda o producto" />
-        <button>
-          <img
-            width="32"
-            height="32"
-            src="https://img.icons8.com/glyph-neue/64/FFFFFF/search--v1.png"
-            alt="search--v1"
-          />
-        </button>
-      </div>
     </>
   );
 };
