@@ -49,10 +49,8 @@
 }
 
 .cardSquare .ver {
-  position: absolute;
-  justify-self: right;
-  bottom: 20px;
-  margin-left: 80px;
+  margin-top: 20px;
+  margin-left: 270px;
   width: 90px;
   height: 40px;
   background-color: red;
@@ -70,6 +68,6 @@
     }
 
     .cardSquare .ver {
-      margin-left: 50px;
+      margin-left: 200px;
     }
 }
