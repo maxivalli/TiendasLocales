@@ -1,0 +1,18 @@
+.filters {
+    position: fixed;
+    display: flex;
+    flex-wrap: wrap;
+    height: 60px;
+    z-index: 99999;
+    align-content: center;
+    justify-self: center;
+    gap: 30px;
+}
+
+.filters select {
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}

@@ -10,6 +10,10 @@
   border-radius: 50%;
 }
 
+.section {
+  margin-bottom: 10px;
+}
+
 @media (max-width: 1280px) {
 
   .cards {
@@ -22,9 +26,5 @@
   .cards {
     width: 340px;
     margin: 0;
-  }
-
-  .section {
-    margin-bottom: 100px;
   }
 }

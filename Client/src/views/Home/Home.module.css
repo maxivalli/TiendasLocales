@@ -6,10 +6,20 @@
 }
 
 .title {
-  display: inline-flex;
+  display: grid;
   justify-self: center;
+}
+
+.title h2 {
   font-weight: 800;
   font-style: italic;
+  margin: 0;
+  margin-top: 20px;
+}
+
+.title p {
+  margin: 0;
+  margin-bottom: 20px;
 }
 
 .title .fire {

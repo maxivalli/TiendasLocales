@@ -1,13 +1,11 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import SearchBar from "../SearchBar/SearchBar";
 import Logo from "../../assets/TLlogoAlpha.png";
 import style from "./Navbar.module.css";
 
 const Navbar = () => {
   return (
     <>
-    <SearchBar />
     <div className={style.navbar}>
       <Link to="/home" className={style.toHome}>
       <div className={style.logo}>

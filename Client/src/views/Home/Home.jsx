@@ -2,23 +2,23 @@ import React from "react";
 import Banner from "../../components/Banners/Banners";
 import Cards from "../../components/Cards/Cards";
 import CardsStore from "../../components/CardsStore/CardsStore";
-import fuego from "../../assets/fire.gif";
-import diamond from '../../assets/diamond.gif'
+import SearchBar from "../../components/SearchBar/SearchBar";
 import style from "./Home.module.css";
+import Head from "../../components/Head/Head";
 
 const Home = () => {
   return (
     <>
+      <SearchBar />
+      <Head/>
       <div className={style.home}>
-
         <div>
           <Banner />
         </div>
 
         <div className={style.title}>
-          <img src={fuego} alt="fire" className={style.fire}/>
           <h2>Productos destacados</h2>
-          <img src={fuego} alt="fire" className={style.fire}/>
+          <p>Explora y compra los mejores productos</p>
         </div>
 
         <div className={style.cards}>
@@ -26,16 +26,15 @@ const Home = () => {
         </div>
 
         <div className={style.title}>
-          <img src={diamond} alt="diamond" className={style.diam}/>
-        <h2>Tiendas destacadas</h2>
-        <img src={diamond} alt="diamond" className={style.diam}/>
+          <h2>Tiendas destacadas</h2>
+          <p>Explora la tiendas destacadas de tu ciudad</p>
         </div>
 
         <div className={style.stores}>
-          <CardsStore/>
-          <CardsStore/>
-          <CardsStore/>
-          <CardsStore/>
+          <CardsStore />
+          <CardsStore />
+          <CardsStore />
+          <CardsStore />
         </div>
       </div>
     </>
