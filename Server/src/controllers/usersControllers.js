@@ -57,8 +57,7 @@ exports.createUser = async (user) => {
     !user.username ||
     !user.email ||
     !user.password ||
-    !user.image ||
-    !user.ubication
+    !user.image
   ) {
     throw new Error("Faltan datos");
   } else {

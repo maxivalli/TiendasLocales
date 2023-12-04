@@ -22,6 +22,7 @@ import Faq from "./views/FAQ/Faq";
 import "./App.css";
 
 function App() {
+  axios.defaults.baseURL = "http://localhost:3001/";
   const {
     user,
     isAuthenticated: isAuthenticatedAuth0,
