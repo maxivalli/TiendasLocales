@@ -53,14 +53,11 @@ exports.getAllExisting = async () => {
 };
 
 exports.createUser = async (user) => {
-  if (
-    !user.username ||
-    !user.email ||
-    !user.password ||
-    !user.image ||
-    !user.ubication
-  ) {
-    throw new Error("Faltan datos");
+  if(user.origin !== "google"){
+    if (!user.username || !user.email ||!user.password ||!user.image) {
+      throw new Error("Faltan datos");
+  }
+  
   } else {
     const existEmail = await User.findAll({
       where: {
@@ -78,9 +75,7 @@ exports.createUser = async (user) => {
     else if (existUsername.length !== 0) {
       throw new Error("El nombre de usuario ya se encuentra registrado");
     } 
-    // if (existEmail.length !== 0 && existUsername.length !== 0) {
-    //   throw new Error("El email y usuario ya están en uso, prueba uno diferente.");
-    // }
+
     else {
       try {
         const saltRounds = 10;
@@ -92,7 +87,6 @@ exports.createUser = async (user) => {
           const newUser = await User.create({
             username: user.username,
             email: user.email,
-            password: bcryptPassword,
             image: user.image,
             ubication: user.ubication,
             rol: "admin",
@@ -112,12 +106,12 @@ exports.createUser = async (user) => {
           });
           const token = jwtGenerator(newUser.id)
           await transporter.sendMail(registerMail(user))
+
           return {newUser, token};
         } else if(user.origin === "google"){
         const newUser = await User.create({
           username: user.username,
           email: user.email,
-          password: bcryptPassword,
           image: user.image,
           ubication: user.ubication,
           origin: user.origin

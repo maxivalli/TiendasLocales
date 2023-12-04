@@ -6,14 +6,14 @@ const transporter = nodemailer.createTransport(
     port: 465,
     secure: true,
     auth: {
-      user: "tiendaslocales@gmail.com",
-      pass: "tucr tvww qwpz rydo",
+      user: "santinomantineo@gmail.com",
+      pass: "xhte unry ylzu pmip", // pasarlo a .env
     },    tls: {
       rejectUnauthorized: false
     },
   },
   {
-    from: '"Tiendas Locales" <registro@tiendaslocales.com>',
+    from: '"Tiendas Locales" <registro@santinomantineo.com>',
   }
 );
 

@@ -22,6 +22,7 @@ import Faq from "./views/FAQ/Faq";
 import "./App.css";
 
 function App() {
+  axios.defaults.baseURL = "http://localhost:3001/";
   const {
     user,
     isAuthenticated: isAuthenticatedAuth0,
@@ -192,17 +193,256 @@ function App() {
             )
           }
         />
-        <Route path="/home" element={<Home />} />
-        <Route path="favorites" element={<Favorites />} />
-        <Route path="/messages" element={<Messages />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="/more" element={<More />} />
-
-        <Route path="/createstore" element={<CreateStore />} />
-        <Route path="/mystore" element={<MyStore />} />
-        <Route path="/store" element={<Store />} />
-        <Route path="/queries" element={<Queries />} />
-        <Route path="/faq" element={<Faq />} />
+        <Route path="/home" element={isAuthenticated ? (
+              userData ? (
+                <Home userData={userData} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : isAuthenticatedAuth0 ? (
+              user ? (
+                <Home userData={user.name} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : (
+              <Login setAuth={setAuth} />
+            )
+          }
+        />
+        <Route path="favorites" element={isAuthenticated ? (
+              userData ? (
+                <Favorites userData={userData} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : isAuthenticatedAuth0 ? (
+              user ? (
+                <Favorites userData={user.name} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : (
+              <Login setAuth={setAuth} />
+            )
+          }
+        />
+        <Route path="/messages" element={isAuthenticated ? (
+              userData ? (
+                <Messages userData={userData} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : isAuthenticatedAuth0 ? (
+              user ? (
+                <Messages userData={user.name} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : (
+              <Login setAuth={setAuth} />
+            )
+          }
+        />
+        <Route path="/account" element={isAuthenticated ? (
+              userData ? (
+                <Account userData={userData} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : isAuthenticatedAuth0 ? (
+              user ? (
+                <Account userData={user.name} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : (
+              <Login setAuth={setAuth} />
+            )
+          }
+        />
+        <Route path="/more" element={isAuthenticated ? (
+              userData ? (
+                <More userData={userData} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : isAuthenticatedAuth0 ? (
+              user ? (
+                <More userData={user.name} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : (
+              <Login setAuth={setAuth} />
+            )
+          }
+        />
+        <Route path="/createstore" element={isAuthenticated ? (
+              userData ? (
+                <CreateStore userData={userData} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : isAuthenticatedAuth0 ? (
+              user ? (
+                <CreateStore userData={user.name} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : (
+              <Login setAuth={setAuth} />
+            )
+          }
+        />
+        <Route path="/mystore" element={isAuthenticated ? (
+              userData ? (
+                <MyStore userData={userData} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : isAuthenticatedAuth0 ? (
+              user ? (
+                <MyStore userData={user.name} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : (
+              <Login setAuth={setAuth} />
+            )
+          }
+        />
+        <Route path="/store" element={isAuthenticated ? (
+              userData ? (
+                <Store userData={userData} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : isAuthenticatedAuth0 ? (
+              user ? (
+                <Store userData={user.name} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : (
+              <Login setAuth={setAuth} />
+            )
+          }
+        />
+        <Route path="/queries" element={isAuthenticated ? (
+              userData ? (
+                <Queries userData={userData} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : isAuthenticatedAuth0 ? (
+              user ? (
+                <Queries userData={user.name} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : (
+              <Login setAuth={setAuth} />
+            )
+          }
+        />
+        <Route path="/faq" element={isAuthenticated ? (
+              userData ? (
+                <Faq userData={userData} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : isAuthenticatedAuth0 ? (
+              user ? (
+                <Faq userData={user.name} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : (
+              <Login setAuth={setAuth} />
+            )
+          }
+        />
       </Routes>
     </>
   );

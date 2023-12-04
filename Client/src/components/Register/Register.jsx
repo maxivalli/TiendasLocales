@@ -4,6 +4,7 @@ import style from "./Register.module.css";
 import axios from "axios";
 import { validateUsername, validateEmail, validatePassword, validateImagen, validateProvince, validateLocalidad, validatePasswordRepeat } from "./validations";
 import Swal from 'sweetalert2';
+import { uploadFile } from '../Firebase/config';
 
 const Register = ({setAuth}) => {
 
@@ -11,12 +12,6 @@ const Register = ({setAuth}) => {
   const [localities, setLocalities] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState("");
   const [ localidad, setSelectedLocalidad ] = useState("")
-
-    // Constantes para Cloudinary.
-
-    const preset_key = "postsimages";
-    const cloud_name = "dlahgnpwp";
-    const folderName = "usersProfilePic";
 
     const [imageError, setImageError] = useState(null);
     const [provinceError, setProvinceError] = useState(null);
@@ -126,15 +121,15 @@ const Register = ({setAuth}) => {
     setShowPassword(!showPassword);
   };
 
-  const handleFile = (event) => {
+  const handleFile = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
+      const imageUrl = await uploadFile(file)
       setInput({
         ...input,
         image: imageUrl,
       });
-      setImageFile(file); 
+      setImageFile(imageUrl); 
       setImageError(null)
     }
   };
@@ -198,27 +193,12 @@ const Register = ({setAuth}) => {
   }
 
   try {
-    let secureUrl = '';
-
-    if (imageFile) {
-      const formData = new FormData();
-      formData.append('file', imageFile);
-      formData.append('upload_preset', preset_key);
-      formData.append('folder', folderName);
-
-      const responseImage = await axios.post(
-        `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload/`,
-        formData
-      );
-
-      secureUrl = responseImage.data.secure_url;
-    }
 
     let newUser = {
       username: input.username,
       password: input.password,
       email: input.email,
-      image: secureUrl,
+      image: imageFile,
       ubication: `${selectedProvince}, ${localidad}`,
       origin: "DB"
     };

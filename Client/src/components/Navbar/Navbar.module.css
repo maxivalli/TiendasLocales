@@ -69,6 +69,12 @@
   border: 0;
 }
 
+.profilePicture {
+  border-radius: 20px;
+  width: 30px;
+  height: 30px;
+}
+
 @media (max-width: 900px) {
   .navbar {
     top: auto;
