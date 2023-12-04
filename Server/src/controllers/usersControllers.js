@@ -53,13 +53,11 @@ exports.getAllExisting = async () => {
 };
 
 exports.createUser = async (user) => {
-  if (
-    !user.username ||
-    !user.email ||
-    !user.password ||
-    !user.image
-  ) {
-    throw new Error("Faltan datos");
+  if(user.origin !== "google"){
+    if (!user.username || !user.email ||!user.password ||!user.image) {
+      throw new Error("Faltan datos");
+  }
+  
   } else {
     const existEmail = await User.findAll({
       where: {
@@ -89,7 +87,6 @@ exports.createUser = async (user) => {
           const newUser = await User.create({
             username: user.username,
             email: user.email,
-            password: bcryptPassword,
             image: user.image,
             ubication: user.ubication,
             rol: "admin",
@@ -115,7 +112,6 @@ exports.createUser = async (user) => {
         const newUser = await User.create({
           username: user.username,
           email: user.email,
-          password: bcryptPassword,
           image: user.image,
           ubication: user.ubication,
           origin: user.origin
