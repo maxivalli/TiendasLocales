@@ -30,6 +30,8 @@
 
 .cardsStore .texto h2 {
   margin: 0;
+  font-weight: 800;
+  font-style: italic;
 }
 
 .cardsStore .texto h4 {
@@ -46,4 +48,37 @@
   font-size: 20px;
   font-weight: 800;
   font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .cardsStore {
+    width: 168px;
+    height: 210px;
+  }
+
+  .cardsStore img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .cardsStore h2 {
+    font-size: 14px;
+  }
+
+  .cardsStore h4 {
+    font-size: 12px;
+  }
+
+  .cardsStore .boton button {
+    width: 54px;
+    height: 24px;
+    font-size: 14px;
+  }
+
+  .cardsStore .fav {
+    margin-left: -120px;
+    margin-top: -168px;
+    width: 24px;
+    height: 24px;
+  }
 }
