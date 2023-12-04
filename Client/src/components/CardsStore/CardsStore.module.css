@@ -7,11 +7,14 @@
   border-radius: 10px;
 }
 
-.cardsStore .fav {
+.cardsStore .favorite {
   display: grid;
   position: absolute;
-  margin-left: -200px;
-  margin-top: -280px;
+  margin-left: 15px;
+  margin-top: 15px;
+}
+
+.cardsStore .fav {
   width: 32px;
   height: 32px;
 }
@@ -76,8 +79,6 @@
   }
 
   .cardsStore .fav {
-    margin-left: -120px;
-    margin-top: -168px;
     width: 24px;
     height: 24px;
   }
