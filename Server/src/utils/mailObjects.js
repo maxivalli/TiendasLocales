@@ -14,8 +14,8 @@ const registerMail = (user) => {
 
 const postCreated = (email, PostData) => {
   const { title, description, category, ubication, image } = PostData;
-  const urlPersonalizada = `https://www.locanjeamos.com.ar/#/login`;
-  // const urlPersonalizada = `http://localhost:5173/#/login`;
+  const urlPersonalizada = `http://localhost:5173/#/login`; // cambiar por la de produccion
+
   const notificationEmail = postTemplate
     .replace('{{title}}', title)
     .replace('{{description}}', description)
@@ -35,8 +35,8 @@ const postCreated = (email, PostData) => {
 const passwordForgot = (email, id) => {
 
   const idUsuario = id
-  const urlPersonalizada = `https://www.locanjeamos.com.ar/#/resetpassword/${idUsuario}`;
-  // const urlPersonalizada = `http://localhost:5173/#/resetpassword/${idUsuario}`;
+  // const urlPersonalizada = `https://www.locanjeamos.com.ar/#/resetpassword/${idUsuario}`;
+  const urlPersonalizada = `http://localhost:5173/#/resetpassword/${idUsuario}`;
   const forgotTemplateWithLink = forgotTemplate.replace("{{reset_password_link}}", urlPersonalizada);
   
   return {

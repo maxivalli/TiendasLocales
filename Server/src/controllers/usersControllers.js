@@ -77,9 +77,7 @@ exports.createUser = async (user) => {
     else if (existUsername.length !== 0) {
       throw new Error("El nombre de usuario ya se encuentra registrado");
     } 
-    // if (existEmail.length !== 0 && existUsername.length !== 0) {
-    //   throw new Error("El email y usuario ya están en uso, prueba uno diferente.");
-    // }
+
     else {
       try {
         const saltRounds = 10;
@@ -111,6 +109,7 @@ exports.createUser = async (user) => {
           });
           const token = jwtGenerator(newUser.id)
           await transporter.sendMail(registerMail(user))
+
           return {newUser, token};
         } else if(user.origin === "google"){
         const newUser = await User.create({
