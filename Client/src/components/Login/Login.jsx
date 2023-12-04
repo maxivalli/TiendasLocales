@@ -4,6 +4,7 @@ import style from "./Login.module.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import Head from '../../components/Head/Head'
 import LoginButton from "../Auth0/LoginButton";
 
 const Login = ({ setAuth, userData }) => {
@@ -84,6 +85,7 @@ const Login = ({ setAuth, userData }) => {
 
   return (
     <>
+    <Head/>
       {showModal && (
         <div className={style.modal}>
           <img src={Logo} alt="" />
