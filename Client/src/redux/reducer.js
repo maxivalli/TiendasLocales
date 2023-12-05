@@ -11,7 +11,6 @@ import {
   DELETE_USER,
   RESTORE_USER,
   RESET_USERS_FILTER,
-  GET_FAVORITES,
   GET_ALL_POSTS,
   GET_ALL_DISABLED_POSTS,
   GET_ALL_EXISTING_POSTS,
@@ -52,7 +51,6 @@ const initialState = {
   otherUserName: "",
   otherUserImage: "",
   selectedUser: "",
-  favorites: [],
   allPosts: [],
   allPostsCopy: [],
   allDisabledPosts: [],
@@ -206,12 +204,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         allExistingUsers: state.allExistingUsersCopy
       }
-
-      case GET_FAVORITES:
-        return {
-          ...state,
-          favorites: action.payload
-        }
 
       case GET_ALL_POSTS:
         // Aplicar los filtros directamente a action.payload
