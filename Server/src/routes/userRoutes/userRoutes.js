@@ -35,6 +35,7 @@ router.post("/register", validInfo, async (req, res) => {
   const user = req.body;
   try {
     const response = await userController.createUser(user);
+    console.log("B", response)
     return res.status(200).json(response);
   } catch (error) {
     return res.status(400).json(error.message);
