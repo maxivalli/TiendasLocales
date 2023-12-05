@@ -1,0 +1,91 @@
+.chat {
+  width: 100vw;
+  margin-top: 60px;
+}
+
+body .chat div {
+  color: initial !important;
+}
+
+body div.ce-avatar.undefined {
+    bottom: 3px !important;
+}
+
+body .chat input {
+  color: black !important;
+  border: 1px solid grey !important;
+  box-shadow: none !important;
+}
+
+body span.ce-their-message-timestamp {
+  color: rgb(24, 144, 255) !important;
+}
+
+body .ce-their-message-body.false {
+  background-color: grey !important;
+}
+
+body .ce-ice-breaker-gif {
+  display: none;
+}
+
+body .ce-ice-breaker-wrapper {
+  display: none;
+}
+
+body div .ce-chat-card.ce-active-chat-card.false {
+  background-color: red !important;
+  border: none !important;
+  box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.3) !important;
+}
+
+body div .ce-chat-card.false {
+  border: none !important;
+  box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.3) !important;
+  background-color: grey !important;
+}
+
+body div .ce-my-message-body.false {
+  background-color: red !important;
+}
+
+button.ce-custom-send-button {
+  background-color: red !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+body .ce-chat-list {
+  background-color: rgba(128, 128, 128, 0.3) !important;
+}
+
+body .ce-chat-feed {
+  background-color: rgba(128, 128, 128, 0.2) !important;
+}
+
+body .ce-message-list {
+  background: rgba(128, 128, 128, 0.1) !important;
+}
+
+body .ce-custom-message-form {
+  background-color: transparent !important;
+}
+
+body .ce-custom-message-input {
+  background-color: rgba(128, 128, 128, 0.3) !important;
+}
+
+body .ce-new-chat-button {
+  display: none !important;
+  background-color: red !important;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+
+@media (max-width: 900px) {
+  .chat {
+    margin-top: 0;
+    margin-bottom: 60px;
+  }
+}

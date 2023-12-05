@@ -1,26 +1,44 @@
-import React from "react";
+import {React, useState} from "react";
 import {Link} from 'react-router-dom'
 import avatar from "../../assets/storeAvatar.jpg";
 import style from "./CardsStore.module.css";
 
 const CardsStore = () => {
+
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
+
   return (
     <div className={style.cardsStore}>
-      <img src="https://img.icons8.com/fluency/48/like.png" alt="like" className={style.fav}/>
+
+      <div className={style.favorite} onClick={toggleFavorite}>
+      <img 
+          src={isFavorite ? "https://img.icons8.com/ios-glyphs/30/FA5252/like--v1.png" : "https://img.icons8.com/ios-glyphs/30/737373/like--v1.png"} 
+          alt="like" 
+          className={style.fav}
+        />
+      </div>
+
       <div className={style.imagen}>
         <img src={avatar} alt="avatar" />
       </div>
+
       <div className={style.texto}>
         <h2>Pizza Land</h2>
         <h4>8:00 a 20:00</h4>
         <h4>Calification</h4>
         <h4>Categoria</h4>
       </div>
+
       <div className={style.boton}>
         <Link to="/store">
         <button>Ver</button>
         </Link>
       </div>
+
     </div>
   );
 };
