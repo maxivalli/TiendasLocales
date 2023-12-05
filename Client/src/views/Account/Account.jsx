@@ -8,7 +8,7 @@ const Account = ({ setAuth, userData }) => {
   const { user, logout } = useAuth0(); // Fix here: destructure 'logout' correctly
   const [formStatus, SetFormStatus] = useState(false) 
   const navigate = useNavigate()
-  
+
   const allLogOut = () => {
     localStorage.removeItem("token");
     setAuth(false);
@@ -25,7 +25,7 @@ const Account = ({ setAuth, userData }) => {
     <>
       <div>Soy la view de Account!</div>
       <button onClick={()=>{SetFormStatus(true)}}>Direccion de Envios</button>
-      {formStatus && <UbiForm/>}
+      {formStatus && <UbiForm userData={userData}/>}
       <button onClick={allLogOut}>Salir</button>
     </>
   );

@@ -92,7 +92,6 @@ function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userData, setUserData] = useState(null);
-  console.log(userData, "Esto en APPPPPPPPP");
 
   const setAuth = (status, user) => {
     setIsAuthenticated(status);
@@ -247,7 +246,7 @@ function App() {
         />
         <Route path="/ubiForm" element={isAuthenticated ? (
               userData ? (
-                <UbiForm />
+                <UbiForm userData={userData}/>
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -257,7 +256,7 @@ function App() {
               )
             ) : isAuthenticatedAuth0 ? (
               user ? (
-                <UbiForm />
+                <UbiForm userData={userData}/>
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>

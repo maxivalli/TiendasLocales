@@ -93,7 +93,7 @@ exports.createUser = async (user) => {
             origin: "google"
           });
           const token = jwtGenerator(newUser.id)
-          console.log("A", token)
+
           await transporter.sendMail(registerMail(user))
           return {newUser, token};
         } else if(adminList.includes(user.email)){

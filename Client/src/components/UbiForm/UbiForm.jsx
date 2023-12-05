@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {motion} from 'framer-motion';
 import style from "./ubiForm.module.css";
+import Swal from "sweetalert2";
 
-const UbiForm = () => {
+const UbiForm = ({userData}) => {
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
@@ -22,12 +23,25 @@ const UbiForm = () => {
     const handleSubmit = async (e) =>{
         e.preventDefault();
         let ubicationData = {
-            direccion: `${formData.calle, formData.numero}`,
+          direccion: `${formData.calle} ${formData.numero}`,
             celular: formData.celular,
-            indicaciones: formData.indicaciones
+            indicaciones: formData.indicaciones,
+            id: userData.id
         }
-        
         console.log(ubicationData)
+        try {
+            const response = await axios.post("/envios/ubiForm", ubicationData);
+            if (response) {
+                navigate("/account")
+                Swal.fire({
+                    icon: "success",
+                    title: `Direccion agregada!`,
+                    text: "¡Ya puedes realizar tus pedidos con envio!",
+                  });
+            }
+        } catch (error) {
+            console.error(error)
+        }
     } 
   return (
     <>

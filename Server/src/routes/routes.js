@@ -7,7 +7,7 @@ const matchRoutes = require("./matchRoutes/matchRoutes")
 const likesRoutes = require("./likesRoutes/likeRoutes")
 const chatsRoutes = require('./chatsRoutes/chatsRoutes')
 const reviewsRoutes = require("./reviewsRoutes/reviewsRoutes")
-const enviosRoutes = require ('./enviosRoutes/enviosRoute')
+const enviosRoutes = require("./enviosRoutes/enviosRoute")
 const favoritesRoutes = require(".//favoritesRoutes/favoritesRoutes");
 
 
@@ -22,6 +22,7 @@ router.use('/matches', matchRoutes)
 router.use('/messages', messageRoutes)
 router.use('/plans', plansRoutes)
 router.use('/chats', chatsRoutes)
+router.use('/envios', enviosRoutes)
 router.use('/reviews', reviewsRoutes)
 
 
