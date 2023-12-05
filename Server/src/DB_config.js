@@ -39,7 +39,7 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Post, User, Message, Chat, UserFavorites, Review, Envio } = sequelize.models;
+const { Post, User, Message, Chat, Review, Envio } = sequelize.models;
 
 // User - Post
 User.hasMany(Post);
@@ -93,11 +93,6 @@ Envio.belongsTo(User,{
   as: 'sender',
   foreignKey: 'senderUserId' 
 })
-
-
-User.belongsToMany(User, { as: 'favorites', through: 'UserFavorites' });
-
-
 
 module.exports = {
   ...sequelize.models,
