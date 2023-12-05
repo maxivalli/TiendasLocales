@@ -39,7 +39,7 @@ const CardsStore = ({userData}) => {
 
   return (
     <div className={style.cardsStore}>
-
+      <div className={style.favorite}>
       {isFavorite ? (
         <img
           src={favoriteIcon}
@@ -57,6 +57,7 @@ const CardsStore = ({userData}) => {
           onMouseOut={handleMouseOut}
         />
       )}
+      </div>
           <div className={style.imagen} >
         <img src={avatar} alt="avatar"/>
       </div>
