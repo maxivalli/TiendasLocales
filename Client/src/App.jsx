@@ -92,6 +92,7 @@ function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userData, setUserData] = useState(null);
+  console.log(userData, "Esto en APPPPPPPPP");
 
   const setAuth = (status, user) => {
     setIsAuthenticated(status);
