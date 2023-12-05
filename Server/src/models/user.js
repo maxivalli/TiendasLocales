@@ -24,8 +24,8 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    ubication: {
-      type: DataTypes.STRING,
+    direccion: {
+      type: DataTypes.JSON,
     },
     rol: {
       type: DataTypes.STRING,
