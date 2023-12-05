@@ -3,9 +3,9 @@ require("dotenv").config();
 const { ACCESS_TOKEN } = process.env;
 const mercadopago = require("mercadopago");
 
-mercadopago.configure({
+/* mercadopago.configure({
     access_token: ACCESS_TOKEN
-}) 
+})  */
 
 let currentUserId;
 

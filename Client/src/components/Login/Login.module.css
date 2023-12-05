@@ -1,5 +1,6 @@
 .container {
   display: grid;
+  height: fit-content;
   box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.3);
   border-radius: 10px;
   padding: 40px;
@@ -7,6 +8,7 @@
   padding-right: 80px;
   margin-top: 90px;
   margin-bottom: 90px;
+  text-align: center;
 }
 
 .container img {

@@ -58,7 +58,6 @@ exports.createUser = async (user) => {
       throw new Error("Faltan datos");
   }
   
-  } else {
     const existEmail = await User.findAll({
       where: {
         email: user.email
@@ -69,14 +68,13 @@ exports.createUser = async (user) => {
         username: user.username
       }
     });
+
     if (existEmail.length !== 0) {
       throw new Error("El email ya se encuentra registrado");
     } 
     else if (existUsername.length !== 0) {
       throw new Error("El nombre de usuario ya se encuentra registrado");
-    } 
-
-    else {
+    } else {
       try {
         const saltRounds = 10;
         const salt = await bcrypt.genSalt(saltRounds);
@@ -93,6 +91,7 @@ exports.createUser = async (user) => {
             origin: "google"
           });
           const token = jwtGenerator(newUser.id)
+          console.log("A", token)
           await transporter.sendMail(registerMail(user))
           return {newUser, token};
         } else if(adminList.includes(user.email)){
