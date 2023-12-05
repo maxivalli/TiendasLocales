@@ -3,6 +3,7 @@
   position: absolute;
   top: 60px;
   left: 0;
+  text-align: center;
 }
 
 .title {
@@ -55,12 +56,6 @@
 @media (max-width: 900px) {
   .stores {
     grid-template-columns: 1fr 1fr;
+    gap: 24px;
   }
 }
-
-@media (max-width: 768px) {
-  .stores {
-    grid-template-columns: 1fr;
-  }
-}
-
