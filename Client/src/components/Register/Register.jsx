@@ -2,7 +2,7 @@ import Logo from '../../assets/logo.png'
 import React, { useState, useEffect } from "react";
 import style from "./Register.module.css";
 import axios from "axios";
-import { validateUsername, validateEmail, validatePassword, validateImagen, validateProvince, validateLocalidad, validatePasswordRepeat } from "./validations";
+import { validateUsername, validateEmail, validatePassword, validateImagen, validatePasswordRepeat } from "./validations";
 import Swal from 'sweetalert2';
 import { uploadFile } from '../Firebase/config';
 
