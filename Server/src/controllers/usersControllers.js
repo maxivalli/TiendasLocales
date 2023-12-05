@@ -7,7 +7,7 @@ const jwtGenerator = require("../utils/jwtGenerator")
 const nodemailer = require('nodemailer')
 const { ADMIN_USERS } = process.env;
 
-/* const adminList = ADMIN_USERS.split(", ") */
+const adminList = ADMIN_USERS.split(", ")
 
 exports.getAllUser = async () => {
   try {
@@ -53,30 +53,30 @@ exports.getAllExisting = async () => {
 };
 
 exports.createUser = async (user) => {
-  if(user.origin !== "google"){
+
     if (!user.username || !user.email ||!user.password ||!user.image) {
       throw new Error("Faltan datos");
   }
-  
-  } else {
+
     const existEmail = await User.findAll({
       where: {
         email: user.email
       }
     });
+
     const existUsername = await User.findAll({
       where: {
         username: user.username
       }
     });
-    if (existEmail.length !== 0) {
-      throw new Error("El email ya se encuentra registrado");
-    } 
-    else if (existUsername.length !== 0) {
-      throw new Error("El nombre de usuario ya se encuentra registrado");
-    } 
 
-    else {
+    if (existEmail.length !== 0) {
+
+      throw new Error("El email ya se encuentra registrado");
+    } else if (existUsername.length !== 0) {
+
+      throw new Error("El nombre de usuario ya se encuentra registrado");
+    } else {
       try {
         const saltRounds = 10;
         const salt = await bcrypt.genSalt(saltRounds);
@@ -93,6 +93,7 @@ exports.createUser = async (user) => {
             origin: "google"
           });
           const token = jwtGenerator(newUser.id)
+          console.log("A", token)
           await transporter.sendMail(registerMail(user))
           return {newUser, token};
         } else if(adminList.includes(user.email)){
@@ -138,7 +139,6 @@ exports.createUser = async (user) => {
       }
     }
   }
-};
 
 exports.loginUser = async (user) => {
   if(user.origin === "google"){
