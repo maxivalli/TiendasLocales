@@ -6,7 +6,9 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import style from "./Home.module.css";
 import Head from "../../components/Head/Head";
 
-const Home = () => {
+const Home = ({userData}) => {
+console.log(userData, "Esto en HOME");
+
   return (
     <>
       <SearchBar />
@@ -31,7 +33,7 @@ const Home = () => {
         </div>
 
         <div className={style.stores}>
-          <CardsStore />
+          <CardsStore userData={userData}/>
           <CardsStore />
           <CardsStore />
           <CardsStore />
