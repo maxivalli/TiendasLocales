@@ -8,12 +8,14 @@ const likesRoutes = require("./likesRoutes/likeRoutes")
 const chatsRoutes = require('./chatsRoutes/chatsRoutes')
 const reviewsRoutes = require("./reviewsRoutes/reviewsRoutes")
 const enviosRoutes = require ('./enviosRoutes/enviosRoute')
+const favoritesRoutes = require(".//favoritesRoutes/favoritesRoutes");
 
 
 const router = Router();
 
 
 router.use('/users', usersRoutes)
+router.use("/favorites", favoritesRoutes);
 router.use('/posts', postsRoutes)
 router.use('/likes', likesRoutes)
 router.use('/matches', matchRoutes)

@@ -12,6 +12,9 @@ import {
   DELETE_USER,
   RESTORE_USER,
   RESET_USERS_FILTER,
+  GET_FAVORITES,
+  REMOVE_FAVORITE,
+  ADD_FAVORITE,
   CARGAR_HISTORIAL_MENSAJES,
   GET_ALL_MESSAGES,
   OTHER_USER_DATA,
@@ -168,6 +171,39 @@ export function restoreUser(id) {
   };
 }
 
+export function addFavorite(userId, favoriteUserId) {
+  return async function (dispatch) {
+    try {
+      await axios.post(`/favorites/addFavorite/${userId}/${favoriteUserId}`);
+      dispatch({ type: ADD_FAVORITE });
+    } catch (error) {
+      throw error
+    }
+  };
+}
+
+export function removeFavorite(userId, favoriteUserId) {
+  return async function (dispatch) {
+    try {
+      await axios.delete(`/favorites/removeFavorite/${userId}/${favoriteUserId}`);
+      dispatch({ type: REMOVE_FAVORITE});
+    } catch (error) {
+      throw error
+    }
+  };
+}
+
+export function getFavorites(userId) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`/favorites/getFavorites/${userId}`);
+      dispatch({ type: GET_FAVORITES, payload: { favorites: response.data } });
+    } catch (error) {
+      throw error
+    }
+  };
+}
+
 export function getAllPosts() {
   return async function (dispatch) {
     const response = await axios("/posts");
@@ -222,8 +258,6 @@ export const likePost = (myUserId, likedPostId, myPostId, anotherUserId) => {
         type: LIKE_POST,
         payload: likedPost,
       });
-
-      // Almacenar el estado liked en el almacenamiento local
       localStorage.setItem(`likedStatus_${likedPostId}`, 'true');
     } catch (error) {
       console.error("Error al dar like a la publicación", error);
