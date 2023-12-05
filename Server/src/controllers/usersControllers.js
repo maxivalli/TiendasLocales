@@ -53,16 +53,17 @@ exports.getAllExisting = async () => {
 };
 
 exports.createUser = async (user) => {
-  if(user.origin !== "google"){
+
     if (!user.username || !user.email ||!user.password ||!user.image) {
       throw new Error("Faltan datos");
   }
-  
+
     const existEmail = await User.findAll({
       where: {
         email: user.email
       }
     });
+
     const existUsername = await User.findAll({
       where: {
         username: user.username
@@ -70,9 +71,10 @@ exports.createUser = async (user) => {
     });
 
     if (existEmail.length !== 0) {
+
       throw new Error("El email ya se encuentra registrado");
-    } 
-    else if (existUsername.length !== 0) {
+    } else if (existUsername.length !== 0) {
+
       throw new Error("El nombre de usuario ya se encuentra registrado");
     } else {
       try {
@@ -137,7 +139,6 @@ exports.createUser = async (user) => {
       }
     }
   }
-};
 
 exports.loginUser = async (user) => {
   if(user.origin === "google"){

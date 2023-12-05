@@ -20,6 +20,7 @@ import Store from './views/Store/Store'
 import Queries from "./views/Queries/Queries";
 import Faq from "./views/FAQ/Faq";
 import "./App.css";
+import UbiForm from "./components/UbiForm/UbiForm";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3001/";
@@ -50,6 +51,7 @@ function App() {
         if (!existe.data) {
           const response = await axios.post("/users/register", userByGoogle);
           if (response) {
+            console.log(response)
             await localStorage.setItem("token", response.data.token);
             setAuth(true);
 
@@ -89,7 +91,6 @@ function App() {
   }, [isAuthenticatedAuth0, isLoading]);
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userToken, setUserToken] = useState("");
   const [userData, setUserData] = useState(null);
 
   const setAuth = (status, user) => {
@@ -231,6 +232,31 @@ function App() {
             ) : isAuthenticatedAuth0 ? (
               user ? (
                 <Favorites userData={user.name} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : (
+              <Login setAuth={setAuth} />
+            )
+          }
+        />
+        <Route path="/ubiForm" element={isAuthenticated ? (
+              userData ? (
+                <UbiForm />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : isAuthenticatedAuth0 ? (
+              user ? (
+                <UbiForm />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
