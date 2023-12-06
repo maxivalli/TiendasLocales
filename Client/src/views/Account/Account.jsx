@@ -45,10 +45,10 @@ const Account = ({ setAuth, userData, setUserData }) => {
             <h2>{userData && userData.username}</h2>
             <p>{userData && userData.email}</p>
             <p>
-              {userData.direccion && userData.direccion.direccion.trim() !== ""
-                ? userData.direccion.direccion
-                : "Sin dirección"}
-            </p>
+            {userData && userData.direccion && userData.direccion.direccion.trim() !== ""
+              ? userData.direccion.direccion
+              : "Sin dirección"}
+          </p>
             <p>
               {userData && userData.averageRating !== 0
                 ? userData.averageRating
