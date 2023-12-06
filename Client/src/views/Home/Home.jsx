@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Banner from "../../components/Banners/Banners";
 import Cards from "../../components/Cards/Cards";
 import CardsStore from "../../components/CardsStore/CardsStore";
@@ -7,7 +8,8 @@ import style from "./Home.module.css";
 import Head from "../../components/Head/Head";
 
 const Home = ({userData}) => {
-console.log(userData, "Esto en HOME");
+  const userDataState = useSelector((state) => state.userData)
+
 
   return (
     <>
@@ -33,7 +35,7 @@ console.log(userData, "Esto en HOME");
         </div>
 
         <div className={style.stores}>
-          <CardsStore userData={userData}/>
+          <CardsStore />
           <CardsStore />
           <CardsStore />
           <CardsStore />

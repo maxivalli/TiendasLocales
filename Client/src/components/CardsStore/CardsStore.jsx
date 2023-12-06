@@ -12,7 +12,6 @@ import style from "./CardsStore.module.css";
 
 
 const CardsStore = ({userData}) => {
-  console.log(userData, "Esto en CARDSTORE");
   const dispatch = useDispatch();
   const [isFavorite, setIsFavorite] = useState(false);
   const [isHovered, setIsHovered] = useState(false);

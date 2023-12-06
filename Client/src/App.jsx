@@ -21,8 +21,11 @@ import Queries from "./views/Queries/Queries";
 import Faq from "./views/FAQ/Faq";
 import "./App.css";
 import UbiForm from "./components/UbiForm/UbiForm";
+import { saveUserData } from "./redux/actions";
+import { useDispatch } from "react-redux";
 
 function App() {
+  const dispatch = useDispatch()
   axios.defaults.baseURL = "http://localhost:3001/";
   const {
     user,
@@ -96,6 +99,7 @@ function App() {
   const setAuth = (status, user) => {
     setIsAuthenticated(status);
     setUserData(user);
+    dispatch(saveUserData(user))
   };
 
   useEffect(() => {
@@ -127,6 +131,15 @@ function App() {
                   rol: userDataResponse.data.rol,
                   averageRating: userDataResponse.data.averageRating,
                 });
+                dispatch(saveUserData({
+                  email: userDataResponse.data.email,
+                  id: userDataResponse.data.id,
+                  username: userDataResponse.data.username,
+                  image: userDataResponse.data.image,
+                  direccion: userDataResponse.data.direccion,
+                  rol: userDataResponse.data.rol,
+                  averageRating: userDataResponse.data.averageRating
+                  }))
                 console.log("A", userData)
               })
               .catch((userDataError) => {
