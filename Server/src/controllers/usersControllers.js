@@ -55,11 +55,13 @@ exports.getAllExisting = async () => {
 };
 
 exports.createUser = async (user) => {
+
   if(user.origin !== "google"){
     if (!user.username || !user.email ||!user.password ||!user.image) {
       throw new Error("Faltan datos");
-  }
-  
+      }
+    }
+
     const existEmail = await User.findAll({
       where: {
         email: user.email
@@ -226,7 +228,6 @@ exports.createUser = async (user) => {
         throw new Error("Hubo un error al crear el usuario: " + error);
       }
     }
-  }
 }
 
 exports.loginUser = async (user) => {
