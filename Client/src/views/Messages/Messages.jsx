@@ -1,5 +1,6 @@
 import {React, useState, useEffect } from "react";
 import Head from '../../components/Head/Head'
+import { useSelector } from 'react-redux';
 import { PrettyChatWindow } from "react-chat-engine-pretty";
 import "./Messages.css";
 
@@ -31,6 +32,8 @@ const Messages = () => {
     
   }, []);
   
+  const userDataState = useSelector((state) => state.userData)
+  console.log(userDataState)
   return (
     <>
       <div className={chatClass}>
