@@ -310,7 +310,7 @@ function App() {
         />
         <Route path="/account" element={isAuthenticated ? (
               userData ? (
-                <Account userData={userData} setAuth={setAuth} />
+                <Account userData={userData} setUserData={setUserData} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -320,7 +320,7 @@ function App() {
               )
             ) : isAuthenticatedAuth0 ? (
               user ? (
-                <Account userData={user.name} setAuth={setAuth} />
+                <Account userData={userData} setUserData={setUserData} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>

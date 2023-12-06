@@ -6,7 +6,7 @@ import style from "./ubiForm.module.css";
 import Swal from "sweetalert2";
 import { useSelector } from 'react-redux';
 
-const UbiForm = ({userData}) => {
+const UbiForm = ({userData, onAddressAdded }) => {
     const navigate = useNavigate()
 
     const userDataState = useSelector((state) => state.userData)
@@ -31,11 +31,11 @@ console.log(userDataState)
             indicaciones: formData.indicaciones,
             id: userData.id
         }
-        console.log(ubicationData)
+
         try {
             const response = await axios.post("/envios/ubiForm", ubicationData);
             if (response) {
-                navigate("/account")
+              onAddressAdded(ubicationData.direccion);
                 Swal.fire({
                     icon: "success",
                     title: `Direccion agregada!`,
