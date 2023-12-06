@@ -17,7 +17,7 @@ const CardsStore = ({userData}) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  //const userId = userData.id
+  const userId = userData?.id
 
   const handleFavoriteClick = () => {
     if (isFavorite) {

@@ -6,6 +6,8 @@ const { registerMail, passwordForgot} = require("../utils/mailObjects")
 const jwtGenerator = require("../utils/jwtGenerator")
 const nodemailer = require('nodemailer')
 const { ADMIN_USERS } = process.env;
+const { PIVATE_KEY_CHATS } = process.env
+const axios = require("axios")
 
 const adminList = ADMIN_USERS.split(", ")
 
@@ -53,17 +55,16 @@ exports.getAllExisting = async () => {
 };
 
 exports.createUser = async (user) => {
-
+  if(user.origin !== "google"){
     if (!user.username || !user.email ||!user.password ||!user.image) {
       throw new Error("Faltan datos");
   }
-
+  
     const existEmail = await User.findAll({
       where: {
         email: user.email
       }
     });
-
     const existUsername = await User.findAll({
       where: {
         username: user.username
@@ -71,10 +72,9 @@ exports.createUser = async (user) => {
     });
 
     if (existEmail.length !== 0) {
-
       throw new Error("El email ya se encuentra registrado");
-    } else if (existUsername.length !== 0) {
-
+    } 
+    else if (existUsername.length !== 0) {
       throw new Error("El nombre de usuario ya se encuentra registrado");
     } else {
       try {
@@ -95,6 +95,29 @@ exports.createUser = async (user) => {
           const token = jwtGenerator(newUser.id)
           console.log("A", token)
           await transporter.sendMail(registerMail(user))
+          const data = {
+            username: user.username,
+            secret: token,
+            email: user.email,
+          };
+          
+          const config = {
+            method: 'post',
+            url: 'https://api.chatengine.io/users/',
+            headers: {
+              'PRIVATE-KEY': '2b9635b2-fa51-4c12-a6b1-64a273f58dee'
+            },
+            data : data
+          };
+          
+          axios(config)
+          .then(function (response) {
+            console.log(JSON.stringify(response.data));
+          })
+          .catch(function (error) {
+            console.log(error);
+            throw error
+          });
           return {newUser, token};
         } else if(adminList.includes(user.email)){
           const newUser = await User.create({
@@ -107,7 +130,28 @@ exports.createUser = async (user) => {
           });
           const token = jwtGenerator(newUser.id)
           await transporter.sendMail(registerMail(user))
-
+          const data = {
+            username: user.username,
+            secret: token,
+            email: user.email,
+          };
+          
+          const config = {
+            method: 'post',
+            url: 'https://api.chatengine.io/users/',
+            headers: {
+              'PRIVATE-KEY':'2b9635b2-fa51-4c12-a6b1-64a273f58dee'
+            },
+            data : data
+          };
+          
+          axios(config)
+          .then(function (response) {
+            console.log(JSON.stringify(response.data));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
           return {newUser, token};
         } else if(user.origin === "google"){
         const newUser = await User.create({
@@ -119,6 +163,28 @@ exports.createUser = async (user) => {
         });
         const token = jwtGenerator(newUser.id)
         await transporter.sendMail(registerMail(user))
+        const data = {
+          username: user.username,
+          secret: token,
+          email: user.email,
+        };
+        
+        const config = {
+          method: 'post',
+          url: 'https://api.chatengine.io/users/',
+          headers: {
+            'PRIVATE-KEY': '2b9635b2-fa51-4c12-a6b1-64a273f58dee'
+          },
+          data : data
+        };
+        
+        axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
         return {newUser, token};
       } else {
         const newUser = await User.create({
@@ -131,6 +197,28 @@ exports.createUser = async (user) => {
         });
         const token = jwtGenerator(newUser.id)
         await transporter.sendMail(registerMail(user))
+        const data = {
+          username: user.username,
+          secret: token,
+          email: user.email,
+        };
+        
+        const config = {
+          method: 'post',
+          url: 'https://api.chatengine.io/users/',
+          headers: {
+            'PRIVATE-KEY': '2b9635b2-fa51-4c12-a6b1-64a273f58dee'
+          },
+          data : data
+        };
+        
+        axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
         return {newUser, token};
       }
 
@@ -139,6 +227,7 @@ exports.createUser = async (user) => {
       }
     }
   }
+}
 
 exports.loginUser = async (user) => {
   if(user.origin === "google"){
