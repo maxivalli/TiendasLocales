@@ -123,10 +123,11 @@ function App() {
                   id: userDataResponse.data.id,
                   username: userDataResponse.data.username,
                   image: userDataResponse.data.image,
+                  direccion: userDataResponse.data.direccion,
                   rol: userDataResponse.data.rol,
                   averageRating: userDataResponse.data.averageRating,
-                  plan: userDataResponse.data.plan,
                 });
+                console.log("A", userData)
               })
               .catch((userDataError) => {
                 console.error(

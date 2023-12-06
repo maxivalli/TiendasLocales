@@ -13,7 +13,7 @@ const CardsStore = ({userData}) => {
   const dispatch = useDispatch();
   const [isFavorite, setIsFavorite] = useState(false);
 
-  //const userId = userData.id
+  const userId = userData?.id
 
   const toggleFavorite = () => {
     if (isFavorite) {

@@ -2,81 +2,21 @@ import Logo from '../../assets/logo.png'
 import React, { useState, useEffect } from "react";
 import style from "./Register.module.css";
 import axios from "axios";
-import { validateUsername, validateEmail, validatePassword, validateImagen, validateProvince, validateLocalidad, validatePasswordRepeat } from "./validations";
+import { validateUsername, validateEmail, validatePassword, validateImagen, validatePasswordRepeat } from "./validations";
 import Swal from 'sweetalert2';
 import { uploadFile } from '../Firebase/config';
 
 const Register = ({setAuth}) => {
 
-  const [provinces, setProvinces] = useState([]);
-  const [localities, setLocalities] = useState([]);
-  const [selectedProvince, setSelectedProvince] = useState("");
-  const [ localidad, setSelectedLocalidad ] = useState("")
+  const [imageError, setImageError] = useState(null);
 
-    const [imageError, setImageError] = useState(null);
-    const [provinceError, setProvinceError] = useState(null);
-    const [localidadError, setLocalidadError] = useState(null);
   const [errors, setErrors] = useState({
     username: null,
     password: null,
     email: null,
     image: null,
-    province: null,
-    localidad: null,
   });
   
-  useEffect(() => {
-    fetch("https://apis.datos.gob.ar/georef/api/provincias")
-      .then((res) => (res.ok ? res.json() : Promise.reject(res)))
-      .then((json) => {
-        setProvinces(json.provincias);
-      })
-      .catch((error) => {
-        console.error(
-          `Error: ${error.status}: ${error.statusText || "Ocurrió un error"}`
-        );
-      });
-  }, []);
-
-  const handleProvinceChange = (e) => {
-    const selectedProvince = e.target.value;
-    setSelectedProvince(selectedProvince);
-
-    const provinceError = validateProvince(selectedProvince);
-    setErrors({ ...errors, province: provinceError });
-    setProvinceError(provinceError);
-
-
-    fetch(
-      `https://apis.datos.gob.ar/georef/api/localidades?provincia=${selectedProvince}&max=500`
-    )
-      .then((res) => (res.ok ? res.json() : Promise.reject(res)))
-      .then((json) => {
-        setLocalities(json.localidades);
-      })
-      .catch((error) => {
-        console.error(
-          `Error al obtener las localidades: ${error.status}: ${
-            error.statusText || "Ocurrió un error"
-          }`
-        );
-      });
-  };
-  const handleLocalidadChange = (e) => {
-    const selectedLocalidad = e.target.value;
-    setSelectedLocalidad(selectedLocalidad);
-
-    const localidadError = validateLocalidad(selectedLocalidad);
-    setErrors({ ...errors, localidad: localidadError });
-    setLocalidadError(localidadError);
-  };
-  const sortedProvinces = provinces.sort((a, b) => {
-    return a.nombre.localeCompare(b.nombre);
-  });
-
-  const sortedLocalities = localities.sort((a, b) => {
-    return a.nombre.localeCompare(b.nombre);
-  });
 
   const [input, setInput] = useState({
     username: "",
@@ -155,9 +95,7 @@ const Register = ({setAuth}) => {
     !input.email ||
     !input.password ||
     !input.repeatPassword ||
-    !input.image ||
-    !selectedProvince ||
-    !localidad
+    !input.image
   )   
   {
  
@@ -168,17 +106,6 @@ const Register = ({setAuth}) => {
     setImageError(null); 
   }
 
-  if (!selectedProvince) {
-    setProvinceError('Es necesario seleccionar una provincia.');
-  } else {
-    setProvinceError(null); 
-  }
-
-  if (!localidad) {
-    setLocalidadError('Es necesario seleccionar una localidad.');
-  } else {
-    setLocalidadError(null); 
-  }
   Swal.fire({
     icon: 'info',
     title: 'Campos incompletos',
@@ -199,7 +126,6 @@ const Register = ({setAuth}) => {
       password: input.password,
       email: input.email,
       image: imageFile,
-      ubication: `${selectedProvince}, ${localidad}`,
       origin: "DB"
     };
 
@@ -347,28 +273,6 @@ const Register = ({setAuth}) => {
           {/* {errors.image && <span className={style.error}>{errors.image}</span>} */}
           {imageError && <div className={style.error}>{imageError}</div>}
         </div>
-
-            <select onChange={handleProvinceChange} disabled={input.disabled}>
-              <option value="Elige una provincia">Provincia</option>
-              {sortedProvinces.map((province) => (
-                <option key={province.id} value={province.nombre}>
-                  {province.nombre}
-                </option>
-              ))}
-            </select>
-            {/* {errors.province && <span className={style.error}>{errors.province}</span>} */}
-            {provinceError && <div className={style.error}>{provinceError}</div>}
-               
-            <select id="selectLocalidades" onChange={handleLocalidadChange} disabled={input.disabled}>
-              <option value="Elige una localidad">Localidad</option>
-              {sortedLocalities.map((locality) => (
-                <option key={locality.id} value={locality.nombre}>
-                  {locality.nombre}
-                </option>
-              ))}
-            </select>
-            {/* {errors.localidad && <span className={style.error}>{errors.localidad}</span>} */}
-            {localidadError && <div className={style.error}>{localidadError}</div>}
        
           <button className={isSubmitDisabled() ? `${style.register} ${style.buttonDisabled}` : style.register} disabled={isSubmitDisabled()} type="submit">
             Enviar
