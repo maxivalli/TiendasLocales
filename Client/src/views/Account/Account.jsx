@@ -22,12 +22,10 @@ const Account = ({ setAuth, userData, setUserData }) => {
   };
 
   const handleAddressAdded = (newAddress) => {
-    // Update the userData with the new address
     setUserData((prevUserData) => ({
       ...prevUserData,
       direccion: { direccion: newAddress },
     }));
-    // Close the modal
     setShowModal(false);
   };
   return (
