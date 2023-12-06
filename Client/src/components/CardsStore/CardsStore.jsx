@@ -5,9 +5,6 @@ import { Link } from "react-router-dom";
 import { addFavorite, removeFavorite } from "../../redux/actions"
 
 import avatar from "../../assets/storeAvatar.jpg";
-import favoriteIcon from "../../assets/favoritazo.gif";
-import noFavoriteIcon from "../../assets/noFavorito.png";
-import addToFavoriteIcon from "../../assets/agregarFavorito.gif";
 import style from "./CardsStore.module.css";
 
 
@@ -15,11 +12,10 @@ const CardsStore = ({userData}) => {
   console.log(userData, "Esto en CARDSTORE");
   const dispatch = useDispatch();
   const [isFavorite, setIsFavorite] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
 
   //const userId = userData.id
 
-  const handleFavoriteClick = () => {
+  const toggleFavorite = () => {
     if (isFavorite) {
       setIsFavorite(false);
       dispatch(removeFavorite(userId))
@@ -29,49 +25,31 @@ const CardsStore = ({userData}) => {
     }
   };
 
-  const handleMouseOver = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseOut = () => {
-    setIsHovered(false);
-  };
-
   return (
     <div className={style.cardsStore}>
-      <div className={style.favorite}>
-      {isFavorite ? (
-        <img
-          src={favoriteIcon}
-          alt="like"
+
+      <div className={style.favorite} onClick={toggleFavorite}>
+      <img 
+          src={isFavorite ? "https://img.icons8.com/ios-glyphs/30/FA5252/like--v1.png" : "https://img.icons8.com/ios-glyphs/30/737373/like--v1.png"} 
+          alt="like" 
           className={style.fav}
-          onClick={handleFavoriteClick}
         />
-      ) : (
-        <img
-          src={isHovered ? addToFavoriteIcon : noFavoriteIcon}
-          alt="like"
-          className={style.fav}
-          onClick={handleFavoriteClick}
-          onMouseOver={handleMouseOver}
-          onMouseOut={handleMouseOut}
-        />
-      )}
       </div>
-          <div className={style.imagen} >
-        <img src={avatar} alt="avatar"/>
+
+      <div className={style.imagen}>
+        <img src={avatar} alt="avatar" />
       </div>
 
       <div className={style.texto}>
         <h2>Pizza Land</h2>
         <h4>8:00 a 20:00</h4>
-        <h4>Calificación</h4>
-        <h4>Categoría</h4>
+        <h4>Calification</h4>
+        <h4>Categoria</h4>
       </div>
 
       <div className={style.boton}>
         <Link to="/store">
-          <button>Ver</button>
+        <button>Ver</button>
         </Link>
       </div>
 

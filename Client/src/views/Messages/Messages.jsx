@@ -15,7 +15,7 @@ const Messages = () => {
 
   const buttonLabel =
     chatClass === "chat2" ? (
-      <img width="24" height="24" src="https://img.icons8.com/material-rounded/24/FA5252/menu--v1.png" alt="menu--v1"/>
+      <img width="22" height="22" src="https://img.icons8.com/sf-regular-filled/48/FA5252/chat.png" alt="chat"/>
     ) : (
       <img width="22" height="22" src="https://img.icons8.com/material-rounded/24/737373/menu--v1.png" alt="menu--v1"/>
     );

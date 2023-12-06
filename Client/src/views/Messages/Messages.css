@@ -45,10 +45,14 @@ body .ce-ice-breaker-wrapper {
   display: none;
 }
 
-body div .ce-chat-card.ce-active-chat-card.false {
+body div .ce-chat-card.ce-active-chat-card {
   background-color: red !important;
   border: none !important;
   box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.3) !important;
+}
+
+div.ce-my-message-body.ce-my-message-sending-body {
+  background-color: grey !important;
 }
 
 body div .ce-chat-card.false {
@@ -97,6 +101,10 @@ body .ce-new-chat-button {
   border-radius: 50%;
 }
 
+div.ce-custom-header-icon-wrapper {
+  text-align: left !important;
+}
+
 @media (max-width: 900px) {
   .chat {
     top: 0;
@@ -127,7 +135,7 @@ body .ce-new-chat-button {
   .chat .toggle {
     display: block;
     position: absolute;
-    right: 22%;
+    right: 6%;
     top: 25px;
     z-index: 999;
   }
@@ -142,7 +150,7 @@ body .ce-new-chat-button {
 
   .chat2 .toggle {
     position: absolute;
-    right: 22%;
+    right: 6%;
     top: 25px;
     z-index: 999;
   }
