@@ -45,8 +45,8 @@ const Head = () => {
               <p>Notificación ejemplo 3</p>
             </button>
           </div>
-          <button onClick={toggleNotifications} className={style.close}>
-            Cerrar
+          <button className={style.close}>
+            Borrar notificaciones
           </button>
         </div>
       )}
