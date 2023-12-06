@@ -10,6 +10,8 @@ export const UPDATE_USER = "UPDATE_USER";
 export const DELETE_USER = "DELETE_USER";
 export const RESTORE_USER = "RESTORE_USER";
 export const RESET_USERS_FILTER = "RESET_USERS_FILTER";
+export const USER_DATA = "USER_DATA"
+export const UPDATE_USER_DATA = "UPDATE_USER_DATA"
 
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE"

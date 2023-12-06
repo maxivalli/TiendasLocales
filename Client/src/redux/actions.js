@@ -46,7 +46,9 @@ import {
   SELECTED_POST,
   RESET_FILTERS,
   CLEAR_DETAIL,
-  ADD_REVIEW
+  ADD_REVIEW,
+  USER_DATA,
+  UPDATE_USER_DATA
 } from "./actionTypes";
 
 export function getAllUsers() {
@@ -169,6 +171,20 @@ export function restoreUser(id) {
       payload: result.data,
     });
   };
+}
+
+export function saveUserData(userData){
+  return {
+    type: USER_DATA,
+    payload: userData
+  }
+}
+
+export function updateUserData(userData){
+  return {
+    type: UPDATE_USER_DATA,
+    payload:userData
+  }
 }
 
 export function addFavorite(userId, favoriteUserId) {

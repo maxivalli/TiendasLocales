@@ -4,10 +4,13 @@ import axios from "axios";
 import {motion} from 'framer-motion';
 import style from "./ubiForm.module.css";
 import Swal from "sweetalert2";
+import { useSelector } from 'react-redux';
 
 const UbiForm = ({userData}) => {
     const navigate = useNavigate()
 
+    const userDataState = useSelector((state) => state.userData)
+console.log(userDataState)
     const [formData, setFormData] = useState({
         calle: "",
         numero: "",
