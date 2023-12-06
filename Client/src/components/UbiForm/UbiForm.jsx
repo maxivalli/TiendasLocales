@@ -52,7 +52,7 @@ console.log(userDataState)
       initial={{opacity: 0,scale: 0.8,}} animate={{opacity: 1, scale: 1,}}
       className={style.container}>
 
-        <h3>Tu direccion para envios</h3>
+        <h3>Tú dirección para envíos</h3>
         <form className={style.create}>
           <div className={style.part1}>
             <label>
@@ -63,7 +63,7 @@ console.log(userDataState)
                 name='calle'
                 value={formData.calle}
                 onChange={handleChange}
-                placeholder='Ej necochea'
+                placeholder='Ej: Necochea'
               />
             </label>
           </div>
@@ -76,7 +76,7 @@ console.log(userDataState)
                 name='numero'
                 value={formData.numero}
                 onChange={handleChange}
-                placeholder='Ej 2261'
+                placeholder='Ej: 1900'
               />
             </label>
           </div>
@@ -89,7 +89,7 @@ console.log(userDataState)
                 name='celular'
                 value={formData.celular}
                 onChange={handleChange}
-                placeholder='Ej 261 205 3984'
+                placeholder='Ej: 3408 12345'
               />
             </label>
           </div>
@@ -98,18 +98,17 @@ console.log(userDataState)
             Indicaciones Extra
               <input
                 className={style.input}
-                type='text'
+                type='textarea'
                 name='indicaciones'
                 value={formData.indicaciones}
                 onChange={handleChange}
-                placeholder='Ej casa roja con porton negro'
+                placeholder='Ej: Piso 1, Dto. "A"'
               />
             </label>
           </div>
         </form>
-        <button onClick={()=>{navigate("/account")}}>Volver</button>
         <button type='submit' onClick={handleSubmit} className={style.button}>
-          Crear
+          Enviar
         </button>
       </motion.div>
     </>

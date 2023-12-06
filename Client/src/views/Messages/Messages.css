@@ -1,6 +1,17 @@
 .chat {
+  display: grid;
+  position: absolute;
+  left: 0;
+  top: 60px;
   width: 100vw;
-  margin-top: 60px;
+}
+
+.chat .toggle {
+  display: none;
+}
+
+body .chat input::placeholder {
+  color: transparent !important;
 }
 
 body .chat div {
@@ -8,11 +19,11 @@ body .chat div {
 }
 
 body div.ce-avatar.undefined {
-    bottom: 3px !important;
+  bottom: 3px !important;
 }
 
 body .chat input {
-  color: black !important;
+  color: initial !important;
   border: 1px solid grey !important;
   box-shadow: none !important;
 }
@@ -22,6 +33,7 @@ body span.ce-their-message-timestamp {
 }
 
 body .ce-their-message-body.false {
+  color: white !important;
   background-color: grey !important;
 }
 
@@ -33,10 +45,14 @@ body .ce-ice-breaker-wrapper {
   display: none;
 }
 
-body div .ce-chat-card.ce-active-chat-card.false {
+body div .ce-chat-card.ce-active-chat-card {
   background-color: red !important;
   border: none !important;
   box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.3) !important;
+}
+
+div.ce-my-message-body.ce-my-message-sending-body {
+  background-color: grey !important;
 }
 
 body div .ce-chat-card.false {
@@ -46,6 +62,7 @@ body div .ce-chat-card.false {
 }
 
 body div .ce-my-message-body.false {
+  color: white !important;
   background-color: red !important;
 }
 
@@ -72,6 +89,7 @@ body .ce-custom-message-form {
 }
 
 body .ce-custom-message-input {
+  margin-top: 23px !important;
   background-color: rgba(128, 128, 128, 0.3) !important;
 }
 
@@ -83,9 +101,68 @@ body .ce-new-chat-button {
   border-radius: 50%;
 }
 
+div.ce-custom-header-icon-wrapper {
+  text-align: left !important;
+}
+
 @media (max-width: 900px) {
   .chat {
-    margin-top: 0;
-    margin-bottom: 60px;
+    top: 0;
+  }
+}
+
+@media (max-width: 666px) {
+  .chat2 {
+    width: 100vw;
+    right: 0;
+  }
+
+  .chat {
+    bottom: 0;
+  }
+
+  body .chat2 .ce-chat-list {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    height: auto !important;
+    width: 100vw !important;
+    background-color: rgb(45, 45, 45) !important;
+    border-radius: 0px 0px 10px 10px;
+  }
+
+  .chat .toggle {
+    display: block;
+    position: absolute;
+    right: 6%;
+    top: 25px;
+    z-index: 999;
+  }
+
+  button.toggle {
+    height: 40px;
+    width: auto;
+    border: none;
+    background-color: transparent !important;
+    border: none;
+  }
+
+  .chat2 .toggle {
+    position: absolute;
+    right: 6%;
+    top: 25px;
+    z-index: 999;
+  }
+
+  .chat2 button {
+    height: 40px;
+    width: auto;
+    background-color: transparent !important;
+    border: none;
+  }
+
+  body .chat2 .ce-chat-feed {
+    display: none;
   }
 }
