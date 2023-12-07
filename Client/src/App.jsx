@@ -138,7 +138,8 @@ function App() {
                   image: userDataResponse.data.image,
                   direccion: userDataResponse.data.direccion,
                   rol: userDataResponse.data.rol,
-                  averageRating: userDataResponse.data.averageRating
+                  averageRating: userDataResponse.data.averageRating,
+                  token: token
                   }))
                 console.log("A", userData)
               })
