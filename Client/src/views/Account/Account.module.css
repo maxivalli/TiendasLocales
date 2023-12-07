@@ -138,12 +138,16 @@
 }
  */
 
-
+ .viewAccount {
+  display: grid;
+  position: absolute;
+  left: 0;
+ }
 
 .account {
   display: grid;
-  grid-template-columns: 150px 6fr 1fr;
-  width: 80vw;
+  grid-template-columns: 200px 6fr 1fr;
+  width: 100vw;
   height: 200px;
   justify-self: center;
   margin-top: 60px;
@@ -185,8 +189,10 @@
 .info2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
   align-self: center;
+  gap: 10px;
+  justify-self: center;
+  margin-left: 10px;
   margin-right: 10px;
 }
 
@@ -233,6 +239,26 @@
   margin-bottom: 50px;
 }
 
+.modal {
+  position: absolute;
+  top: 20%;
+  justify-self: center;
+  background-color: rgb(210, 210, 210);
+  border-radius: 10px;
+}
+
+.close {
+  position: absolute;
+  right: 0;
+  margin-top: 10px;
+  margin-right: 10px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background-color: grey;
+}
+
 @media (max-width: 1280px) {
   .misCompras {
     grid-template-columns: 1fr 1fr;
@@ -241,13 +267,9 @@
 
 @media (max-width: 768px) {
 
-  .viewAccount {
-    display: grid;
-  }
-
   .account {
     width: 100vw;
-    grid-template-columns: 1fr 3fr 2fr;
+    grid-template-columns: 80px 3fr 1fr;
     height: 100px;
   }
 
@@ -270,10 +292,6 @@
 
   .info2 {
     padding-right: 0;
-  }
-
-  .redes {
-    justify-self: center;
   }
 
   .misCompras {

@@ -86,6 +86,12 @@ const Account = ({ setAuth, userData, setUserData }) => {
             price={"$5000"}
             store={"Pizza Land"}
           />
+          <CardSquare
+            image={pizza}
+            title={"Pizza Napolitana"}
+            price={"$5000"}
+            store={"Pizza Land"}
+          />
         </div>
 
           {showModal && (

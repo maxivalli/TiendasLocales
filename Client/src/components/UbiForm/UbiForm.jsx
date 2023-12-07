@@ -92,7 +92,7 @@ const UbiForm = ({userData, onAddressAdded }) => {
             <label>
               Piso/Depto
               <input
-                className={style.input}
+                className={style.inputCheck}
                 type="checkbox"
                 name="pisoDeptoChecked"
                 checked={formData.pisoDeptoChecked}
