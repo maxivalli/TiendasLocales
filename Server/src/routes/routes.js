@@ -8,8 +8,8 @@ const likesRoutes = require("./likesRoutes/likeRoutes")
 const chatsRoutes = require('./chatsRoutes/chatsRoutes')
 const reviewsRoutes = require("./reviewsRoutes/reviewsRoutes")
 const enviosRoutes = require("./enviosRoutes/enviosRoute")
-const favoritesRoutes = require(".//favoritesRoutes/favoritesRoutes");
-
+const favoritesRoutes = require(".//favoritesRoutes/favoritesRoutes")
+const tiendasRoutes = require("./tiendasRoutes/tiendasRoutes")
 
 const router = Router();
 
@@ -24,6 +24,6 @@ router.use('/plans', plansRoutes)
 router.use('/chats', chatsRoutes)
 router.use('/envios', enviosRoutes)
 router.use('/reviews', reviewsRoutes)
-
+router.use('/tiendas', tiendasRoutes)
 
 module.exports = router;
