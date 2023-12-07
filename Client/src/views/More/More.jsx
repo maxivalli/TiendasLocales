@@ -9,7 +9,7 @@ const More = () => {
     <div className={style.section}></div>
     <div className={style.more}>
     <CardWide textButton={"Crear Tienda"} logo={<img width="60" height="60" src="https://img.icons8.com/parakeet/96/add-shop.png" alt="add-shop"/>} link={"/createstore"}/>
-    <CardWide textButton={"Mi Tienda"} logo={<img width="60" height="60" src="https://img.icons8.com/parakeet/96/online-order.png" alt="online-order"/>} link={"/mystore"} />
+    <CardWide textButton={"Mis Tiendas"} logo={<img width="60" height="60" src="https://img.icons8.com/parakeet/96/online-order.png" alt="online-order"/>} link={"/mystore"} />
     <CardWide textButton={"Consultas"} logo={<img width="60" height="60" src="https://img.icons8.com/pulsar-color/96/mail.png" alt="mail"/>} link={"/queries"} />
     <CardWide textButton={"FAQ"} logo={<img width="60" height="60" src="https://img.icons8.com/pulsar-color/96/seo-text.png" alt="seo-text"/>} link={"/faq"} />
     <Link>

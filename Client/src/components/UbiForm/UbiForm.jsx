@@ -1,27 +1,30 @@
-import React, {useState, useEffect} from 'react';
-import { useNavigate } from "react-router-dom";
+import React, {useState} from 'react';
 import axios from "axios";
 import {motion} from 'framer-motion';
 import style from "./ubiForm.module.css";
 import Swal from "sweetalert2";
-import { useSelector } from 'react-redux';
 
-const UbiForm = ({userData}) => {
-    const navigate = useNavigate()
+const UbiForm = ({userData, onAddressAdded }) => {
 
-    const userDataState = useSelector((state) => state.userData)
-console.log(userDataState)
     const [formData, setFormData] = useState({
         calle: "",
         numero: "",
         celular: "",
-        indicaciones: ""
+        indicaciones: "",
+        pisoDeptoChecked: false,
+        piso: "",
+        depto: "",
       });
 
       const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
+        const { name, value, type, checked } = e.target;
+    
+        if (type === 'checkbox') {
+          setFormData({ ...formData, [name]: checked });
+        } else {
+          setFormData({ ...formData, [name]: value });
+        }
+      };
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
@@ -31,11 +34,16 @@ console.log(userDataState)
             indicaciones: formData.indicaciones,
             id: userData.id
         }
-        console.log(ubicationData)
+
+        if (formData.pisoDeptoChecked) {
+          ubicationData.piso = formData.piso;
+          ubicationData.depto = formData.depto;
+        }
+
         try {
             const response = await axios.post("/envios/ubiForm", ubicationData);
             if (response) {
-                navigate("/account")
+              onAddressAdded(ubicationData.direccion);
                 Swal.fire({
                     icon: "success",
                     title: `Direccion agregada!`,
@@ -80,6 +88,48 @@ console.log(userDataState)
               />
             </label>
           </div>
+          <div className={style.part1}>
+            <label>
+              Piso/Depto
+              <input
+                className={style.input}
+                type="checkbox"
+                name="pisoDeptoChecked"
+                checked={formData.pisoDeptoChecked}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          {formData.pisoDeptoChecked && (
+            <>
+              <div className={style.part1}>
+                <label>
+                  Piso
+                  <input
+                    className={style.input}
+                    type="text"
+                    name="piso"
+                    value={formData.piso}
+                    onChange={handleChange}
+                    placeholder="Ej: 1"
+                  />
+                </label>
+              </div>
+              <div className={style.part1}>
+                <label>
+                  Depto
+                  <input
+                    className={style.input}
+                    type="text"
+                    name="depto"
+                    value={formData.depto}
+                    onChange={handleChange}
+                    placeholder='Ej: "A"'
+                  />
+                </label>
+              </div>
+            </>
+          )}
           <div className={style.part1}>
             <label>
               Numero Celular

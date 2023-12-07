@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Head from "../../components/Head/Head";
-import LogoutButton from "../../components/Auth0/LogoutButton"; // Assuming you have a component named LogoutButton
 import { useAuth0 } from "@auth0/auth0-react";
 import UbiForm from "../../components/UbiForm/UbiForm";
 import CardSquare from "../../components/CardSquare/CardSquare";
@@ -8,7 +7,7 @@ import Filters from '../../components/Filters/Filters'
 import pizza from "../../assets/pizza.jpg";
 import style from "./Account.module.css";
 
-const Account = ({ setAuth, userData }) => {
+const Account = ({ setAuth, userData, setUserData }) => {
   const { user, logout } = useAuth0(); // Fix here: destructure 'logout' correctly
   const [showModal, setShowModal] = useState(false);
 
@@ -22,6 +21,13 @@ const Account = ({ setAuth, userData }) => {
     logout({ logoutParams: { returnTo: window.location.origin } });
   };
 
+  const handleAddressAdded = (newAddress) => {
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      direccion: { direccion: newAddress },
+    }));
+    setShowModal(false);
+  };
   return (
     <>
       <Filters/>
@@ -37,10 +43,10 @@ const Account = ({ setAuth, userData }) => {
             <h2>{userData && userData.username}</h2>
             <p>{userData && userData.email}</p>
             <p>
-              {userData.direccion && userData.direccion.direccion.trim() !== ""
-                ? userData.direccion.direccion
-                : "Sin dirección"}
-            </p>
+            {userData && userData.direccion && userData.direccion.direccion.trim() !== ""
+              ? userData.direccion.direccion
+              : "Sin dirección"}
+          </p>
             <p>
               {userData && userData.averageRating !== 0
                 ? userData.averageRating
@@ -82,7 +88,7 @@ const Account = ({ setAuth, userData }) => {
           />
         </div>
 
-        {showModal && (
+          {showModal && (
           <div className={style.modal}>
             <div className={style.modalContent}>
               <button
@@ -91,7 +97,7 @@ const Account = ({ setAuth, userData }) => {
               >
                 X
               </button>
-              <UbiForm userData={userData} />
+              <UbiForm userData={userData} onAddressAdded={handleAddressAdded} />
             </div>
           </div>
         )}

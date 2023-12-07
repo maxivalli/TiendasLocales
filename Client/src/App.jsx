@@ -72,10 +72,20 @@ function App() {
             await localStorage.setItem("token", response.data.token);
             setAuth(true, response.data.usuario);
 
-            Swal.fire({
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 1000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+    
+            Toast.fire({
               icon: "success",
-              title: `Bienvenido devuelta ${userByGoogle.username}`,
-              text: "¡Te has logueado exitosamente!",
+              title: "Login exitoso",
             });
           } else {
             console.log("Hubo un error al crear el usuario.");
@@ -130,6 +140,7 @@ function App() {
                   direccion: userDataResponse.data.direccion,
                   rol: userDataResponse.data.rol,
                   averageRating: userDataResponse.data.averageRating,
+                  tiendas: userDataResponse.data.tiendas
                 });
                 dispatch(saveUserData({
                   email: userDataResponse.data.email,
@@ -138,7 +149,8 @@ function App() {
                   image: userDataResponse.data.image,
                   direccion: userDataResponse.data.direccion,
                   rol: userDataResponse.data.rol,
-                  averageRating: userDataResponse.data.averageRating
+                  averageRating: userDataResponse.data.averageRating,
+                  tiendas: userDataResponse.data.tiendas
                   }))
                 console.log("A", userData)
               })
@@ -184,7 +196,7 @@ function App() {
               )
             ) : isAuthenticatedAuth0 ? (
               user ? (
-                <Home userData={user.name} setAuth={setAuth} />
+                <Home userData={userData} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -220,7 +232,7 @@ function App() {
               )
             ) : isAuthenticatedAuth0 ? (
               user ? (
-                <Home userData={user.name} setAuth={setAuth} />
+                <Home userData={userData} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -245,7 +257,7 @@ function App() {
               )
             ) : isAuthenticatedAuth0 ? (
               user ? (
-                <Favorites userData={user.name} setAuth={setAuth} />
+                <Favorites userData={userData} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -295,7 +307,7 @@ function App() {
               )
             ) : isAuthenticatedAuth0 ? (
               user ? (
-                <Messages userData={user.name} setAuth={setAuth} />
+                <Messages userData={userData} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -310,7 +322,7 @@ function App() {
         />
         <Route path="/account" element={isAuthenticated ? (
               userData ? (
-                <Account userData={userData} setAuth={setAuth} />
+                <Account userData={userData} setUserData={setUserData} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -320,7 +332,7 @@ function App() {
               )
             ) : isAuthenticatedAuth0 ? (
               user ? (
-                <Account userData={user.name} setAuth={setAuth} />
+                <Account userData={userData} setUserData={setUserData} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -345,7 +357,7 @@ function App() {
               )
             ) : isAuthenticatedAuth0 ? (
               user ? (
-                <More userData={user.name} setAuth={setAuth} />
+                <More userData={userData} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -360,7 +372,7 @@ function App() {
         />
         <Route path="/createstore" element={isAuthenticated ? (
               userData ? (
-                <CreateStore userData={userData} setAuth={setAuth} />
+                <CreateStore userData={userData} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -370,7 +382,7 @@ function App() {
               )
             ) : isAuthenticatedAuth0 ? (
               user ? (
-                <CreateStore userData={user.name} setAuth={setAuth} />
+                <CreateStore userData={userData} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -420,7 +432,7 @@ function App() {
               )
             ) : isAuthenticatedAuth0 ? (
               user ? (
-                <Store userData={user.name} setAuth={setAuth} />
+                <Store userData={userData} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -445,7 +457,7 @@ function App() {
               )
             ) : isAuthenticatedAuth0 ? (
               user ? (
-                <Queries userData={user.name} setAuth={setAuth} />
+                <Queries userData={userData} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -470,7 +482,7 @@ function App() {
               )
             ) : isAuthenticatedAuth0 ? (
               user ? (
-                <Faq userData={user.name} setAuth={setAuth} />
+                <Faq userData={userData} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
