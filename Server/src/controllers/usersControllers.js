@@ -100,6 +100,7 @@ exports.createUser = async (user) => {
             username: user.username,
             secret: token,
             email: user.email,
+            first_name: user.username
           };
           
           const config = {
@@ -134,6 +135,7 @@ exports.createUser = async (user) => {
             username: user.username,
             secret: token,
             email: user.email,
+            first_name: user.username
           };
           
           const config = {
@@ -166,6 +168,7 @@ exports.createUser = async (user) => {
           username: user.username,
           secret: token,
           email: user.email,
+          first_name: user.username
         };
         
         const config = {
@@ -199,6 +202,7 @@ exports.createUser = async (user) => {
           username: user.username,
           secret: token,
           email: user.email,
+          first_name: user.username
         };
         
         const config = {
