@@ -22,7 +22,7 @@ const Store = () => {
 
           <div className={style.info}>
             <h2>Pizza Land</h2>
-            <p>Av. Libertador</p>
+            <p>Av. Libertador 1234</p>
             <p>11:00 a 23:00</p>
             <p>Comidas</p>
           </div>
