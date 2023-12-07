@@ -6,14 +6,12 @@ import "./Messages.css";
 
 const Messages = () => {
 
-<<<<<<< HEAD
-  console.log(PrettyChatWindow)
-=======
   const userData = useSelector((state) => state.userData)
->>>>>>> d54120fdbedcf242dde3092beb026f58b3a8aa12
 
   const [showModal, setShowModal] = useState(false);
   const [chatClass, setChatClass] = useState("chat");
+
+  console.log("token", userData)
 
   const toggleModal = () => {
     setShowModal((prevState) => !prevState);
@@ -47,8 +45,7 @@ const Messages = () => {
           username= {userData.username}
           secret= {userData.token}
           height="calc(100vh - 60px)"
-
-        />
+          />
       </div>
     </>
   );
