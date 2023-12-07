@@ -72,10 +72,20 @@ function App() {
             await localStorage.setItem("token", response.data.token);
             setAuth(true, response.data.usuario);
 
-            Swal.fire({
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 1000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+    
+            Toast.fire({
               icon: "success",
-              title: `Bienvenido devuelta ${userByGoogle.username}`,
-              text: "¡Te has logueado exitosamente!",
+              title: "Login exitoso",
             });
           } else {
             console.log("Hubo un error al crear el usuario.");

@@ -7,7 +7,7 @@ const MyStore = ({userData}) => {
 
   // conseguir todos los datos pertinentes de cada tienda, en userData esta la propiedad tiendas donde tengo el id de cada tienda para buscar la info.
   return (
-    <h1>Mis tiendas</h1>
+    <h1>ACA SOLO SE MUESTRA LA TIENDA DEL USUARIO. SOLO UNA PUEDE TENER</h1>
   //   <Link to={`detail/${id}`}>
   //   <div className={style.card}>
   //     {
