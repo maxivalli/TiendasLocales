@@ -98,7 +98,7 @@ exports.createUser = async (user) => {
           await transporter.sendMail(registerMail(user))
           const data = {
             username: user.username,
-            secret: token,
+            secret: user.email,
             email: user.email,
             first_name: user.username
           };
@@ -133,7 +133,7 @@ exports.createUser = async (user) => {
           await transporter.sendMail(registerMail(user))
           const data = {
             username: user.username,
-            secret: token,
+            secret: user.email,
             email: user.email,
             first_name: user.username
           };
@@ -166,7 +166,7 @@ exports.createUser = async (user) => {
         await transporter.sendMail(registerMail(user))
         const data = {
           username: user.username,
-          secret: token,
+          secret: user.email,
           email: user.email,
           first_name: user.username
         };
@@ -200,7 +200,7 @@ exports.createUser = async (user) => {
         await transporter.sendMail(registerMail(user))
         const data = {
           username: user.username,
-          secret: token,
+          secret: user.email,
           email: user.email,
           first_name: user.username
         };
