@@ -6,6 +6,8 @@ import "./Messages.css";
 
 const Messages = () => {
 
+  console.log(PrettyChatWindow)
+
   const [showModal, setShowModal] = useState(false);
   const [chatClass, setChatClass] = useState("chat");
 
