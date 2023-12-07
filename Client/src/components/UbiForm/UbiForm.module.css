@@ -1,7 +1,7 @@
 .container {
   display: grid;
   width: 340px;
-  height: 500px;
+  height: auto;
   justify-content: center;
   justify-self: center;
   text-align: left;
@@ -60,6 +60,12 @@
   padding-left: 10px;
   box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.2);
   outline: none;
+}
+
+.inputCheck {
+  justify-self: left;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .button {

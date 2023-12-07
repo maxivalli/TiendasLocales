@@ -1,9 +1,13 @@
-
+.viewStore {
+  display: grid;
+  position: absolute;
+  left: 0;
+}
 
 .store {
   display: grid;
-  grid-template-columns: 150px 6fr 1fr;
-  width: 80vw;
+  grid-template-columns: 200px 6fr 1fr;
+  width: 100vw;
   height: 200px;
   justify-self: center;
   margin-top: 60px;
@@ -75,9 +79,9 @@
 .store2 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  justify-self: center;
   gap: 20px;
   margin-bottom: 50px;
+  justify-self: center;
 }
 
 .info2 button {
@@ -101,10 +105,6 @@
 }
 
 @media (max-width: 768px) {
-
-  .viewStore {
-    display: grid;
-  }
 
   .store {
     width: 100vw;
@@ -140,5 +140,6 @@
   .store2 {
     grid-template-columns: 1fr;
     margin-bottom: 100px;
+    justify-self: center;
   }
 }

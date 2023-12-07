@@ -47,21 +47,6 @@ function isValidImageUrl(url) {
   return urlPattern.test(url);
 }
 
-export function validateProvince(province) {
-  if (!province || province === "Elige una provincia") {
-    return "Seleccione una provincia";
-  }
-  return null; // Si no hay errores de validación
-}
-
-// Función de validación para el campo de localidad
-export function validateLocalidad(locality) {
-  if (!locality || locality === "Elige una localidad") {
-    return "Seleccione una localidad";
-  }
-  return null; // Si no hay errores de validación
-}
-
 export const validatePasswordRepeat = (passwordRepeat, password) => {
 if (passwordRepeat === '') {
   return "Debes completar el campo";
