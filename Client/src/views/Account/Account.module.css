@@ -237,7 +237,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -40%);
   justify-self: center;
   background-color: rgb(210, 210, 210);
   border-radius: 10px;
