@@ -150,6 +150,7 @@ function App() {
                   direccion: userDataResponse.data.direccion,
                   rol: userDataResponse.data.rol,
                   averageRating: userDataResponse.data.averageRating,
+                  token: token
                   tiendas: userDataResponse.data.tiendas
                   }))
                 console.log("A", userData)

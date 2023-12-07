@@ -6,7 +6,11 @@ import "./Messages.css";
 
 const Messages = () => {
 
+<<<<<<< HEAD
   console.log(PrettyChatWindow)
+=======
+  const userData = useSelector((state) => state.userData)
+>>>>>>> d54120fdbedcf242dde3092beb026f58b3a8aa12
 
   const [showModal, setShowModal] = useState(false);
   const [chatClass, setChatClass] = useState("chat");
@@ -34,17 +38,16 @@ const Messages = () => {
     
   }, []);
   
-  const userDataState = useSelector((state) => state.userData)
-  console.log(userDataState)
   return (
     <>
       <div className={chatClass}>
       <button onClick={toggleModal} className="toggle">{buttonLabel}</button>
         <PrettyChatWindow
           projectId="1fb49778-0ca9-4761-a91b-512f3a51ee7f"
-          username="maxivalli"
-          secret="Maxi1368"
+          username= {userData.username}
+          secret= {userData.token}
           height="calc(100vh - 60px)"
+
         />
       </div>
     </>
