@@ -3,6 +3,7 @@ import axios from "axios";
 import {motion} from 'framer-motion';
 import style from "./ubiForm.module.css";
 import Swal from "sweetalert2";
+import { validateAddressForm } from './validations'
 
 const UbiForm = ({userData, onAddressAdded }) => {
 
@@ -15,6 +16,15 @@ const UbiForm = ({userData, onAddressAdded }) => {
         piso: "",
         depto: "",
       });
+      const [errors, setErrors] = useState({
+        calle: "",
+        numero: "",
+        piso: "",
+        depto: "",
+        celular: "",
+      });
+    
+
 
       const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -24,10 +34,22 @@ const UbiForm = ({userData, onAddressAdded }) => {
         } else {
           setFormData({ ...formData, [name]: value });
         }
+        const newErrors = validateAddressForm({ ...formData, [name]: value });
+        setErrors({ ...errors, [name]: newErrors[name] || "" });
       };
+
+      
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
+
+        const formErrors = validateAddressForm(formData);
+
+    if (Object.values(formErrors).some((error) => error)) {
+      setErrors(formErrors);
+      return;
+    }
+
         let ubicationData = {
           direccion: `${formData.calle} ${formData.numero}`,
             celular: formData.celular,
@@ -63,6 +85,7 @@ const UbiForm = ({userData, onAddressAdded }) => {
         <h3>Tú dirección para envíos</h3>
         <form className={style.create}>
           <div className={style.part1}>
+
             <label>
               Calle
               <input
@@ -73,8 +96,11 @@ const UbiForm = ({userData, onAddressAdded }) => {
                 onChange={handleChange}
                 placeholder='Ej: Necochea'
               />
+                            {errors.calle && <span className={style.error}>{errors.calle}</span>}
+
             </label>
           </div>
+
           <div className={style.part1}>
             <label>
               Numero de Casa
@@ -86,8 +112,11 @@ const UbiForm = ({userData, onAddressAdded }) => {
                 onChange={handleChange}
                 placeholder='Ej: 1900'
               />
+                                          {errors.numero && <span className={style.error}>{errors.numero}</span>}
+
             </label>
           </div>
+
           <div className={style.part1}>
             <label>
               Piso/Depto
@@ -100,6 +129,7 @@ const UbiForm = ({userData, onAddressAdded }) => {
               />
             </label>
           </div>
+
           {formData.pisoDeptoChecked && (
             <>
               <div className={style.part1}>
@@ -113,8 +143,11 @@ const UbiForm = ({userData, onAddressAdded }) => {
                     onChange={handleChange}
                     placeholder="Ej: 1"
                   />
+                                              {errors.piso && <span className={style.error}>{errors.piso}</span>}
+
                 </label>
               </div>
+
               <div className={style.part1}>
                 <label>
                   Depto
@@ -126,10 +159,13 @@ const UbiForm = ({userData, onAddressAdded }) => {
                     onChange={handleChange}
                     placeholder='Ej: "A"'
                   />
+                                              {errors.depto && <span className={style.error}>{errors.depto}</span>}
+
                 </label>
               </div>
             </>
           )}
+
           <div className={style.part1}>
             <label>
               Numero Celular
@@ -141,8 +177,11 @@ const UbiForm = ({userData, onAddressAdded }) => {
                 onChange={handleChange}
                 placeholder='Ej: 3408 12345'
               />
+                                          {errors.celular && <span className={style.error}>{errors.celular}</span>}
+
             </label>
           </div>
+
           <div className={style.part1}>
             <label>
             Indicaciones Extra
@@ -156,7 +195,9 @@ const UbiForm = ({userData, onAddressAdded }) => {
               />
             </label>
           </div>
+
         </form>
+
         <button type='submit' onClick={handleSubmit} className={style.button}>
           Enviar
         </button>
