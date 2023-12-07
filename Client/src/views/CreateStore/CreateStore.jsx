@@ -4,55 +4,136 @@ import axios from "axios";
 import {motion} from 'framer-motion';
 import style from "./CreateStore.module.css";
 import Swal from "sweetalert2";
-import { useSelector } from 'react-redux';
+import { uploadFile } from '../../components/Firebase/config';
 
 const CreateStore = ({userData}) => {
     const navigate = useNavigate()
+    const [showFacebookInput, setShowFacebookInput] = useState(false);
+    const [showInstagramInput, setShowInstagramInput] = useState(false);
+    const [showWhatsappInput, setShowWhatsappInput] = useState(false);
+    const [imageError, setImageError] = useState(null);
+    const [imageFile, setImageFile] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState("");
 
+    const categories = [
+      "🧁 Alimentos",
+      "⚱️ Antiguedades",
+      "🎨 Arte y artesanías",
+      "⚽️ Articulos deportivos",
+      "📺 Audio y video",
+      "📷 Cámaras y accesorios",
+      "📱 Celulares",
+      "💻 Computadoras",
+      "🔌Electrodomésticos",
+      "🛠️ Herramientas",
+      "🎸 Instrumentos musicales",
+      "💍 Joyas y relojes",
+      "🪑 Muebles y hogar",
+      "🚗 Rodados con motor",
+      "🚲 Rodados sin motor",
+      "👕 Ropa e indumentaria",
+      "🛒 Varios",
+      "🎮 Videojuegos",
+    ];
+    const handleCheckboxChange = (socialMedia) => {
+      switch (socialMedia) {
+        case 'facebook':
+          setShowFacebookInput(!showFacebookInput);
+          break;
+        case 'instagram':
+          setShowInstagramInput(!showInstagramInput);
+          break;
+        case 'whatsapp':
+          setShowWhatsappInput(!showWhatsappInput);
+          break;
+        default:
+          break;
+      }
+    };
     const [formData, setFormData] = useState({
         nombre: "",
         image: "",
+        imageFile: null,
         calle: "",
-        numeracion: "",
+        numero: "",
+        pisoDeptoChecked: false,
         piso: "",
         depto: "",
         indicaciones: "",
         categoria: "",
         horarios: "",
-        celular: "",
+        dias: "",
         facebook: "",
         instagram: "",
         whatsapp: ""
       });
-
+      useEffect(()=>{
+        formData.categoria = selectedCategory
+      },[selectedCategory])
       const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        const { name, value, type, checked } = e.target;
+    
+        if (type === 'checkbox') {
+          setFormData({ ...formData, [name]: checked });
+        } else {
+          setFormData({ ...formData, [name]: value });
+        }
+      };
+
+    const handleFile = async (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const imageUrl = await uploadFile(file)
+        setFormData({
+          ...formData,
+          image: imageUrl,
+        });
+        setImageFile(imageUrl); 
+        setImageError(null)
+      }
+    };
+    const handleImageClear = () => {
+      setFormData({
+        ...formData,
+        image: '',
+      });
+      setImageFile(null);
     };
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
-        console.log("MIAU", formData)
-        // let storeData = {
-        //     direccion: `${formData.calle} ${formData.numero}`,
-        //     celular: formData.celular,
-        //     indicaciones: formData.indicaciones,
-        //     id: userData.id
-        // }
 
-        // try {
-        //     const response = await axios.post("/tiendas/createStore", storeData);
-        //     if (response) {
-        //       navigate("/mystore")
-        //         Swal.fire({
-        //             icon: "success",
-        //             title: `Direccion agregada!`,
-        //             text: "¡Ya puedes realizar tus pedidos con envio!",
-        //           });
-        //     }
-        // } catch (error) {
-        //     console.error(error)
-        // }
+        let storeData = {
+            nombre: formData.nombre,
+            direccion: `${formData.calle} ${formData.numero}`,
+            indicaciones: formData.indicaciones,
+            image: imageFile,
+            categoria: formData.categoria,
+            horarios: formData.horarios,
+            userId: userData.id,
+            facebook: formData.facebook,
+            instagram: formData.instagram,
+            whatsapp: formData.whatsapp,
+            email: userData.email,
+            dias: formData.dias
+        }
+        if (formData.pisoDeptoChecked) {
+          storeData.piso = formData.piso;
+          storeData.depto = formData.depto;
+        }
+
+        try {
+            const response = await axios.post("/tiendas/createStore", storeData);
+            if (response) {
+                Swal.fire({
+                    icon: "success",
+                    title: `Tienda en Processo de Aprobacion!`,
+                    text: "Debes esperar a que sea aprobada tu tienda, nosotros te diremos por mail!",
+                  });
+            }
+        } catch (error) {
+            console.error(error)
+        }
     } 
   return (
     <>
@@ -62,6 +143,19 @@ const CreateStore = ({userData}) => {
 
         <h3>Tú dirección para envíos</h3>
         <form className={style.create}>
+        <div className={style.part1}>
+            <label>
+              Nombre de la tienda
+              <input
+                className={style.input}
+                type='text'
+                name='nombre'
+                value={formData.nombre}
+                onChange={handleChange}
+                placeholder='Ej: Ferreteria Manolo'
+              />
+            </label>
+          </div>
           <div className={style.part1}>
             <label>
               Calle
@@ -90,17 +184,46 @@ const CreateStore = ({userData}) => {
           </div>
           <div className={style.part1}>
             <label>
-              Numero Celular
+              Piso/Depto
               <input
-                className={style.input}
-                type='text'
-                name='celular'
-                value={formData.celular}
+                className={style.inputCheck}
+                type="checkbox"
+                name="pisoDeptoChecked"
+                checked={formData.pisoDeptoChecked}
                 onChange={handleChange}
-                placeholder='Ej: 3408 12345'
               />
             </label>
           </div>
+          {formData.pisoDeptoChecked && (
+            <>
+              <div className={style.part1}>
+                <label>
+                  Piso
+                  <input
+                    className={style.input}
+                    type="text"
+                    name="piso"
+                    value={formData.piso}
+                    onChange={handleChange}
+                    placeholder="Ej: 1"
+                  />
+                </label>
+              </div>
+              <div className={style.part1}>
+                <label>
+                  Depto
+                  <input
+                    className={style.input}
+                    type="text"
+                    name="depto"
+                    value={formData.depto}
+                    onChange={handleChange}
+                    placeholder='Ej: "A"'
+                  />
+                </label>
+              </div>
+            </>
+          )}
           <div className={style.part1}>
             <label>
             Indicaciones Extra
@@ -114,6 +237,135 @@ const CreateStore = ({userData}) => {
               />
             </label>
           </div>
+
+          <select
+              name='categoria'
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              <option value='Elige una categoría'>Categoría</option>
+              {categories.map((categoria, index) => (
+                <option key={index} value={categoria}>
+                  {categoria}
+                </option>
+              ))}
+            </select>
+          <div className={style.part1}>
+            <label>
+              Horarios (formato: número - número)
+              <input
+                className={style.input}
+                type="text"
+                name="horarios"
+                value={formData.horarios}
+                onChange={handleChange}
+                placeholder="Ej: 9 - 5"
+              />
+            </label>
+          </div>
+          <div className={style.part1}>
+            <label>
+              Dias (formato: dia - dia)
+              <input
+                className={style.input}
+                type="text"
+                name="dias"
+                value={formData.dias}
+                onChange={handleChange}
+                placeholder="Ej: lunes - viernes"
+              />
+            </label>
+          </div>
+          <div className={style.checkboxContainer}>
+        <label>
+          Facebook
+          <input
+            type="checkbox"
+            checked={showFacebookInput}
+            onChange={() => handleCheckboxChange('facebook')}
+          />
+        </label>
+        {showFacebookInput && (
+          <div className={style.socialMediaInput}>
+            <label>
+              Facebook URL
+              <input
+                type="text"
+                name="facebook"
+                value={formData.facebook}
+                onChange={handleChange}
+                placeholder="Ej: https://www.facebook.com/tu_pagina"
+              />
+            </label>
+          </div>
+        )}
+      </div>
+
+      <div className={style.checkboxContainer}>
+        <label>
+          Instagram
+          <input
+            type="checkbox"
+            checked={showInstagramInput}
+            onChange={() => handleCheckboxChange('instagram')}
+          />
+        </label>
+        {showInstagramInput && (
+          <div className={style.socialMediaInput}>
+            <label>
+              Instagram URL
+              <input
+                type="text"
+                name="instagram"
+                value={formData.instagram}
+                onChange={handleChange}
+                placeholder="Ej: https://www.instagram.com/tu_cuenta"
+              />
+            </label>
+          </div>
+        )}
+      </div>
+
+      <div className={style.checkboxContainer}>
+        <label>
+          WhatsApp Del Negocio
+          <input
+            type="checkbox"
+            checked={showWhatsappInput}
+            onChange={() => handleCheckboxChange('whatsapp')}
+          />
+        </label>
+        {showWhatsappInput && (
+          <div className={style.socialMediaInput}>
+            <label>
+              WhatsApp URL
+              <input
+                type="text"
+                name="whatsapp"
+                value={formData.whatsapp}
+                onChange={handleChange}
+                placeholder="Ej: https://wa.me/1234567890"
+              />
+            </label>
+          </div>
+        )}
+      </div>
+          <div className={style.fileInput}>
+          <input
+            type="file"
+            accept="image/*"
+            name="image"
+            onChange={handleFile}
+          />
+          {formData.image && (
+            <div className={style.imagePreview}>
+              <img src={formData.image} alt="Preview" className={style.imgUser}/>
+              <button onClick={handleImageClear}>✖️</button>
+            </div>
+          )}
+          {/* {errors.image && <span className={style.error}>{errors.image}</span>} */}
+          {imageError && <div className={style.error}>{imageError}</div>}
+        </div>
         </form>
         <button type='submit' onClick={handleSubmit} className={style.button}>
           Enviar

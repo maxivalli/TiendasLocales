@@ -90,7 +90,6 @@ exports.createUser = async (user) => {
             username: user.username,
             email: user.email,
             image: user.image,
-            ubication: user.ubication,
             rol: "admin",
             origin: "google"
           });
@@ -101,6 +100,7 @@ exports.createUser = async (user) => {
             username: user.username,
             secret: token,
             email: user.email,
+            first_name: user.username
           };
           
           const config = {
@@ -127,7 +127,6 @@ exports.createUser = async (user) => {
             email: user.email,
             password: bcryptPassword,
             image: user.image,
-            ubication: user.ubication,
             rol: "admin"
           });
           const token = jwtGenerator(newUser.id)
@@ -136,6 +135,7 @@ exports.createUser = async (user) => {
             username: user.username,
             secret: token,
             email: user.email,
+            first_name: user.username
           };
           
           const config = {
@@ -160,7 +160,6 @@ exports.createUser = async (user) => {
           username: user.username,
           email: user.email,
           image: user.image,
-          ubication: user.ubication,
           origin: user.origin
         });
         const token = jwtGenerator(newUser.id)
@@ -169,6 +168,7 @@ exports.createUser = async (user) => {
           username: user.username,
           secret: token,
           email: user.email,
+          first_name: user.username
         };
         
         const config = {
@@ -194,7 +194,6 @@ exports.createUser = async (user) => {
           email: user.email,
           password: bcryptPassword,
           image: user.image,
-          ubication: user.ubication,
           origin: "google"
         });
         const token = jwtGenerator(newUser.id)
@@ -203,6 +202,7 @@ exports.createUser = async (user) => {
           username: user.username,
           secret: token,
           email: user.email,
+          first_name: user.username
         };
         
         const config = {
