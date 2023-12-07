@@ -1,9 +1,9 @@
 import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import style from "./Banners.module.css";
+import style from "./ProductImages.module.css";
 
-const Banners = ({ b1, b2, b3 }) => {
+const ProductImages = ({ b1, b2, b3 }) => {
   return (
     <div className={style.banners}>
       <Carousel
@@ -30,4 +30,4 @@ const Banners = ({ b1, b2, b3 }) => {
   );
 };
 
-export default Banners;
+export default ProductImages;

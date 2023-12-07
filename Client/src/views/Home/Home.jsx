@@ -6,6 +6,9 @@ import CardsStore from "../../components/CardsStore/CardsStore";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import style from "./Home.module.css";
 import Head from "../../components/Head/Head";
+import b1 from "../../assets/Banner1.jpg";
+import b2 from "../../assets/Banner2.jpg";
+import b3 from "../../assets/Banner3.jpg";
 
 const Home = ({userData}) => {
   const userDataState = useSelector((state) => state.userData)
@@ -17,7 +20,7 @@ const Home = ({userData}) => {
       <Head/>
       <div className={style.home}>
         <div>
-          <Banner />
+          <Banner b1={b1} b2={b2} b3={b3}/>
         </div>
 
         <div className={style.title}>

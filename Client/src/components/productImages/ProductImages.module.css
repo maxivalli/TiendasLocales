@@ -1,0 +1,16 @@
+.banners {
+  display: grid;
+  margin: 0;
+}
+
+.banners img {
+  width: 100vw;
+  height: 400px;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .banners img {
+    height: 200px;
+  }
+}

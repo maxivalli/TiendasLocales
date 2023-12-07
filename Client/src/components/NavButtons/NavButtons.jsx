@@ -10,12 +10,12 @@ const userData = useSelector((state) => state.userData)
   const handleChatButtonClick = async () => {
     const projectID = "1fb49778-0ca9-4761-a91b-512f3a51ee7f";
     const userName = userData.username;
-    const userSecret = userData.token;
+    const userSecret = userData.email;
 
     const apiUrl = 'https://api.chatengine.io/chats/';
 
     // Replace with the actual usernames you want to include in the chat
-    const usernames = ["Maximiliano Valli"];
+    const usernames = ["TiendasLocales"];
     const title = "Another Surprise Party!";
     const isDirectChat = true;
 

@@ -11,8 +11,6 @@ const Messages = () => {
   const [showModal, setShowModal] = useState(false);
   const [chatClass, setChatClass] = useState("chat");
 
-  console.log("token", userData)
-
   const toggleModal = () => {
     setShowModal((prevState) => !prevState);
     setChatClass(prevClass => prevClass === "chat" ? "chat2" : "chat");
@@ -45,6 +43,7 @@ const Messages = () => {
           username= {userData.username}
           secret= {userData.email}
           height="calc(100vh - 60px)"
+          offset={-3}
           />
       </div>
     </>

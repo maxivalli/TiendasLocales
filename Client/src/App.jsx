@@ -10,6 +10,7 @@ import Register from "./components/Register/Register";
 import Navbar from "./components/Navbar/Navbar";
 
 import Home from "./views/Home/Home";
+import Detail from "./views/Detail/Detail";
 import Favorites from "./views/Favorites/Favorites";
 import Messages from "./views/Messages/Messages";
 import Account from "./views/Account/Account";
@@ -233,6 +234,31 @@ function App() {
             ) : isAuthenticatedAuth0 ? (
               user ? (
                 <Home userData={userData} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : (
+              <Login setAuth={setAuth} />
+            )
+          }
+        />
+        <Route path="/detail" element={isAuthenticated ? (
+              userData ? (
+                <Detail userData={userData} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : isAuthenticatedAuth0 ? (
+              user ? (
+                <Detail userData={userData} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
