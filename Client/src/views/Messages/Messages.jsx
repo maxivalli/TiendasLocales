@@ -11,8 +11,6 @@ const Messages = () => {
   const [showModal, setShowModal] = useState(false);
   const [chatClass, setChatClass] = useState("chat");
 
-  console.log("token", userData)
-
   const toggleModal = () => {
     setShowModal((prevState) => !prevState);
     setChatClass(prevClass => prevClass === "chat" ? "chat2" : "chat");

@@ -27,7 +27,7 @@ const Detail = () => {
             <h4>$3500</h4>
           </div>
 
-          <label for="cantidad">Cantidad:</label>
+          <label>Cantidad:</label>
           <input
             type="number"
             id="cantidad"
