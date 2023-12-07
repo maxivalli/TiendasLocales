@@ -1,8 +1,9 @@
 .cardSquare {
+  position: relative;
   width: 400px;
   height: 200px;
   box-shadow: 0px 5px 10px grey;
-  box-shadow: 50px 50px 40px 10px  rgba(0, 0, 0, 0.8) inset;
+  box-shadow: 50px 50px 40px 10px rgba(0, 0, 0, 0.8) inset;
   border-radius: 10px;
 }
 
@@ -24,6 +25,9 @@
   color: white;
   font-weight: 800;
   font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cardSquare h3 {
@@ -48,9 +52,11 @@
   font-style: italic;
 }
 
-.cardSquare .ver {
-  margin-top: 20px;
-  margin-left: 270px;
+.cardSquare .comprar {
+  display: inline-block;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
   width: 90px;
   height: 40px;
   background-color: red;
@@ -63,11 +69,7 @@
 }
 
 @media (max-width: 768px) {
-    .cardSquare {
-        width: 340px;
-    }
-
-    .cardSquare .ver {
-      margin-left: 200px;
-    }
+  .cardSquare {
+    width: 340px;
+  }
 }

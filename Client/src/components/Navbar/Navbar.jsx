@@ -5,7 +5,9 @@ import style from "./Navbar.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar = ({ isAuthenticated, setAuth, userData }) => {
+
   const { user, isAuthenticated: isAuthenticatedAuth0, logout: loguotAuth0 } = useAuth0();
+  
   return (
     <>
     <div className={style.navbar}>

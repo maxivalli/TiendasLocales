@@ -43,6 +43,9 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       defaultValue: "DB"
     },
+    tiendas: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
+    }
   },
   {
     paranoid: true,

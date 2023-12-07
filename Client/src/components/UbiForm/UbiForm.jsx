@@ -1,27 +1,30 @@
-import React, {useState, useEffect} from 'react';
-import { useNavigate } from "react-router-dom";
+import React, {useState} from 'react';
 import axios from "axios";
 import {motion} from 'framer-motion';
 import style from "./ubiForm.module.css";
 import Swal from "sweetalert2";
-import { useSelector } from 'react-redux';
 
-const UbiForm = ({userData}) => {
-    const navigate = useNavigate()
+const UbiForm = ({userData, onAddressAdded }) => {
 
-    const userDataState = useSelector((state) => state.userData)
-console.log(userDataState)
     const [formData, setFormData] = useState({
         calle: "",
         numero: "",
         celular: "",
-        indicaciones: ""
+        indicaciones: "",
+        pisoDeptoChecked: false,
+        piso: "",
+        depto: "",
       });
 
       const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
+        const { name, value, type, checked } = e.target;
+    
+        if (type === 'checkbox') {
+          setFormData({ ...formData, [name]: checked });
+        } else {
+          setFormData({ ...formData, [name]: value });
+        }
+      };
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
@@ -31,11 +34,16 @@ console.log(userDataState)
             indicaciones: formData.indicaciones,
             id: userData.id
         }
-        console.log(ubicationData)
+
+        if (formData.pisoDeptoChecked) {
+          ubicationData.piso = formData.piso;
+          ubicationData.depto = formData.depto;
+        }
+
         try {
             const response = await axios.post("/envios/ubiForm", ubicationData);
             if (response) {
-                navigate("/account")
+              onAddressAdded(ubicationData.direccion);
                 Swal.fire({
                     icon: "success",
                     title: `Direccion agregada!`,
@@ -52,7 +60,7 @@ console.log(userDataState)
       initial={{opacity: 0,scale: 0.8,}} animate={{opacity: 1, scale: 1,}}
       className={style.container}>
 
-        <h3>Tu direccion para envios</h3>
+        <h3>Tú dirección para envíos</h3>
         <form className={style.create}>
           <div className={style.part1}>
             <label>
@@ -63,7 +71,7 @@ console.log(userDataState)
                 name='calle'
                 value={formData.calle}
                 onChange={handleChange}
-                placeholder='Ej necochea'
+                placeholder='Ej: Necochea'
               />
             </label>
           </div>
@@ -76,10 +84,52 @@ console.log(userDataState)
                 name='numero'
                 value={formData.numero}
                 onChange={handleChange}
-                placeholder='Ej 2261'
+                placeholder='Ej: 1900'
               />
             </label>
           </div>
+          <div className={style.part1}>
+            <label>
+              Piso/Depto
+              <input
+                className={style.input}
+                type="checkbox"
+                name="pisoDeptoChecked"
+                checked={formData.pisoDeptoChecked}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          {formData.pisoDeptoChecked && (
+            <>
+              <div className={style.part1}>
+                <label>
+                  Piso
+                  <input
+                    className={style.input}
+                    type="text"
+                    name="piso"
+                    value={formData.piso}
+                    onChange={handleChange}
+                    placeholder="Ej: 1"
+                  />
+                </label>
+              </div>
+              <div className={style.part1}>
+                <label>
+                  Depto
+                  <input
+                    className={style.input}
+                    type="text"
+                    name="depto"
+                    value={formData.depto}
+                    onChange={handleChange}
+                    placeholder='Ej: "A"'
+                  />
+                </label>
+              </div>
+            </>
+          )}
           <div className={style.part1}>
             <label>
               Numero Celular
@@ -89,7 +139,7 @@ console.log(userDataState)
                 name='celular'
                 value={formData.celular}
                 onChange={handleChange}
-                placeholder='Ej 261 205 3984'
+                placeholder='Ej: 3408 12345'
               />
             </label>
           </div>
@@ -98,18 +148,17 @@ console.log(userDataState)
             Indicaciones Extra
               <input
                 className={style.input}
-                type='text'
+                type='textarea'
                 name='indicaciones'
                 value={formData.indicaciones}
                 onChange={handleChange}
-                placeholder='Ej casa roja con porton negro'
+                placeholder='Ej: Piso 1, Dto. "A"'
               />
             </label>
           </div>
         </form>
-        <button onClick={()=>{navigate("/account")}}>Volver</button>
         <button type='submit' onClick={handleSubmit} className={style.button}>
-          Crear
+          Enviar
         </button>
       </motion.div>
     </>

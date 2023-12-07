@@ -9,7 +9,7 @@ const CardSquare = ({image, title, price, store}) => {
         <h2>{title}</h2>
         <h3>{price}</h3>
         <h4>{store}</h4>
-        <button className={style.ver}>Ver</button>
+        <button className={style.comprar}>Ver</button>
       </div>
     </>
   );
