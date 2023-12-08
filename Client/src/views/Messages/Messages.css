@@ -14,6 +14,10 @@
   display: none;
 }
 
+.chat .icon {
+  display: none;
+}
+
 body .chat input::placeholder {
   color: transparent !important;
 }
