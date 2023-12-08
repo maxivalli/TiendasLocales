@@ -15,8 +15,8 @@ const userData = useSelector((state) => state.userData)
     const apiUrl = 'https://api.chatengine.io/chats/';
 
     // Replace with the actual usernames you want to include in the chat
-    const usernames = ["Ejemplo"];
-    const title = "Another Surprise Party!";
+    const usernames = ["test"];
+    const title = "Nuevo chat";
     const isDirectChat = true;
 
     try {

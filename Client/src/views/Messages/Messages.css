@@ -124,12 +124,17 @@ div.ce-custom-header-icon-wrapper {
     bottom: 0;
   }
 
+  body .chat2 .ce-chat-feed {
+    display: none !important;
+    background-color: rgba(128, 128, 128, 0.2) !important;
+  }
+
   body .chat2 .ce-chat-list {
     position: fixed;
     top: 0;
     left: 0;
     z-index: 99;
-    height: 91vh !important;
+    height: 85vh !important;
     width: 100vw !important;
     background-color: rgb(45, 45, 45) !important;
     border-radius: 0px 0px 10px 10px;
