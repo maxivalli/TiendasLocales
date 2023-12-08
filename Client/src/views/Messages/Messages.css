@@ -6,8 +6,86 @@
   width: 100vw;
 }
 
-.chat .ce-chat-engine div {
-  color: rgb(45, 45, 45) !important;
+.ce-chat-engine {
+  background-color: transparent !important;
+}
+
+div .ce-chat-list {
+  background-color: transparent !important;
+}
+
+div.ce-chats-container {
+  background-color: transparent !important;
+}
+
+div.ce-chat-form-container {
+  background-color: transparent !important;
+  color: initial !important;
+}
+
+div.ce-active-chat-card {
+  background-color: red !important;
+  margin: 5px !important;
+}
+
+div#ce-chat-card-title-test {
+  color: initial !important;
+}
+
+div.ce-chat-feed {
+  background-color: transparent !important;
+}
+
+div.ce-chat-title {
+  background-color: gray !important;
+}
+
+div#ce-feed-container {
+  background-color: transparent !important;
+}
+
+div#msg-form-container {
+  background-color: gray !important;
+}
+
+div.ce-settings {
+  background-color: transparent !important;
+}
+
+div.ce-section-title-container {
+  background-color: transparent !important;
+}
+
+div#ce-options-drop-down {
+  background-color: transparent !important;
+}
+
+div.ce-message-bubble.false {
+  background-color: red !important;
+}
+
+div#ce-send-message-button {
+  background-color: red !important;
+}
+
+div#toolbar {
+  border: none;
+}
+
+div.ql-container {
+  border: none !important;
+}
+
+div#ce-chat-feed-title-test {
+  color: black !important;
+}
+
+div.ce-chat-subtitle-text {
+  color: black !important;
+}
+
+button#new-chat-plus-button {
+  background-color: red !important;
 }
 
 .chat #ce-ice-breaker-text {
@@ -24,7 +102,7 @@
 
 @media (max-width: 900px) {
   .chat {
-    top: 0;
+    top: 1px;
   }
 }
 
