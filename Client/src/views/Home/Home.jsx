@@ -15,12 +15,9 @@ const Home = () => {
   const userDataState = useSelector((state) => state.userData);
   const stores = useSelector((state) => state.allStores);
 
-<<<<<<< HEAD
   useEffect(() => {
     dispatch(getAllStores());
   }, [dispatch]);
-=======
->>>>>>> 3ffe661b002918864efc7795c94964b09b57486c
 
   return (
     <>
