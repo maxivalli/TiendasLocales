@@ -1,6 +1,6 @@
 const { Tienda } = require("../DB_config");
 
-const createStore = async (storeData) => {
+exports.createStore = async (storeData) => {
   try {
     console.log(storeData);
 
@@ -50,4 +50,13 @@ const createStore = async (storeData) => {
   }
 };
 
-module.exports = { createStore };
+exports.getAllStores = async () => {
+  try {
+    const stores = await Tienda.findAll();
+    return stores;
+  } catch (error) {
+    throw error;
+  }
+};
+
+

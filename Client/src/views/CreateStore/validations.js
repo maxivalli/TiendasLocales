@@ -93,7 +93,7 @@ export const validateStoreForm = (formData) => {
   if (!formData.dias.trim()) {
     errors.dias = 'Los días abiertos son requeridos';
   } else {
-    const validDiasRegex = /^(Lunes|Martes|Miércoles|Jueves|Viernes|Sábado|Domingo)( ?- ?(Lunes|Martes|Miércoles|Jueves|Viernes|Sábado|Domingo))*$/i;
+    const validDiasRegex = /^(Lunes|Martes|Miércoles|Jueves|Viernes|Sabado|Domingo)( ?- ?(Lunes|Martes|Miércoles|Jueves|Viernes|Sabado|Domingo))*$/i;
     if (!validDiasRegex.test(formData.dias)) {
       errors.dias = 'Ingrese días válidos separados por espacios o guiones. Ej: Lunes - Viernes';
     }

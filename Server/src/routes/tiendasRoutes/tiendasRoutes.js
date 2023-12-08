@@ -14,6 +14,15 @@ router.post('/createStore', async (req, res) => {
     }
   });
 
+router.get('/getAllStores', async (req,res) => {
+  try{
+    const response = await tiendasController.getAllStores();
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json(error.message)
+  }
+})
+
 module.exports = router;
 
 
