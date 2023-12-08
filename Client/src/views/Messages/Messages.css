@@ -6,19 +6,29 @@
   width: 100vw;
 }
 
-.chat .toggle {
-  display: none;
+.chat .ce-chat-engine div {
+  color: rgb(45, 45, 45) !important;
 }
 
-.chat .text {
-  display: none;
+.chat #ce-ice-breaker-text {
+  display: none !important;
 }
 
-.chat .icon {
-  display: none;
+.chat #ce-ice-breaker-gif {
+  display: none !important;
 }
 
-body .chat input::placeholder {
+.ql-editor {
+  white-space: unset !important;
+}
+
+@media (max-width: 900px) {
+  .chat {
+    top: 0;
+  }
+}
+
+/* body .chat input::placeholder {
   color: transparent !important;
 }
 
@@ -201,4 +211,4 @@ div.ce-custom-header-icon-wrapper {
     background-color: transparent !important;
     border: none;
   }
-}
+} */
