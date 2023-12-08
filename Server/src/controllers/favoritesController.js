@@ -1,41 +1,51 @@
-const { UserFavorites, User } = require("../DB_config");
+const { Favorites, User } = require("../DB_config");
 
-exports.createFavorite = async (userId, favoriteUserId) => {
+exports.createFavorite = async (userId, storeId) => {
+    console.log(userId, storeId);
     try {
-        const newFavorite = await UserFavorites.create({ userId, favoriteUserId });
-        return newFavorite
-    }catch (error){
-        throw error
+        const existingFavorite = await Favorites.findOne({
+            where: { userId, storeId }
+        });
+        if (existingFavorite) {
+            console.log('La tienda ya ha sido agregada como favorita por este usuario.');
+            return existingFavorite;
+        }
+        const newFavorite = await Favorites.create({
+            userId: userId,
+            storeId: storeId
+        });
+        return newFavorite;
+    } catch (error) {
+        console.error("Error al crear favorito:", error);
+        throw error;
     }
 }
 
-exports.removeFavorite = async (userId, favoriteUserId) => {
+exports.removeFavorite = async (userId, storeId) => {
+    console.log(userId, storeId);
     try {
-        const deletedFavorite = await UserFavorites.destroy({
-            where: { userId, favoriteUserId }
+        const deletedFavorite = await Favorites.destroy({
+            where: { userId: userId, storeId: storeId }
         });
 
-        if (deletedFavorite) {
-          
-            return true
-        }else{
-            return false
-        }
+        return deletedFavorite > 0;
     } catch (error) {
-        console.error("Error al eliminar favorito:", error)
+        console.error("Error al eliminar favorito:", error);
         throw error;
     }
 };
 
+
 exports.getFavorites = async (userId) => {
     try {
-        const favorites = await User.findByPk(userId, {
-            include: [{ model: User, as: 'favorites' }],
-        })
-        return favorites
-    }catch (error) {
-        console.error("Error al obtener favoritos:", error)
+        const userFavorites = await Favorites.findAll({
+            where: { userId: userId }
+        });
+
+        return userFavorites;
+    } catch (error) {
+        console.error("Error al obtener favoritos:", error);
         throw error;
     }
-}
+};
 

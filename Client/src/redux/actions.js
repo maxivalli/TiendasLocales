@@ -202,10 +202,10 @@ export function getAllStores() {
   }
 }
 
-export function addFavorite(userId, favoriteUserId) {
+export function addFavorite(userId, storeId) {
   return async function (dispatch) {
     try {
-      await axios.post(`/favorites/addFavorite/${userId}/${favoriteUserId}`);
+      await axios.post(`/favorites/addFavorite/${userId}/${storeId}`);
       dispatch({ type: ADD_FAVORITE });
     } catch (error) {
       throw error
@@ -213,10 +213,10 @@ export function addFavorite(userId, favoriteUserId) {
   };
 }
 
-export function removeFavorite(userId, favoriteUserId) {
+export function removeFavorite(userId, storeId) {
   return async function (dispatch) {
     try {
-      await axios.delete(`/favorites/removeFavorite/${userId}/${favoriteUserId}`);
+      await axios.delete(`/favorites/removeFavorite/${userId}/${storeId}`);
       dispatch({ type: REMOVE_FAVORITE});
     } catch (error) {
       throw error
@@ -228,7 +228,7 @@ export function getFavorites(userId) {
   return async function (dispatch) {
     try {
       const response = await axios.get(`/favorites/getFavorites/${userId}`);
-      dispatch({ type: GET_FAVORITES, payload: { favorites: response.data } });
+      dispatch({ type: GET_FAVORITES, payload: response.data });
     } catch (error) {
       throw error
     }

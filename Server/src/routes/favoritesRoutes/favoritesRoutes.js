@@ -6,27 +6,26 @@ const favoritesController = require("../../controllers/favoritesController"); //
 
 
 // Añadir a favoritos
-router.post("/addFavorite/:userId/:favoriteUserId", async (req, res) => {
-  const { userId, favoriteUserId } = req.params;
-
+router.post("/addFavorite/:userId/:storeId", async (req, res) => {
+  const { userId, storeId } = req.params;
   try {
-    await favoritesController.createFavorite({ userId, favoriteUserId });
-    res.status(200).send("Usuario agregado a favoritos correctamente");
+    await favoritesController.createFavorite( userId, storeId );
+    res.status(200).send("Tienda agregada a favoritos correctamente");
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error al agregar usuario a favoritos");
+    res.status(500).send("Error al agregar tienda a favoritos");
   }
 });
 
-router.delete("/removeFavorite/:userId/:favoriteUserId", async (req, res) => {
-    const { userId, favoriteUserId } = req.params;
+router.delete("/removeFavorite/:userId/:storeId", async (req, res) => {
+    const { userId, storeId } = req.params;
   
     try {
-      await favoritesController.removeFavorite({ userId, favoriteUserId });
-      res.status(200).send("Usuario removido de favoritos correctamente");
+      await favoritesController.removeFavorite( userId, storeId );
+      res.status(200).send("Tienda removida de favoritos correctamente");
     } catch (error) {
       console.error(error);
-      res.status(500).send("Error al remover usuario de favoritos");
+      res.status(500).send("Error al remover tienda de favoritos");
     }
   });
 

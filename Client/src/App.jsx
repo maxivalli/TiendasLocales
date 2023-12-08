@@ -55,7 +55,6 @@ function App() {
         if (!existe.data) {
           const response = await axios.post("/users/register", userByGoogle);
           if (response) {
-            console.log(response)
             await localStorage.setItem("token", response.data.token);
             setAuth(true);
 
@@ -141,7 +140,8 @@ function App() {
                   direccion: userDataResponse.data.direccion,
                   rol: userDataResponse.data.rol,
                   averageRating: userDataResponse.data.averageRating,
-                  tiendas: userDataResponse.data.tiendas
+                  tiendas: userDataResponse.data.tiendas,
+                  vendedor: userDataResponse.data.vendedor
                 });
                 dispatch(saveUserData({
                   email: userDataResponse.data.email,
@@ -151,9 +151,10 @@ function App() {
                   direccion: userDataResponse.data.direccion,
                   rol: userDataResponse.data.rol,
                   averageRating: userDataResponse.data.averageRating,
-                  tiendas: userDataResponse.data.tiendas
+                  tiendas: userDataResponse.data.tiendas,
+                  vendedor: userDataResponse.data.vendedor
                   }))
-                console.log("A", userData)
+
               })
               .catch((userDataError) => {
                 console.error(
@@ -425,7 +426,7 @@ function App() {
             )
           }
         />
-        <Route path="/mystore" element={isAuthenticated ? (
+        {/* <Route path="/mystore" element={isAuthenticated ? (
               userData ? (
                 <MyStore userData={userData} setAuth={setAuth} />
               ) : (
@@ -449,7 +450,7 @@ function App() {
               <Login setAuth={setAuth} />
             )
           }
-        />
+        /> */}
         <Route path="/store/:storeId" element={isAuthenticated ? (
               userData ? (
                 <Store userData={userData} setAuth={setAuth} />
