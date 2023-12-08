@@ -22,7 +22,7 @@ import Queries from "./views/Queries/Queries";
 import Faq from "./views/FAQ/Faq";
 import "./App.css";
 import UbiForm from "./components/UbiForm/UbiForm";
-import { saveUserData } from "./redux/actions";
+import { getAllStores, saveUserData } from "./redux/actions";
 import { useDispatch } from "react-redux";
 
 function App() {
@@ -173,6 +173,10 @@ function App() {
       setIsAuthenticated(false);
     }
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    dispatch(getAllStores())
+  }, [dispatch])
 
   return (
     <>
