@@ -2,7 +2,6 @@ const { Tienda } = require("../DB_config");
 
 exports.createStore = async (storeData) => {
   try {
-    console.log(storeData);
 
     const existStore = await Tienda.findOne({
       where: {
@@ -47,6 +46,20 @@ exports.createStore = async (storeData) => {
   } catch (error) {
     console.error(error);
     throw new Error("No se ha podido crear la tienda");
+  }
+};
+
+exports.getStore = async (id) => {
+  try {
+    const store = await Tienda.findOne({
+      where: {
+        userId: id,
+      },
+    });
+    
+    return store;
+  } catch (error) {
+    throw error;
   }
 };
 

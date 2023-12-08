@@ -155,6 +155,7 @@ const CreateStore = ({ userData }) => {
     try {
       const response = await axios.post("/tiendas/createStore", storeData);
       if (response) {
+        navigate("/more")
         Swal.fire({
           icon: "success",
           title: `Tienda en Processo de Aprobacion!`,
@@ -279,7 +280,7 @@ const CreateStore = ({ userData }) => {
                 name="indicaciones"
                 value={formData.indicaciones}
                 onChange={handleChange}
-                placeholder='Ej: Piso 1, Dto. "A"'
+                placeholder='Ej: Casa roja con porton negro'
               />
             </label>
           </div>

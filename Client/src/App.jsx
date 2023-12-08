@@ -141,7 +141,8 @@ function App() {
                   direccion: userDataResponse.data.direccion,
                   rol: userDataResponse.data.rol,
                   averageRating: userDataResponse.data.averageRating,
-                  tiendas: userDataResponse.data.tiendas
+                  tiendas: userDataResponse.data.tiendas,
+                  vendedor: userDataResponse.data.vendedor
                 });
                 dispatch(saveUserData({
                   email: userDataResponse.data.email,
@@ -151,9 +152,10 @@ function App() {
                   direccion: userDataResponse.data.direccion,
                   rol: userDataResponse.data.rol,
                   averageRating: userDataResponse.data.averageRating,
-                  tiendas: userDataResponse.data.tiendas
+                  tiendas: userDataResponse.data.tiendas,
+                  vendedor: userDataResponse.data.vendedor
                   }))
-                console.log("A", userData)
+
               })
               .catch((userDataError) => {
                 console.error(
