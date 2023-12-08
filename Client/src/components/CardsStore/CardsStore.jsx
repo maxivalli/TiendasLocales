@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom";
 import { addFavorite, removeFavorite } from "../../redux/actions"
 
@@ -11,8 +11,10 @@ import style from "./CardsStore.module.css";
 const CardsStore = ({userData}) => {
   const dispatch = useDispatch();
   const [isFavorite, setIsFavorite] = useState(false);
-
+  const stores = useSelector((state) => state.allStores)
+  console.log(stores);
   const userId = userData?.id
+
 
   const toggleFavorite = () => {
     if (isFavorite) {
@@ -35,23 +37,26 @@ const CardsStore = ({userData}) => {
         />
       </div>
 
-      <div className={style.imagen}>
-        <img src={avatar} alt="avatar" />
-      </div>
+       {stores.map((store) => (
+        <div key={store.id} className={style.card}>
+          <div className={style.imagen}>
+            <img src={store.image} alt="avatar" />
+          </div>
 
-      <div className={style.texto}>
-        <h2>Pizza Land</h2>
-        <h4>8:00 a 20:00</h4>
-        <h4>Calification</h4>
-        <h4>Categoria</h4>
-      </div>
+          <div className={style.texto}>
+            <h2>{store.nombre}</h2>
+            <h4>Dias de atención y horarios: {store.horarios}</h4>
+            <h4>Calificación: {store.calificacion}</h4>
+            <h4>Categoría: {store.categoria}</h4>
+          </div>
 
-      <div className={style.boton}>
-        <Link to="/store">
-        <button>Ver</button>
-        </Link>
-      </div>
-
+          <div className={style.boton}>
+            <Link to={`/store/${store.id}`}>
+              <button>Ver</button>
+            </Link>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

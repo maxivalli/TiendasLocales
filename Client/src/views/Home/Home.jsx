@@ -1,5 +1,5 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Banner from "../../components/Banners/Banners";
 import Cards from "../../components/Cards/Cards";
 import CardsStore from "../../components/CardsStore/CardsStore";
@@ -9,10 +9,15 @@ import Head from "../../components/Head/Head";
 import b1 from "../../assets/Banner1.jpg";
 import b2 from "../../assets/Banner2.jpg";
 import b3 from "../../assets/Banner3.jpg";
+import { getAllStores } from "../../redux/actions";
 
-const Home = ({userData}) => {
+const Home = () => {
+  const dispatch = useDispatch();
   const userDataState = useSelector((state) => state.userData)
 
+useEffect(() => {
+  dispatch(getAllStores())
+}, [dispatch])
 
   return (
     <>
@@ -38,9 +43,6 @@ const Home = ({userData}) => {
         </div>
 
         <div className={style.stores}>
-          <CardsStore />
-          <CardsStore />
-          <CardsStore />
           <CardsStore />
         </div>
       </div>

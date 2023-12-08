@@ -48,7 +48,8 @@ import {
   CLEAR_DETAIL,
   ADD_REVIEW,
   USER_DATA,
-  UPDATE_USER_DATA
+  UPDATE_USER_DATA,
+  GET_STORES,
 } from "./actionTypes";
 
 export function getAllUsers() {
@@ -184,6 +185,21 @@ export function updateUserData(userData){
   return {
     type: UPDATE_USER_DATA,
     payload:userData
+  }
+}
+
+export function getAllStores() {
+  return async function (dispatch) {
+    try {
+      const response = await axios('/tiendas/getAllStores');
+      console.log(response.data);
+      return dispatch({
+        type: GET_STORES,
+        payload: response.data
+      })
+    }catch (error) {
+      throw error
+    }
   }
 }
 
