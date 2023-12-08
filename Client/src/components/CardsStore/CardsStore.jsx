@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom";
 import { addFavorite, removeFavorite } from "../../redux/actions"
 
-import avatar from "../../assets/storeAvatar.jpg";
 import style from "./CardsStore.module.css";
 
 
@@ -12,7 +11,7 @@ const CardsStore = ({userData}) => {
   const dispatch = useDispatch();
   const [isFavorite, setIsFavorite] = useState(false);
   const stores = useSelector((state) => state.allStores)
-  console.log(stores);
+
   const userId = userData?.id
 
 
@@ -25,6 +24,8 @@ const CardsStore = ({userData}) => {
       dispatch(addFavorite(userId))
     }
   };
+
+  
 
   return (
     <div className={style.cardsStore}>

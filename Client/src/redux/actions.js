@@ -192,7 +192,6 @@ export function getAllStores() {
   return async function (dispatch) {
     try {
       const response = await axios('/tiendas/getAllStores');
-      console.log(response.data);
       return dispatch({
         type: GET_STORES,
         payload: response.data
