@@ -55,7 +55,6 @@ function App() {
         if (!existe.data) {
           const response = await axios.post("/users/register", userByGoogle);
           if (response) {
-            console.log(response)
             await localStorage.setItem("token", response.data.token);
             setAuth(true);
 
