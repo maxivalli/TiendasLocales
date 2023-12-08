@@ -1,9 +1,67 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Banner from "../../components/Banners/Banners";
+import Cards from "../../components/Cards/Cards";
+import CardsStore from "../../components/CardsStore/CardsStore";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import style from "./Favorites.module.css";
+import Head from "../../components/Head/Head";
+import b1 from "../../assets/Banner1.jpg";
+import b2 from "../../assets/Banner2.jpg";
+import b3 from "../../assets/Banner3.jpg";
+import { getAllStores, getFavorites } from "../../redux/actions";
 
 const Favorites = () => {
-  return (
-    <div>Soy la view de Favorites!</div>
-  )
-}
+  const dispatch = useDispatch()
+  const userData = useSelector((state) => state.userData);
+  const stores = useSelector((state) => state.allStores);
+  const favorites = useSelector((state) => state.favorites)
 
-export default Favorites
+  const userId = userData.id
+
+  useEffect(() => {
+    dispatch(getAllStores())
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(getFavorites(userId))
+  }, [dispatch])
+
+  const favoriteStores = stores.filter((store) =>
+  favorites.some((favorite) => favorite.storeId === store.id)
+);
+
+  return (
+    <>
+      <SearchBar />
+      <Head />
+      <div className={style.home}>
+        <div>
+          <Banner b1={b1} b2={b2} b3={b3} />
+        </div>
+
+        <div className={style.title}>
+          <h2>Productos destacados</h2>
+          <p>Explora y compra los mejores productos</p>
+        </div>
+
+        <div className={style.cards}>
+          <Cards />
+        </div>
+
+        <div className={style.title}>
+          <h2>Tiendas destacadas</h2>
+          <p>Explora la tiendas destacadas de tu ciudad</p>
+        </div>
+
+        <div className={style.stores}>
+          {favoriteStores.map((store, index) => (
+            <CardsStore key={index} {...store} />
+          ))}
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Favorites;

@@ -9,10 +9,16 @@ import Head from "../../components/Head/Head";
 import b1 from "../../assets/Banner1.jpg";
 import b2 from "../../assets/Banner2.jpg";
 import b3 from "../../assets/Banner3.jpg";
+import { getAllStores } from "../../redux/actions";
 
 const Home = () => {
+  const dispatch = useDispatch()
   const userDataState = useSelector((state) => state.userData);
   const stores = useSelector((state) => state.allStores);
+
+  useEffect(() => {
+    dispatch(getAllStores())
+  }, [dispatch])
 
   return (
     <>
