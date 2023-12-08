@@ -225,7 +225,6 @@ function rootReducer(state = initialState, action) {
 
 
     case GET_STORES:
-      console.log(action.payload);
       return {
         ...state,
         allStores: action.payload
