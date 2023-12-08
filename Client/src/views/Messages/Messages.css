@@ -162,19 +162,6 @@ div.ce-custom-header-icon-wrapper {
     z-index: 999;
   }
 
-  /*  .chat2 .text {
-    position: fixed;
-    width: 150px;
-    top: 22px;
-    left: 110px;
-    z-index: 999; 
-    font-size: 14px;
-    background-color: grey;
-    border-radius: 10px;
-    padding: 5px;
-    text-align: center;
-  } */
-
   .chat2 .icon {
     position: fixed;
     width: 20px;
@@ -204,8 +191,5 @@ div.ce-custom-header-icon-wrapper {
     width: auto;
     background-color: transparent !important;
     border: none;
-  }
-
-  body .chat2 .ce-chat-feed {
   }
 }

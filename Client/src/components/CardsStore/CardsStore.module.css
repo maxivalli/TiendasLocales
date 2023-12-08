@@ -1,6 +1,6 @@
 .cardsStore {
   display: grid;
-  grid-template-rows: 3fr 3fr 1.5fr;
+  /* grid-template-rows: 3fr 3fr 1.5fr; */
   width: 280px;
   height: 350px;
   box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.3);
@@ -22,6 +22,8 @@
 
 .cardsStore .imagen {
   display: grid;
+  padding-top: 40px;
+  padding-bottom: 20px;
 }
 
 .cardsStore img {
@@ -42,6 +44,10 @@
   margin: 0;
 }
 
+.cardsStore .boton {
+  padding: 20px;
+}
+
 .cardsStore .boton button {
   background-color: red;
   width: 90px;
@@ -58,6 +64,17 @@
   .cardsStore {
     width: 168px;
     height: 210px;
+  }
+
+  .cardsStore .imagen {
+    padding: 0;
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+
+  .cardsStore .boton {
+    padding: 0;
+    padding-top: 10px;
   }
 
   .cardsStore img {

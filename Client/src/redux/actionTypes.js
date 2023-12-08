@@ -13,6 +13,8 @@ export const RESET_USERS_FILTER = "RESET_USERS_FILTER";
 export const USER_DATA = "USER_DATA"
 export const UPDATE_USER_DATA = "UPDATE_USER_DATA"
 
+export const GET_STORES = "GET_STORES"
+
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE"
 export const GET_FAVORITES = "GET_FAVORITES"

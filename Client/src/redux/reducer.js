@@ -44,10 +44,12 @@ import {
   CLEAR_DETAIL,
   USER_DATA,
   UPDATE_USER_DATA,
+  GET_STORES,
 } from "./actionTypes";
 
 const initialState = {
   allUsers: [],
+  allStores: [],
   allExistingUsers: [],
   allExistingUsersCopy: [],
   allDisabledUsers: [],
@@ -220,6 +222,14 @@ function rootReducer(state = initialState, action) {
         ...state,
         allExistingUsers: state.allExistingUsersCopy,
       };
+
+
+    case GET_STORES:
+      console.log(action.payload);
+      return {
+        ...state,
+        allStores: action.payload
+      }
 
     case GET_FAVORITES:
       return {

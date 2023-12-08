@@ -446,7 +446,7 @@ function App() {
             )
           }
         />
-        <Route path="/store" element={isAuthenticated ? (
+        <Route path="/store/:storeId" element={isAuthenticated ? (
               userData ? (
                 <Store userData={userData} setAuth={setAuth} />
               ) : (
