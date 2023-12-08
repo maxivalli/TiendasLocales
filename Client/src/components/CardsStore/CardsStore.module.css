@@ -1,6 +1,6 @@
 .cardsStore {
   display: grid;
-  /* grid-template-rows: 3fr 3fr 1.5fr; */
+  justify-self: center;
   width: 280px;
   height: 350px;
   box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.3);

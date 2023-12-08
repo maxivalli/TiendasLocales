@@ -6,19 +6,107 @@
   width: 100vw;
 }
 
-.chat .toggle {
-  display: none;
+.ce-chat-engine {
+  background-color: transparent !important;
 }
 
-.chat .text {
-  display: none;
+div .ce-chat-list {
+  background-color: transparent !important;
 }
 
-.chat .icon {
-  display: none;
+div.ce-chats-container {
+  background-color: transparent !important;
 }
 
-body .chat input::placeholder {
+div.ce-chat-form-container {
+  background-color: transparent !important;
+  color: initial !important;
+}
+
+div.ce-active-chat-card {
+  background-color: red !important;
+  margin: 5px !important;
+}
+
+div#ce-chat-card-title-test {
+  color: initial !important;
+}
+
+div.ce-chat-feed {
+  background-color: transparent !important;
+}
+
+div.ce-chat-title {
+  background-color: gray !important;
+}
+
+div#ce-feed-container {
+  background-color: transparent !important;
+}
+
+div#msg-form-container {
+  background-color: gray !important;
+}
+
+div.ce-settings {
+  background-color: transparent !important;
+}
+
+div.ce-section-title-container {
+  background-color: transparent !important;
+}
+
+div#ce-options-drop-down {
+  background-color: transparent !important;
+}
+
+div.ce-message-bubble.false {
+  background-color: red !important;
+}
+
+div#ce-send-message-button {
+  background-color: red !important;
+}
+
+div#toolbar {
+  border: none;
+}
+
+div.ql-container {
+  border: none !important;
+}
+
+div#ce-chat-feed-title-test {
+  color: black !important;
+}
+
+div.ce-chat-subtitle-text {
+  color: black !important;
+}
+
+button#new-chat-plus-button {
+  background-color: red !important;
+}
+
+.chat #ce-ice-breaker-text {
+  display: none !important;
+}
+
+.chat #ce-ice-breaker-gif {
+  display: none !important;
+}
+
+.ql-editor {
+  white-space: unset !important;
+}
+
+@media (max-width: 900px) {
+  .chat {
+    top: 1px;
+  }
+}
+
+/* body .chat input::placeholder {
   color: transparent !important;
 }
 
@@ -124,12 +212,17 @@ div.ce-custom-header-icon-wrapper {
     bottom: 0;
   }
 
+  body .chat2 .ce-chat-feed {
+    display: none !important;
+    background-color: rgba(128, 128, 128, 0.2) !important;
+  }
+
   body .chat2 .ce-chat-list {
     position: fixed;
     top: 0;
     left: 0;
     z-index: 99;
-    height: 91vh !important;
+    height: 85vh !important;
     width: 100vw !important;
     background-color: rgb(45, 45, 45) !important;
     border-radius: 0px 0px 10px 10px;
@@ -196,4 +289,4 @@ div.ce-custom-header-icon-wrapper {
     background-color: transparent !important;
     border: none;
   }
-}
+} */
