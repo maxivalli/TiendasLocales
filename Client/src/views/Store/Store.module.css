@@ -142,4 +142,8 @@
     margin-bottom: 100px;
     justify-self: center;
   }
+
+  .buttons {
+    right: 20px;
+  }
 }

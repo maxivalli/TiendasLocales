@@ -11,17 +11,16 @@ import b2 from "../../assets/Banner2.jpg";
 import b3 from "../../assets/Banner3.jpg";
 
 const Home = () => {
-  const dispatch = useDispatch();
-  const userDataState = useSelector((state) => state.userData)
-
+  const userDataState = useSelector((state) => state.userData);
+  const stores = useSelector((state) => state.allStores);
 
   return (
     <>
       <SearchBar />
-      <Head/>
+      <Head />
       <div className={style.home}>
         <div>
-          <Banner b1={b1} b2={b2} b3={b3}/>
+          <Banner b1={b1} b2={b2} b3={b3} />
         </div>
 
         <div className={style.title}>
@@ -39,7 +38,9 @@ const Home = () => {
         </div>
 
         <div className={style.stores}>
-          <CardsStore />
+          {stores.map((store, index) => (
+            <CardsStore key={index} {...store} />
+          ))}
         </div>
       </div>
     </>

@@ -1,6 +1,6 @@
 .detail {
   display: grid;
-  grid-template-columns: 1fr 2fr 2fr;
+  grid-template-columns: 1.3fr 2.5fr 1.3fr;
   width: 85vw;
   height: fit-content;
 }
@@ -59,7 +59,7 @@
 .info h2 {
   font-weight: 800;
   font-style: italic;
-  font-size: 30px;
+  font-size: 24px;
 }
 
 .info h3 {
@@ -95,6 +95,7 @@
 }
 
 .sidebar {
+  height: 400px;
   padding: 30px;
   border-radius: 10px;
   margin-right: 10px;
@@ -109,7 +110,7 @@
 .desc {
   width: 85vw;
   justify-self: center;
-  margin-top: -50px;
+  margin-top: -20px;
 }
 
 .desc h5 {
@@ -144,6 +145,7 @@
   .sidebar {
     padding: 10px;
     margin-right: 0;
+    height: auto;
   }
   .detail {
     grid-template-columns: 1fr;

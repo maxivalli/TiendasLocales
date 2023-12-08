@@ -10,6 +10,14 @@
   display: none;
 }
 
+.chat .text {
+  display: none;
+}
+
+.chat .icon {
+  display: none;
+}
+
 body .chat input::placeholder {
   color: transparent !important;
 }
@@ -112,11 +120,6 @@ div.ce-custom-header-icon-wrapper {
 }
 
 @media (max-width: 666px) {
-  .chat2 {
-    width: 100vw;
-    right: 0;
-  }
-
   .chat {
     bottom: 0;
   }
@@ -126,7 +129,7 @@ div.ce-custom-header-icon-wrapper {
     top: 0;
     left: 0;
     z-index: 99;
-    height: auto !important;
+    height: 91vh !important;
     width: 100vw !important;
     background-color: rgb(45, 45, 45) !important;
     border-radius: 0px 0px 10px 10px;
@@ -140,6 +143,14 @@ div.ce-custom-header-icon-wrapper {
     z-index: 999;
   }
 
+  .chat .text {
+    display: none;
+  }
+
+  .chat .icon {
+    display: none;
+  }
+
   button.toggle {
     height: 40px;
     width: auto;
@@ -149,10 +160,34 @@ div.ce-custom-header-icon-wrapper {
   }
 
   .chat2 .toggle {
-    position: absolute;
+    position: fixed;
     right: 6%;
     top: 25px;
     z-index: 999;
+  }
+
+  .chat2 .icon {
+    position: fixed;
+    width: 20px;
+    top: 15px;
+    right: 70px;
+    z-index: 999;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 30px;
+    animation: moving 1s infinite;
+  }
+
+  @keyframes moving {
+    0% {
+      right: 75px;
+    }
+    50% {
+      right: 70px;
+    }
+    100% {
+      right: 75px;
+    }
   }
 
   .chat2 button {
@@ -160,9 +195,5 @@ div.ce-custom-header-icon-wrapper {
     width: auto;
     background-color: transparent !important;
     border: none;
-  }
-
-  body .chat2 .ce-chat-feed {
-    display: none;
   }
 }
