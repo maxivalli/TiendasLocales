@@ -1,12 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
 import { addFavorite, removeFavorite } from "../../redux/actions";
-=======
-import { addFavorite, removeFavorite } from "../../redux/actions"
 
->>>>>>> 3ffe661b002918864efc7795c94964b09b57486c
 import style from "./CardsStore.module.css";
 
 const CardsStore = ({
@@ -21,14 +17,7 @@ const CardsStore = ({
 
   const dispatch = useDispatch();
   const [isFavorite, setIsFavorite] = useState(false);
-<<<<<<< HEAD
   const userId = userData?.id;
-=======
-  const stores = useSelector((state) => state.allStores)
-
-  const userId = userData?.id
-
->>>>>>> 3ffe661b002918864efc7795c94964b09b57486c
 
   const toggleFavorite = () => {
     if (isFavorite) {
@@ -39,8 +28,6 @@ const CardsStore = ({
       dispatch(addFavorite(userId));
     }
   };
-
-  
 
   return (
     <div className={style.cardsStore}>
