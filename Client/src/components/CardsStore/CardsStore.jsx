@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addFavorite, getFavorites, removeFavorite } from "../../redux/actions";
+import {socket} from "../../App"
 
 import style from "./CardsStore.module.css";
 
@@ -25,12 +26,16 @@ const CardsStore = ({
 
 
   const toggleFavorite = () => {
+    const data = {userId, storeId}
     if (isFavorite) {
       setIsFavorite(false);
       dispatch(removeFavorite(userId, storeId));
+      socket.emit("removeFavorite", data)
     } else {
       setIsFavorite(true);
       dispatch(addFavorite(userId, storeId));
+      socket.emit("addFavorite", data)
+      console.log("socket addFavorite emitido al servidor");
     }
   };
 
@@ -40,7 +45,7 @@ const CardsStore = ({
   }, [favorites, storeId]);
 
   useEffect(() => {
-    dispatch(getFavorites(userId))
+      dispatch(getFavorites(userId))
   }, [dispatch])
 
   return (

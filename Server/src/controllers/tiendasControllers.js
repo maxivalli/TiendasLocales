@@ -1,4 +1,5 @@
 const { Tienda } = require("../DB_config");
+const axios = require("axios")
 
 exports.createStore = async (storeData) => {
   try {
@@ -38,6 +39,30 @@ exports.createStore = async (storeData) => {
       });
 
       if (newStore) {
+        const data = {
+          username: newStore.nombre,
+          secret: newStore.email,
+          email: newStore.email,
+          first_name: newStore.nombre
+        };
+        
+        const config = {
+          method: 'post',
+          url: 'https://api.chatengine.io/users/',
+          headers: {
+            'PRIVATE-KEY': '2b9635b2-fa51-4c12-a6b1-64a273f58dee'
+          },
+          data : data
+        };
+        
+        axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+          console.log(error);
+          throw error
+        });
         return true;
       } else {
         throw new Error("No se ha podido crear la tienda");
