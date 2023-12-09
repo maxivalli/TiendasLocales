@@ -6,7 +6,6 @@ const { registerMail, passwordForgot} = require("../utils/mailObjects")
 const jwtGenerator = require("../utils/jwtGenerator")
 const nodemailer = require('nodemailer')
 const { ADMIN_USERS } = process.env;
-const { PIVATE_KEY_CHATS } = process.env
 const axios = require("axios")
 
 const adminList = ADMIN_USERS.split(", ")
