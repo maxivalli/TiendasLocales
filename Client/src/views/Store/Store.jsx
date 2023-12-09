@@ -87,7 +87,7 @@ const selectedStore = stores.find((store) => store.id == storeId);
           />
         </div>
         <div className={style.buttons}>
-          <NavButtons />
+          <NavButtons storeId={storeId}/>
         </div>
         
       </div>
