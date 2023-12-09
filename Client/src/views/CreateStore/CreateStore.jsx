@@ -6,8 +6,7 @@ import style from "./CreateStore.module.css";
 import Swal from "sweetalert2";
 import { uploadFile } from "../../components/Firebase/config";
 import { validateStoreForm } from "./validations";
-
-
+import Head from '../../components/Head/Head'
 
 const CreateStore = ({ userData }) => {
   const navigate = useNavigate();
@@ -110,7 +109,6 @@ const CreateStore = ({ userData }) => {
         image: imageUrl,
       });
       setImageFile(imageUrl);
-    
     }
   };
   const handleImageClear = () => {
@@ -120,7 +118,6 @@ const CreateStore = ({ userData }) => {
     });
     setImageFile(null);
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -155,7 +152,7 @@ const CreateStore = ({ userData }) => {
     try {
       const response = await axios.post("/tiendas/createStore", storeData);
       if (response) {
-        navigate("/more")
+        navigate("/more");
         Swal.fire({
           icon: "success",
           title: `Tienda en Processo de Aprobacion!`,
@@ -168,17 +165,18 @@ const CreateStore = ({ userData }) => {
   };
   return (
     <>
+    <Head/>
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         className={style.container}
       >
-        <h3>Tú dirección para envíos</h3>
+        <h3>Crear tienda</h3>
+
         <form className={style.create}>
           <div className={style.part1}>
-
-            <label>
-              Nombre de la tienda
+            <div className={style.nombre}>
+              <p>Nombre de la tienda</p>
               <input
                 className={style.input}
                 type="text"
@@ -187,13 +185,13 @@ const CreateStore = ({ userData }) => {
                 onChange={handleChange}
                 placeholder="Ej: Ferreteria Manolo"
               />
-             {errors.nombre && <span className={style.error}>{errors.nombre}</span>}
-            </label>
-          </div>
+              {errors.nombre && (
+                <span className={style.error}>{errors.nombre}</span>
+              )}
+            </div>
 
-          <div className={style.part1}>
-            <label>
-              Calle
+            <div className={style.calle}>
+              <p>Calle</p>
               <input
                 className={style.input}
                 type="text"
@@ -202,14 +200,13 @@ const CreateStore = ({ userData }) => {
                 onChange={handleChange}
                 placeholder="Ej: Necochea"
               />
-              {errors.calle && <span className={style.error}>{errors.calle}</span>}
+              {errors.calle && (
+                <span className={style.error}>{errors.calle}</span>
+              )}
+            </div>
 
-            </label>
-          </div>
-
-          <div className={style.part1}>
-            <label>
-              Numero de Casa
+            <div className={style.numero}>
+              <p>Numero de Casa</p>
               <input
                 className={style.input}
                 type="text"
@@ -218,14 +215,13 @@ const CreateStore = ({ userData }) => {
                 onChange={handleChange}
                 placeholder="Ej: 1900"
               />
-             {errors.numero && <span className={style.error}>{errors.numero}</span>}
+              {errors.numero && (
+                <span className={style.error}>{errors.numero}</span>
+              )}
+            </div>
 
-            </label>
-          </div>
-
-          <div className={style.part1}>
-            <label>
-              Piso/Depto
+            <div className={style.pisoDto}>
+              <p>Piso/Depto</p>
               <input
                 className={style.inputCheck}
                 type="checkbox"
@@ -233,14 +229,12 @@ const CreateStore = ({ userData }) => {
                 checked={formData.pisoDeptoChecked}
                 onChange={handleChange}
               />
-            </label>
-          </div>
+            </div>
 
-          {formData.pisoDeptoChecked && (
-            <>
-              <div className={style.part1}>
-                <label>
-                  Piso
+            {formData.pisoDeptoChecked && (
+              <>
+                <div className={style.piso}>
+                  <p>Piso</p>
                   <input
                     className={style.input}
                     type="text"
@@ -249,13 +243,12 @@ const CreateStore = ({ userData }) => {
                     onChange={handleChange}
                     placeholder="Ej: 1"
                   />
-                               {errors.piso && <span className={style.error}>{errors.piso}</span>}
-
-                </label>
-              </div>
-              <div className={style.part1}>
-                <label>
-                  Depto
+                  {errors.piso && (
+                    <span className={style.error}>{errors.piso}</span>
+                  )}
+                </div>
+                <div className={style.dto}>
+                  <p>Depto</p>
                   <input
                     className={style.input}
                     type="text"
@@ -264,45 +257,46 @@ const CreateStore = ({ userData }) => {
                     onChange={handleChange}
                     placeholder='Ej: "A"'
                   />
-                  {errors.depto && <span className={style.error}>{errors.depto}</span>}
+                  {errors.depto && (
+                    <span className={style.error}>{errors.depto}</span>
+                  )}
+                </div>
+              </>
+            )}
 
-                </label>
-              </div>
-            </>
-          )}
-
-          <div className={style.part1}>
-            <label>
-              Indicaciones Extra
+            <div className={style.extra}>
+              <p>Indicaciones Extra</p>
               <input
                 className={style.input}
                 type="textarea"
                 name="indicaciones"
                 value={formData.indicaciones}
                 onChange={handleChange}
-                placeholder='Ej: Casa roja con porton negro'
+                placeholder="Ej: Casa roja con porton negro"
               />
-            </label>
+            </div>
           </div>
-
-          <select
-            name="categoria"
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-          >
-            <option value="Elige una categoría">Categoría</option>
-            {categories.map((categoria, index) => (
-              <option key={index} value={categoria}>
-                {categoria}
-              </option>
-            ))}
-          </select>
-          {errors.categoria && <span className={style.error}>{errors.categoria}</span>}
-
-
-          <div className={style.part1}>
-            <label>
-              Horarios (formato: número - número)
+          <div className={style.part2}>
+            <div className={style.categoria}>
+              <p>Categoría</p>
+              <select
+                name="categoria"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                <option value="Elige una categoría">Categoría</option>
+                {categories.map((categoria, index) => (
+                  <option key={index} value={categoria}>
+                    {categoria}
+                  </option>
+                ))}
+              </select>
+              {errors.categoria && (
+                <span className={style.error}>{errors.categoria}</span>
+              )}
+            </div>
+            <div className={style.horarios}>
+              <p>Horarios (formato: número - número)</p>
               <input
                 className={style.input}
                 type="text"
@@ -311,14 +305,13 @@ const CreateStore = ({ userData }) => {
                 onChange={handleChange}
                 placeholder="Ej: 9 - 5"
               />
-                           {errors.horarios && <span className={style.error}>{errors.horarios}</span>}
+              {errors.horarios && (
+                <span className={style.error}>{errors.horarios}</span>
+              )}
+            </div>
 
-            </label>
-          </div>
-
-          <div className={style.part1}>
-            <label>
-              Dias (formato: dia - dia)
+            <div className={style.dias}>
+              <p>Dias (formato: dia - dia)</p>
               <input
                 className={style.input}
                 type="text"
@@ -327,112 +320,105 @@ const CreateStore = ({ userData }) => {
                 onChange={handleChange}
                 placeholder="Ej: lunes - viernes"
               />
-            </label>
-          </div>
+            </div>
 
-          <div className={style.checkboxContainer}>
-            <label>
-              Facebook
+            <div className={style.face}>
+              <p>Facebook</p>
               <input
                 type="checkbox"
                 checked={showFacebookInput}
                 onChange={() => handleCheckboxChange("facebook")}
               />
-            </label>
-            {showFacebookInput && (
-              <div className={style.socialMediaInput}>
-                <label>
-                  Facebook URL
-                  <input
-                    type="text"
-                    name="facebook"
-                    value={formData.facebook}
-                    onChange={handleChange}
-                    placeholder="Ej: https://www.facebook.com/tu_pagina"
-                  />
-                               {errors.facebook && <span className={style.error}>{errors.facebook}</span>}
+            </div>
 
-                </label>
+            {showFacebookInput && (
+              <div className={style.faceIn}>
+                <p>Facebook URL</p>
+                <input
+                  type="text"
+                  name="facebook"
+                  value={formData.facebook}
+                  onChange={handleChange}
+                  placeholder="Ej: https://www.facebook.com/tu_pagina"
+                />
+                {errors.facebook && (
+                  <span className={style.error}>{errors.facebook}</span>
+                )}
               </div>
             )}
-          </div>
 
-          <div className={style.checkboxContainer}>
-            <label>
-              Instagram
+            <div className={style.insta}>
+              <p>Instagram</p>
               <input
                 type="checkbox"
                 checked={showInstagramInput}
                 onChange={() => handleCheckboxChange("instagram")}
               />
-            </label>
-            {showInstagramInput && (
-              <div className={style.socialMediaInput}>
-                <label>
-                  Instagram URL
-                  <input
-                    type="text"
-                    name="instagram"
-                    value={formData.instagram}
-                    onChange={handleChange}
-                    placeholder="Ej: https://www.instagram.com/tu_cuenta"
-                  />
-                               {errors.instagram && <span className={style.error}>{errors.instagram}</span>}
+            </div>
 
-                </label>
+            {showInstagramInput && (
+              <div className={style.instaIn}>
+                <p>Instagram URL</p>
+                <input
+                  type="text"
+                  name="instagram"
+                  value={formData.instagram}
+                  onChange={handleChange}
+                  placeholder="Ej: https://www.instagram.com/tu_cuenta"
+                />
+                {errors.instagram && (
+                  <span className={style.error}>{errors.instagram}</span>
+                )}
               </div>
             )}
-          </div>
 
-          <div className={style.checkboxContainer}>
-            <label>
-              WhatsApp Del Negocio
+            <div className={style.whats}>
+              <p>WhatsApp de la tienda</p>
               <input
                 type="checkbox"
                 checked={showWhatsappInput}
                 onChange={() => handleCheckboxChange("whatsapp")}
               />
-            </label>
+            </div>
+
             {showWhatsappInput && (
-              <div className={style.socialMediaInput}>
-                <label>
-                  WhatsApp URL
-                  <input
-                    type="text"
-                    name="whatsapp"
-                    value={formData.whatsapp}
-                    onChange={handleChange}
-                    placeholder="Ej: https://wa.me/1234567890"
-                  />
-                               {errors.whatsapp && <span className={style.error}>{errors.whatsapp}</span>}
-
-                </label>
-              </div>
-            )}
-          </div>
-
-          <div className={style.fileInput}>
-            <input
-              type="file"
-              accept="image/*"
-              name="image"
-              onChange={handleFile}
-              />
-              {errors.image && <span className={style.error}>{errors.image}</span>}
-            {formData.image && (
-              <div className={style.imagePreview}>
-                <img
-                  src={formData.image}
-                  alt="Preview"
-                  className={style.imgUser}
+              <div className={style.whatsIn}>
+                <p>WhatsApp URL</p>
+                <input
+                  type="text"
+                  name="whatsapp"
+                  value={formData.whatsapp}
+                  onChange={handleChange}
+                  placeholder="Ej: https://wa.me/1234567890"
                 />
-                <button onClick={handleImageClear}>✖️</button>
+                {errors.whatsapp && (
+                  <span className={style.error}>{errors.whatsapp}</span>
+                )}
               </div>
             )}
-            
 
+            <div className={style.foto}>
+              <input
+                type="file"
+                accept="image/*"
+                name="image"
+                onChange={handleFile}
+              />
+              {errors.image && (
+                <span className={style.error}>{errors.image}</span>
+              )}
+              {formData.image && (
+                <div className={style.imagePreview}>
+                  <img
+                    src={formData.image}
+                    alt="Preview"
+                    className={style.imgUser}
+                  />
+                  <button onClick={handleImageClear}>✖️</button>
+                </div>
+              )}
+            </div>
           </div>
-
         </form>
 
         <button type="submit" onClick={handleSubmit} className={style.button}>

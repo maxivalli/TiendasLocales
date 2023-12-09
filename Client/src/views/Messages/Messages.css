@@ -10,6 +10,19 @@
   background-color: transparent !important;
 }
 
+.ce-chat-engine img {
+  border-radius: 15px !important;
+  border: none !important;
+}
+
+div.ce-photo-thumbnail {
+  border: none !important;
+}
+
+button#ce-delete-chat-button {
+  background-color: initial !important;
+}
+
 div .ce-chat-list {
   background-color: transparent !important;
 }
@@ -74,6 +87,22 @@ div#toolbar {
 
 div.ql-container {
   border: none !important;
+}
+
+div.ql-editor.ql-blank {
+  background-color: whitesmoke !important;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+div.ql-editor {
+  background-color: whitesmoke !important;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+div.ql-editor p {
+  color: black !important;
 }
 
 div#ce-chat-feed-title-test {
