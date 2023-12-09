@@ -1,6 +1,7 @@
 const express = require("express");
 const { createServer } = require("node:http");
 const { Server } = require("socket.io");
+const { User } = require("./src/DB_config");
 
 const router = require("./src/routes/routes");
 const { Message } = require("./src/DB_config");
@@ -15,6 +16,28 @@ const io = new Server(httpServer, {
 
 io.on("connection", (socket) => {
   console.log('Un cliente se ha conectado');
+
+  socket.on("assignSocketId", async (userId) => {
+    try {
+      const user = await User.findByPk(userId);
+      if (user) {
+        user.socketId = socket.id;
+        user.save();
+        console.log(`Socket.id ${socket.id} asignado a User ${userId}`);
+      }
+    } catch (error) {
+      console.error('Error al asignar Socket.id al usuario:', error);
+    }
+  });
+
+  socket.on("addFavorite", async (data) => {
+    console.log("socket addFavorite recibido en el servidor");
+    const {userId, storeId} = data
+    const user = await User.findByPk(userId);
+    const userSocket = user.socketId
+    io.to(userSocket).emit("addFavorite", storeId)
+    console.log(`socket addFavorite emitido al front a ${userSocket}`);
+  })
 
   socket.on("joinRoom", (chatId) => {
     socket.join(chatId);

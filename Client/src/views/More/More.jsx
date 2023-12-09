@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom'
 import CardWide from '../../components/CardWide/CardWide'
 import style from './More.module.css'
 import axios from "axios";
+import { useSelector } from 'react-redux';
 
-const More = ({userData}) => {
-  
+const More = () => {
+  const userData = useSelector((state) => state.userData)
   const [ storeData, setStoreData ] = useState("")
 
   useEffect(() => {

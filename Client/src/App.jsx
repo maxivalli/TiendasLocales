@@ -1,5 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import { io } from 'socket.io-client';
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
@@ -24,6 +25,8 @@ import "./App.css";
 import UbiForm from "./components/UbiForm/UbiForm";
 import { getAllStores, saveUserData } from "./redux/actions";
 import { useDispatch } from "react-redux";
+
+let socket
 
 function App() {
   const dispatch = useDispatch()
@@ -152,7 +155,7 @@ function App() {
                   rol: userDataResponse.data.rol,
                   averageRating: userDataResponse.data.averageRating,
                   tiendas: userDataResponse.data.tiendas,
-                  vendedor: userDataResponse.data.vendedor
+                  vendedor: userDataResponse.data.vendedor,
                   }))
 
               })
@@ -178,6 +181,25 @@ function App() {
   useEffect(() => {
     dispatch(getAllStores())
   }, [dispatch])
+
+  const userId = userData?.id
+
+  const [shouldConnectSocket, setShouldConnectSocket] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      socket = io("http://localhost:3001/")
+      //socket = io("https://lo-canjeamos-production.up.railway.app/")
+      setShouldConnectSocket(true);
+    }
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (shouldConnectSocket && userId) {
+      socket.emit("assignSocketId", userId)
+    }
+  }, [shouldConnectSocket, userId]);
+
 
   return (
     <>
@@ -531,4 +553,4 @@ function App() {
   );
 }
 
-export default App;
+export { App, socket };
