@@ -3,12 +3,12 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC5rqp-6yMzL-sLJAv1psn4U6MbTirHGp8",
-  authDomain: "tiendaslocales-df366.firebaseapp.com",
-  projectId: "tiendaslocales-df366",
-  storageBucket: "tiendaslocales-df366.appspot.com",
-  messagingSenderId: "977128139184",
-  appId: "1:977128139184:web:a110bf0a95ef4456398e75"
+  apiKey: "AIzaSyAiXwnw-mIc8s-DkV2y8JaSwjKa__KF6i8",
+  authDomain: "tiendaslocales-7bbf8.firebaseapp.com",
+  projectId: "tiendaslocales-7bbf8",
+  storageBucket: "tiendaslocales-7bbf8.appspot.com",
+  messagingSenderId: "611326584535",
+  appId: "1:611326584535:web:0e3aa3aeb59818cbe57292"
 };
 
 const app = initializeApp(firebaseConfig);
