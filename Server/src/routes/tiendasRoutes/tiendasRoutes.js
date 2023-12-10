@@ -14,16 +14,28 @@ router.post('/createStore', async (req, res) => {
     }
   });
 
-router.get('/getStore', async (req,res) => {
-  const { id } = req.query
+  router.post('/habStore', async (req, res) => {
+    const { id } = req.body;
+    console.log(id);
+    try {
+      const response = await tiendasController.habStore(id);
+      return res.status(200).json(response);
+    } catch (error) {
+      return res.status(500).json(error.message);
+    }
+  });
+  
+  router.get('/getStore', async (req,res) => {
+    const { id } = req.query
+  
+    try{
+      const response = await tiendasController.getStore(id);
+      return res.status(200).json(response);
+    } catch (error) {
+      return res.status(500).json(error.message)
+    }
+  })
 
-  try{
-    const response = await tiendasController.getStore(id);
-    return res.status(200).json(response);
-  } catch (error) {
-    return res.status(500).json(error.message)
-  }
-})
 router.get('/getAllStores', async (req,res) => {
   try{
     const response = await tiendasController.getAllStores();
