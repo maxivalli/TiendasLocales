@@ -1,4 +1,4 @@
-const { Tienda } = require("../DB_config");
+const { Tienda, User } = require("../DB_config");
 const axios = require("axios")
 
 exports.createStore = async (storeData) => {
@@ -83,6 +83,34 @@ exports.getStore = async (id) => {
     });
     
     return store;
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.habStore = async (id) => {
+  try {
+    const store = await Tienda.findOne({
+      where: {
+        id: id,
+      },
+    });
+    
+    store.habilitado = "habilitado";
+    await store.save();
+    
+    if(store){
+      const user = await User.findOne({
+        where: {
+          id: store.userId,
+        },
+      });
+  
+      user.vendedor = "vendedor"
+      await user.save();
+    }
+
+    return true;
   } catch (error) {
     throw error;
   }

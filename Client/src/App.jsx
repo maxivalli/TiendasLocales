@@ -21,6 +21,7 @@ import MyStore from "./views/MyStore/MyStore";
 import Store from './views/Store/Store'
 import Queries from "./views/Queries/Queries";
 import Faq from "./views/FAQ/Faq";
+import Dashboard from "./views/Dashboard/Dashboard";
 import "./App.css";
 import UbiForm from "./components/UbiForm/UbiForm";
 import { getAllStores, saveUserData } from "./redux/actions";
@@ -536,6 +537,31 @@ function App() {
             ) : isAuthenticatedAuth0 ? (
               user ? (
                 <Faq userData={userData} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : (
+              <Login setAuth={setAuth} />
+            )
+          }
+        />
+        <Route path="/dashboard" element={isAuthenticated ? (
+              userData ? (
+                <Dashboard userData={userData} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : isAuthenticatedAuth0 ? (
+              user ? (
+                <Dashboard userData={userData} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>

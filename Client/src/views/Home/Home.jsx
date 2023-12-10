@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Banner from "../../components/Banners/Banners";
 import Cards from "../../components/Cards/Cards";
@@ -16,9 +16,13 @@ const Home = () => {
   const userDataState = useSelector((state) => state.userData);
   const stores = useSelector((state) => state.allStores);
 
+  const [filterStores, setStores] = useState([]);
+
   useEffect(() => {
-    dispatch(getAllStores())
-  }, [dispatch])
+    dispatch(getAllStores());
+    const filtered = stores.filter((store) => store.habilitado === "habilitado");
+    setStores(filtered);
+  }, [dispatch, stores]); // Agregamos `stores` al array de dependencias
 
   return (
     <>
@@ -44,7 +48,7 @@ const Home = () => {
         </div>
 
         <div className={style.stores}>
-          {stores.map((store, index) => (
+          {filterStores.map((store, index) => (
             <CardsStore key={index} {...store} />
           ))}
         </div>
