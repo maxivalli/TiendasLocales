@@ -15,6 +15,13 @@
   border: none;
 }
 
+.dot {
+  position: fixed;
+  top: 15px;
+  left: 235px;
+  z-index: 9999999;
+}
+
 .modal {
   display: grid;
   position: fixed;
@@ -51,7 +58,6 @@
 .modal .close {
   justify-self: center;
   height: 40px;
-  margin-bottom: 10px;
   background-color: transparent;
   border: none;
   border-radius: 5px;

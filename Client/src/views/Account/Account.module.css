@@ -134,7 +134,7 @@
   .account {
     width: 100vw;
     grid-template-columns: 80px 3fr 1fr;
-    height: 100px;
+    height: 120px;
   }
 
   .avatar img {
