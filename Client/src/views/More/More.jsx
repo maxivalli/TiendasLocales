@@ -35,6 +35,7 @@ const More = () => {
     <CardWide textButton={"Consultas"} logo={<img width="60" height="60" src="https://img.icons8.com/pulsar-color/96/mail.png" alt="mail"/>} link={"/queries"} />
     <CardWide textButton={"FAQ"} logo={<img width="60" height="60" src="https://img.icons8.com/pulsar-color/96/seo-text.png" alt="seo-text"/>} link={"/faq"} />
     {userData.rol === "admin" && <CardWide textButton={"Admin Dashboard"} logo={<img width="60" height="60" src="https://img.icons8.com/pulsar-color/96/seo-text.png" alt="seo-text"/>} link={"/dashboard"} />}
+    <div></div>
     <Link>
     <button className={style.tyc}>Términos y condiciones</button>
     </Link>
