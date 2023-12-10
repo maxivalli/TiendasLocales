@@ -13,19 +13,16 @@ const Store = () => {
   const dispatch = useDispatch();
   const { storeId } = useParams();
 
-const stores = useSelector((state) => state.allStores)
+  const stores = useSelector((state) => state.allStores);
 
-const selectedStore = stores.find((store) => store.id == storeId);
-
+  const selectedStore = stores.find((store) => store.id == storeId);
 
   return (
     <>
       <Filters />
       <Head />
       <div className={style.viewStore}>
-
         <div className={style.store}>
-
           <div className={style.avatar}>
             <img src={selectedStore.image} alt="avatar" />
           </div>
@@ -48,6 +45,7 @@ const selectedStore = stores.find((store) => store.id == storeId);
                   alt="facebook-new"
                 />
               </button>
+              
               <button>
                 <img
                   width="40"
@@ -56,20 +54,15 @@ const selectedStore = stores.find((store) => store.id == storeId);
                   alt="whatsapp--v1"
                 />
               </button>
-              <a
-  href={selectedStore.instagram}
-  target="_blank"
-  rel="noopener noreferrer"
->
-  <button>
-    <img
-      width="40"
-      height="40"
-      src="https://img.icons8.com/fluency/48/instagram-new.png"
-      alt="instagram-new"
-    />
-  </button>
-</a>
+
+              <button>
+                <img
+                  width="40"
+                  height="40"
+                  src="https://img.icons8.com/fluency/48/instagram-new.png"
+                  alt="instagram-new"
+                />
+              </button>
             </div>
           </div>
         </div>
@@ -87,9 +80,8 @@ const selectedStore = stores.find((store) => store.id == storeId);
           />
         </div>
         <div className={style.buttons}>
-          <NavButtons storeId={storeId}/>
+          <NavButtons storeId={storeId} />
         </div>
-        
       </div>
     </>
   );
