@@ -6,6 +6,8 @@ import "./Messages.css";
 const Messages = () => {
   const userData = useSelector((state) => state.userData);
 
+  console.log(userData)
+
   return (
     <>
       <div className="chat">
@@ -20,15 +22,5 @@ const Messages = () => {
     </>
   );
 };
-
-{
-  /* <PrettyChatWindow
-  projectId="1fb49778-0ca9-4761-a91b-512f3a51ee7f"
-  username={userData.username}
-  secret={userData.email}
-  avatarUrl={userData.image}
-  height="calc(100vh - 60px)"
-/>; */
-}
 
 export default Messages;

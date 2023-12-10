@@ -8,6 +8,7 @@
 
 .ce-chat-engine {
   background-color: transparent !important;
+  color: initial !important;
 }
 
 .ce-chat-engine img {
@@ -35,7 +36,7 @@ div.ce-chats-container {
 
 div.ce-chat-form-container {
   background-color: transparent !important;
-  color: initial !important;
+  /* color: initial !important; */
 }
 
 div.ce-active-chat-card {
@@ -44,7 +45,7 @@ div.ce-active-chat-card {
 }
 
 div#ce-chat-card-title-test {
-  color: initial !important;
+  /* color: initial !important; */
 }
 
 div.ce-chat-feed {
@@ -53,6 +54,7 @@ div.ce-chat-feed {
 
 div.ce-chat-title {
   background-color: red !important;
+  border-top: 1px solid black !important;
 }
 
 div#ce-feed-container {
@@ -105,15 +107,15 @@ div.ql-editor {
 }
 
 div.ql-editor p {
-  color: black !important;
+  /* color: black !important; */
 }
 
 div#ce-chat-feed-title-test {
-  color: initial !important;
+  /* color: initial !important; */
 }
 
 div.ce-chat-subtitle-text {
-  color: initial !important;
+  /* color: initial !important; */
 }
 
 button#new-chat-plus-button {
@@ -147,6 +149,5 @@ div.ce-wrapper {
 
   div .ce-chat-list {
     border-right: none !important;
-    color-scheme: light;
   }
 }

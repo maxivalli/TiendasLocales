@@ -16,21 +16,20 @@
 
 .container p {
   margin: 0;
-  height: 25px;
   font-size: 14px;
+  align-self: flex-end;
 }
 
 .container input {
-  margin-bottom: 20px;
   height: 35px;
   border-radius: 5px;
   border: none;
+  background-color: rgb(194, 194, 194);
 }
 
 .container span {
   color: red;
   font-size: 12px;
-  margin-top: -20px;
 }
 
 .create {
@@ -40,26 +39,27 @@
 }
 
 .part1 {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .part2 {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .nombre {
   display: grid;
-  height: 75px;
 }
 
 .calle {
   display: grid;
-  height: 75px;
 }
 
 .numero {
   display: grid;
-  height: 75px;
 }
 
 .pisoDto {
@@ -67,45 +67,41 @@
 }
 
 .pisoDto input {
-  margin: 0;
-  margin-left: 5px;
-  margin-top: -6px;
+  height: auto;
+}
+
+.pisoDto p {
+  align-self: center;
 }
 
 .piso {
   display: grid;
-  height: 75px;
 }
 
 .dto {
   display: grid;
-  height: 75px;
 }
 
 .extra {
   display: grid;
-  height: 75px;
 }
 
 .categoria {
   display: grid;
-  height: 75px;
 }
 
 .categoria select {
   height: 35px;
-  margin-top: -15px;
   border-radius: 5px;
+  margin-bottom: 2px;
 }
 
 .horarios {
   display: grid;
-  height: 75px;
 }
 
 .dias {
   display: grid;
-  height: 75px;
 }
 
 .face {
@@ -114,13 +110,10 @@
 
 .faceIn {
   display: grid;
-  height: 75px;
 }
 
 .face input {
-  margin: 0;
-  margin-left: 5px;
-  margin-top: -6px;
+  height: auto;
 }
 
 .insta {
@@ -128,9 +121,7 @@
 }
 
 .insta input {
-  margin: 0;
-  margin-left: 5px;
-  margin-top: -6px;
+  height: auto;
 }
 
 .instaIn {
@@ -142,9 +133,7 @@
 }
 
 .whats input {
-  margin: 0;
-  margin-left: 5px;
-  margin-top: -6px;
+  height: auto;
 }
 
 .whatsIn {
@@ -153,8 +142,33 @@
 
 .foto {
   display: grid;
-  height: 75px;
-  margin-top: 20px;
+  height: auto;
+}
+
+.foto input {
+  height: auto;
+}
+
+.imagePreview {
+  display: grid;
+}
+
+.imagePreview button {
+  width: 20px;
+  height: 20px;
+  border: none;
+  justify-self: center;
+  background-color: gray;
+  padding: 0;
+  margin-top: 5px;
+  border-radius: 2px;
+}
+
+.imgUser {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  justify-self: center;
 }
 
 .button {
@@ -164,6 +178,7 @@
   border: none;
   border-radius: 5px;
   justify-self: center;
+  margin-top: 50px;
 }
 
 @media (max-width: 768px) {

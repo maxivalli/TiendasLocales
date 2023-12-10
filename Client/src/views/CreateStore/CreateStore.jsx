@@ -18,25 +18,29 @@ const CreateStore = ({ userData }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const categories = [
-    "🧁 Alimentos",
     "⚱️ Antiguedades",
     "🎨 Arte y artesanías",
     "⚽️ Articulos deportivos",
     "📺 Audio y video",
+    "☕️ Cafetería",
     "📷 Cámaras y accesorios",
     "📱 Celulares",
-    "💻 Computadoras",
-    "🔌Electrodomésticos",
+    "💻 Computación",
+    "🚧 Construcción",
+    "🔌 Electrodomésticos",
     "🛠️ Herramientas",
+    "🍦 Heladería",
     "🎸 Instrumentos musicales",
     "💍 Joyas y relojes",
     "🪑 Muebles y hogar",
+    "🍰 Postres",
     "🚗 Rodados con motor",
     "🚲 Rodados sin motor",
     "👕 Ropa e indumentaria",
+    "🍕 Rotisería",
     "🛒 Varios",
-    "🎮 Videojuegos",
   ];
+
   const handleCheckboxChange = (socialMedia) => {
     switch (socialMedia) {
       case "facebook":
@@ -221,7 +225,7 @@ const CreateStore = ({ userData }) => {
             </div>
 
             <div className={style.pisoDto}>
-              <p>Piso/Depto</p>
+              <p>Piso/Departamento</p>
               <input
                 className={style.inputCheck}
                 type="checkbox"
@@ -373,7 +377,7 @@ const CreateStore = ({ userData }) => {
             )}
 
             <div className={style.whats}>
-              <p>WhatsApp de la tienda</p>
+              <p>Whatsapp</p>
               <input
                 type="checkbox"
                 checked={showWhatsappInput}
@@ -398,6 +402,7 @@ const CreateStore = ({ userData }) => {
             )}
 
             <div className={style.foto}>
+              <p>Logo tienda</p>
               <input
                 type="file"
                 accept="image/*"
@@ -414,7 +419,7 @@ const CreateStore = ({ userData }) => {
                     alt="Preview"
                     className={style.imgUser}
                   />
-                  <button onClick={handleImageClear}>✖️</button>
+                  <button onClick={handleImageClear}>x</button>
                 </div>
               )}
             </div>
