@@ -31,9 +31,10 @@ const More = () => {
     {!storeData && <CardWide textButton={"Crear Tienda"} logo={<img width="60" height="60" src="https://img.icons8.com/parakeet/96/add-shop.png" alt="add-shop"/>} link={"/createstore"}/>}
     {(userData.vendedor === "vendedor" && storeData?.habilitado === "habilitado") 
     ? <CardWide textButton={"Mi Tienda"} logo={<img width="60" height="60" src="https://img.icons8.com/parakeet/96/online-order.png" alt="online-order"/>} link={`/store/${storeData.id}`}/> 
-    : (storeData && userData.vendedor === "noVendedor" && <h2>Su tienda esta en processo de aprobacion</h2>)}
+    : (storeData && userData.vendedor === "noVendedor" && <CardWide textButton={"En espera"} logo={<img width="60" height="60" src="https://img.icons8.com/color/96/hourglass.png" alt="hourglass"/>}/>)}
     <CardWide textButton={"Consultas"} logo={<img width="60" height="60" src="https://img.icons8.com/pulsar-color/96/mail.png" alt="mail"/>} link={"/queries"} />
     <CardWide textButton={"FAQ"} logo={<img width="60" height="60" src="https://img.icons8.com/pulsar-color/96/seo-text.png" alt="seo-text"/>} link={"/faq"} />
+    <div></div>
     <Link>
     <button className={style.tyc}>Términos y condiciones</button>
     </Link>

@@ -23,7 +23,7 @@ const Head = () => {
       // Agregar nueva notificación al principio de la lista
       setNotifications((prevNotifications) => [
         {
-          text: `Se ha agregado "${store.nombre}" a favoritos!`,
+          text: `¡Se ha agregado "${store.nombre}" a favoritos!`,
           image: store.image,
         },
         ...prevNotifications,
@@ -61,6 +61,7 @@ const Head = () => {
         </button>
       </div>
       {showNotifications && (
+        <>
         <div className={style.modal}>
           {notifications.map((notification, index) => (
             <div key={index}>
@@ -70,10 +71,12 @@ const Head = () => {
               </button>
             </div>
           ))}
+          {/* <div className={style.dot}>🔵</div> */}
           <button className={style.close} onClick={clearNotifications}>
             Borrar notificaciones
           </button>
         </div>
+        </>
       )}
     </>
   );
