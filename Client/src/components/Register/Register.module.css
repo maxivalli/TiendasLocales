@@ -20,11 +20,22 @@
   height: 60px;
   margin-top: 10px;
   justify-self: center;
+  border-radius: 5px;
 }
 
 .imagePreview {
   display: grid;
   grid-template-columns: 1fr;
+}
+
+.imagePreview button {
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  background-color: gray;
+  justify-self: center;
+  margin-top: 5px;
 }
 .container .buttons {
   display: grid;
