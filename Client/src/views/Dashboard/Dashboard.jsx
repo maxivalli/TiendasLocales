@@ -42,6 +42,8 @@ const Dashboard = () => {
     }
   };
 
+  console.log(stores);
+
   return (
     <>
       <div className={style.home}>
@@ -53,18 +55,24 @@ const Dashboard = () => {
         <div className={style.stores}>
           {filterStores.map((store, index) => (
             <div key={index} className={style.storeCard}>
-              <h2>{store.nombre}</h2>
-              <img
-                src={store.image}
-                className={style.image}
-                alt={store.nombre}
-              />
-              <p>Email: {store.email}</p>
-              <p>Dirección: {store.direccion}</p>
-              <p>Creador Id: {store.userId}</p>
-              <button onClick={() => handleHabilitacion(store.id)}>
-                Habilitar
-              </button>
+              <div className={style.avatar}>
+                <h2>{store.nombre}</h2>
+                <img
+                  src={store.image}
+                  className={style.image}
+                  alt={store.nombre}
+                />
+              </div>
+              <div className={style.info}>
+                <p>{store.email}</p>
+                <p>{store.direccion}</p>
+                <p>{store.categoria}</p>
+              </div>
+              <div className={style.button}>
+                <button onClick={() => handleHabilitacion(store.id)}>
+                  Habilitar
+                </button>
+              </div>
             </div>
           ))}
         </div>
