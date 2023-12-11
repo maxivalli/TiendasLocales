@@ -1,9 +1,12 @@
 .title {
   display: grid;
+  width: 100vw;
+  background-color: rgba(128, 128, 128, 0.1);
+  padding-bottom: 20px;
 }
 
 .title h2 {
-  margin-top: 100px;
+  margin-top: 80px;
   justify-self: center;
 }
 
@@ -14,17 +17,18 @@
 
 .stores {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
   padding: 20px;
 }
 
 .storeCard {
-  width: 250px;
-  height: 300px;
   display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
   border: 1px solid grey;
   border-radius: 10px;
   padding: 10px;
+  justify-self: center;
 }
 
 .storeCard h2 {
@@ -46,7 +50,16 @@
   border: none;
   color: white;
   justify-self: center;
-  margin-top: 25px;
+}
+
+.info {
+  align-self: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.button {
+  align-self: center;
 }
 
 .stores h2 {
@@ -59,4 +72,21 @@
   object-fit: cover;
   border-radius: 50%;
   justify-self: center;
+  border: 2px solid red;
+}
+
+@media (max-width: 1280px) {
+  .stores {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .stores {
+    grid-template-columns: 1fr;
+  }
+
+  .title h2 {
+    margin-top: 20px;
+  }
 }
