@@ -1,4 +1,62 @@
+.title {
+  display: grid;
+}
+
+.title h2 {
+  margin-top: 100px;
+  justify-self: center;
+}
+
+.title p {
+  justify-self: center;
+  margin: 0;
+}
+
+.stores {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 20px;
+}
+
+.storeCard {
+  width: 250px;
+  height: 300px;
+  display: grid;
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.storeCard h2 {
+  margin: 0;
+  font-size: 16px;
+  font-style: italic;
+}
+
+.storeCard p {
+  font-size: 12px;
+  margin: 5px;
+}
+
+.storeCard button {
+  background-color: red;
+  width: 90px;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  justify-self: center;
+  margin-top: 25px;
+}
+
+.stores h2 {
+  justify-self: center;
+}
+
 .image {
-    max-width: 200px;
-    max-height: 200px;
+  max-width: 75px;
+  max-height: 75px;
+  object-fit: cover;
+  border-radius: 50%;
+  justify-self: center;
 }

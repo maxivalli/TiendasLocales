@@ -16,7 +16,9 @@ const Dashboard = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const filtered = stores.filter((store) => store.habilitado === "noHabilitado");
+    const filtered = stores.filter(
+      (store) => store.habilitado === "noHabilitado"
+    );
     setStores(filtered);
   }, [dispatch, stores]);
 
@@ -25,7 +27,9 @@ const Dashboard = () => {
       const response = await axios.post("/tiendas/habStore", { id: id });
       if (response) {
         // Actualizar el estado local eliminando la tienda aprobada
-        setStores((prevStores) => prevStores.filter((store) => store.id !== id));
+        setStores((prevStores) =>
+          prevStores.filter((store) => store.id !== id)
+        );
 
         Swal.fire({
           icon: "success",
@@ -41,21 +45,26 @@ const Dashboard = () => {
   return (
     <>
       <div className={style.home}>
-
         <div className={style.title}>
-          <h1>Admin Dashboard</h1>
+          <h2>Panel de control</h2>
           <p>Tiendas en espera de aprobacion</p>
         </div>
 
         <div className={style.stores}>
-        {filterStores.map((store, index) => (
+          {filterStores.map((store, index) => (
             <div key={index} className={style.storeCard}>
               <h2>{store.nombre}</h2>
-              <img src={store.image} className={style.image} alt={store.nombre} />
+              <img
+                src={store.image}
+                className={style.image}
+                alt={store.nombre}
+              />
               <p>Email: {store.email}</p>
               <p>Dirección: {store.direccion}</p>
               <p>Creador Id: {store.userId}</p>
-              <button onClick={() => handleHabilitacion(store.id)}>HABILITAR TIENDA</button>
+              <button onClick={() => handleHabilitacion(store.id)}>
+                Habilitar
+              </button>
             </div>
           ))}
         </div>
