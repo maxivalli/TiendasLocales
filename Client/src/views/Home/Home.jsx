@@ -20,9 +20,12 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getAllStores());
+  }, [dispatch]);
+
+  useEffect(() => {
     const filtered = stores.filter((store) => store.habilitado === "habilitado");
     setStores(filtered);
-  }, [dispatch, stores]); // Agregamos `stores` al array de dependencias
+  }, [dispatch, stores]);
 
   return (
     <>
