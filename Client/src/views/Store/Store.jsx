@@ -16,6 +16,7 @@ const Store = () => {
   const stores = useSelector((state) => state.allStores);
 
   const selectedStore = stores.find((store) => store.id == storeId);
+  console.log(selectedStore.image);
 
   return (
     <>

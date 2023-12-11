@@ -13,9 +13,12 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getAllStores());
+  }, [dispatch]);
+
+  useEffect(() => {
     const filtered = stores.filter((store) => store.habilitado === "noHabilitado");
     setStores(filtered);
-  }, [dispatch, stores]); // Agregamos `stores` al array de dependencias
+  }, [dispatch, stores]);
 
   const handleHabilitacion = async (id) => {
     try {
