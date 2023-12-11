@@ -7,6 +7,7 @@ const postTemplate = fs.readFileSync(__dirname + '/newPost.html', 'utf8');
 const registerMail = (user) => {
   return {
     to: user.email,
+    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
     subject: "Registro completado",
     html: registerTemplate,
   };

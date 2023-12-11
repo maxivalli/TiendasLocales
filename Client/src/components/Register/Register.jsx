@@ -267,7 +267,7 @@ const Register = ({setAuth}) => {
           {input.image && (
             <div className={style.imagePreview}>
               <img src={input.image} alt="Preview" className={style.imgUser}/>
-              <button onClick={handleImageClear}>✖️</button>
+              <button onClick={handleImageClear}>x</button>
             </div>
           )}
           {/* {errors.image && <span className={style.error}>{errors.image}</span>} */}
