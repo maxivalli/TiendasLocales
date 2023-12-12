@@ -6,8 +6,6 @@ import "./Messages.css";
 const Messages = () => {
   const userData = useSelector((state) => state.userData);
 
-  console.log(userData)
-
   return (
     <>
       <div className="chat">
