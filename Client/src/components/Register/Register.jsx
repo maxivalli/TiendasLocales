@@ -11,7 +11,8 @@ const Register = ({setAuth}) => {
   const [imageError, setImageError] = useState(null);
 
   const [errors, setErrors] = useState({
-    username: null,
+    nombre: null,
+    apellido: null,
     password: null,
     email: null,
     image: null,
@@ -19,7 +20,8 @@ const Register = ({setAuth}) => {
   
 
   const [input, setInput] = useState({
-    username: "",
+    nombre: "",
+    apellido: "",
     password: "",
     repeatPassword: "",
     email: "",
@@ -38,7 +40,9 @@ const Register = ({setAuth}) => {
       [name]: value,
     });
 
-    if (name === 'username') {
+    if (name === 'nombre') {
+      setErrors({ ...errors, username: validateUsername(value) });
+    } else if (name === "apellido"){
       setErrors({ ...errors, username: validateUsername(value) });
     } else if (name === 'email') {
       setErrors({ ...errors, email: validateEmail(value) });
@@ -91,7 +95,8 @@ const Register = ({setAuth}) => {
     disabled: true})
 
   if (
-    !input.username ||
+    !input.nombre ||
+    !input.apellido ||
     !input.email ||
     !input.password ||
     !input.repeatPassword ||
@@ -122,7 +127,7 @@ const Register = ({setAuth}) => {
   try {
 
     let newUser = {
-      username: input.username,
+      username: `${input.nombre} ${input.apellido}`,
       password: input.password,
       email: input.email,
       image: imageFile,
@@ -176,7 +181,8 @@ const Register = ({setAuth}) => {
   }
 
   setInput({
-    username: '',
+    nombre: '',
+    apellido: '',
     password: '',
     repeatPassword: '',
     email: '',
@@ -202,15 +208,25 @@ const Register = ({setAuth}) => {
           <div>
             <input
               type="text"
-              name="username"
-              placeholder="Usuario"
+              name="nombre"
+              placeholder="Nombre"
               onChange={handleInputChange}
               value={input.username}
               disabled={input.disabled}
             />
-             {errors.username && <span className={style.error}>{errors.username}</span>}
+             {errors.nombre && <span className={style.error}>{errors.nombre}</span>}
           </div>
-
+          <div>
+            <input
+              type="text"
+              name="apellido"
+              placeholder="Apellido"
+              onChange={handleInputChange}
+              value={input.apellido}
+              disabled={input.disabled}
+            />
+             {errors.apellido && <span className={style.error}>{errors.apellido}</span>}
+          </div>
           <div>
             <input
               type="email"

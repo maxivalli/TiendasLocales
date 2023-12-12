@@ -102,7 +102,7 @@ const Login = ({ setAuth, userData }) => {
               <input
                 type="text"
                 name="username"
-                placeholder="Usuario"
+                placeholder="Mail"
                 onChange={handleInputChange}
                 value={input.username}
               />
