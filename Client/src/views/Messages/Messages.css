@@ -36,7 +36,6 @@ div.ce-chats-container {
 
 div.ce-chat-form-container {
   background-color: transparent !important;
-  /* color: initial !important; */
 }
 
 div.ce-active-chat-card {
@@ -44,9 +43,6 @@ div.ce-active-chat-card {
   margin: 5px !important;
 }
 
-div#ce-chat-card-title-test {
-  /* color: initial !important; */
-}
 
 div.ce-chat-feed {
   background-color: transparent !important;
@@ -55,6 +51,34 @@ div.ce-chat-feed {
 div.ce-chat-title {
   background-color: red !important;
   border-top: 1px solid black !important;
+}
+
+div.ce-chat-title-text {
+  color: initial ;
+}
+
+div.ce-chat-subtitle-text {
+  color: initial ;
+}
+
+div.ce-chat-subtitle-text.ce-chat-subtitle-message {
+  color: initial !important;
+}
+
+div.ce-chat-subtitle-text.ce-chat-subtitle-date {
+  color: initial !important;
+}
+
+div.ce-message-date-text {
+  color: initial !important;
+}
+
+span.ce-message-timestamp {
+  color: initial !important;
+}
+
+div.ce-their-message-sender {
+  color: initial !important;
 }
 
 div#ce-feed-container {
@@ -105,18 +129,6 @@ div.ql-editor {
   border-radius: 10px;
   margin: 5px;
   color: black !important;
-}
-
-div.ql-editor p {
-  /* color: black !important; */
-}
-
-div#ce-chat-feed-title-test {
-  /* color: initial !important; */
-}
-
-div.ce-chat-subtitle-text {
-  /* color: initial !important; */
 }
 
 button#new-chat-plus-button {
