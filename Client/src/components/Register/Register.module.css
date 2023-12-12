@@ -1,10 +1,11 @@
 .container {
   display: grid;
-  width: 400px;
   box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.3);
   border-radius: 10px;
   padding: 40px;
-  margin-top: 100px;
+  padding-left: 80px;
+  padding-right: 80px;
+  margin-top: 120px;
   margin-bottom: 100px;
   text-align: center;
 }
@@ -12,7 +13,6 @@
 .logo {
   width: 100px;
   justify-self: center;
-  margin-top: -30px;
 }
 
 .imgUser {
@@ -69,6 +69,8 @@
 
 .container h2 {
   color: grey;
+  font-size: 18px;
+  margin-top: 30px;
 }
 
 .container p {
