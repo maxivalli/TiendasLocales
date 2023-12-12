@@ -299,7 +299,7 @@ exports.loginUser = async (user) => {
   } else {
     const usuarios = await User.findAll({
       where: {
-        username: user.username,
+        email: user.username,
       },
     });
 
