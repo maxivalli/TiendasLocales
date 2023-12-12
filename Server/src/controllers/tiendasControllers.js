@@ -1,9 +1,19 @@
 const { Tienda, User } = require("../DB_config");
-const axios = require("axios")
+const axios = require("axios");
+
+async function getImageBlobFromURL(imageUrl) {
+  try {
+    const response = await fetch(imageUrl);
+    const blob = await response.blob();
+    return blob;
+  } catch (error) {
+    console.error("Error al obtener la imagen como Blob:", error);
+    throw new Error("Error al obtener la imagen como Blob");
+  }
+}
 
 exports.createStore = async (storeData) => {
   try {
-
     const existStore = await Tienda.findOne({
       where: {
         userId: storeData.userId,
@@ -11,11 +21,8 @@ exports.createStore = async (storeData) => {
     });
 
     if (existStore) {
-      throw new Error(
-        "Ya tienes una tienda creada o en espera de aprobacion!"
-      );
+      throw new Error("Ya tienes una tienda creada o en espera de aprobacion!");
     } else {
-      // Construir la dirección con piso y/o depto si están presentes
       let direccionCompleta = storeData.direccion;
       if (storeData.piso) {
         direccionCompleta += `, Piso ${storeData.piso}`;
@@ -35,7 +42,7 @@ exports.createStore = async (storeData) => {
         userId: storeData.userId,
         facebook: storeData.facebook,
         instagram: storeData.instagram,
-        whatsapp: storeData.whatsapp
+        whatsapp: storeData.whatsapp,
       });
 
       if (newStore) {
@@ -43,26 +50,37 @@ exports.createStore = async (storeData) => {
           username: newStore.nombre,
           secret: newStore.email,
           email: newStore.email,
-          first_name: newStore.nombre
+          first_name: newStore.nombre,
         };
-        
+
+        const imageBlob = await getImageBlobFromURL(storeData.image);
+
+        const formData = new FormData();
+        formData.append("username", data.username);
+        formData.append("secret", data.secret);
+        formData.append("email", data.email);
+        formData.append("first_name", data.first_name);
+        formData.append("avatar", imageBlob, "avatar.png");
+
         const config = {
-          method: 'post',
-          url: 'https://api.chatengine.io/users/',
+          method: "post",
+          url: "https://api.chatengine.io/users/",
           headers: {
-            'PRIVATE-KEY': '2b9635b2-fa51-4c12-a6b1-64a273f58dee'
+            "PRIVATE-KEY": "2b9635b2-fa51-4c12-a6b1-64a273f58dee",
+            "Content-Type": "multipart/form-data",
           },
-          data : data
+          data: formData,
         };
-        
+
         axios(config)
-        .then(function (response) {
-          console.log(JSON.stringify(response.data));
-        })
-        .catch(function (error) {
-          console.log(error);
-          throw error
-        });
+          .then(function (response) {
+            console.log(JSON.stringify(response.data));
+          })
+          .catch(function (error) {
+            console.log(error);
+            throw error;
+          });
+
         return true;
       } else {
         throw new Error("No se ha podido crear la tienda");
@@ -81,7 +99,7 @@ exports.getStore = async (id) => {
         userId: id,
       },
     });
-    
+
     return store;
   } catch (error) {
     throw error;
@@ -95,18 +113,18 @@ exports.habStore = async (id) => {
         id: id,
       },
     });
-    
+
     store.habilitado = "habilitado";
     await store.save();
-    
-    if(store){
+
+    if (store) {
       const user = await User.findOne({
         where: {
           id: store.userId,
         },
       });
-  
-      user.vendedor = "vendedor"
+
+      user.vendedor = "vendedor";
       await user.save();
     }
 
@@ -124,5 +142,3 @@ exports.getAllStores = async () => {
     throw error;
   }
 };
-
-
