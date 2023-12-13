@@ -3,13 +3,14 @@ import Logo from "../../assets/TLlogoAlpha.png";
 import style from "./Head.module.css";
 import { socket } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPosts, getUserNotif } from "../../redux/actions";
+import { deleteUserNotif, getAllPosts, getUserNotif } from "../../redux/actions";
 
 const Head = () => {
   const dispatch = useDispatch()
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [hasUnreadNotification, setHasUnreadNotification] = useState(false);
+  const [clearNotifications, setClearNotifications] = useState(false);
   const stores = useSelector((state) => state.allStores);
   const userData = useSelector((state)=> state.userData)
   const savedNotif = useSelector((state)=> state.userNotif)
@@ -32,6 +33,9 @@ useEffect(()=> {
     setShowNotifications((prevState) => !prevState);
     if (hasUnreadNotification) {
       setHasUnreadNotification(false);
+    }
+    if (clearNotifications) {
+      setClearNotifications(false);
     }
   };
 
@@ -58,9 +62,11 @@ useEffect(()=> {
     };
   }, [stores]);
 
-  const clearNotifications = () => {
+  const handleClearNotifications = () => {
     setNotifications([]);
     setHasUnreadNotification(false);
+    dispatch(deleteUserNotif(userId));
+    setClearNotifications(true); 
   };
 
   return (
@@ -95,7 +101,7 @@ useEffect(()=> {
               </button>
             </div>
           ))}
-          {savedNotif.map((notification) => (
+           {!clearNotifications && savedNotif.map((notification) => (
             <div key={notification.id}>
               <button className={style.notifAcces}>
                 <img src={notification.image} alt="" />
@@ -103,7 +109,7 @@ useEffect(()=> {
               </button>
             </div>
           ))}
-          <button className={style.close} onClick={clearNotifications}>
+          <button className={style.close} onClick={handleClearNotifications}>
             Borrar notificaciones
           </button>
         </div>
