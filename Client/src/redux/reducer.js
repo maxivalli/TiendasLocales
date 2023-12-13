@@ -12,34 +12,19 @@ import {
   RESTORE_USER,
   RESET_USERS_FILTER,
   GET_FAVORITES,
-  GET_ALL_POSTS,
+  GET_STORE_POSTS,
   GET_ALL_DISABLED_POSTS,
   GET_ALL_EXISTING_POSTS,
   SORT_POSTS_BY_ID,
   SORT_POSTS_BY_STATUS,
   RESET_POSTS_FILTER,
   GET_POST_BY_ID,
-  SELECT_CATEGORY,
-  SELECT_LOCALITY,
-  SELECT_PROVINCE,
-  GET_POST_BY_CATEGORY,
-  GET_POST_BY_PROVINCE,
-  GET_POST_BY_LOCALITY,
   CREATE_POST,
   UPDATE_POST,
   DELETE_POST,
   RESTORE_POST,
   RESET_FILTERS,
-  CARGAR_HISTORIAL_MENSAJES,
   OTHER_USER_DATA,
-  GET_ALL_MESSAGES,
-  GET_ALL_CHATS,
-  DELETE_LIKE,
-  CHAT_CREATED,
-  GET_MATCHES,
-  UPDATE_FILTERED_MATCHES,
-  LIKED_POSTS,
-  GET_ALL_LIKES,
   SELECTED_POST,
   CLEAR_DETAIL,
   USER_DATA,
@@ -57,7 +42,7 @@ const initialState = {
   otherUserImage: "",
   selectedUser: "",
   favorites: [],
-  allPosts: [],
+  storePosts: [],
   allPostsCopy: [],
   allDisabledPosts: [],
   allExistingPosts: [],
@@ -236,32 +221,10 @@ function rootReducer(state = initialState, action) {
         favorites: action.payload,
       };
 
-    case GET_ALL_POSTS:
-      // Aplicar los filtros directamente a action.payload
-      let filteredAllPosts = action.payload;
-
-      if (state.selectedCategory) {
-        filteredAllPosts = filteredAllPosts.filter(
-          (post) => post.category === state.selectedCategory
-        );
-      }
-
-      if (state.selectedProvince) {
-        filteredAllPosts = filteredAllPosts.filter((post) =>
-          post.ubication.includes(state.selectedProvince)
-        );
-      }
-
-      if (state.selectedLocality) {
-        filteredAllPosts = filteredAllPosts.filter((post) =>
-          post.ubication.includes(state.selectedLocality)
-        );
-      }
-
+    case GET_STORE_POSTS:
       return {
         ...state,
-        allPosts: filteredAllPosts,
-        allPostsCopy: action.payload,
+        storePosts: action.payload,
       };
 
     case GET_ALL_DISABLED_POSTS:
@@ -324,66 +287,6 @@ function rootReducer(state = initialState, action) {
       };
     }
 
-    case RESET_POSTS_FILTER:
-      return {
-        ...state,
-        allExistingPosts: state.allExistingPostsCopy,
-      };
-
-    case SELECT_PROVINCE:
-      return {
-        ...state,
-        selectedProvince: action.payload,
-        selectedLocality: "",
-      };
-
-    case SELECT_LOCALITY:
-      return {
-        ...state,
-        selectedLocality: action.payload,
-      };
-
-    case SELECT_CATEGORY:
-      return {
-        ...state,
-        selectedCategory: action.payload,
-      };
-
-    case SELECTED_POST:
-      return {
-        ...state,
-        selectedPostToInteract: action.payload.id,
-        selectedPostImage: action.payload.image,
-      };
-
-    case GET_POST_BY_CATEGORY:
-    case GET_POST_BY_PROVINCE:
-    case GET_POST_BY_LOCALITY:
-      let filteredPosts = state.allPostsCopy;
-
-      if (state.selectedCategory) {
-        filteredPosts = filteredPosts.filter(
-          (post) => post.category === state.selectedCategory
-        );
-      }
-
-      if (state.selectedProvince) {
-        filteredPosts = filteredPosts.filter((post) =>
-          post.ubication.includes(state.selectedProvince)
-        );
-      }
-
-      if (state.selectedLocality) {
-        filteredPosts = filteredPosts.filter((post) =>
-          post.ubication.includes(state.selectedLocality)
-        );
-      }
-
-      return {
-        ...state,
-        allPosts: filteredPosts,
-      };
-
     case CREATE_POST:
       return {
         ...state,
@@ -428,101 +331,11 @@ function rootReducer(state = initialState, action) {
       };
     }
 
-    case GET_ALL_LIKES:
-      return {
-        ...state,
-        allLikes: action.payload,
-      };
-
-    case DELETE_LIKE:
-      const deletedLikeId = action.payload.id;
-
-      // Filtra los likes que deben eliminarse
-      const updatedLikes = state.allLikes.filter(
-        (like) => like.likedPostId == deletedLikeId
-      );
-
-      // Filtra los matches que deben eliminarse
-      const updatedMatches = state.matches.filter((match) =>
-        match.some((like) => like.id !== deletedLikeId)
-      );
-
-      // Actualiza el estado con los likes y matches filtrados
-      return {
-        ...state,
-        allLikes: updatedLikes,
-        matches: updatedMatches,
-      };
-
-    case LIKED_POSTS:
-      const userId = action.payload;
-      const filteredLikes = state.allLikes.filter(
-        (like) => like.myUserId === userId
-      );
-      const likedPostIds = filteredLikes.map((like) => like.likedPostId);
-      const likedPosts = state.allPosts.filter((post) =>
-        likedPostIds.includes(post.id)
-      );
-      return {
-        ...state,
-        likedPosts: likedPosts,
-      };
 
     case CLEAR_DETAIL:
       return {
         ...state,
         postDetail: [],
-      };
-
-    case GET_MATCHES:
-      return {
-        ...state,
-        matches: action.payload,
-      };
-
-    case UPDATE_FILTERED_MATCHES:
-      return {
-        ...state,
-        matchedPairs: action.payload,
-      };
-
-    case CARGAR_HISTORIAL_MENSAJES:
-      return {
-        ...state,
-        messageHistory: action.payload,
-      };
-
-    case GET_ALL_MESSAGES:
-      return {
-        ...state,
-        messageHistory: action.payload,
-      };
-
-    case GET_ALL_CHATS:
-      return {
-        ...state,
-        chats: action.payload,
-      };
-
-    case CHAT_CREATED:
-      return {
-        ...state,
-        chats: [
-          ...state.chats,
-          {
-            id: action.payload.chatId.chatId,
-            user1Id: action.payload.user1Id,
-            user2Id: action.payload.user2Id,
-          },
-        ],
-      };
-
-    case RESET_FILTERS:
-      return {
-        ...state,
-        selectedCategory: "",
-        selectedProvince: "",
-        selectedLocality: "",
       };
 
     default:
