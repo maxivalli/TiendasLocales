@@ -6,6 +6,30 @@
   width: 100vw;
 }
 
+span.anticon.anticon-setting {
+  display: none;
+}
+
+span.anticon.anticon-menu {
+  color: black !important;
+}
+
+span.anticon.anticon-close {
+  color: black !important;
+}
+
+div.ce-settings-column {
+  border-left: 1px solid red;
+}
+
+div.ce-settings {
+  display: none;
+}
+
+input.ce-input.ce-text-input {
+  background: transparent !important;
+}
+
 .ce-chat-engine {
   background-color: transparent !important;
   color: initial !important;
@@ -30,8 +54,7 @@ div .ce-chat-list {
 }
 
 div.ce-chats-container {
-  background-color: transparent !important;
-  
+  background-color: transparent !important;  
 }
 
 div.ce-chat-form-container {
@@ -163,6 +186,11 @@ div.ce-wrapper {
   div .ce-chat-list {
     border-right: none !important;
   }
+
+  div.ce-settings-column {
+    border-left: none;
+  }
+
 }
 
 
