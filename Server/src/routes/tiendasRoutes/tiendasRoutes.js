@@ -3,6 +3,8 @@ const router = express.Router();
 const tiendasController = require("../../controllers/tiendasControllers");
 const payController = require("../../controllers/payController");
 
+let payUserData
+
 router.post('/createStore', async (req, res) => {
     const storeData = req.body
     try {
@@ -49,7 +51,7 @@ router.post('/create-order', async(req, res) =>{
     const paymentData = req.body
     try{
         const response = await payController.createOrder(paymentData);
-      
+        payUserData = response
         return res.status(200).json(response)
     } catch(error){
         return res.status(400).json(error.message)
@@ -57,9 +59,9 @@ router.post('/create-order', async(req, res) =>{
 })
 
 router.get('/success', async(req, res) =>{
-    console.log(req.body)
+    
     try{
-        await payController.successfullPurchase(purchaseUserId);
+        const response = await payController.successfullPurchase(purchaseUserId);
         return res.send("Success")
     } catch(error){
         return res.status(400).json(error.message)
@@ -86,7 +88,7 @@ router.post('/webhook', async(req, res) =>{
     const data = req.query
 
     try{
-        const response = await payController.webhook(data);
+        const response = await payController.webhook({data, payUserData});
         return res.json(response); 
     } catch(error){
         return res.status(400).json(error.message)
