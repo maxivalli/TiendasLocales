@@ -4,7 +4,7 @@ import ProductImages from "../../components/productImages/ProductImages";
 import Head from "../../components/Head/Head";
 import style from "./Detail.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getPostById, updateStock } from "../../redux/actions";
+import { getPostById } from "../../redux/actions";
 import axios from "axios";
 
 const Detail = ({userData}) => {
@@ -17,8 +17,6 @@ const Detail = ({userData}) => {
   const [quantity, setQuantity] = useState(1);
   
   const selectedStore = stores?.find((store) => store.id == selectedPost?.storeId);
-  const postId = selectedPost?.id
-  const stock = selectedPost?.stock
   const isBuyButtonDisabled = quantity <= 0 || selectedPost.stock === 0;
   
   
@@ -40,8 +38,6 @@ const Detail = ({userData}) => {
 const handlePremium = async () => {
     try {
       if (quantity > 0 && quantity <= selectedPost.stock) {
-        dispatch(updateStock(quantity, postId));
-        setBuyClickCounter((prevCounter) => prevCounter + 1);
       } else {
         throw new Error ("Disculpe, no hay mas stock disponible");
       }
