@@ -45,7 +45,7 @@ const Detail = () => {
             max="10"
             step="1"
           ></input>
-          <h5>Envío gratis</h5>
+          <h5>Envío disponible 🛵</h5>
           <div className={style.comprar}>
             <button>Comprar</button>
           </div>
