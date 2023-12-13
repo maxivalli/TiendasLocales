@@ -46,7 +46,7 @@ const CardSquare = ({
           <img src={image} alt="image" />
           <h2>{title}</h2>
           <h3>{marca ? marca : <p></p>}</h3>
-          <h4>${price}</h4>
+          <h3>${price}</h3>
           <h4>Stock: {stock}</h4>
           <h4>{delivery ? "Envío disponible 🛵" : "Retiro en tienda 🙋🏻‍♂️"}</h4>
         </div>
