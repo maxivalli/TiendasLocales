@@ -5,16 +5,18 @@ import "slick-carousel/slick/slick-theme.css";
 import CardSquare from "../CardSquare/CardSquare";
 import style from "./Cards.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllExistingPosts } from "../../redux/actions";
+import { getAllPosts } from "../../redux/actions";
 
 
 const Cards = () => {
 
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.allExistingPosts)
+  const posts = useSelector((state) => state.allPosts)
+
+  console.log(posts);
 
   useEffect(() => {
-    dispatch(getAllExistingPosts)
+    dispatch(getAllPosts())
   }, [dispatch])
 
   const settings = {
