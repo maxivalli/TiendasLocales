@@ -6,8 +6,17 @@ const postsController = require("../../controllers/postsControllers.js");
 router.get("/getStorePosts/:storeId", async (req, res) => {
   const { storeId } = req.params;
   try {
-    const storePosts = await postsController.getStorePosts(storeId)
-    return res.status(200).json(storePosts)
+    const storePosts = await postsController.getStorePosts(storeId);
+    return res.status(200).json(storePosts);
+  } catch (error) {
+    return res.status(404).json({ error: error.message });
+  }
+});
+
+router.get("/getAllPosts", async (req, res) => {
+  try {
+    const allPosts = await postsController.getAllPosts();
+    return res.status(200).json(allPosts);
   } catch (error) {
     return res.status(404).json({ error: error.message });
   }

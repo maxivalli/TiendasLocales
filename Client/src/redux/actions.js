@@ -228,6 +228,16 @@ export function getStorePosts(storeId) {
   };
 }
 
+export function getAllPosts() {
+  return async function (dispatch) {
+    const response = await axios.get("/posts/getAllPosts");
+    return dispatch({
+      type: GET_ALL_POSTS,
+      payload: response.data,
+    });
+  };
+}
+
 export function getAllDisabledPosts() {
   return async function (dispatch) {
     const response = await axios.get("/posts/allDisabledPosts");

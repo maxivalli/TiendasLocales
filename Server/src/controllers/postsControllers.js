@@ -55,6 +55,15 @@ exports.getStorePosts = async (storeId) => {
   }
 };
 
+exports.getAllPosts = async () => {
+  try {
+    const allPosts = await Post.findAll();
+    return allPosts;
+  } catch (error) {
+    throw error;
+  }
+};
+
 exports.createPost = async (postData) => {
   try {
       const newPost = await Post.create({
