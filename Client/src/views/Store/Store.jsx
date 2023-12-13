@@ -8,15 +8,22 @@ import hambur from "../../assets/hambur.jpg";
 import style from "./Store.module.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { getStorePosts } from "../../redux/actions";
 
 const Store = () => {
   const dispatch = useDispatch();
   const { storeId } = useParams();
 
   const stores = useSelector((state) => state.allStores);
+  const storePosts = useSelector((state) => state.storePosts)
 
   const selectedStore = stores.find((store) => store.id == storeId);
-  console.log(selectedStore.image);
+
+  useEffect(() => {
+    dispatch(getStorePosts(storeId))
+  }, [dispatch])
+  
+
 
   return (
     <>
@@ -73,12 +80,9 @@ const Store = () => {
         </div>
 
         <div className={style.store2}>
-          <CardSquare
-            image={hambur}
-            title={"Hamburguesa Americana"}
-            price={"$2500"}
-            store={"Pizza Land"}
-          />
+        {storePosts.map((post, index) => (
+          <CardSquare key={index} {...post} storeId={storeId}/>
+          ))}
         </div>
         <div className={style.buttons}>
           <NavButtons storeId={storeId} />

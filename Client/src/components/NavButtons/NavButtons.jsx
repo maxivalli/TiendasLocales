@@ -4,13 +4,13 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const NavButtons = ({storeId}) => {
-  console.log(storeId);
+
   const navigate = useNavigate();
 const userData = useSelector((state) => state.userData)
 const stores = useSelector((state) => state.allStores)
 
 const store = stores.find((store) => store.id == storeId)
-console.log(store);
+
 
   const handleChatButtonClick = async () => {
     const projectID = "1fb49778-0ca9-4761-a91b-512f3a51ee7f";

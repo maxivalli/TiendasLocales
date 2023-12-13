@@ -3,7 +3,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import style from "./ProductImages.module.css";
 
-const ProductImages = ({ b1, b2, b3 }) => {
+const ProductImages = ({ images }) => {
   return (
     <div className={style.banners}>
       <Carousel
@@ -17,14 +17,9 @@ const ProductImages = ({ b1, b2, b3 }) => {
         stopOnHover={true}
       >
         <div>
-          <img src={b1} alt="banner1" />
+          <img src={images} alt="banner1" />
         </div>
-        <div>
-          <img src={b2} alt="banner2" />
-        </div>
-        <div>
-          <img src={b3} alt="banner2" />
-        </div>
+       
       </Carousel>
     </div>
   );

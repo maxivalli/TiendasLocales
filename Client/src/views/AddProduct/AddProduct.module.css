@@ -1,0 +1,129 @@
+/* Estilos para el formulario de productos en React */
+
+.container {
+    display: grid;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.3);
+    margin-bottom: 100px;
+    margin-top: 100px;
+    width: 800px;
+  }
+  
+  .container h3 {
+    justify-self: center;
+    margin-bottom: 40px;
+    font-style: italic;
+  }
+  
+  .container p {
+    margin: 0;
+    font-size: 14px;
+    align-self: flex-end;
+  }
+
+  .container input {
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(194, 194, 194);
+  }
+
+  .container span {
+    color: red;
+    font-size: 12px;
+  }
+
+  .create {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  .title {
+    display: grid;
+  }
+  
+  .marca {
+    display: grid;
+  }
+  
+  .image {
+    display: grid;
+  }
+  
+  .description {
+    display: grid;
+  }
+  
+  .price {
+    display: grid;
+  }
+  
+  .stock {
+    display: grid;
+  }
+  
+  .delivery {
+    display: grid;
+  }
+
+  .foto {
+    display: grid;
+    height: auto;
+  }
+  
+  .foto input {
+    height: auto;
+  }
+
+  
+  .container button {
+    width: 100px;
+    height: 40px;
+    background-color: red;
+    border: none;
+    border-radius: 5px;
+    justify-self: center;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  
+  .imagePreview {
+    display: grid;
+  }
+
+  .imagePreview button {
+    width: 20px;
+    height: 20px;
+    border: none;
+    justify-self: center;
+    background-color: gray;
+    padding: 0;
+    margin-top: 5px;
+    border-radius: 2px;
+  }
+
+  .imgUser {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    justify-self: center;
+  }
+
+  .button {
+    width: 100px;
+    height: 40px;
+    background-color: red;
+    border: none;
+    border-radius: 5px;
+    justify-self: center;
+    margin-top: 50px;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      width: 320px;
+    }
+  }
+  

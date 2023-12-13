@@ -26,6 +26,7 @@ import "./App.css";
 import UbiForm from "./components/UbiForm/UbiForm";
 import { getAllStores, saveUserData } from "./redux/actions";
 import { useDispatch } from "react-redux";
+import AddProduct from "./views/AddProduct/AddProduct";
 
 let socket
 
@@ -274,7 +275,7 @@ function App() {
             )
           }
         />
-        <Route path="/detail" element={isAuthenticated ? (
+        <Route path="/post/:id" element={isAuthenticated ? (
               userData ? (
                 <Detail userData={userData} setAuth={setAuth} />
               ) : (
@@ -562,6 +563,31 @@ function App() {
             ) : isAuthenticatedAuth0 ? (
               user ? (
                 <Dashboard userData={userData} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : (
+              <Login setAuth={setAuth}/>
+            )
+          }
+        />
+         <Route path="/addproduct" element={isAuthenticated ? (
+              userData ? (
+                <AddProduct userData={userData} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : isAuthenticatedAuth0 ? (
+              user ? (
+                <AddProduct userData={userData} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>

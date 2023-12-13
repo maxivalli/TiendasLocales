@@ -1,5 +1,5 @@
-import React from "react";
-import {Link} from 'react-router-dom'
+import React, { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import ProductImages from "../../components/productImages/ProductImages";
 import Head from "../../components/Head/Head";
 import style from "./Detail.module.css";
@@ -7,34 +7,51 @@ import b1 from "../../assets/1.jpeg";
 import b2 from "../../assets/2.jpeg";
 import b3 from "../../assets/3.jpeg";
 import avatar from "../../assets/storeAvatar.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { getPostById } from "../../redux/actions";
 
 const Detail = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+
+  const selectedPost = useSelector((state) => state.selectedPost);
+  const stores = useSelector((state) => state.allStores);
+
+  const selectedStore = stores?.find(
+    (store) => store.id == selectedPost?.storeId
+  );
+  console.log(selectedStore);
+
+  useEffect(() => {
+    dispatch(getPostById(id));
+  }, [dispatch]);
+
   return (
     <>
       <Head />
       <div className={style.detail}>
         <div className={style.sidebar}>
           <Link to="/store">
-          <div className={style.avatar}>
-            <img src={avatar} alt="avatar" />
-            <h3>Pizza Land</h3>
-          </div>
+            <div className={style.avatar}>
+              <img src={selectedStore?.image} alt="avatar" />
+              <h3>{selectedStore?.nombre}</h3>
+            </div>
           </Link>
           <div className={style.contact}>
-            <h4>Av. Libertador 1234</h4>
-            <h4>Comidas</h4>
-            <h4>11:00 a 23:00</h4>
+            <h4>{selectedStore?.direccion}</h4>
+            <h4>{selectedStore?.categoria}</h4>
+            <h4>{selectedStore?.horarios}</h4>
           </div>
         </div>
         <div className={style.images}>
-          <ProductImages b1={b1} b2={b2} b3={b3} />
+          <ProductImages images={selectedPost.image} />
         </div>
 
         <div className={style.info}>
-          <h2>Pizza 8 porciones</h2>
+          <h2>{selectedPost.title}</h2>
           <div className={style.precio}>
             <span>Precio:</span>
-            <h4>$3500</h4>
+            <h4>${selectedPost.price}</h4>
           </div>
           <label>Cantidad:</label>
           <input
@@ -53,7 +70,7 @@ const Detail = () => {
       </div>
       <div className={style.desc}>
         <h5>Descripción</h5>
-        <p>Variedades: Anchoas, Palmitos, Especial, Napolitana</p>
+        <p>{selectedPost.description}</p>
       </div>
     </>
   );
