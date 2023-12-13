@@ -51,7 +51,7 @@ const CardsStore = ({
 
   return (
     <Link to={`/store/${id}`}>
-      <div className={style.cardsStore}>
+    <div className={style.cardsStore}>
         <div className={style.favorite} onClick={toggleFavorite}>
           <img
             src={
