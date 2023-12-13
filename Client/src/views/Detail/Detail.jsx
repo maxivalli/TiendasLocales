@@ -20,11 +20,12 @@ const Detail = () => {
   const selectedStore = stores?.find(
     (store) => store.id == selectedPost?.storeId
   );
-  console.log(selectedStore);
 
   useEffect(() => {
     dispatch(getPostById(id));
   }, [dispatch]);
+
+  console.log(selectedPost);
 
   return (
     <>
@@ -62,7 +63,7 @@ const Detail = () => {
             max="10"
             step="1"
           ></input>
-          <h5>Envío disponible 🛵</h5>
+          <h5>{selectedPost.delivery ? "Envío disponible 🛵" : "Retiro en tienda 🙋🏻‍♂️"}</h5>
           <div className={style.comprar}>
             <button>Comprar</button>
           </div>

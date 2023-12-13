@@ -34,6 +34,10 @@
   align-self: center;
 }
 
+.texto {
+  margin-top: 20px;
+}
+
 .cardsStore .texto h2 {
   margin: 0;
   font-weight: 800;
