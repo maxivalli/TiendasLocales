@@ -43,6 +43,7 @@ const initialState = {
   selectedUser: "",
   favorites: [],
   storePosts: [],
+  allPosts: [],
   allPostsCopy: [],
   allDisabledPosts: [],
   allExistingPosts: [],

@@ -2,13 +2,27 @@ import React, { useEffect, useState } from "react";
 import Logo from "../../assets/TLlogoAlpha.png";
 import style from "./Head.module.css";
 import { socket } from "../../App";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllPosts } from "../../redux/actions";
 
 const Head = () => {
+  const dispatch = useDispatch()
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [hasUnreadNotification, setHasUnreadNotification] = useState(false);
   const stores = useSelector((state) => state.allStores);
+
+
+
+const allPosts = useSelector((state)=> state.allPosts)
+
+
+
+
+
+
+
+
 
   const toggleNotifications = () => {
     setShowNotifications((prevState) => !prevState);
