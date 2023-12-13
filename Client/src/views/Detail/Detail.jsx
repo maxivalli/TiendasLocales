@@ -15,7 +15,6 @@ const Detail = ({userData}) => {
   const stores = useSelector((state) => state.allStores);
   
   const [quantity, setQuantity] = useState(1);
-  const [buyClickCounter, setBuyClickCounter] = useState(1);
   
   const selectedStore = stores?.find((store) => store.id == selectedPost?.storeId);
   const postId = selectedPost?.id
@@ -33,7 +32,6 @@ const Detail = ({userData}) => {
       setQuantity(quantity + 1);
     }
   }
-  
   
   useEffect(() => {
     dispatch(getPostById(id));
