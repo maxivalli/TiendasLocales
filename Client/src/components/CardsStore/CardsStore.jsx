@@ -50,42 +50,38 @@ const CardsStore = ({
   }, [dispatch]);
 
   return (
-    <div className={style.cardsStore}>
-      <div className={style.favorite} onClick={toggleFavorite}>
-        <img
-          src={
-            isFavorite
-              ? "https://img.icons8.com/ios-glyphs/30/FA5252/like--v1.png"
-              : "https://img.icons8.com/ios-glyphs/30/737373/like--v1.png"
-          }
-          alt="like"
-          className={style.fav}
-        />
-      </div>
-
-      <div key={id} className={style.card}>
-        <div className={style.imagen}>
-          <img src={image} alt="avatar" />
+    <Link to={`/store/${id}`}>
+      <div className={style.cardsStore}>
+        <div className={style.favorite} onClick={toggleFavorite}>
+          <img
+            src={
+              isFavorite
+                ? "https://img.icons8.com/ios-glyphs/30/FA5252/like--v1.png"
+                : "https://img.icons8.com/ios-glyphs/30/737373/like--v1.png"
+            }
+            alt="like"
+            className={style.fav}
+          />
         </div>
 
-        <div className={style.texto}>
-          <h2>{nombre}</h2>
-          <h4>{horarios}</h4>
-          {calificacion ? (
-            <h4>{calificacion}</h4>
-          ) : (
-            <h4>No hay calificación disponible</h4>
-          )}
-          <h4>{categoria}</h4>
-        </div>
+        <div key={id} className={style.card}>
+          <div className={style.imagen}>
+            <img src={image} alt="avatar" />
+          </div>
 
-        <div className={style.boton}>
-          <Link to={`/store/${id}`}>
-            <button>Ver</button>
-          </Link>
+          <div className={style.texto}>
+            <h2>{nombre}</h2>
+            <h4>{horarios}</h4>
+            {calificacion ? (
+              <h4>{calificacion}</h4>
+            ) : (
+              <h4>No hay calificación disponible</h4>
+            )}
+            <h4>{categoria}</h4>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

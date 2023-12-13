@@ -13,8 +13,6 @@ const Cards = () => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.allPosts)
 
-  console.log(posts);
-
   useEffect(() => {
     dispatch(getAllPosts())
   }, [dispatch])
