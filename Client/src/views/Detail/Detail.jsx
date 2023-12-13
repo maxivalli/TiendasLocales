@@ -5,9 +5,9 @@ import Head from "../../components/Head/Head";
 import style from "./Detail.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostById, updateStock } from "../../redux/actions";
+import axios from "axios";
 
-
-const Detail = () => {
+const Detail = ({userData}) => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -21,11 +21,6 @@ const Detail = () => {
   const postId = selectedPost?.id
   const stock = selectedPost?.stock
   const isBuyButtonDisabled = quantity <= 0 || selectedPost.stock === 0;
-
-
-  console.log(selectedPost);
-
-
   
   
   function decrement() {
@@ -39,18 +34,41 @@ const Detail = () => {
     }
   }
   
-  const handleBuyClick = () => {
-    if (quantity > 0 && quantity <= selectedPost.stock) {
-      dispatch(updateStock(quantity, postId));
-      setBuyClickCounter((prevCounter) => prevCounter + 1);
-    } else {
-      console.log("Disculpe, no hay mas stock disponible");
-    }
-  };
   
   useEffect(() => {
     dispatch(getPostById(id));
   }, [dispatch]);
+
+const handlePremium = async () => {
+    try {
+      if (quantity > 0 && quantity <= selectedPost.stock) {
+        dispatch(updateStock(quantity, postId));
+        setBuyClickCounter((prevCounter) => prevCounter + 1);
+      } else {
+        throw new Error ("Disculpe, no hay mas stock disponible");
+      }
+        const paymentData = {
+          postId: selectedPost.id,
+          userId: userData.id,
+          title: selectedPost.title,
+          quantity: quantity,
+          price: selectedPost.price,
+          currency_id: "ARG",
+          description: selectedPost.description,
+        };
+  
+      const response = await axios.post("/tiendas/create-order", paymentData);
+  
+      if (response) {
+        window.location.href = response.data.response.body.init_point;
+      } else {
+        console.error("Init point not found in the response");
+      }
+    } catch (error) {
+      console.error("Error al realizar solicitud de compra", error);
+    }
+};
+
   return (
     <>
       <Head />
@@ -100,7 +118,7 @@ const Detail = () => {
               : "Retiro en tienda 🙋🏻‍♂️"}
           </h5>
           <div className={style.comprar}>
-          <button onClick={handleBuyClick} disabled={isBuyButtonDisabled}>Comprar</button>
+          <button onClick={handlePremium} disabled={isBuyButtonDisabled}>Comprar</button>
           </div>
         </div>
       </div>
