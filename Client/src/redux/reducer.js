@@ -17,21 +17,19 @@ import {
   GET_ALL_EXISTING_POSTS,
   SORT_POSTS_BY_ID,
   SORT_POSTS_BY_STATUS,
-  RESET_POSTS_FILTER,
   GET_POST_BY_ID,
   CREATE_POST,
   UPDATE_POST,
   DELETE_POST,
   RESTORE_POST,
-  RESET_FILTERS,
   OTHER_USER_DATA,
-  SELECTED_POST,
   CLEAR_DETAIL,
   USER_DATA,
   UPDATE_USER_DATA,
   GET_STORES,
   GET_ALL_POSTS,
   UPDATE_STOCK,
+  GET_USER_NOTIFICATIONS,
 } from "./actionTypes";
 
 const initialState = {
@@ -65,6 +63,7 @@ const initialState = {
   matchedPairs: [],
   postDetail: [],
   userData: {},
+  userNotif: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -211,12 +210,11 @@ function rootReducer(state = initialState, action) {
         allExistingUsers: state.allExistingUsersCopy,
       };
 
-
     case GET_STORES:
       return {
         ...state,
-        allStores: action.payload
-      }
+        allStores: action.payload,
+      };
 
     case GET_FAVORITES:
       return {
@@ -230,11 +228,11 @@ function rootReducer(state = initialState, action) {
         storePosts: action.payload,
       };
 
-      case GET_ALL_POSTS:
+    case GET_ALL_POSTS:
       return {
         ...state,
-        allPosts: action.payload
-      }
+        allPosts: action.payload,
+      };
 
     case GET_ALL_DISABLED_POSTS:
       return {
@@ -262,25 +260,31 @@ function rootReducer(state = initialState, action) {
         selectedPost: action.payload,
       };
 
-      case 'UPDATE_STOCK':
-        const { quantity, postId } = action.payload;
-      
-        // Actualiza la propiedad stock de selectedPost
-        const updatedSelectedPost = {
-          ...state.selectedPost,
-          stock: state.selectedPost.stock - quantity,
-        };
-      
-        // Actualiza la propiedad stock del post correspondiente en allPosts
-        const updatedAllPosts = state.allPosts.map(post =>
-          post.id === postId ? { ...post, stock: post.stock - quantity } : post
-        );
-      
-        return {
-          ...state,
-          selectedPost: updatedSelectedPost,
-          allPosts: updatedAllPosts,
-        };
+    case UPDATE_STOCK:
+      const { quantity, postId } = action.payload;
+
+      // Actualiza la propiedad stock de selectedPost
+      const updatedSelectedPost = {
+        ...state.selectedPost,
+        stock: state.selectedPost.stock - quantity,
+      };
+
+      // Actualiza la propiedad stock del post correspondiente en allPosts
+      const updatedAllPosts = state.allPosts.map((post) =>
+        post.id === postId ? { ...post, stock: post.stock - quantity } : post
+      );
+
+      return {
+        ...state,
+        selectedPost: updatedSelectedPost,
+        allPosts: updatedAllPosts,
+      };
+
+    case GET_USER_NOTIFICATIONS:
+      return {
+        ...state,
+        userNotif: action.payload,
+      };
 
     case SORT_POSTS_BY_ID: {
       let ordered;
@@ -359,7 +363,6 @@ function rootReducer(state = initialState, action) {
         allPosts,
       };
     }
-
 
     case CLEAR_DETAIL:
       return {

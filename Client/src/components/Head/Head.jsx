@@ -3,7 +3,7 @@ import Logo from "../../assets/TLlogoAlpha.png";
 import style from "./Head.module.css";
 import { socket } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPosts } from "../../redux/actions";
+import { getAllPosts, getUserNotif } from "../../redux/actions";
 
 const Head = () => {
   const dispatch = useDispatch()
@@ -11,14 +11,18 @@ const Head = () => {
   const [notifications, setNotifications] = useState([]);
   const [hasUnreadNotification, setHasUnreadNotification] = useState(false);
   const stores = useSelector((state) => state.allStores);
+  const userData = useSelector((state)=> state.userData)
+  const savedNotif = useSelector((state)=> state.userNotif)
 
 
 
-const allPosts = useSelector((state)=> state.allPosts)
+  const userId = userData?.id
 
 
 
-
+useEffect(()=> {
+  dispatch(getUserNotif(userId))
+}, [dispatch])
 
 
 
@@ -34,7 +38,7 @@ const allPosts = useSelector((state)=> state.allPosts)
   useEffect(() => {
     const handleAddFavorite = (storeId) => {
       console.log("socket addFavorite recibido por el front");
-      const store = stores.find((store) => store.id === storeId);
+      const store = stores.find((store) => store.id == storeId);
 
       setNotifications((prevNotifications) => [
         {
@@ -88,6 +92,14 @@ const allPosts = useSelector((state)=> state.allPosts)
               <button className={style.notifAcces}>
                 <img src={notification.image} alt="" />
                 <p>{notification.text}</p>
+              </button>
+            </div>
+          ))}
+          {savedNotif.map((notification) => (
+            <div key={notification.id}>
+              <button className={style.notifAcces}>
+                <img src={notification.image} alt="" />
+                <p>{notification.content}</p>
               </button>
             </div>
           ))}

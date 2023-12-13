@@ -1,7 +1,7 @@
 const express = require("express");
 const { createServer } = require("node:http");
 const { Server } = require("socket.io");
-const { User } = require("./src/DB_config");
+const { User, Notifications } = require("./src/DB_config");
 
 const router = require("./src/routes/routes");
 const { Message } = require("./src/DB_config");
@@ -30,9 +30,19 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("addFavorite", async (data) => {
+  socket.on("addFavorite", async (addData) => {
     console.log("socket addFavorite recibido en el servidor");
-    const {userId, storeId} = data
+    const {userId, storeId, addText, image} = addData
+    try {
+      await Notifications.create({
+        content: addText,
+        userId: userId,
+        image: image
+      });
+      console.log('Notificación almacenada en la base de datos');
+    } catch (error) {
+      console.error('Error al almacenar notificación en la base de datos:', error);
+    }
     const user = await User.findByPk(userId);
     const userSocket = user.socketId
     io.to(userSocket).emit("addFavorite", storeId)

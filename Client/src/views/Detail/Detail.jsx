@@ -15,7 +15,6 @@ const Detail = () => {
   const stores = useSelector((state) => state.allStores);
   
   const [quantity, setQuantity] = useState(1);
-  const [buyClickCounter, setBuyClickCounter] = useState(1);
   
   const selectedStore = stores?.find((store) => store.id == selectedPost?.storeId);
   const postId = selectedPost?.id
@@ -41,10 +40,8 @@ const Detail = () => {
   
   const handleBuyClick = () => {
     if (quantity > 0 && quantity <= selectedPost.stock) {
-      dispatch(updateStock(quantity, postId));
-      setBuyClickCounter((prevCounter) => prevCounter + 1);
     } else {
-      console.log("Disculpe, no hay mas stock disponible");
+      alert("Disculpe, no hay mas stock disponible");
     }
   };
   

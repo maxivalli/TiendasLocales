@@ -9,6 +9,7 @@ const reviewsRoutes = require("./reviewsRoutes/reviewsRoutes")
 const enviosRoutes = require("./enviosRoutes/enviosRoute")
 const favoritesRoutes = require(".//favoritesRoutes/favoritesRoutes")
 const tiendasRoutes = require("./tiendasRoutes/tiendasRoutes")
+const notificationsRoutes = require("./notificationsRoutes/notificationsRoutes")
 
 const router = Router();
 
@@ -23,5 +24,6 @@ router.use('/chats', chatsRoutes)
 router.use('/envios', enviosRoutes)
 router.use('/reviews', reviewsRoutes)
 router.use('/tiendas', tiendasRoutes)
+router.use('/notif', notificationsRoutes)
 
 module.exports = router;
