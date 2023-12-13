@@ -3,15 +3,12 @@ require("dotenv").config();
 const { ACCESS_TOKEN } = process.env;
 const mercadopago = require("mercadopago");
 
-/* mercadopago.configure({
+mercadopago.configure({
     access_token: ACCESS_TOKEN
-})  */
-
-let currentUserId;
+}) 
 
 exports.createOrder = async (paymentData) => {
-        const { userId, title, description, price } = paymentData
-        currentUserId = userId
+        
     try{
         let preference = {
             items: [{
@@ -23,11 +20,11 @@ exports.createOrder = async (paymentData) => {
                 description: description,
             }],
             back_urls: {  // Corrected property name to 'back_urls'
-                failure: "http://localhost:5173/#/",
-                pending: "http://localhost:5173/#/",
-                success: "http://localhost:5173/#/login"
+                failure: "http://localhost:5173/#/account",
+                pending: "http://localhost:5173/#/account",
+                success: "http://localhost:5173/#/account"
             },
-            notification_url: "https://eadb-201-190-251-186.ngrok.io/plans/webhook"
+            notification_url: "https://eadb-201-190-251-186.ngrok.io/tiendas/webhook"
         }
 
         const response = await mercadopago.preferences.create(preference);
