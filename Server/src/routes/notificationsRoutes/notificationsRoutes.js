@@ -13,7 +13,15 @@ router.get("/getUserNotif/:userId", async (req, res) => {
       }
     });
   
-
+router.delete("/deleteUserNotif/:userId", async (req, res) => {
+  const { userId } = req.params
+    try {
+      const response = await notificationsControllers.deleteUserNotif(userId);
+      return res.status(200).json(response);
+    } catch (error) {
+      return res.status(400).json(error.message);
+    }
+  });
 
 
 module.exports = router;

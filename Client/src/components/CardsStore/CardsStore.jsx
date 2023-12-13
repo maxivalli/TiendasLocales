@@ -30,7 +30,7 @@ const CardsStore = ({
     if (isFavorite) {
       setIsFavorite(false);
       dispatch(removeFavorite(userId, storeId));
-      socket.emit("removeFavorite", data);
+     // socket.emit("removeFavorite", data);
     } else {
       setIsFavorite(true);
       dispatch(addFavorite(userId, storeId));

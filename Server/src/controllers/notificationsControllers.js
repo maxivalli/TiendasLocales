@@ -13,3 +13,19 @@ exports.getUserNotif = async (userId) => {
       return []
     }
   };
+
+  exports.deleteUserNotif = async (userId) => {
+    try {
+      // Buscar y eliminar todas las notificaciones del usuario
+      const deletedRows = await Notifications.destroy({
+        where: {
+          userId: userId,
+        },
+      });
+      
+      return deletedRows;
+    } catch (error) {
+      console.error("Error al eliminar notificaciones del usuario:", error);
+      return 0;
+    }
+  };
