@@ -17,19 +17,24 @@ const CreateStore = ({ userData }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   
   const categories = [
-    "👕 Ropa e indumentaria",
-    "🛒 Comercios de conveniencia. Ej; Minimercado",
-    "🍦 Heladería",
-    " industria de la alimentación y bebidas Ej: Restaurante",
+    "🪇 Arte y artesanías",
+    "☕️ Cafeterías",
+    "🚧 Construcción",
+    "📺 Electrodomésticos",
+    "💻 Electrónica",
+    "💊 Farmacias y perfumerías",
+    "🍦 Heladerías",
     "🛠️ Herramientas",
-    "🍰 Panaderia y reposteria",
-    " Farmacias",
-    "💻🔌 Tiendas de electrónica 📱",
     "🎸 Instrumentos musicales",
     "💍 Joyas y relojes",
+    "🍭 Kioscos y almacenes",
     "🪑 Muebles y hogar",
-    "🚗 Transporte",
-    "🛒 Varios",
+    "🍰 Panaderia y reposteria",
+    "🍕 Rotisería y restaurantes",
+    "🛍️ Regalería",
+    "👕 Ropa e indumentaría",
+    "🚗 Vehículos",
+    "🛒 Sin categoría",
   ];
 
   const handleCheckboxChange = (socialMedia) => {

@@ -18,10 +18,10 @@ const CardSquare = ({id, title, marca, description, price, stock, delivery, imag
     }
   };
   
-  
   return (
     <>
       <div className={style.cardSquare}>
+        
       <div className={style.favorite} onClick={toggleFavorite}>
         <img
           src={

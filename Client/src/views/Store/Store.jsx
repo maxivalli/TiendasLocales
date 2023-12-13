@@ -37,8 +37,8 @@ const Store = () => {
 
           <div className={style.info}>
             <h2>{selectedStore.nombre}</h2>
-            <p>{selectedStore.direccion}</p>
-            <p>{selectedStore.horarios}</p>
+            <p>📍 {selectedStore.direccion}</p>
+            <p>⏰ {selectedStore.horarios}</p>
             <p>{selectedStore.categoria}</p>
           </div>
 

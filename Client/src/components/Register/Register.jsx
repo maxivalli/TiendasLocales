@@ -1,5 +1,6 @@
 import Logo from '../../assets/logo.png'
 import React, { useState, useEffect } from "react";
+import Head from '../../components/Head/Head'
 import style from "./Register.module.css";
 import axios from "axios";
 import { validateUsername, validateEmail, validatePassword, validateImagen, validatePasswordRepeat } from "./validations";
@@ -197,6 +198,8 @@ const Register = ({setAuth}) => {
   }
 
   return (
+    <>
+    <Head/>
     <div className={style.container}>
       <img src={Logo} className={style.logo}/>
       <div className={style.title}>
@@ -300,6 +303,7 @@ const Register = ({setAuth}) => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 

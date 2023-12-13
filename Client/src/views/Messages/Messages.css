@@ -4,6 +4,58 @@
   left: 0;
   top: 60px;
   width: 100vw;
+  background-color: initial !important;
+}
+
+div.ce-chat-list-column
+  > div
+  > div
+  > div:nth-child(1)
+  > div
+  > div
+  > div:nth-child(1)
+  > div {
+  display: none;
+}
+
+div.ce-chat-feed-column
+  > div
+  > div.ce-chat-title
+  > div.ce-chat-list-mobile-option
+  > div
+  > div
+  > div
+  > div
+  > div:nth-child(1)
+  > div.ce-chat-form-container
+  > div
+  > div:nth-child(1)
+  > div {
+  display: none;
+}
+
+span.anticon.anticon-setting {
+  display: none;
+}
+
+span.anticon.anticon-menu {
+  color: black !important;
+}
+
+span.anticon.anticon-close {
+  color: cornflowerblue !important;
+}
+
+div.ce-settings-column {
+  border-left: 1px solid red;
+}
+
+div[id^="ce-username-option-"] {
+  background-color: initial !important;
+}
+
+input.ce-input.ce-text-input {
+  background: transparent !important;
 }
 
 .ce-chat-engine {
@@ -24,28 +76,22 @@ button#ce-delete-chat-button {
   background-color: initial !important;
 }
 
-div .ce-chat-list {
-  background-color: transparent !important;
+div.ce-chat-list {
+  background-color: initial !important;
   border-right: 1px solid red !important;
 }
 
 div.ce-chats-container {
   background-color: transparent !important;
-  
 }
 
 div.ce-chat-form-container {
   background-color: transparent !important;
-  /* color: initial !important; */
 }
 
 div.ce-active-chat-card {
   background-color: red !important;
   margin: 5px !important;
-}
-
-div#ce-chat-card-title-test {
-  /* color: initial !important; */
 }
 
 div.ce-chat-feed {
@@ -55,6 +101,34 @@ div.ce-chat-feed {
 div.ce-chat-title {
   background-color: red !important;
   border-top: 1px solid black !important;
+}
+
+div.ce-chat-title-text {
+  color: initial;
+}
+
+div.ce-chat-subtitle-text {
+  color: initial;
+}
+
+div.ce-chat-subtitle-text.ce-chat-subtitle-message {
+  color: initial !important;
+}
+
+div.ce-chat-subtitle-text.ce-chat-subtitle-date {
+  color: initial !important;
+}
+
+div.ce-message-date-text {
+  color: initial !important;
+}
+
+span.ce-message-timestamp {
+  color: initial !important;
+}
+
+div.ce-their-message-sender {
+  color: initial !important;
 }
 
 div#ce-feed-container {
@@ -107,18 +181,6 @@ div.ql-editor {
   color: black !important;
 }
 
-div.ql-editor p {
-  /* color: black !important; */
-}
-
-div#ce-chat-feed-title-test {
-  /* color: initial !important; */
-}
-
-div.ce-chat-subtitle-text {
-  /* color: initial !important; */
-}
-
 button#new-chat-plus-button {
   background-color: red !important;
 }
@@ -151,6 +213,8 @@ div.ce-wrapper {
   div .ce-chat-list {
     border-right: none !important;
   }
+
+  div.ce-settings-column {
+    border-left: none;
+  }
 }
-
-
