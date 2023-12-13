@@ -90,11 +90,10 @@ const handlePremium = async () => {
             <span>Precio:</span>
             <h4>${selectedPost.price}</h4>
           </div>
-          <label>cantidad:</label>
-          <div>
+
+          <div className={style.but}>
             <button onClick={decrement}>-</button>
             <input
-              type="number"
               id="cantidad"
               name="cantidad"
               min="1"
@@ -105,12 +104,15 @@ const handlePremium = async () => {
             ></input>
             <button onClick={increment}>+</button>
           </div>
-          <p> stock: {selectedPost.stock}</p>
+          
+          <p> Stock: {selectedPost.stock}</p>
+          <div className={style.envio}>
           <h5>
             {selectedPost.delivery
               ? "Envío disponible 🛵"
               : "Retiro en tienda 🙋🏻‍♂️"}
           </h5>
+          </div>
           <div className={style.comprar}>
           <button onClick={handlePremium} disabled={isBuyButtonDisabled}>Comprar</button>
           </div>
