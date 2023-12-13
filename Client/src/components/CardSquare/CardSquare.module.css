@@ -6,11 +6,14 @@
   box-shadow: 50px 50px 40px 10px rgba(0, 0, 0, 0.8) inset;
   border-radius: 10px;
 }
+
 .cardSquare .favorite {
-  display: relative;
-  margin-left: 15px;
-  margin-top: 15px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 9999;
 }
+
 .cardSquare .fav {
   width: 28px;
   height: 28px;

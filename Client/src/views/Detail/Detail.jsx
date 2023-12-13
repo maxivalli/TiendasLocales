@@ -38,9 +38,9 @@ const Detail = () => {
             </div>
           </Link>
           <div className={style.contact}>
-            <h4>{selectedStore?.direccion}</h4>
+            <h4>📍 {selectedStore?.direccion}</h4>
             <h4>{selectedStore?.categoria}</h4>
-            <h4>{selectedStore?.horarios}</h4>
+            <h4>⏰ {selectedStore?.horarios}</h4>
           </div>
         </div>
         <div className={style.images}>
