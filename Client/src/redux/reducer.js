@@ -30,6 +30,7 @@ import {
   USER_DATA,
   UPDATE_USER_DATA,
   GET_STORES,
+  GET_ALL_POSTS,
 } from "./actionTypes";
 
 const initialState = {
@@ -227,6 +228,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         storePosts: action.payload,
       };
+
+      case GET_ALL_POSTS:
+      return {
+        ...state,
+        allPosts: action.payload
+      }
 
     case GET_ALL_DISABLED_POSTS:
       return {
