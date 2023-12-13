@@ -29,28 +29,27 @@ const CardSquare = ({
 
   return (
     <>
-      <Link to={`/post/${id}`}>
-        <div className={style.cardSquare}>
-          <div className={style.favorite} onClick={toggleFavorite}>
-            <img
-              src={
-                isFavorite
-                  ? "https://img.icons8.com/ios-glyphs/30/FA5252/like--v1.png"
-                  : "https://img.icons8.com/ios-glyphs/30/737373/like--v1.png"
-              }
-              alt="like"
-              className={style.fav}
-            />
-          </div>
-
+      <div className={style.cardSquare}>
+        <div className={style.favorite} onClick={toggleFavorite}>
+          <img
+            src={
+              isFavorite
+                ? "https://img.icons8.com/ios-glyphs/30/FA5252/like--v1.png"
+                : "https://img.icons8.com/ios-glyphs/30/737373/like--v1.png"
+            }
+            alt="like"
+            className={style.fav}
+          />
+        </div>
+        <Link to={`/post/${id}`}>
           <img src={image} alt="image" />
           <h2>{title}</h2>
           <h3>{marca ? marca : <p></p>}</h3>
-          <h4>${price}</h4>
+          <h3>${price}</h3>
           <h4>Stock: {stock}</h4>
           <h4>{delivery ? "Envío disponible 🛵" : "Retiro en tienda 🙋🏻‍♂️"}</h4>
-        </div>
-      </Link>
+        </Link>
+      </div>
     </>
   );
 };
