@@ -26,7 +26,7 @@ try{
                 pending: "http://localhost:5173/#/account",
                 success: "http://localhost:5173/#/account"
             },
-            notification_url: "https://4d22-201-190-175-186.ngrok.io/tiendas/webhook"
+            notification_url: "https://1167-201-190-175-186.ngrok.io/tiendas/webhook"
         }
 
         const response = await mercadopago.preferences.create(preference);
@@ -40,9 +40,9 @@ try{
     }
 } 
 
-exports.webhook = async (data) => {
+exports.webhook = async ({data, payUserData}) => {
     if (data.type === "payment") {
-        console.log("AAA", data)
+        console.log("AAA", payUserData)
     } else {
         throw new Error("Invalid webhook event type");
     }
