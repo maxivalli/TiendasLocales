@@ -33,13 +33,12 @@ const CardSquare = ({id, title, marca, description, price, stock, delivery, imag
           className={style.fav}
         />
       </div>
-
         <img src={image} alt="image" />
         <h2>{title}</h2>
-        <h3>{marca}</h3>
+        <h3>{marca ? marca : <p></p>}</h3>
         <h4>${price}</h4>
-        <h4>stock: {stock}</h4>
-        <h4>{delivery}</h4>
+        <h4>Stock: {stock}</h4>
+        <h4>{delivery ? 'Envío disponible 🛵' : 'Retiro en tienda 🙋🏻‍♂️'}</h4>
         <Link to={`/post/${id}`}>
         <button className={style.comprar}>Ver</button>
         </Link>
