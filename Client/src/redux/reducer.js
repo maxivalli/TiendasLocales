@@ -31,6 +31,7 @@ import {
   UPDATE_USER_DATA,
   GET_STORES,
   GET_ALL_POSTS,
+  UPDATE_STOCK,
 } from "./actionTypes";
 
 const initialState = {
@@ -260,6 +261,26 @@ function rootReducer(state = initialState, action) {
         ...state,
         selectedPost: action.payload,
       };
+
+      case 'UPDATE_STOCK':
+        const { quantity, postId } = action.payload;
+      
+        // Actualiza la propiedad stock de selectedPost
+        const updatedSelectedPost = {
+          ...state.selectedPost,
+          stock: state.selectedPost.stock - quantity,
+        };
+      
+        // Actualiza la propiedad stock del post correspondiente en allPosts
+        const updatedAllPosts = state.allPosts.map(post =>
+          post.id === postId ? { ...post, stock: post.stock - quantity } : post
+        );
+      
+        return {
+          ...state,
+          selectedPost: updatedSelectedPost,
+          allPosts: updatedAllPosts,
+        };
 
     case SORT_POSTS_BY_ID: {
       let ordered;

@@ -100,6 +100,24 @@ exports.updatePost = async (id, updatedData) => {
   }
 };
 
+exports.updateStock = async (postId, quantity) => {
+  try {
+    const post = await Post.findByPk(postId);
+
+    if (!post) {
+      throw new Error("Post not found");
+    }
+
+    post.stock -= quantity;
+
+    await post.save();
+
+    return post;
+  } catch (error) {
+    throw error;
+  }
+};
+
 exports.deletePost = async (id) => {
   try {
     const post = await Post.findByPk(id);
