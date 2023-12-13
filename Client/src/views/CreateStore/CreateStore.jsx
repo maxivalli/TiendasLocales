@@ -13,31 +13,22 @@ const CreateStore = ({ userData }) => {
   const [showFacebookInput, setShowFacebookInput] = useState(false);
   const [showInstagramInput, setShowInstagramInput] = useState(false);
   const [showWhatsappInput, setShowWhatsappInput] = useState(false);
-  const [imageError, setImageError] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("");
-
+  
   const categories = [
-    "⚱️ Antiguedades",
-    "🎨 Arte y artesanías",
-    "⚽️ Articulos deportivos",
-    "📺 Audio y video",
-    "☕️ Cafetería",
-    "📷 Cámaras y accesorios",
-    "📱 Celulares",
-    "💻 Computación",
-    "🚧 Construcción",
-    "🔌 Electrodomésticos",
-    "🛠️ Herramientas",
+    "👕 Ropa e indumentaria",
+    "🛒 Comercios de conveniencia. Ej; Minimercado",
     "🍦 Heladería",
+    " industria de la alimentación y bebidas Ej: Restaurante",
+    "🛠️ Herramientas",
+    "🍰 Panaderia y reposteria",
+    " Farmacias",
+    "💻🔌 Tiendas de electrónica 📱",
     "🎸 Instrumentos musicales",
     "💍 Joyas y relojes",
     "🪑 Muebles y hogar",
-    "🍰 Postres",
-    "🚗 Rodados con motor",
-    "🚲 Rodados sin motor",
-    "👕 Ropa e indumentaria",
-    "🍕 Rotisería",
+    "🚗 Transporte",
     "🛒 Varios",
   ];
 
@@ -130,7 +121,6 @@ const CreateStore = ({ userData }) => {
 
     if (Object.values(formErrors).some((error) => error)) {
       setErrors(formErrors);
-      console.log(errors);
       return;
     }
 

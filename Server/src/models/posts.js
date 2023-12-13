@@ -1,5 +1,4 @@
 const { DataTypes } = require("sequelize");
-const User = require("./user")
 
 module.exports = (sequelize) => {
   sequelize.define("Post", {
@@ -8,24 +7,36 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true
     },
+    storeId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+      },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    marca: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     description: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    category: {
-      type: DataTypes.STRING,
+    price: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
-    ubication: {
-      type: DataTypes.STRING,
+    stock: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
-    image:{
-      type: DataTypes.ARRAY(DataTypes.STRING),
+    delivery: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    image: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
   },

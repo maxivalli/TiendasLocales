@@ -15,11 +15,7 @@ import {
   GET_FAVORITES,
   REMOVE_FAVORITE,
   ADD_FAVORITE,
-  CARGAR_HISTORIAL_MENSAJES,
-  GET_ALL_MESSAGES,
   OTHER_USER_DATA,
-  GET_ALL_CHATS,
-  CHAT_CREATED,
   GET_ALL_POSTS,
   GET_ALL_DISABLED_POSTS,
   GET_ALL_EXISTING_POSTS,
@@ -27,29 +23,16 @@ import {
   SORT_POSTS_BY_STATUS,
   RESET_POSTS_FILTER,
   GET_POST_BY_ID,
-  SELECT_CATEGORY,
-  SELECT_LOCALITY,
-  SELECT_PROVINCE,
-  GET_POST_BY_CATEGORY,
-  GET_POST_BY_PROVINCE,
-  GET_POST_BY_LOCALITY,
-  LIKE_POST,
-  LIKED_POSTS,
-  GET_ALL_LIKES,
-  DELETE_LIKE,
-  GET_MATCHES,
-  UPDATE_FILTERED_MATCHES,
   CREATE_POST,
   UPDATE_POST,
   DELETE_POST,
   RESTORE_POST,
-  SELECTED_POST,
   RESET_FILTERS,
   CLEAR_DETAIL,
-  ADD_REVIEW,
   USER_DATA,
   UPDATE_USER_DATA,
   GET_STORES,
+  GET_STORE_POSTS,
 } from "./actionTypes";
 
 export function getAllUsers() {
@@ -235,11 +218,11 @@ export function getFavorites(userId) {
   };
 }
 
-export function getAllPosts() {
+export function getStorePosts(storeId) {
   return async function (dispatch) {
-    const response = await axios("/posts");
+    const response = await axios(`/posts/getStorePosts/${storeId}`);
     return dispatch({
-      type: GET_ALL_POSTS,
+      type: GET_STORE_POSTS,
       payload: response.data,
     });
   };
@@ -267,7 +250,7 @@ export function getAllExistingPosts() {
 
 export function getPostById(id) {
   return async function (dispatch) {
-    const response = await axios(`/posts/${id}`);
+    const response = await axios(`/posts/getPost/${id}`);
     return dispatch({
       type: GET_POST_BY_ID,
       payload: response.data,
