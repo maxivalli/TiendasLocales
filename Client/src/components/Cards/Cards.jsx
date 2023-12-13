@@ -17,8 +17,6 @@ const Cards = () => {
     dispatch(getAllExistingPosts)
   }, [dispatch])
 
-  console.log(posts)
-
   const settings = {
     arrows: true,
     dots: true,

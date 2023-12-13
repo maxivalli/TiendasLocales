@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
-
 import CardSquare from "../../components/CardSquare/CardSquare";
 import Filters from "../../components/Filters/Filters";
 import Head from "../../components/Head/Head";
 import NavButtons from "../../components/NavButtons/NavButtons";
-import hambur from "../../assets/hambur.jpg";
 import style from "./Store.module.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getStorePosts } from "../../redux/actions";
 
 const Store = () => {
+  
   const dispatch = useDispatch();
   const { storeId } = useParams();
 
@@ -23,8 +22,6 @@ const Store = () => {
     dispatch(getStorePosts(storeId))
   }, [dispatch])
   
-
-
   return (
     <>
       <Filters />
