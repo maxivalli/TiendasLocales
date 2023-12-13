@@ -50,20 +50,19 @@ const CardsStore = ({
   }, [dispatch]);
 
   return (
-    <Link to={`/store/${id}`}>
     <div className={style.cardsStore}>
-        <div className={style.favorite} onClick={toggleFavorite}>
-          <img
-            src={
-              isFavorite
-                ? "https://img.icons8.com/ios-glyphs/30/FA5252/like--v1.png"
-                : "https://img.icons8.com/ios-glyphs/30/737373/like--v1.png"
-            }
-            alt="like"
-            className={style.fav}
-          />
-        </div>
-
+      <div className={style.favorite} onClick={toggleFavorite}>
+        <img
+          src={
+            isFavorite
+              ? "https://img.icons8.com/ios-glyphs/30/FA5252/like--v1.png"
+              : "https://img.icons8.com/ios-glyphs/30/737373/like--v1.png"
+          }
+          alt="like"
+          className={style.fav}
+        />
+      </div>
+      <Link to={`/store/${id}`}>
         <div key={id} className={style.card}>
           <div className={style.imagen}>
             <img src={image} alt="avatar" />
@@ -80,8 +79,8 @@ const CardsStore = ({
             <h4>{categoria}</h4>
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 
