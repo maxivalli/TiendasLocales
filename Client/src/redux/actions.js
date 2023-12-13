@@ -33,6 +33,7 @@ import {
   UPDATE_USER_DATA,
   GET_STORES,
   GET_STORE_POSTS,
+  UPDATE_STOCK,
 } from "./actionTypes";
 
 export function getAllUsers() {
@@ -268,26 +269,15 @@ export function getPostById(id) {
   };
 }
 
-export const likePost = (myUserId, likedPostId, myPostId, anotherUserId) => {
+export function updateStock(quantity, postId) {
   return async (dispatch) => {
-    try {
-      const response = await axios.post("/likes", {
-        myUserId: myUserId,
-        likedPostId: likedPostId,
-        myPostId: myPostId,
-        anotherUserId: anotherUserId,
-      });
-      const likedPost = response.data.like;
-      dispatch({
-        type: LIKE_POST,
-        payload: likedPost,
-      });
-      localStorage.setItem(`likedStatus_${likedPostId}`, 'true');
-    } catch (error) {
-      console.error("Error al dar like a la publicación", error);
-    }
+    const result = await axios.put(`/posts/updateStock/${postId}`, {quantity});
+    dispatch({
+      type: UPDATE_STOCK,
+      payload: {quantity, postId},
+    });
   };
-};
+}
 
 export function saveOtherUserData(otherUserName, otherUserImage) {
   return {
@@ -299,61 +289,12 @@ export function saveOtherUserData(otherUserName, otherUserImage) {
   }
 }
 
-export function likedPosts(userId) {
-  return {
-    type: LIKED_POSTS,
-    payload: userId,
-  };
-}
-
-export function getAllLikes() {
-  return async function (dispatch) {
-    const response = await axios("/likes/allLikes");
-    return dispatch({
-      type: GET_ALL_LIKES,
-      payload: response.data,
-    });
-  };
-}
-
-export function deleteLike(likeId) {
-  return async (dispatch) => {
-    const result = await axios.delete(`/likes/${likeId}`);
-    console.log(result)
-    dispatch({
-      type: DELETE_LIKE,
-      payload: result.data,
-    });
-  };
-}
-
-
 export const clearDetail = () => {
   return async function (dispatch) {
     return dispatch({
       type: CLEAR_DETAIL,
     });
   };
-};
-
-export const getMatches = (userId) => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.get(`/matches/${userId}`);
-      const matches = response.data;
-      dispatch({ type: GET_MATCHES, payload: matches });
-    } catch (error) {
-      // Manejar errores, por ejemplo, mostrar un mensaje de error en la interfaz de usuario
-      console.error("Error al obtener los matches", error);
-    }
-  };
-};
-
-export const updateMatchedPairs = (matchedPairs) => {
-  return {
-    type: UPDATE_FILTERED_MATCHES,
-    payload: matchedPairs,
-  }
 };
 
 export const selectedPost = (postId, postImage) => {
@@ -366,56 +307,6 @@ export const selectedPost = (postId, postImage) => {
   };
 };
 
-export function selectCategory(category) {
-  return {
-    type: SELECT_CATEGORY,
-    payload: category,
-  };
-}
-
-export function selectProvince(provincia) {
-  return {
-    type: SELECT_PROVINCE,
-    payload: provincia,
-  };
-}
-
-export function selectLocality(localidad) {
-  return {
-    type: SELECT_LOCALITY,
-    payload: localidad,
-  };
-}
-
-export function getPostByCategory(category) {
-  return async function (dispatch) {
-    const response = await axios(`/posts/categories/${category}`);
-    return dispatch({
-      type: GET_POST_BY_CATEGORY,
-      payload: response.data,
-    });
-  };
-}
-
-export function getPostByProvince(provincia) {
-  return async function (dispatch) {
-    const response = await axios(`/posts/provincia/${provincia}`);
-    return dispatch({
-      type: GET_POST_BY_PROVINCE,
-      payload: response.data,
-    });
-  };
-}
-
-export function getPostByLocality(localidad) {
-  return async function (dispatch) {
-    const response = await axios(`/posts/localidad/${localidad}`);
-    return dispatch({
-      type: GET_POST_BY_LOCALITY,
-      payload: response.data,
-    });
-  };
-}
 
 export function updatePost(id, post) {
   return async (dispatch) => {

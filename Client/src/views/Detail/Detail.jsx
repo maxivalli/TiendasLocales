@@ -1,14 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ProductImages from "../../components/productImages/ProductImages";
 import Head from "../../components/Head/Head";
 import style from "./Detail.module.css";
-import b1 from "../../assets/1.jpeg";
-import b2 from "../../assets/2.jpeg";
-import b3 from "../../assets/3.jpeg";
-import avatar from "../../assets/storeAvatar.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { getPostById } from "../../redux/actions";
+import { getPostById, updateStock } from "../../redux/actions";
+
 
 const Detail = () => {
   const { id } = useParams();
@@ -16,17 +13,44 @@ const Detail = () => {
 
   const selectedPost = useSelector((state) => state.selectedPost);
   const stores = useSelector((state) => state.allStores);
+  
+  const [quantity, setQuantity] = useState(1);
+  const [buyClickCounter, setBuyClickCounter] = useState(1);
+  
+  const selectedStore = stores?.find((store) => store.id == selectedPost?.storeId);
+  const postId = selectedPost?.id
+  const stock = selectedPost?.stock
+  const isBuyButtonDisabled = quantity <= 0 || selectedPost.stock === 0;
 
-  const selectedStore = stores?.find(
-    (store) => store.id == selectedPost?.storeId
-  );
-
-  useEffect(() => {
-    dispatch(getPostById(id));
-  }, [dispatch]);
 
   console.log(selectedPost);
 
+
+  
+  
+  function decrement() {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  }
+  function increment() {
+    if (quantity < selectedPost.stock) {
+      setQuantity(quantity + 1);
+    }
+  }
+  
+  const handleBuyClick = () => {
+    if (quantity > 0 && quantity <= selectedPost.stock) {
+      dispatch(updateStock(quantity, postId));
+      setBuyClickCounter((prevCounter) => prevCounter + 1);
+    } else {
+      console.log("Disculpe, no hay mas stock disponible");
+    }
+  };
+  
+  useEffect(() => {
+    dispatch(getPostById(id));
+  }, [dispatch]);
   return (
     <>
       <Head />
@@ -54,18 +78,29 @@ const Detail = () => {
             <span>Precio:</span>
             <h4>${selectedPost.price}</h4>
           </div>
-          <label>Cantidad:</label>
-          <input
-            type="number"
-            id="cantidad"
-            name="cantidad"
-            min="1"
-            max="10"
-            step="1"
-          ></input>
-          <h5>{selectedPost.delivery ? "Envío disponible 🛵" : "Retiro en tienda 🙋🏻‍♂️"}</h5>
+          <label>cantidad:</label>
+          <div>
+            <button onClick={decrement}>-</button>
+            <input
+              type="number"
+              id="cantidad"
+              name="cantidad"
+              min="1"
+              max={selectedPost.stock}
+              step="1"
+              value={quantity}
+              onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
+            ></input>
+            <button onClick={increment}>+</button>
+          </div>
+          <p> stock: {selectedPost.stock}</p>
+          <h5>
+            {selectedPost.delivery
+              ? "Envío disponible 🛵"
+              : "Retiro en tienda 🙋🏻‍♂️"}
+          </h5>
           <div className={style.comprar}>
-            <button>Comprar</button>
+          <button onClick={handleBuyClick} disabled={isBuyButtonDisabled}>Comprar</button>
           </div>
         </div>
       </div>
