@@ -15,6 +15,8 @@ import {
   GET_FAVORITES,
   REMOVE_FAVORITE,
   ADD_FAVORITE,
+  REMOVE_FAVORITE_POST,
+  ADD_FAVORITE_POST,
   OTHER_USER_DATA,
   GET_ALL_POSTS,
   GET_ALL_DISABLED_POSTS,
@@ -26,6 +28,7 @@ import {
   CREATE_POST,
   UPDATE_POST,
   DELETE_POST,
+  SELECTED_POST,
   RESTORE_POST,
   RESET_FILTERS,
   CLEAR_DETAIL,
@@ -215,6 +218,28 @@ export function getFavorites(userId) {
     try {
       const response = await axios.get(`/favorites/getFavorites/${userId}`);
       dispatch({ type: GET_FAVORITES, payload: response.data });
+    } catch (error) {
+      throw error
+    }
+  };
+}
+
+export function addFavoritePost(userId, storeId, postId) {
+  return async function (dispatch) {
+    try {
+      await axios.post(`/favorites/addFavoritePost/${userId}/${storeId}/${postId}`);
+      dispatch({ type: ADD_FAVORITE_POST });
+    } catch (error) {
+      throw error
+    }
+  };
+}
+
+export function removeFavoritePost(userId, storeId, postId) {
+  return async function (dispatch) {
+    try {
+      await axios.delete(`/favorites/removeFavoritePost/${userId}/${storeId}/${postId}`);
+      dispatch({ type: REMOVE_FAVORITE_POST});
     } catch (error) {
       throw error
     }

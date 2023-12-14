@@ -16,6 +16,9 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    postId: {
+      type: DataTypes.INTEGER,
+    }
   });
 };
 
