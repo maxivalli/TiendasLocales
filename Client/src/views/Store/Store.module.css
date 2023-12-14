@@ -49,7 +49,6 @@
 
 .info2 {
   display: grid;
-  grid-template-rows: 1fr 1fr;
   text-align: center;
   align-self: center;
   padding-right: 20px;

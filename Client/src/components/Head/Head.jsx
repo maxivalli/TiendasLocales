@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from "./Head.module.css";
 import { socket } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteUserNotif,
-  getUserNotif,
-} from "../../redux/actions";
+import { deleteUserNotif, getUserNotif } from "../../redux/actions";
 
 const Head = () => {
   const dispatch = useDispatch();
@@ -13,23 +10,27 @@ const Head = () => {
   const [liveNotifications, setLiveNotifications] = useState([]);
   const [hasUnreadNotification, setHasUnreadNotification] = useState(false);
   const [clearNotifications, setClearNotifications] = useState(false);
+  
   const stores = useSelector((state) => state.allStores);
-  const userData = useSelector((state)=> state.userData)
-  const savedNotif = useSelector((state)=> state.userNotif)
+  const userData = useSelector((state) => state.userData);
+  const savedNotif = useSelector((state) => state.userNotif);
 
   const mixturedNotifications = [...liveNotifications, ...savedNotif];
   const notifications = Array.from(
-    new Set(mixturedNotifications.map(notification => notification.content))
-  ).map(content => mixturedNotifications.find(notification => notification.content === content));
-  
-  const userId = userData?.id
+    new Set(mixturedNotifications.map((notification) => notification.content))
+  ).map((content) =>
+    mixturedNotifications.find(
+      (notification) => notification.content === content
+    )
+  );
+
+  const userId = userData?.id;
 
   useEffect(() => {
     if (showNotifications !== false) {
       dispatch(getUserNotif(userId));
     }
   }, [showNotifications]);
-
 
   const toggleNotifications = () => {
     setShowNotifications((prevState) => !prevState);
@@ -40,8 +41,6 @@ const Head = () => {
       setClearNotifications(false);
     }
   };
-
-  
 
   useEffect(() => {
     const handleAddFavorite = (storeId) => {
@@ -68,7 +67,7 @@ const Head = () => {
 
   useEffect(() => {
     const handleWaitingStore = (data) => {
-      const { nombre, image } = data
+      const { nombre, image } = data;
       setLiveNotifications((prevNotifications) => [
         {
           content: `Su tienda "${nombre}" se encuentra en espera de aprobación`,

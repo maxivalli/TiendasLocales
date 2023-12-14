@@ -57,8 +57,8 @@ const Account = ({ setAuth, userData, setUserData }) => {
           <div className={style.info2}>
             <button onClick={openModal} className={style.envios}>
               <img
-                width="28"
-                height="28"
+                width="22"
+                height="22"
                 src="https://img.icons8.com/ios-filled/50/FFFFFF/mailbox-opened-flag-down.png"
                 alt="mailbox-opened-flag-down"
               />
@@ -66,8 +66,8 @@ const Account = ({ setAuth, userData, setUserData }) => {
 
             <button onClick={allLogOut} className={style.salir}>
               <img
-                width="28"
-                height="28"
+                width="22"
+                height="22"
                 src="https://img.icons8.com/ios-filled/50/FFFFFF/logout-rounded.png"
                 alt="logout-rounded"
               />
@@ -83,13 +83,13 @@ const Account = ({ setAuth, userData, setUserData }) => {
           <CardSquare
             image={pizza}
             title={"Pizza Napolitana"}
-            price={"$5000"}
+            price={"5000"}
             store={"Pizza Land"}
           />
           <CardSquare
             image={pizza}
             title={"Pizza Napolitana"}
-            price={"$5000"}
+            price={"5000"}
             store={"Pizza Land"}
           />
         </div>

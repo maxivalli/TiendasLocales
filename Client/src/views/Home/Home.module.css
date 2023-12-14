@@ -42,7 +42,7 @@
 .stores {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 42px;
+  gap: 20px;
   justify-self: center;
   margin-bottom: 100px;
 }

@@ -16,7 +16,7 @@ const CreateStore = ({ userData }) => {
   const [showWhatsappInput, setShowWhatsappInput] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("");
-  
+
   const categories = [
     "🪇 Arte y artesanías",
     "☕️ Cafeterías",
@@ -166,7 +166,7 @@ const CreateStore = ({ userData }) => {
   };
   return (
     <>
-    <Head/>
+      <Head />
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
