@@ -55,7 +55,7 @@
 
 @media (max-width: 900px) {
   .stores {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 15px;
   }
 }

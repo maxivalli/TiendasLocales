@@ -28,6 +28,7 @@ const Store = () => {
       <Head />
       <div className={style.viewStore}>
         <div className={style.store}>
+          
           <div className={style.avatar}>
             <img src={selectedStore.image} alt="avatar" />
           </div>
@@ -44,8 +45,8 @@ const Store = () => {
             <div className={style.redes}>
               <button>
                 <img
-                  width="40"
-                  height="40"
+                  width="32"
+                  height="32"
                   src="https://img.icons8.com/color/48/facebook-new.png"
                   alt="facebook-new"
                 />
@@ -53,8 +54,8 @@ const Store = () => {
               
               <button>
                 <img
-                  width="40"
-                  height="40"
+                  width="32"
+                  height="32"
                   src="https://img.icons8.com/color/48/whatsapp--v1.png"
                   alt="whatsapp--v1"
                 />
@@ -62,8 +63,8 @@ const Store = () => {
 
               <button>
                 <img
-                  width="40"
-                  height="40"
+                  width="32"
+                  height="32"
                   src="https://img.icons8.com/fluency/48/instagram-new.png"
                   alt="instagram-new"
                 />

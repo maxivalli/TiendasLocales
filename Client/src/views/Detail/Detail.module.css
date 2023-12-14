@@ -50,9 +50,10 @@
 
 .info input {
   margin-left: 10px;
+  margin-right: 10px;
   height: 30px;
   width: 40px;
-  border: 1px solid grey;
+  border: 2px solid grey;
   border-radius: 5px;
 }
 
@@ -77,6 +78,28 @@
   margin: 0;
   margin-top: 30px;
   font-size: 16px;
+}
+
+.info button {
+  border: none;
+  background-color: red;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  padding: 0;
+  color: white;
+  margin: 0;
+  font-size: 18px;
+  align-self: center;
+}
+
+.but {
+  display: flex;
+}
+
+.envio {
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .precio {
@@ -127,7 +150,7 @@
 }
 
 .comprar {
-  margin-top: 60px;
+  margin-top: 40px;
   display: grid;
 }
 

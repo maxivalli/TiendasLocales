@@ -30,7 +30,7 @@ const CardsStore = ({
     if (isFavorite) {
       setIsFavorite(false);
       dispatch(removeFavorite(userId, storeId));
-      socket.emit("removeFavorite", data);
+     // socket.emit("removeFavorite", data);
     } else {
       setIsFavorite(true);
       dispatch(addFavorite(userId, storeId));
@@ -52,6 +52,7 @@ const CardsStore = ({
 
   return (
     <div className={style.cardsStore}>
+
       <div className={style.favorite} onClick={toggleFavorite}>
         <img
           src={
@@ -63,8 +64,9 @@ const CardsStore = ({
           className={style.fav}
         />
       </div>
+
       <Link to={`/store/${id}`}>
-        <div key={id} className={style.card}>
+       
           <div className={style.imagen}>
             <img src={image} alt="avatar" />
           </div>
@@ -75,11 +77,11 @@ const CardsStore = ({
             {calificacion ? (
               <h4>{calificacion}</h4>
             ) : (
-              <h4>No hay calificación disponible</h4>
+              <h4>Sin calificaciones</h4>
             )}
             <h4>{categoria}</h4>
           </div>
-        </div>
+   
       </Link>
     </div>
   );

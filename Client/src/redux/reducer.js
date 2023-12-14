@@ -342,6 +342,12 @@ function rootReducer(state = initialState, action) {
         ),
       };
 
+      case DELETE_POST:
+        return {
+          ...state,
+          userNotif: [],
+        };
+
     case RESTORE_POST: {
       const { id } = action.payload;
       const allPosts = [...state.allPosts];

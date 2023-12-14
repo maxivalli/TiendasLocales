@@ -35,6 +35,7 @@ import {
   GET_STORE_POSTS,
   UPDATE_STOCK,
   GET_USER_NOTIFICATIONS,
+  DELETE_USER_NOTIFICATIONS,
 } from "./actionTypes";
 
 export function getAllUsers() {
@@ -225,6 +226,17 @@ export function getUserNotif(userId) {
     try {
       const response = await axios.get(`/notif/getUserNotif/${userId}`);
       dispatch({ type: GET_USER_NOTIFICATIONS, payload: response.data });
+    } catch (error) {
+      throw error
+    }
+  };
+}
+
+export function deleteUserNotif(userId) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.delete(`/notif/deleteUserNotif/${userId}`);
+      dispatch({ type: DELETE_USER_NOTIFICATIONS, payload: response.data });
     } catch (error) {
       throw error
     }
