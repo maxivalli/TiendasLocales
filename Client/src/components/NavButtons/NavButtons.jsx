@@ -74,7 +74,7 @@ const NavButtons = ({ storeId }) => {
       </button>
       {mostrarBotonesExtras && (
         <div className={style.botonesExtras}>
-          <Link to={store.whatsapp}>
+          <Link to={store.whatsapp} target="_blank">
           <button>
             <img
               width="40"
@@ -84,7 +84,7 @@ const NavButtons = ({ storeId }) => {
             />
           </button>
           </Link >
-          <Link to={store.facebook}>
+          <Link to={store.facebook} target="_blank">
           <button>
             <img
               width="40"
@@ -94,7 +94,7 @@ const NavButtons = ({ storeId }) => {
             />
           </button>
           </Link>
-          <Link to={store.instagram}>
+          <Link to={store.instagram} target="_blank">
           <button>
             <img
               width="40"
