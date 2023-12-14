@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import style from "./NavButtons.module.css";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -73,6 +74,7 @@ const NavButtons = ({ storeId }) => {
       </button>
       {mostrarBotonesExtras && (
         <div className={style.botonesExtras}>
+          <Link to={store.whatsapp}>
           <button>
             <img
               width="40"
@@ -81,6 +83,8 @@ const NavButtons = ({ storeId }) => {
               alt="whatsapp--v1"
             />
           </button>
+          </Link >
+          <Link to={store.facebook}>
           <button>
             <img
               width="40"
@@ -89,6 +93,8 @@ const NavButtons = ({ storeId }) => {
               alt="facebook-new"
             />
           </button>
+          </Link>
+          <Link to={store.instagram}>
           <button>
             <img
               width="40"
@@ -97,6 +103,7 @@ const NavButtons = ({ storeId }) => {
               alt="instagram-new"
             />
           </button>
+          </Link>
         </div>
       )}
     </>
