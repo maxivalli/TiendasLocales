@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Logo from "../../assets/TLlogoAlpha.png";
 import style from "./Head.module.css";
 import { socket } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteUserNotif,
-  getAllPosts,
   getUserNotif,
 } from "../../redux/actions";
 
@@ -27,7 +25,6 @@ const Head = () => {
   const userId = userData?.id
 
   useEffect(() => {
-    // Asegurarse de que showNotifications tenga un valor previo
     if (showNotifications !== false) {
       dispatch(getUserNotif(userId));
     }
