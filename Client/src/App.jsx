@@ -32,8 +32,8 @@ let socket
 
 function App() {
   const dispatch = useDispatch()
-  axios.defaults.baseURL = "http://localhost:3001/";
-  //axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/"
+  //axios.defaults.baseURL = "http://localhost:3001/";
+  axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/"
   const {
     user,
     isAuthenticated: isAuthenticatedAuth0,
@@ -147,7 +147,8 @@ function App() {
                   rol: userDataResponse.data.rol,
                   averageRating: userDataResponse.data.averageRating,
                   tiendas: userDataResponse.data.tiendas,
-                  vendedor: userDataResponse.data.vendedor
+                  vendedor: userDataResponse.data.vendedor,
+                  accT: userDataResponse.data.accT,
                 });
                 dispatch(saveUserData({
                   email: userDataResponse.data.email,
@@ -159,6 +160,7 @@ function App() {
                   averageRating: userDataResponse.data.averageRating,
                   tiendas: userDataResponse.data.tiendas,
                   vendedor: userDataResponse.data.vendedor,
+                  accT: userDataResponse.data.accT,
                   }))
 
               })
@@ -191,8 +193,8 @@ function App() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      //socket = io("https://tiendaslocales-production.up.railway.app/")
-      socket = io("http://localhost:3001/")
+      socket = io("https://tiendaslocales-production.up.railway.app/")
+      //socket = io("http://localhost:3001/")
       setShouldConnectSocket(true);
     }
   }, [isAuthenticated]);
@@ -451,7 +453,7 @@ function App() {
             )
           }
         />
-        {/* <Route path="/mystore" element={isAuthenticated ? (
+        <Route path="/mystore/:storeId" element={isAuthenticated ? (
               userData ? (
                 <MyStore userData={userData} setAuth={setAuth} />
               ) : (
@@ -475,7 +477,7 @@ function App() {
               <Login setAuth={setAuth} />
             )
           }
-        /> */}
+        />
         <Route path="/store/:storeId" element={isAuthenticated ? (
               userData ? (
                 <Store userData={userData} setAuth={setAuth} />

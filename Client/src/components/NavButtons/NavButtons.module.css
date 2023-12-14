@@ -25,10 +25,10 @@
   gap: 10px;
   bottom: 60px;
   left: 70px;
-  background-color: grey;
+  background-color: rgba(128, 128, 128, 0.5);
   padding-top: 10px;
   padding-bottom: 10px;
-  border-radius: 10px;
+  border-radius: 25px;
 }
 
 .botonesExtras button{
