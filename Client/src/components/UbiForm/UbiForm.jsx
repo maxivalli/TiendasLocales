@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import style from "./ubiForm.module.css";
+import style from "./UbiForm.module.css";
 import Swal from "sweetalert2";
 import { validateAddressForm } from "./validations";
 
