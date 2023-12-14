@@ -17,8 +17,15 @@
 .stores {
   display: grid;
   justify-self: center;
-  gap: 20px;
+  gap: 15px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.products {
+  display: grid;
+  justify-self: center;
+  gap: 25px;
+  grid-template-columns: 1fr 1fr 1fr;
   margin-bottom: 100px;
 }
 
@@ -26,10 +33,17 @@
   .stores {
     grid-template-columns: 1fr 1fr;
   }
+
+  .products {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (max-width: 768px) {
   .stores {
+    grid-template-columns: 1fr;
+  }
+  .products {
     grid-template-columns: 1fr;
   }
 }

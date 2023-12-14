@@ -44,7 +44,8 @@ const Favorites = () => {
             <CardsStore key={index} {...store} />
           ))}
         </div>
-        <div className={style.stores}>
+        <h2 className={style.title}>Productos favoritos</h2>
+        <div className={style.products}>
           {favoritePosts.map((post, index) => (
             <CardSquare key={index} {...post} />
           ))}

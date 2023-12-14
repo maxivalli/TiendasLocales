@@ -22,8 +22,13 @@
 .botonesExtras {
   position: absolute;
   display: grid;
+  gap: 10px;
   bottom: 60px;
   left: 70px;
+  background-color: grey;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 10px;
 }
 
 .botonesExtras button{
