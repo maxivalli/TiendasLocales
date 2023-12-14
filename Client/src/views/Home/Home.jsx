@@ -38,7 +38,7 @@ const Home = () => {
 
         <div className={style.title}>
           <h2>Productos destacados</h2>
-          <p>Explora y compra los mejores productos</p>
+          <p>Mirá los últimos productos que publicaron</p>
         </div>
 
         <div className={style.cards}>
@@ -47,7 +47,7 @@ const Home = () => {
 
         <div className={style.title}>
           <h2>Tiendas destacadas</h2>
-          <p>Explora la tiendas destacadas de tu ciudad</p>
+          <p>Explora las últimas tiendas que llegaron</p>
         </div>
 
         <div className={style.stores}>
