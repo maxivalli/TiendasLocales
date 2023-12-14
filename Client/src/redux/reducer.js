@@ -30,6 +30,7 @@ import {
   GET_ALL_POSTS,
   UPDATE_STOCK,
   GET_USER_NOTIFICATIONS,
+  DELETE_USER_NOTIFICATIONS
 } from "./actionTypes";
 
 const initialState = {
@@ -342,7 +343,7 @@ function rootReducer(state = initialState, action) {
         ),
       };
 
-      case DELETE_POST:
+      case DELETE_USER_NOTIFICATIONS:
         return {
           ...state,
           userNotif: [],

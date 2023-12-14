@@ -4,18 +4,21 @@ import CardsStore from "../../components/CardsStore/CardsStore";
 import Filters from '../../components/Filters/Filters'
 import style from "./Favorites.module.css";
 import Head from "../../components/Head/Head";
-import { getAllStores, getFavorites } from "../../redux/actions";
+import { getAllPosts, getAllStores, getFavorites } from "../../redux/actions";
+import CardSquare from "../../components/CardSquare/CardSquare";
 
 const Favorites = () => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userData);
   const stores = useSelector((state) => state.allStores);
   const favorites = useSelector((state) => state.favorites);
+  const posts = useSelector((state) => state.allPosts);
 
   const userId = userData.id;
 
   useEffect(() => {
     dispatch(getAllStores());
+    dispatch(getAllPosts())
   }, [dispatch]);
 
   useEffect(() => {
@@ -23,8 +26,12 @@ const Favorites = () => {
   }, [dispatch]);
 
   const favoriteStores = stores.filter((store) =>
-    favorites.some((favorite) => favorite.storeId === store.id)
+    favorites.some((favorite) => favorite.storeId === store.id && favorite.postId === null)
   );
+
+  const favoritePosts = posts.filter((post) =>
+  favorites.some((favorite) => favorite.postId === post.id)
+);
 
   return (
     <>
@@ -35,6 +42,11 @@ const Favorites = () => {
         <div className={style.stores}>
           {favoriteStores.map((store, index) => (
             <CardsStore key={index} {...store} />
+          ))}
+        </div>
+        <div className={style.stores}>
+          {favoritePosts.map((post, index) => (
+            <CardSquare key={index} {...post} />
           ))}
         </div>
       </div>

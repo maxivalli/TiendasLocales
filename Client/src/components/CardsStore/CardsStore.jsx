@@ -20,8 +20,7 @@ const CardsStore = ({
   const userId = userData?.id;
   const storeId = id;
 
-  const isStoreFavorite =
-    favorites && favorites.some((favorite) => favorite.storeId === storeId);
+  const isStoreFavorite = favorites && favorites.some((favorite) => favorite.storeId === storeId && favorite.postId === null);
   const [isFavorite, setIsFavorite] = useState(isStoreFavorite);
 
   const toggleFavorite = () => {
@@ -35,20 +34,19 @@ const CardsStore = ({
       setIsFavorite(true);
       dispatch(addFavorite(userId, storeId));
       socket.emit("addFavorite", addData);
-      console.log("socket addFavorite emitido al servidor");
     }
   };
 
   useEffect(() => {
-    const isStoreFavorite = favorites.some(
-      (favorite) => favorite.storeId === storeId
-    );
+    const isStoreFavorite = favorites.some((favorite) => favorite.storeId === storeId && favorite.postId === null);
     setIsFavorite(isStoreFavorite);
   }, [favorites, storeId]);
 
   useEffect(() => {
+    if(userId !== undefined) {
     dispatch(getFavorites(userId));
-  }, [dispatch]);
+    }
+  }, [userId]);
 
   return (
     <div className={style.cardsStore}>

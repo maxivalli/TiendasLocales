@@ -85,6 +85,7 @@ const AddProduct = () => {
       stock: newProduct.stock,
       delivery: newProduct.delivery,
       storeId: storeId,
+      userId: userData.id,
     };
     if (newProduct.marcaChecked) {
       postData.marca = newProduct.marca;

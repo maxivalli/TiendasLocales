@@ -42,4 +42,34 @@ router.get("/getFavorites/:userId", async (req, res) => {
   }
 });
 
+
+
+
+
+
+
+// Añadir publicacion a favoritos
+router.post("/addFavoritePost/:userId/:storeId/:postId", async (req, res) => {
+  const { userId, storeId, postId } = req.params;
+  try {
+    await favoritesController.createFavoritePost( userId, storeId, postId );
+    res.status(200).send("Publicacion agregada a favoritos correctamente");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error al agregar publicacion a favoritos");
+  }
+});
+
+router.delete("/removeFavoritePost/:userId/:storeId/:postId", async (req, res) => {
+    const { userId, storeId, postId } = req.params;
+  
+    try {
+      await favoritesController.removeFavoritePost( userId, storeId, postId );
+      res.status(200).send("Publicacion removida de favoritos correctamente");
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error al remover publicacion de favoritos");
+    }
+  });
+
 module.exports = router;
