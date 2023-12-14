@@ -63,6 +63,7 @@ const More = () => {
         ) : (
           storeData &&
           userData.vendedor === "noVendedor" && (
+            <>
             <CardWide
               textButton={"En espera"}
               logo={
@@ -74,7 +75,11 @@ const More = () => {
                 />
               }
             />
-          )
+            {!userData.accT && <button onClick={()=>{window.location.href = `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://362c-201-190-175-186.ngrok.io/tiendas/redirectUrl`;}}>
+              Conectar MP
+            </button>}
+
+            </>)
         )}
         <CardWide
           textButton={"Consultas"}

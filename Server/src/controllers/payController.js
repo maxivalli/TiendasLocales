@@ -1,8 +1,8 @@
-const { NUMBER } = require("sequelize");
 const { User, Compra, Post } = require("../DB_config");
 require("dotenv").config();
-const { ACCESS_TOKEN } = process.env;
+const { ACCESS_TOKEN, CLIENT_ID, CLIENT_SECRET } = process.env;
 const mercadopago = require("mercadopago");
+const axios = require("axios");
 
 mercadopago.configure({
     access_token: ACCESS_TOKEN
@@ -25,7 +25,7 @@ exports.createOrder = async (paymentData) => {
                 pending: "http://localhost:5173/#/account",
                 success: "http://localhost:5173/#/account"
             },
-            notification_url: "https://6ccd-201-190-175-186.ngrok.io/tiendas/webhook"
+            notification_url: "https://aa93-201-190-175-186.ngrok.io/tiendas/webhook"
         }
 
         const response = await mercadopago.preferences.create(preference);
@@ -102,3 +102,38 @@ exports.pedidosCompras = async (id) => {
        throw new Error(error)
     }
 }
+exports.accT = async (code, state) => {
+    try {
+      const response = await fetch('https://api.mercadopago.com/oauth/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          client_id: '6356168129471214',
+          client_secret: 'dbj3rL8bNBQ6UOzxaI4nOEjTcC22yAMa',
+          code: code,
+          grant_type: 'authorization_code',
+          redirect_uri: 'https://362c-201-190-175-186.ngrok.io/tiendas/redirectUrl',
+          test_token: true,
+        }),
+      });
+  
+      const data = await response.json();
+      const accessToken = data.access_token;
+  
+      // Ahora puedes hacer algo con el accessToken, por ejemplo, guardarlo en la base de datos para el usuario.
+      const user = await User.findOne({
+        where: {
+          id: state,
+        },
+      });
+  
+      user.accT = accessToken;
+      await user.save();
+  
+      return true
+    } catch (error) {
+      throw new Error(error);
+    }
+  };

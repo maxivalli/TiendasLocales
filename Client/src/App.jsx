@@ -147,7 +147,8 @@ function App() {
                   rol: userDataResponse.data.rol,
                   averageRating: userDataResponse.data.averageRating,
                   tiendas: userDataResponse.data.tiendas,
-                  vendedor: userDataResponse.data.vendedor
+                  vendedor: userDataResponse.data.vendedor,
+                  accT: userDataResponse.data.accT,
                 });
                 dispatch(saveUserData({
                   email: userDataResponse.data.email,
@@ -159,6 +160,7 @@ function App() {
                   averageRating: userDataResponse.data.averageRating,
                   tiendas: userDataResponse.data.tiendas,
                   vendedor: userDataResponse.data.vendedor,
+                  accT: userDataResponse.data.accT,
                   }))
 
               })

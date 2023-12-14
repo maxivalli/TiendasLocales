@@ -48,6 +48,9 @@ module.exports = (sequelize) => {
     },
     tiendas: {
       type: DataTypes.ARRAY(DataTypes.INTEGER),
+    },
+    accT: {
+      type: DataTypes.STRING,
     }
   },
   {
