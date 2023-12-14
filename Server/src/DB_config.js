@@ -39,7 +39,10 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Post, User, Message, Chat, Favorites, Notifications, Review, Envio } = sequelize.models;
+const { Post, User, Message, Chat, Favorites, Notifications, Review, Envio, Compra } = sequelize.models;
+
+User.hasMany(Compra);
+Compra.belongsTo(User);
 
 // User - Post
 User.hasMany(Post);

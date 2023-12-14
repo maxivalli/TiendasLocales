@@ -1,4 +1,5 @@
-const { User } = require("../DB_config");
+const { NUMBER } = require("sequelize");
+const { User, Compra, Post } = require("../DB_config");
 require("dotenv").config();
 const { ACCESS_TOKEN } = process.env;
 const mercadopago = require("mercadopago");
@@ -8,9 +9,7 @@ mercadopago.configure({
 }) 
 
 exports.createOrder = async (paymentData) => {
-    let postId = paymentData.postId
-    let userId = paymentData.userId
-try{
+    try{
         let preference = {
             items: [{
                 postId: paymentData.postId,
@@ -26,12 +25,13 @@ try{
                 pending: "http://localhost:5173/#/account",
                 success: "http://localhost:5173/#/account"
             },
-            notification_url: "https://1167-201-190-175-186.ngrok.io/tiendas/webhook"
+            notification_url: "https://6ccd-201-190-175-186.ngrok.io/tiendas/webhook"
         }
 
         const response = await mercadopago.preferences.create(preference);
 
-        const respuesta = {response, postId, userId};
+        let allData = preference.items[0]
+        const respuesta = {response, allData};
     
         
         return respuesta
@@ -40,10 +40,65 @@ try{
     }
 } 
 
-exports.webhook = async ({data, payUserData}) => {
-    if (data.type === "payment") {
-        console.log("AAA", payUserData.postId, payUserData.userId)
+exports.webhook = async (allData) => {
+    if (allData.data.type === "payment") {
+
+        const post = await Post.findOne({
+            where: {
+                id: allData.payUserData.postId,
+            },
+          });
+
+        post.stock = post.stock - allData.payUserData.quantity;
+        await post.save();
+
+        const newCompra = await Compra.create({
+            userId: allData.payUserData.userId,
+            postId: allData.payUserData.postId,
+            storeId: post.storeId,
+            title: allData.payUserData.title,
+            quantity: allData.payUserData.quantity,
+            unit_price: allData.payUserData.unit_price,
+            currency_id: allData.payUserData.currency_id,
+            description: allData.payUserData.description,
+            productImage: post.image
+          });
     } else {
         throw new Error("Invalid webhook event type");
+    }
+}
+
+
+exports.allCompras = async (id) => {
+
+    try{
+        const searchId = id.id
+
+        const misCompras = await Compra.findAll({
+            where: {
+                userId: searchId
+            },
+          });
+
+        return misCompras
+    } catch (error){
+       throw new Error(error)
+    }
+}
+
+exports.pedidosCompras = async (id) => {
+
+    try{
+        const searchId = id.id
+
+        const misPedidos = await Compra.findAll({
+            where: {
+                storeId: searchId
+            },
+          });
+
+        return misPedidos
+    } catch (error){
+       throw new Error(error)
     }
 }

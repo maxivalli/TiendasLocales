@@ -49,9 +49,10 @@ router.get('/getAllStores', async (req,res) => {
 
 router.post('/create-order', async(req, res) =>{
     const paymentData = req.body
+
     try{
         const response = await payController.createOrder(paymentData);
-        payUserData = response
+        payUserData = response.allData
         return res.status(200).json(response)
     } catch(error){
         return res.status(400).json(error.message)
@@ -86,13 +87,38 @@ router.get('/pending', async(req, res) =>{
 
 router.post('/webhook', async(req, res) =>{
     const data = req.query
-
+    const allData = {
+      data: data,
+      payUserData: payUserData
+    }
     try{
-        const response = await payController.webhook({data, payUserData});
+        const response = await payController.webhook(allData);
         return res.json(response); 
     } catch(error){
         return res.status(400).json(error.message)
     }
+})
+
+router.get('/allCompras', async(req, res) =>{
+  const id = req.body
+
+  try{
+      const response = await payController.allCompras(id);
+      return res.json(response); 
+  } catch(error){
+      return res.status(400).json(error.message)
+  }
+})
+
+router.get('/pedidosCompras', async(req, res) =>{
+  const id = req.body
+
+  try{
+      const response = await payController.pedidosCompras(id);
+      return res.json(response); 
+  } catch(error){
+      return res.status(400).json(error.message)
+  }
 })
 
 module.exports = router;

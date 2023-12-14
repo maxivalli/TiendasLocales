@@ -75,7 +75,7 @@ exports.createPost = async (postData) => {
         stock: postData.stock,
         delivery: postData.delivery,
         image: postData.image,
-
+        userId: postData.userId,
   });
       return newPost;
   } catch (error) {
