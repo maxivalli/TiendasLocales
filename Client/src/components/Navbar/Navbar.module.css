@@ -8,7 +8,7 @@
   width: 100vw;
   height: 60px;
   background-color: red;
-  z-index: 99;
+  z-index: 1;
 }
 
 .navbar .toHome {
