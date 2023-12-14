@@ -75,7 +75,7 @@ const CardsStore = ({
             {calificacion ? (
               <h4>{calificacion}</h4>
             ) : (
-              <h4>No hay calificación disponible</h4>
+              <h4>No lo han calificación aún</h4>
             )}
             <h4>{categoria}</h4>
           </div>
