@@ -3,7 +3,7 @@
   display: flex;
   flex-wrap: wrap;
   height: 60px;
-  z-index: 99999;
+  z-index: 3;
   align-content: center;
   justify-self: center;
   gap: 30px;

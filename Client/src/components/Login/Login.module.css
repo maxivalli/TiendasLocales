@@ -89,7 +89,7 @@
   width: 100vw;
   height: 100vh;
   background-color: red;
-  z-index: 99999;
+  z-index: 9;
 }
 
 .modal img {
