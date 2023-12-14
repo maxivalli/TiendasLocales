@@ -3,7 +3,11 @@
   height: 50px;
   border-radius: 50%;
   border: none;
-  background-color: yellow;
+  background-color: red;
+}
+
+.nav img {
+  padding-left: 4px;
 }
 
 .nav {
@@ -12,5 +16,17 @@
   height: 50px;
   border-radius: 50%;
   padding-top: 5px;
-  background-color: rgb(51, 203, 102);
+  background-color: cornflowerblue;
+}
+
+.botonesExtras {
+  position: absolute;
+  display: grid;
+  bottom: 60px;
+  left: 70px;
+}
+
+.botonesExtras button{
+  background-color: transparent;
+  border: none;
 }

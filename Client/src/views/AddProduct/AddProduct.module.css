@@ -1,5 +1,3 @@
-/* Estilos para el formulario de productos en React */
-
 .container {
     display: grid;
     border-radius: 10px;
@@ -8,6 +6,10 @@
     margin-bottom: 100px;
     margin-top: 100px;
     width: 800px;
+  }
+
+  .container input {
+    font-family: 'Noto Sans';
   }
   
   .container h3 {
@@ -19,7 +21,6 @@
   .container p {
     margin: 0;
     font-size: 14px;
-    align-self: flex-end;
   }
 
   .container input {
@@ -42,10 +43,28 @@
 
   .title {
     display: grid;
+    margin-bottom: 20px;
   }
-  
+
   .marca {
     display: grid;
+    margin-bottom: 20px;
+  }
+  
+  .marcaCheck {
+    display: flex;
+  }
+
+  .marcaCheck p {
+    align-self: center;
+  }
+
+  .delivery {
+    display: flex;
+  }
+
+  .delivery p {
+    align-self: center;
   }
   
   .image {
@@ -54,18 +73,17 @@
   
   .description {
     display: grid;
+    margin-bottom: 20px;
   }
   
   .price {
     display: grid;
+    margin-bottom: 20px;
   }
   
   .stock {
     display: grid;
-  }
-  
-  .delivery {
-    display: grid;
+    margin-bottom: 20px;
   }
 
   .foto {
@@ -124,6 +142,10 @@
   @media (max-width: 768px) {
     .container {
       width: 320px;
+    }
+
+    .create {
+      grid-template-columns: 1fr;
     }
   }
   

@@ -6,7 +6,7 @@ import style from "./CreateStore.module.css";
 import Swal from "sweetalert2";
 import { uploadFile } from "../../components/Firebase/config";
 import { validateStoreForm } from "./validations";
-import Head from '../../components/Head/Head'
+import Head from "../../components/Head/Head";
 
 const CreateStore = ({ userData }) => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const CreateStore = ({ userData }) => {
   const [showWhatsappInput, setShowWhatsappInput] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("");
-  
+
   const categories = [
     "🪇 Arte y artesanías",
     "☕️ Cafeterías",
@@ -164,7 +164,7 @@ const CreateStore = ({ userData }) => {
   };
   return (
     <>
-    <Head/>
+      <Head />
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}

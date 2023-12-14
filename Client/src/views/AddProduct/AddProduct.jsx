@@ -116,139 +116,145 @@ const AddProduct = () => {
         <h3>Agregar producto</h3>
 
         <form className={style.create}>
-          <div className={style.title}>
-            <p>Titulo</p>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={newProduct.title}
-              onChange={handleInputChange}
-              placeholder="Nombre de producto"
-              required
-            />
-            {errors.title && (
-              <span className={style.error}>{errors.title}</span>
+
+          <div className={style.part1}>
+
+            <div className={style.title}>
+              <p>Titulo</p>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                value={newProduct.title}
+                onChange={handleInputChange}
+                placeholder="Nombre de producto"
+                required
+              />
+              {errors.title && (
+                <span className={style.error}>{errors.title}</span>
+              )}
+            </div>
+
+            <div className={style.description}>
+              <p>Descripcion</p>
+              <textarea
+                id="description"
+                name="description"
+                value={newProduct.description}
+                onChange={handleInputChange}
+                placeholder="Inserte una breve descripcion del producto"
+                required
+              />
+              {errors.description && (
+                <span className={style.error}>{errors.description}</span>
+              )}
+            </div>
+
+            <div className={style.marcaCheck}>
+              <p>Tiene marca</p>
+              <input
+                className={style.inputCheck}
+                type="checkbox"
+                name="marcaChecked"
+                checked={newProduct.marcaChecked}
+                onChange={handleInputChange}
+              />
+            </div>
+            {newProduct.marcaChecked && (
+              <>
+                <div className={style.marca}>
+                  <p>Marca del producto</p>
+                  <input
+                    type="text"
+                    id="marca"
+                    name="marca"
+                    value={newProduct.marca}
+                    onChange={handleInputChange}
+                    placeholder="Marca del producto"
+                    required
+                  />
+                  {errors.marca && (
+                    <span className={style.error}>{errors.marca}</span>
+                  )}
+                </div>
+              </>
             )}
+
+            <div className={style.delivery}>
+              <p>Tiene envío a domicilio</p>
+              <input
+                type="checkbox"
+                id="delivery"
+                name="delivery"
+                value={newProduct.delivery}
+                onChange={handleInputChange}
+                required
+              />
+              {errors.delivery && (
+                <span className={style.error}>{errors.delivery}</span>
+              )}
+            </div>
           </div>
 
-          <div className={style.marcaCheck}>
-            <p>posee marca</p>
-            <input
-              className={style.inputCheck}
-              type="checkbox"
-              name="marcaChecked"
-              checked={newProduct.marcaChecked}
-              onChange={handleInputChange}
-            />
-          </div>
+          <div className={style.part2}>
 
-          {newProduct.marcaChecked && (
-            <>
-              <div className={style.marca}>
-                <p>Marca del producto</p>
-                <input
-                  type="text"
-                  id="marca"
-                  name="marca"
-                  value={newProduct.marca}
-                  onChange={handleInputChange}
-                  placeholder="Marca del producto"
-                  required
-                />
-                {errors.marca && (
-                  <span className={style.error}>{errors.marca}</span>
-                )}
-              </div>
-            </>
-          )}
+            <div className={style.price}>
+              <p>Precio</p>
+              <input
+                id="price"
+                name="price"
+                value={newProduct.price}
+                onChange={handleInputChange}
+                placeholder="Inserte precio"
+                required
+              />
+              {errors.price && (
+                <span className={style.error}>{errors.price}</span>
+              )}
+            </div>
 
-          <div className={style.description}>
-            <p>Descripcion</p>
-            <textarea
-              id="description"
-              name="description"
-              value={newProduct.description}
-              onChange={handleInputChange}
-              placeholder="Inserte una breve descripcion del producto"
-              required
-            />
-            {errors.description && (
-              <span className={style.error}>{errors.description}</span>
-            )}
-          </div>
+            <div className={style.stock}>
+              <p>Stock</p>
+              <input
+                id="stock"
+                name="stock"
+                value={newProduct.stock}
+                onChange={handleInputChange}
+                placeholder="Inserte stock disponible"
+                required
+              />
+              {errors.stock && (
+                <span className={style.error}>{errors.stock}</span>
+              )}
+            </div>
 
-          <div className={style.delivery}>
-            <p>Envios</p>
-            <input
-              type="checkbox"
-              id="delivery"
-              name="delivery"
-              value={newProduct.delivery}
-              onChange={handleInputChange}
-              required
-            />
-            {errors.delivery && (
-              <span className={style.error}>{errors.delivery}</span>
-            )}
-          </div>
-
-          <div className={style.price}>
-            <p>Precio</p>
-            <input
-              id="price"
-              name="price"
-              value={newProduct.price}
-              onChange={handleInputChange}
-              placeholder="Inserte precio"
-              required
-            />
-            {errors.price && (
-              <span className={style.error}>{errors.price}</span>
-            )}
-          </div>
-
-          <div className={style.stock}>
-            <p>Stock</p>
-            <input
-              id="stock"
-              name="stock"
-              value={newProduct.stock}
-              onChange={handleInputChange}
-              placeholder="Inserte stock disponible"
-              required
-            />
-            {errors.stock && (
-              <span className={style.error}>{errors.stock}</span>
-            )}
-          </div>
-
-          <div className={style.foto}>
-            <p>Imagenes</p>
-            <input
-              type="file"
-              accept="image/*"
-              name="image"
-              onChange={handleFile}
-            />
-            {errors.image && (
-              <span className={style.error}>{errors.image}</span>
-            )}
-            {newProduct.image && (
-              <div className={style.imagePreview}>
-                <img
-                  src={newProduct.image}
-                  alt="Preview"
-                  className={style.imgUser}
-                />
-                <button onClick={handleImageClear}>x</button>
-              </div>
-            )}
+            <div className={style.foto}>
+              <p>Imagenes</p>
+              <input
+                type="file"
+                accept="image/*"
+                name="image"
+                onChange={handleFile}
+              />
+              {errors.image && (
+                <span className={style.error}>{errors.image}</span>
+              )}
+              {newProduct.image && (
+                <div className={style.imagePreview}>
+                  <img
+                    src={newProduct.image}
+                    alt="Preview"
+                    className={style.imgUser}
+                  />
+                  <button onClick={handleImageClear}>x</button>
+                </div>
+              )}
+            </div>
           </div>
         </form>
 
         <button type="submit" onClick={handleSubmit} className={style.button}>
-          Agregar Producto
+          Agregar
         </button>
       </motion.div>
     </>
