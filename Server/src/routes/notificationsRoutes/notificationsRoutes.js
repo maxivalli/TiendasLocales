@@ -24,4 +24,15 @@ router.delete("/deleteUserNotif/:userId", async (req, res) => {
   });
 
 
+  router.put("/markNotiAsRead/:notiId", async (req, res) => {
+    const { notiId } = req.params
+    try {
+      const response = await notificationsControllers.markNotiAsRead(notiId);
+      return res.status(200).json(response);
+    } catch (error) {
+      return res.status(400).json(error.message);
+    }
+  })
+
+
 module.exports = router;

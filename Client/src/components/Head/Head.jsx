@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deleteUserNotif,
   getUserNotif,
+  markNotiAsRead,
 } from "../../redux/actions";
 
 const Head = () => {
@@ -12,6 +13,8 @@ const Head = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [liveNotifications, setLiveNotifications] = useState([]);
   const [hasUnreadNotification, setHasUnreadNotification] = useState(false);
+  const [hoveredNotificationIndex, setHoveredNotificationIndex] =
+    useState(null);
   const [clearNotifications, setClearNotifications] = useState(false);
   const stores = useSelector((state) => state.allStores);
   const userData = useSelector((state)=> state.userData)
@@ -25,10 +28,19 @@ const Head = () => {
   const userId = userData?.id
 
   useEffect(() => {
-    if (showNotifications !== false) {
-      dispatch(getUserNotif(userId));
+    if(userId){
+    dispatch(getUserNotif(userId));
     }
-  }, [showNotifications]);
+  }, [dispatch, showNotifications]);
+
+  useEffect(() => {
+    const hasUnread = savedNotif.some(
+      (notification) => notification.read === false
+    );
+    if (hasUnread) {
+      setHasUnreadNotification(true);
+    }
+  }, [dispatch, notifications, hoveredNotificationIndex]);
 
 
   const toggleNotifications = () => {
@@ -41,7 +53,15 @@ const Head = () => {
     }
   };
 
-  
+
+  const handleMouseOver = (index) => {
+    setHoveredNotificationIndex(index);
+    if (notifications[index].read === false) {
+      notifications[index].read = true;
+      dispatch(markNotiAsRead(notifications[index]?.id));
+    }
+  };
+
 
   useEffect(() => {
     const handleAddFavorite = (storeId) => {
@@ -52,6 +72,7 @@ const Head = () => {
         {
           content: `¡Se ha agregado "${store.nombre}" a favoritos!`,
           image: store.image,
+          read: false,
         },
         ...prevNotifications,
       ]);
@@ -73,10 +94,10 @@ const Head = () => {
         {
           content: `Su tienda "${nombre}" se encuentra en espera de aprobación`,
           image: image,
+          read: false,
         },
         ...prevNotifications,
       ]);
-
       setHasUnreadNotification(true);
     };
 
@@ -93,6 +114,7 @@ const Head = () => {
     dispatch(deleteUserNotif(userId));
     setClearNotifications(true);
     setShowNotifications(false);
+    setHoveredNotificationIndex(null); // Limpiar el índice cuando se cierran las notificaciones.
   };
 
   return (
@@ -123,7 +145,7 @@ const Head = () => {
       {showNotifications && (
         <div className={style.modal}>
           {notifications.map((notification, index) => (
-            <div key={index}>
+            <div key={index} onMouseOver={() => handleMouseOver(index)}>
               <button className={style.notifAcces}>
                 <img src={notification.image} alt="" />
                 <p>{notification.content}</p>

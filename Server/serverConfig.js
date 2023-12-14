@@ -32,24 +32,39 @@ io.on("connection", (socket) => {
 
   socket.on("addFavorite", async (addData) => {
     const { userId, storeId, addText, image } = addData;
+  
     try {
-      await Notifications.create({
-        content: addText,
-        userId: userId,
-        image: image,
+      const existingNotification = await Notifications.findOne({
+        where: {
+          content: addText,
+          userId: userId,
+        },
       });
-      console.log("Notificación almacenada en la base de datos");
+  
+      if (!existingNotification) {
+        await Notifications.create({
+          content: addText,
+          userId: userId,
+          image: image,
+        });
+  
+        console.log("Notificación almacenada en la base de datos");
+      } else {
+        existingNotification.read = false;
+        await existingNotification.save();
+        
+        console.log("Notificación ya existe en la base de datos, propiedad 'read' actualizada a true");
+      }
     } catch (error) {
-      console.error(
-        "Error al almacenar notificación en la base de datos:",
-        error
-      );
+      console.error("Error al almacenar/comprobar notificación en la base de datos:", error);
     }
+  
     const user = await User.findByPk(userId);
     const userSocket = user.socketId;
     io.to(userSocket).emit("addFavorite", storeId);
     console.log(`socket addFavorite emitido al front a ${userSocket}`);
   });
+  
 
   socket.on("waitingStore", async (storeData) => {
     const { nombre, image, userId } = storeData
