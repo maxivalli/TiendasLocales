@@ -55,9 +55,9 @@ const manifestForPlugIn = {
         ],
       },
       {
-        name: "Mi perfil",
-        description: "Mi perfil",
-        url: "https://locanjeamos.com.ar/#/account",
+        name: "Mensajes",
+        description: "Mis mensajes",
+        url: "https://locanjeamos.com.ar/#/messages",
         icons: [
           {
             src: "user.png",
