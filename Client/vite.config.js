@@ -57,7 +57,7 @@ const manifestForPlugIn = {
       {
         name: "Mensajes",
         description: "Mis mensajes",
-        url: "https://locanjeamos.com.ar/#/messages",
+        url: "https://tiendaslocales.com.ar/#/messages",
         icons: [
           {
             src: "user.png",
