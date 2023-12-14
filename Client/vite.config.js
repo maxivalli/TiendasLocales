@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
 import { VitePWA } from "vite-plugin-pwa";
 
 const manifestForPlugIn = {
@@ -82,5 +82,8 @@ export default defineConfig({
   base: "",
   build: {
     chunkSizeWarningLimit: 1000000,
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
   },
 });
