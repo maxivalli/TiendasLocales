@@ -82,8 +82,6 @@ export default defineConfig({
   base: "",
   build: {
     chunkSizeWarningLimit: 1000000,
-  },
-  esbuild: {
     commonjsOptions: {
       transformMixedEsModules: true,
     },
