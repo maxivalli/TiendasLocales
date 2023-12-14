@@ -59,6 +59,7 @@
 }
 
 .modal .notifAcces p {
+  text-align: left;
   align-self: center;
   padding-left: 10px;
   color: black;

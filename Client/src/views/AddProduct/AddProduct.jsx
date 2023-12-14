@@ -138,7 +138,7 @@ const AddProduct = () => {
 
             <div className={style.description}>
               <p>Descripcion</p>
-              <textarea
+              <input
                 id="description"
                 name="description"
                 value={newProduct.description}

@@ -1,6 +1,6 @@
 /* import { React, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { ChatEngine } from "react-chat-engine";
+import { PrettyChatWindow } from 'react-chat-engine-pretty';
 import "./Messages.css";
 
 const Messages = () => {
@@ -43,10 +43,10 @@ const Messages = () => {
   return (
     <>
       <div className="chat">
-        <ChatEngine
-          projectID="1fb49778-0ca9-4761-a91b-512f3a51ee7f"
-          userName={userData.username}
-          userSecret={userData.email}
+        <PrettyChatWindow
+          projectId="1fb49778-0ca9-4761-a91b-512f3a51ee7f"
+          username={userData.username}
+          secret={userData.email}
           height="calc(100vh - 60px)"
           offset={-3}
         />
@@ -55,8 +55,8 @@ const Messages = () => {
   );
 };
 
-export default Messages;
- */
+export default Messages; */
+
 
 import React from 'react'
 
