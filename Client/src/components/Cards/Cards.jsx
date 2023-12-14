@@ -28,7 +28,7 @@ const Cards = () => {
       {
         breakpoint: 1280,
         settings: {
-          slidesToShow: Math.min(3, posts.length),
+          slidesToShow: Math.min(2, posts.length),
           slidesToScroll: 2,
         },
       },
