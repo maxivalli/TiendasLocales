@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { addFavoritePost, getFavorites, removeFavoritePost } from "../../redux/actions";
+import { socket } from "../../App";
+
 import style from "./CardSquare.module.css";
-import { useSelector } from "react-redux";
 
 const CardSquare = ({
   id,
@@ -14,18 +17,41 @@ const CardSquare = ({
   image,
   storeId,
 }) => {
-  const stores = useSelector((state) => state.allStores);
-  const [isFavorite, setIsFavorite] = useState();
-
-  const selectedStore = stores.find((store) => store.id == storeId);
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.userData);
+  const favorites = useSelector((state) => state.favorites);
+  
+  
+  const userId = userData?.id;
+  const postId = id
+  
+  const isPostFavorite = favorites && favorites.some((favorite)=> favorite.postId === postId)
+  const [isFavorite, setIsFavorite] = useState(isPostFavorite);
 
   const toggleFavorite = () => {
+    const addText = `¡Se ha agregado "${title}" a favoritos!`
+    const addData = { userId, storeId, addText, image, postId };
     if (isFavorite) {
       setIsFavorite(false);
+      dispatch(removeFavoritePost(userId, storeId, postId));
+     // socket.emit("removeFavorite", data);
     } else {
       setIsFavorite(true);
+      dispatch(addFavoritePost(userId, storeId, postId));
+      socket.emit("addFavoritePost", addData);
     }
   };
+
+  useEffect(() => {
+    const isPostFavorite = favorites && favorites.some((favorite)=> favorite.postId === postId)
+    setIsFavorite(isPostFavorite);
+  }, [favorites, postId]);
+
+  useEffect(() => {
+    if(userId !== undefined) {
+    dispatch(getFavorites(userId));
+    }
+  }, [userId]);
 
   return (
     <>
