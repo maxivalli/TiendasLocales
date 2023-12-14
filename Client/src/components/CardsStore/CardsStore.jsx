@@ -35,7 +35,6 @@ const CardsStore = ({
       setIsFavorite(true);
       dispatch(addFavorite(userId, storeId));
       socket.emit("addFavorite", addData);
-      console.log("socket addFavorite emitido al servidor");
     }
   };
 

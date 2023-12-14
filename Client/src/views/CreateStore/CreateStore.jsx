@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { uploadFile } from "../../components/Firebase/config";
 import { validateStoreForm } from "./validations";
 import Head from '../../components/Head/Head'
+import { socket } from "../../App";
 
 const CreateStore = ({ userData }) => {
   const navigate = useNavigate();
@@ -147,15 +148,16 @@ const CreateStore = ({ userData }) => {
       storeData.piso = formData.piso;
       storeData.depto = formData.depto;
     }
-
+    
     try {
       const response = await axios.post("/tiendas/createStore", storeData);
       if (response) {
         navigate("/more");
+        socket?.emit("waitingStore", storeData)
         Swal.fire({
           icon: "success",
           title: `Tienda en Processo de Aprobacion!`,
-          text: "Debes esperar a que sea aprobada tu tienda, nosotros te diremos por mail!",
+          text: "Debes esperar que tu tienda sea aprobada, nosotros te avisaremos por mail!",
         });
       }
     } catch (error) {

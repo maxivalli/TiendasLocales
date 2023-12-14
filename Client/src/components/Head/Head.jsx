@@ -8,12 +8,19 @@ import { deleteUserNotif, getAllPosts, getUserNotif } from "../../redux/actions"
 const Head = () => {
   const dispatch = useDispatch()
   const [showNotifications, setShowNotifications] = useState(false);
-  const [notifications, setNotifications] = useState([]);
+  const [liveNotifications, setLiveNotifications] = useState([]);
   const [hasUnreadNotification, setHasUnreadNotification] = useState(false);
   const [clearNotifications, setClearNotifications] = useState(false);
   const stores = useSelector((state) => state.allStores);
   const userData = useSelector((state)=> state.userData)
+
   const savedNotif = useSelector((state)=> state.userNotif)
+
+  const mixturedNotifications = [...liveNotifications, ...savedNotif];
+  const notifications = Array.from(
+    new Set(mixturedNotifications.map(notification => notification.content))
+  ).map(content => mixturedNotifications.find(notification => notification.content === content));
+  
 
 
 
@@ -21,9 +28,12 @@ const Head = () => {
 
 
 
-useEffect(()=> {
-  dispatch(getUserNotif(userId))
-}, [dispatch])
+  useEffect(() => {
+    // Asegurarse de que showNotifications tenga un valor previo
+    if (showNotifications !== false) {
+      dispatch(getUserNotif(userId));
+    }
+  }, [showNotifications]);
 
 
 
@@ -39,14 +49,16 @@ useEffect(()=> {
     }
   };
 
+  
+
   useEffect(() => {
     const handleAddFavorite = (storeId) => {
       console.log("socket addFavorite recibido por el front");
       const store = stores.find((store) => store.id == storeId);
 
-      setNotifications((prevNotifications) => [
+      setLiveNotifications((prevNotifications) => [
         {
-          text: `¡Se ha agregado "${store.nombre}" a favoritos!`,
+          content: `¡Se ha agregado "${store.nombre}" a favoritos!`,
           image: store.image,
         },
         ...prevNotifications,
@@ -62,11 +74,35 @@ useEffect(()=> {
     };
   }, [stores]);
 
+  useEffect(() => {
+    const handleWaitingStore = (data) => {
+      const { nombre, image } = data
+      setLiveNotifications((prevNotifications) => [
+        {
+          content: `Su tienda "${nombre}" se encuentra en espera de aprobación`,
+          image: image,
+        },
+        ...prevNotifications,
+      ]);
+
+      setHasUnreadNotification(true);
+    };
+
+    socket?.on("waitingStore", handleWaitingStore);
+
+    return () => {
+      socket?.off("waitingStore", handleWaitingStore);
+    };
+  }, [stores]);
+
   const handleClearNotifications = () => {
-    setNotifications([]);
+   
+  
+    setLiveNotifications([]);
     setHasUnreadNotification(false);
     dispatch(deleteUserNotif(userId));
-    setClearNotifications(true); 
+    setClearNotifications(true);
+    setShowNotifications(false);
   };
 
   return (
@@ -97,18 +133,11 @@ useEffect(()=> {
             <div key={index}>
               <button className={style.notifAcces}>
                 <img src={notification.image} alt="" />
-                <p>{notification.text}</p>
-              </button>
-            </div>
-          ))}
-           {!clearNotifications && savedNotif.map((notification) => (
-            <div key={notification.id}>
-              <button className={style.notifAcces}>
-                <img src={notification.image} alt="" />
                 <p>{notification.content}</p>
               </button>
             </div>
           ))}
+       
           <button className={style.close} onClick={handleClearNotifications}>
             Borrar notificaciones
           </button>

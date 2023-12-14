@@ -15,6 +15,7 @@ const Detail = ({userData}) => {
   const stores = useSelector((state) => state.allStores);
   
   const [quantity, setQuantity] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(selectedPost.price);
   
   const selectedStore = stores?.find((store) => store.id == selectedPost?.storeId);
   const isBuyButtonDisabled = quantity <= 0 || selectedPost.stock === 0;
@@ -30,6 +31,10 @@ const Detail = ({userData}) => {
       setQuantity(quantity + 1);
     }
   }
+
+  useEffect(() => {
+    setTotalPrice(selectedPost.price * quantity);
+  }, [quantity, selectedPost.price]);
   
   useEffect(() => {
     dispatch(getPostById(id));
@@ -88,7 +93,7 @@ const handlePremium = async () => {
           <h2>{selectedPost.title}</h2>
           <div className={style.precio}>
             <span>Precio:</span>
-            <h4>${selectedPost.price}</h4>
+            <h4>${totalPrice}</h4>
           </div>
 
           <div className={style.but}>
