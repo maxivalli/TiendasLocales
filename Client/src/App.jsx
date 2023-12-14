@@ -451,7 +451,7 @@ function App() {
             )
           }
         />
-        {/* <Route path="/mystore" element={isAuthenticated ? (
+        <Route path="/mystore/:storeId" element={isAuthenticated ? (
               userData ? (
                 <MyStore userData={userData} setAuth={setAuth} />
               ) : (
@@ -475,7 +475,7 @@ function App() {
               <Login setAuth={setAuth} />
             )
           }
-        /> */}
+        />
         <Route path="/store/:storeId" element={isAuthenticated ? (
               userData ? (
                 <Store userData={userData} setAuth={setAuth} />

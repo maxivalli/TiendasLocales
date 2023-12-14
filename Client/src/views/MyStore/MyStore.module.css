@@ -1,62 +1,182 @@
-.card {
-    width: 200px;
-    height: 250px;
-    border-radius: 10px;
-    box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.3);
-    box-shadow: 0px -40px 40px 10px  rgba(0, 0, 0, 0.8) inset;
-    margin: 10px;
+.viewStore {
+  display: grid;
+  position: absolute;
+  left: 0;
+}
+
+.store {
+  display: grid;
+  grid-template-columns: 200px 6fr 1fr;
+  width: 100vw;
+  height: 200px;
+  justify-self: center;
+  margin-top: 60px;
+  background-color: rgba(128, 128, 128, 0.1);
+}
+
+.avatar {
+  display: grid;
+  justify-content: center;
+}
+
+.avatar img {
+  width: 150px;
+  height: 150px;
+  justify-self: center;
+  align-self: center;
+  border-radius: 50%;
+  border: 3px solid red;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.info {
+  text-align: left;
+  align-self: center;
+  padding-left: 30px;
+}
+
+.info h2 {
+  margin: 0;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.info p {
+  margin: 0;
+  color: cornflowerblue;
+}
+
+.info2 {
+  display: grid;
+  text-align: center;
+  align-self: center;
+  padding-right: 20px;
+}
+
+.info2 h3 {
+  margin: 0;
+  align-self: center;
+  justify-self: right;
+  padding-right: 5px;
+}
+
+.redes {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding-top: 5px;
+  justify-self: center;
+}
+
+.redes button {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  justify-self: center;
+  align-self: center;
+}
+
+.redes img {
+  justify-self: center;
+  align-self: center;
+}
+
+.title {
+  display: grid;
+  height: 100px;
+  font-style: italic;
+  color: grey;
+}
+
+.title h2 {
+  justify-self: center;
+  margin: 0;
+  align-self: center;
+}
+
+.agregar {
+  display: grid;
+  margin-top: 25px;
+}
+
+.agregar button {
+  justify-self: center;
+  width: 90px;
+  height: 40px;
+  background-color: cornflowerblue;
+  color: initial;
+  border-radius: 5px;
+  border: none;
+}
+
+.store2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 100px;
+  justify-self: center;
+}
+
+.info2 button {
+  border: none;
+  background-color: transparent;
+}
+
+.buttons {
+  display: flex;
+  gap: 20px;
+  position: fixed;
+  bottom: 100px;
+  right: 50px;
+  z-index: 9;
+}
+
+@media (max-width: 1280px) {
+  .store2 {
+    grid-template-columns: 1fr 1fr;
   }
-  
-  .card img {
-    position: relative;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+
+  .store {
+    width: 100vw;
+    grid-template-columns: 1fr 3fr 1fr;
+    height: 120px;
   }
-  
-  .card a {
-    justify-content: left;
-    margin-left: 10px;
+
+  .avatar img {
+    width: 60px;
+    height: 60px;
   }
-  
-  .card p {
-    width: 90%;
-    color: whitesmoke;
-    text-shadow: 0px 5px 5px black;
-    margin: 0;
-    text-align: left;
-    margin-top: -40px;
-    margin-left: 10px;
-    white-space: nowrap;
-    overflow: hidden;
+
+  .info {
+    padding-left: 0px;
   }
-  
-  .card h6 {
-    width: 90%;
-    color: whitesmoke;
-    text-shadow: 0px 5px 5px black;
-    text-align: left;
-    margin: 0;
-    margin-top: -40px;
-    margin-left: 10px;
-    white-space: nowrap;
-    overflow: hidden;
+
+  .info h2 {
+    font-size: 18px;
   }
-  
-  @media (max-width: 768px) {
-    .card {
-      width: 150px;
-      height: 200px;
-    }
-  
-    .card p {
-      top: 260px
-    }
-  
-    .card h6 {
-      top: 280px
-    }
+
+  .info p {
+    font-size: 12px;
   }
-  
+
+  .info2 {
+    padding-right: 0;
+  }
+
+  .redes {
+    justify-self: center;
+  }
+
+  .store2 {
+    grid-template-columns: 1fr;
+    margin-bottom: 100px;
+    justify-self: center;
+  }
+
+  .buttons {
+    right: 20px;
+  }
+}

@@ -94,7 +94,7 @@ const AddProduct = () => {
     try {
       const response = await axios.post("/posts/createPost", postData);
       if (response) {
-        navigate("/mystore");
+        navigate(`/mystore/${storeId}`);
         Swal.fire({
           icon: "success",
           title: `Producto creado con exito!`,
