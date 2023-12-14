@@ -58,7 +58,7 @@ const More = () => {
                 alt="online-order"
               />
             }
-            link={`/store/${storeData.id}`}
+            link={`/mystore/${storeData.id}`}
           />
         ) : (
           storeData &&
