@@ -114,7 +114,7 @@
   position: fixed;
   bottom: 100px;
   right: 50px;
-  z-index: 999999;
+  z-index: 9;
 }
 
 @media (max-width: 1280px) {

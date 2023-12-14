@@ -3,7 +3,7 @@
   left: 50%;
   transform: translateX(-50%);
   top: 10px;
-  z-index: 2;
+  z-index: 3;
 }
 
 .searchBar input {
