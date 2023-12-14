@@ -22,13 +22,13 @@ const Cards = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: Math.min(3, posts.length),
     slidesToScroll: 3,
     responsive: [
       {
         breakpoint: 1280,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: Math.min(3, posts.length),
           slidesToScroll: 2,
         },
       },
