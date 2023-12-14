@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CardWide from "../../components/CardWide/CardWide";
+import Head from '../../components/Head/Head'
 import style from "./More.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -28,6 +29,7 @@ const More = () => {
 
   return (
     <>
+    <Head/>
       <div className={style.section}></div>
       <div className={style.more}>
         {!storeData && (
