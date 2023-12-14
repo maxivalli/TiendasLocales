@@ -50,7 +50,6 @@ const Login = ({ setAuth, userData }) => {
 
         const Toast = Swal.mixin({
           toast: true,
-          position: "top-end",
           showConfirmButton: false,
           timer: 1000,
           timerProgressBar: true,

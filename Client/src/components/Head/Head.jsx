@@ -3,17 +3,20 @@ import Logo from "../../assets/TLlogoAlpha.png";
 import style from "./Head.module.css";
 import { socket } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUserNotif, getAllPosts, getUserNotif } from "../../redux/actions";
+import {
+  deleteUserNotif,
+  getAllPosts,
+  getUserNotif,
+} from "../../redux/actions";
 
 const Head = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [showNotifications, setShowNotifications] = useState(false);
   const [liveNotifications, setLiveNotifications] = useState([]);
   const [hasUnreadNotification, setHasUnreadNotification] = useState(false);
   const [clearNotifications, setClearNotifications] = useState(false);
   const stores = useSelector((state) => state.allStores);
   const userData = useSelector((state)=> state.userData)
-
   const savedNotif = useSelector((state)=> state.userNotif)
 
   const mixturedNotifications = [...liveNotifications, ...savedNotif];
@@ -21,12 +24,7 @@ const Head = () => {
     new Set(mixturedNotifications.map(notification => notification.content))
   ).map(content => mixturedNotifications.find(notification => notification.content === content));
   
-
-
-
   const userId = userData?.id
-
-
 
   useEffect(() => {
     // Asegurarse de que showNotifications tenga un valor previo
@@ -34,9 +32,6 @@ const Head = () => {
       dispatch(getUserNotif(userId));
     }
   }, [showNotifications]);
-
-
-
 
 
   const toggleNotifications = () => {
@@ -96,8 +91,6 @@ const Head = () => {
   }, [stores]);
 
   const handleClearNotifications = () => {
-   
-  
     setLiveNotifications([]);
     setHasUnreadNotification(false);
     dispatch(deleteUserNotif(userId));
@@ -108,24 +101,27 @@ const Head = () => {
   return (
     <>
       <div className={style.background}>
-        <img
-          src={Logo}
-          alt="logo"
-          className={style.logo}
-          onClick={toggleNotifications}
-        />
-        {hasUnreadNotification && (
-          <div className={style.dot}></div>
+        {hasUnreadNotification ? (
+          <button className={style.notifications} onClick={toggleNotifications}>
+            <img
+              width="28"
+              height="28"
+              src="https://img.icons8.com/ios-filled/50/FAB005/appointment-reminders--v1.png"
+              alt="appointment-reminders--v1"
+              className={style.bellMove}
+            />
+          </button>
+        ) : (
+          <button className={style.notifications} onClick={toggleNotifications}>
+            <img
+              width="28"
+              height="28"
+              src="https://img.icons8.com/ios-filled/50/FFFFFF/appointment-reminders--v1.png"
+              alt="appointment-reminders--v1"
+              className={style.bell}
+            />
+          </button>
         )}
-        <button className={style.notifications} onClick={toggleNotifications}>
-          <img
-            width="28"
-            height="28"
-            src="https://img.icons8.com/ios-filled/50/FFFFFF/appointment-reminders--v1.png"
-            alt="appointment-reminders--v1"
-            className={style.bell}
-          />
-        </button>
       </div>
       {showNotifications && (
         <div className={style.modal}>
@@ -137,7 +133,6 @@ const Head = () => {
               </button>
             </div>
           ))}
-       
           <button className={style.close} onClick={handleClearNotifications}>
             Borrar notificaciones
           </button>

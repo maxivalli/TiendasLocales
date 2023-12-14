@@ -58,12 +58,28 @@
 .info2 h3 {
   margin: 0;
   align-self: center;
+  justify-self: right;
+  padding-right: 5px;
 }
 
 .redes {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   padding-top: 5px;
+  justify-self: center;
+}
+
+.redes button {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  justify-self: center;
+  align-self: center;
+}
+
+.redes img {
+  justify-self: center;
+  align-self: center;
 }
 
 .title {
@@ -94,11 +110,11 @@
 
 .buttons {
   display: flex;
-  gap: 30px;
+  gap: 20px;
   position: fixed;
   bottom: 100px;
   right: 50px;
-  z-index: 999999;
+  z-index: 9;
 }
 
 @media (max-width: 1280px) {
@@ -111,7 +127,7 @@
 
   .store {
     width: 100vw;
-    grid-template-columns: 1fr 3fr 2fr;
+    grid-template-columns: 1fr 3fr 1fr;
     height: 120px;
   }
 

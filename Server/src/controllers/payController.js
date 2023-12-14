@@ -42,7 +42,7 @@ try{
 
 exports.webhook = async ({data, payUserData}) => {
     if (data.type === "payment") {
-        console.log("AAA", payUserData)
+        console.log("AAA", payUserData.postId, payUserData.userId)
     } else {
         throw new Error("Invalid webhook event type");
     }
