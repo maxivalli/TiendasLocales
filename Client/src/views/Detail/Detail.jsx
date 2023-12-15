@@ -47,6 +47,7 @@ const handlePremium = async () => {
         throw new Error ("Disculpe, no hay mas stock disponible");
       }
         const paymentData = {
+          accT: userData.accT,
           postId: selectedPost.id,
           userId: userData.id,
           title: selectedPost.title,

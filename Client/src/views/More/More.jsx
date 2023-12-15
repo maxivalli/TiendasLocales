@@ -27,6 +27,16 @@ const More = () => {
     fetchData();
   }, [userData.id]);
 
+  const handleConnectMP = () => {
+    // Abrir enlace de Mercado Pago en una nueva pestaña
+    window.open(
+      `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://8778-201-190-175-186.ngrok.io/tiendas/redirectUrl`
+    );
+
+    // Redirigir a la página de inicio en la ventana actual
+    window.location.href = "/home";
+  };
+
   return (
     <>
     <Head/>
@@ -75,7 +85,7 @@ const More = () => {
                 />
               }
             />
-            {!userData.accT && <button onClick={()=>{window.location.href = `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://362c-201-190-175-186.ngrok.io/tiendas/redirectUrl`;}}>
+            {!userData.accT && <button onClick={handleConnectMP}>
               Conectar MP
             </button>}
 

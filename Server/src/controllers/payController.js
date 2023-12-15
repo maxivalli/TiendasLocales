@@ -10,6 +10,9 @@ mercadopago.configure({
 
 exports.createOrder = async (paymentData) => {
     try{
+      mercadopago.configure({
+        access_token: paymentData.accT
+    });
         let preference = {
             items: [{
                 postId: paymentData.postId,
@@ -25,7 +28,7 @@ exports.createOrder = async (paymentData) => {
                 pending: "http://localhost:5173/#/account",
                 success: "http://localhost:5173/#/account"
             },
-            notification_url: "https://aa93-201-190-175-186.ngrok.io/tiendas/webhook"
+            notification_url: "https://8778-201-190-175-186.ngrok.io/tiendas/webhook"
         }
 
         const response = await mercadopago.preferences.create(preference);
@@ -114,7 +117,7 @@ exports.accT = async (code, state) => {
           client_secret: 'dbj3rL8bNBQ6UOzxaI4nOEjTcC22yAMa',
           code: code,
           grant_type: 'authorization_code',
-          redirect_uri: 'https://362c-201-190-175-186.ngrok.io/tiendas/redirectUrl',
+          redirect_uri: 'https://8778-201-190-175-186.ngrok.io/tiendas/redirectUrl',
           test_token: true,
         }),
       });
