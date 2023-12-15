@@ -57,7 +57,7 @@ const Messages = () => {
     <>
       <div className="chat">
         <ChatEngine
-          publicKey="1fb49778-0ca9-4761-a91b-512f3a51ee7f"
+          publicKey="59fa8828-96fe-4a26-a226-18d513d30b1e"
           userName={userData.username}
           userSecret={userData.email}
           height="calc(100vh - 60px)"
