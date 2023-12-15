@@ -41,7 +41,7 @@
 }
 
 .info {
-  padding: 30px;
+  padding: 20px;
   border: 2px solid rgba(123, 123, 123, 0.1);
   border-radius: 10px;
   margin-left: 10px;
@@ -61,6 +61,7 @@
   font-weight: 800;
   font-style: italic;
   font-size: 20px;
+  margin-top: 0;
 }
 
 .info h3 {
@@ -150,8 +151,8 @@
 }
 
 .comprar {
-  margin-top: 40px;
   display: grid;
+  margin-top: 25px;
 }
 
 .comprar button {
