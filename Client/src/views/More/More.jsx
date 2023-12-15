@@ -78,7 +78,14 @@ const More = () => {
               {!userData.accT && (
                 <CardWide
                   textButton={"Conectar MP"}
-                  logo={<img width="60" height="60" src="https://img.icons8.com/color/96/mercado-pago.png" alt="mercado-pago"/>}
+                  logo={
+                    <img
+                      width="60"
+                      height="60"
+                      src="https://img.icons8.com/color/96/mercado-pago.png"
+                      alt="mercado-pago"
+                    />
+                  }
                   link={`https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://362c-201-190-175-186.ngrok.io/tiendas/redirectUrl`}
                 />
               )}
