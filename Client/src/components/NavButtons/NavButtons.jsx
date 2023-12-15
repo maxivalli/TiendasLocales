@@ -16,7 +16,7 @@ const NavButtons = ({ storeId }) => {
   };
 
   const handleChatButtonClick = async () => {
-    const projectID = "1fb49778-0ca9-4761-a91b-512f3a51ee7f";
+    const projectID = "59fa8828-96fe-4a26-a226-18d513d30b1e";
     const userName = userData.username;
     const userSecret = userData.email;
 
@@ -47,7 +47,7 @@ const NavButtons = ({ storeId }) => {
       }
 
       console.log("Chat created successfully");
-      navigate("/messages");
+      navigate("/messages/user");
     } catch (error) {
       console.error("Error creating chat:", error.message);
       throw error;
