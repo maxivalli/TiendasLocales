@@ -4,6 +4,23 @@ import { ChatEngine } from "react-chat-engine";
 import "./Messages.css";
 
 const Messages = () => {
+  // Verifica si el navegador soporta las notificaciones
+  if ("Notification" in window) {
+    // Verifica el estado actual de las notificaciones
+    if (
+      Notification.permission !== "granted" &&
+      Notification.permission !== "denied"
+    ) {
+      // Solicita permiso al usuario
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          // El usuario ha dado permiso para las notificaciones
+          console.log("Permiso para notificaciones concedido.");
+        }
+      });
+    }
+  }
+
   useEffect(() => {
     const updateDOMElements = () => {
       let people = document.querySelector(
