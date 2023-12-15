@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addFavoritePost, getFavorites, removeFavoritePost } from "../../redux/actions";
+import {
+  addFavoritePost,
+  getFavorites,
+  removeFavoritePost,
+} from "../../redux/actions";
+import disc from "../../assets/disc.png";
 import { socket } from "../../App";
 
 import style from "./CardSquare.module.css";
@@ -20,21 +25,21 @@ const CardSquare = ({
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userData);
   const favorites = useSelector((state) => state.favorites);
-  
-  
+
   const userId = userData?.id;
-  const postId = id
-  
-  const isPostFavorite = favorites && favorites.some((favorite)=> favorite.postId === postId)
+  const postId = id;
+
+  const isPostFavorite =
+    favorites && favorites.some((favorite) => favorite.postId === postId);
   const [isFavorite, setIsFavorite] = useState(isPostFavorite);
 
   const toggleFavorite = () => {
-    const addText = `¡Se ha agregado "${title}" a favoritos!`
+    const addText = `¡Se ha agregado "${title}" a favoritos!`;
     const addData = { userId, storeId, addText, image, postId };
     if (isFavorite) {
       setIsFavorite(false);
       dispatch(removeFavoritePost(userId, storeId, postId));
-     // socket.emit("removeFavorite", data);
+      // socket.emit("removeFavorite", data);
     } else {
       setIsFavorite(true);
       dispatch(addFavoritePost(userId, storeId, postId));
@@ -43,15 +48,32 @@ const CardSquare = ({
   };
 
   useEffect(() => {
-    const isPostFavorite = favorites && favorites.some((favorite)=> favorite.postId === postId)
+    const isPostFavorite =
+      favorites && favorites.some((favorite) => favorite.postId === postId);
     setIsFavorite(isPostFavorite);
   }, [favorites, postId]);
 
   useEffect(() => {
-    if(userId !== undefined) {
-    dispatch(getFavorites(userId));
+    if (userId !== undefined) {
+      dispatch(getFavorites(userId));
     }
   }, [userId]);
+
+  const [online, setOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    const updateOnlineStatus = () => {
+      setOnline(navigator.onLine);
+    };
+
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+
+    return () => {
+      window.removeEventListener('online', updateOnlineStatus);
+      window.removeEventListener('offline', updateOnlineStatus);
+    };
+  }, []);
 
   return (
     <>
@@ -68,7 +90,11 @@ const CardSquare = ({
           />
         </div>
         <Link to={`/post/${id}`}>
-          <img src={image} alt="image" />
+          {online ? (
+            <img src={image} alt="image" />
+          ) : (
+            <img src={disc} alt="default image" />
+          )}
           <h2>{title}</h2>
           <h3>{marca ? marca : <p></p>}</h3>
           <h3>${price}</h3>

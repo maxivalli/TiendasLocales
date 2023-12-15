@@ -32,8 +32,10 @@ let socket
 
 function App() {
   const dispatch = useDispatch()
+
   const location = useLocation();
   const key = location.pathname.substring('/messages/'.length);
+
 
   axios.defaults.baseURL = "http://localhost:3001/";
   //axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/"
@@ -198,8 +200,10 @@ function App() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      /* socket = io("https://tiendaslocales-production.up.railway.app/") */
+
+      //socket = io("https://tiendaslocales-production.up.railway.app/")
       socket = io("http://localhost:3001/")
+      
       setShouldConnectSocket(true);
     }
   }, [isAuthenticated]);

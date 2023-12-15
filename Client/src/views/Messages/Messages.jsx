@@ -57,10 +57,22 @@ useEffect(() => {
       window.removeEventListener("popstate", handleUrlChange);
     };
   }, [navigate]);
-  
-
 
   useEffect(() => {
+    
+    if ("Notification" in window) {
+      if (
+        Notification.permission !== "granted" &&
+        Notification.permission !== "denied"
+      ) {
+        Notification.requestPermission().then((permission) => {
+          if (permission === "granted") {
+            console.log("Permiso para notificaciones concedido.");
+          }
+        });
+      }
+    }
+
     const updateDOMElements = () => {
       let people = document.querySelector(
         "#root > div.chat > div > div.ce-wrapper > div.ce-settings-column > div > div > div:nth-child(2) > div > div.ce-section-title-container.ce-person-title-container > div"
@@ -98,8 +110,10 @@ useEffect(() => {
       <div className="chat">
         <ChatEngine
           publicKey="59fa8828-96fe-4a26-a226-18d513d30b1e"
+
           userName={chatUserName}
           userSecret={userSecret}
+
           height="calc(100vh - 60px)"
           offset={-3}
         />

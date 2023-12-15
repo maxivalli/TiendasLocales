@@ -6,21 +6,23 @@ import style from "./Detail.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostById } from "../../redux/actions";
 import axios from "axios";
+import disc from "../../assets/disc.png";
 
-const Detail = ({userData}) => {
+const Detail = ({ userData }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const selectedPost = useSelector((state) => state.selectedPost);
   const stores = useSelector((state) => state.allStores);
-  
+
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(selectedPost.price);
-  
-  const selectedStore = stores?.find((store) => store.id == selectedPost?.storeId);
+
+  const selectedStore = stores?.find(
+    (store) => store.id == selectedPost?.storeId
+  );
   const isBuyButtonDisabled = quantity <= 0 || selectedPost.stock === 0;
-  
-  
+
   function decrement() {
     if (quantity > 1) {
       setQuantity(quantity - 1);
@@ -35,29 +37,36 @@ const Detail = ({userData}) => {
   useEffect(() => {
     setTotalPrice(selectedPost.price * quantity);
   }, [quantity, selectedPost.price]);
-  
+
   useEffect(() => {
     dispatch(getPostById(id));
   }, [dispatch]);
 
-const handlePremium = async () => {
+  const handlePremium = async () => {
     try {
       if (quantity > 0 && quantity <= selectedPost.stock) {
       } else {
-        throw new Error ("Disculpe, no hay mas stock disponible");
+        throw new Error("Disculpe, no hay mas stock disponible");
       }
-        const paymentData = {
-          postId: selectedPost.id,
-          userId: userData.id,
-          title: selectedPost.title,
-          quantity: quantity,
-          price: selectedPost.price,
-          currency_id: "ARG",
-          description: selectedPost.description,
-        };
-  
+      const result1 = await axios.get(`/posts/getPost/${selectedPost.id}`);
+
+      const result = await axios.get(
+        `/users/anotherUserId/?id=${result1.data.userId}`
+      );
+
+      const paymentData = {
+        accT: result.data.accT,
+        postId: selectedPost.id,
+        userId: userData.id,
+        title: selectedPost.title,
+        quantity: quantity,
+        price: selectedPost.price,
+        currency_id: "ARG",
+        description: selectedPost.description,
+      };
+
       const response = await axios.post("/tiendas/create-order", paymentData);
-  
+
       if (response) {
         window.location.href = response.data.response.body.init_point;
       } else {
@@ -66,7 +75,23 @@ const handlePremium = async () => {
     } catch (error) {
       console.error("Error al realizar solicitud de compra", error);
     }
-};
+  };
+
+  const [online, setOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    const updateOnlineStatus = () => {
+      setOnline(navigator.onLine);
+    };
+
+    window.addEventListener("online", updateOnlineStatus);
+    window.addEventListener("offline", updateOnlineStatus);
+
+    return () => {
+      window.removeEventListener("online", updateOnlineStatus);
+      window.removeEventListener("offline", updateOnlineStatus);
+    };
+  }, []);
 
   return (
     <>
@@ -75,7 +100,8 @@ const handlePremium = async () => {
         <div className={style.sidebar}>
           <Link to="/store">
             <div className={style.avatar}>
-              <img src={selectedStore?.image} alt="avatar" />
+              <img src={selectedStore?.image} alt="image" />
+
               <h3>{selectedStore?.nombre}</h3>
             </div>
           </Link>
@@ -109,17 +135,19 @@ const handlePremium = async () => {
             ></input>
             <button onClick={increment}>+</button>
           </div>
-          
+
           <p> Stock: {selectedPost.stock}</p>
           <div className={style.envio}>
-          <h5>
-            {selectedPost.delivery
-              ? "Envío disponible 🛵"
-              : "Retiro en tienda 🙋🏻‍♂️"}
-          </h5>
+            <h5>
+              {selectedPost.delivery
+                ? "Envío disponible 🛵"
+                : "Retiro en tienda 🙋🏻‍♂️"}
+            </h5>
           </div>
           <div className={style.comprar}>
-          <button onClick={handlePremium} disabled={isBuyButtonDisabled}>Comprar</button>
+            <button onClick={handlePremium} disabled={isBuyButtonDisabled}>
+              Comprar
+            </button>
           </div>
         </div>
       </div>

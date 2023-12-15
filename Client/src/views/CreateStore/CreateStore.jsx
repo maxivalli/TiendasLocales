@@ -265,17 +265,6 @@ const CreateStore = ({ userData }) => {
               </>
             )}
 
-            <div className={style.extra}>
-              <p>Indicaciones Extra</p>
-              <input
-                className={style.input}
-                type="textarea"
-                name="indicaciones"
-                value={formData.indicaciones}
-                onChange={handleChange}
-                placeholder="Ej: Casa roja con porton negro"
-              />
-            </div>
           </div>
           <div className={style.part2}>
             <div className={style.categoria}>

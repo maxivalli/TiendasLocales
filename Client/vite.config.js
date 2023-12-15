@@ -4,6 +4,10 @@ import { VitePWA } from "vite-plugin-pwa";
 
 const manifestForPlugIn = {
   registerType: "prompt",
+  workbox: {
+    cleanupOutdatedCaches: true,
+    globPatterns : ['**/*.{js, css, html, ico, png, svg, json, txt}']
+  },
   includeAssets: [
     "favicon.ico",
     "apple-touc-icon.png",
@@ -55,9 +59,9 @@ const manifestForPlugIn = {
         ],
       },
       {
-        name: "Mi perfil",
-        description: "Mi perfil",
-        url: "https://locanjeamos.com.ar/#/account",
+        name: "Mensajes",
+        description: "Mis mensajes",
+        url: "https://tiendaslocales.com.ar/#/messages",
         icons: [
           {
             src: "user.png",

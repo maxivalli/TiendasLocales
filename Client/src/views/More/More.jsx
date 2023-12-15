@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CardWide from "../../components/CardWide/CardWide";
-import Head from '../../components/Head/Head'
+import Head from "../../components/Head/Head";
 import style from "./More.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -27,9 +27,19 @@ const More = () => {
     fetchData();
   }, [userData.id]);
 
+  const handleConnectMP = () => {
+    // Abrir enlace de Mercado Pago en una nueva pestaña
+    window.open(
+      `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://8778-201-190-175-186.ngrok.io/tiendas/redirectUrl`
+    );
+
+    // Redirigir a la página de inicio en la ventana actual
+    window.location.href = "/home";
+  };
+
   return (
     <>
-    <Head/>
+      <Head />
       <div className={style.section}></div>
       <div className={style.more}>
         {!storeData && (
@@ -64,22 +74,33 @@ const More = () => {
           storeData &&
           userData.vendedor === "noVendedor" && (
             <>
-            <CardWide
-              textButton={"En espera"}
-              logo={
-                <img
-                  width="60"
-                  height="60"
-                  src="https://img.icons8.com/color/96/hourglass.png"
-                  alt="hourglass"
+              <CardWide
+                textButton={"En espera"}
+                logo={
+                  <img
+                    width="60"
+                    height="60"
+                    src="https://img.icons8.com/color/96/hourglass.png"
+                    alt="hourglass"
+                  />
+                }
+              />
+              {!userData.accT && (
+                <CardWide
+                  textButton={"Conectar MP"}
+                  logo={
+                    <img
+                      width="60"
+                      height="60"
+                      src="https://img.icons8.com/color/96/mercado-pago.png"
+                      alt="mercado-pago"
+                    />
+                  }
+                  link={`https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://362c-201-190-175-186.ngrok.io/tiendas/redirectUrl`}
                 />
-              }
-            />
-            {!userData.accT && <button onClick={()=>{window.location.href = `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://362c-201-190-175-186.ngrok.io/tiendas/redirectUrl`;}}>
-              Conectar MP
-            </button>}
-
-            </>)
+              )}
+            </>
+          )
         )}
         <CardWide
           textButton={"Consultas"}
