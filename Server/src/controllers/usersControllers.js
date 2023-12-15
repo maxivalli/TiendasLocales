@@ -124,7 +124,7 @@ exports.createUser = async (user) => {
           method: "post",
           url: "https://api.chatengine.io/users/",
           headers: {
-            "PRIVATE-KEY": "2b9635b2-fa51-4c12-a6b1-64a273f58dee",
+            "PRIVATE-KEY": "a4751e26-0b61-4563-b34c-88729b25c792",
             "Content-Type": "multipart/form-data",
           },
           data: formData,
@@ -169,7 +169,7 @@ exports.createUser = async (user) => {
           method: "post",
           url: "https://api.chatengine.io/users/",
           headers: {
-            "PRIVATE-KEY": "2b9635b2-fa51-4c12-a6b1-64a273f58dee",
+            "PRIVATE-KEY": "a4751e26-0b61-4563-b34c-88729b25c792",
             "Content-Type": "multipart/form-data",
           },
           data: formData,
@@ -212,7 +212,7 @@ exports.createUser = async (user) => {
           method: "post",
           url: "https://api.chatengine.io/users/",
           headers: {
-            "PRIVATE-KEY": "2b9635b2-fa51-4c12-a6b1-64a273f58dee",
+            "PRIVATE-KEY": "a4751e26-0b61-4563-b34c-88729b25c792",
             "Content-Type": "multipart/form-data",
           },
           data: formData,
@@ -256,7 +256,7 @@ exports.createUser = async (user) => {
           method: "post",
           url: "https://api.chatengine.io/users/",
           headers: {
-            "PRIVATE-KEY": "2b9635b2-fa51-4c12-a6b1-64a273f58dee",
+            "PRIVATE-KEY": "a4751e26-0b61-4563-b34c-88729b25c792",
             "Content-Type": "multipart/form-data",
           },
           data: formData,
