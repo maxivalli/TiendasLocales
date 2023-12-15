@@ -4,14 +4,11 @@ import {
   GET_ALL_DISABLED_USERS,
   GET_ALL_EXISTING_USERS,
   SORT_USER_BY_ID,
-  SORT_USER_BY_PLAN,
-  SORT_USER_BY_STATUS,
   GET_USER_BY_ID,
   CREATE_USER,
   UPDATE_USER,
   DELETE_USER,
   RESTORE_USER,
-  RESET_USERS_FILTER,
   GET_FAVORITES,
   REMOVE_FAVORITE,
   ADD_FAVORITE,
@@ -39,7 +36,8 @@ import {
   UPDATE_STOCK,
   GET_USER_NOTIFICATIONS,
   DELETE_USER_NOTIFICATIONS,
-  MARK_NOTI_AS_READ
+  MARK_NOTI_AS_READ,
+  GET_USER_STORE
 } from "./actionTypes";
 
 export function getAllUsers() {
@@ -89,19 +87,6 @@ export const sortUsersByID = (order) => {
   };
 };
 
-export const sortUsersByPlan = (plan) => {
-  return {
-    type: SORT_USER_BY_PLAN,
-    payload: plan,
-  };
-};
-
-export const sortUsersByStatus = (status) => {
-  return {
-    type: SORT_USER_BY_STATUS,
-    payload: status,
-  };
-};
 
 export function createGoogleUser(user) {
 
@@ -148,12 +133,6 @@ export function deleteUser(id) {
   };
 }
 
-export function resetUsersFilter() {
-  return {
-    type: RESET_USERS_FILTER,
-  };
-}
-
 export function restoreUser(id) {
   return async (dispatch) => {
     const result = await axios.put(`/users/restoreUser/${id}`);
@@ -190,6 +169,17 @@ export function getAllStores() {
       throw error
     }
   }
+}
+
+export function getUserStore(userId) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`/tiendas/getUserStore/${userId}`);
+      dispatch({ type: GET_USER_STORE, payload: response.data });
+    } catch (error) {
+      throw error
+    }
+  };
 }
 
 export function addFavorite(userId, storeId) {

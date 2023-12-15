@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import { io } from 'socket.io-client';
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
@@ -24,7 +24,7 @@ import Faq from "./views/FAQ/Faq";
 import Dashboard from "./views/Dashboard/Dashboard";
 import "./App.css";
 import UbiForm from "./components/UbiForm/UbiForm";
-import { getAllStores, saveUserData } from "./redux/actions";
+import { getAllStores, getUserStore, saveUserData } from "./redux/actions";
 import { useDispatch } from "react-redux";
 import AddProduct from "./views/AddProduct/AddProduct";
 
@@ -116,6 +116,7 @@ function App() {
     setIsAuthenticated(status);
     setUserData(user);
     dispatch(saveUserData(user))
+    dispatch(getUserStore(user?.id))
   };
 
   useEffect(() => {
@@ -162,6 +163,7 @@ function App() {
                   vendedor: userDataResponse.data.vendedor,
                   accT: userDataResponse.data.accT,
                   }))
+                  dispatch(getUserStore(userDataResponse?.data.id))
 
               })
               .catch((userDataError) => {
@@ -353,31 +355,24 @@ function App() {
             )
           }
         />
-        <Route path="/messages" element={isAuthenticated ? (
-              userData ? (
-                <Messages userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <Messages userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+             <Route
+        path="/messages/*"
+        element={
+          isAuthenticated || isAuthenticatedAuth0 ? (
+            user || userData ? (
+              <Messages key={key} userData={userData} setAuth={setAuth} />
             ) : (
-              <Login setAuth={setAuth} />
+              <div className="spinner">
+                <div className="bounce1"></div>
+                <div className="bounce2"></div>
+                <div className="bounce3"></div>
+              </div>
             )
-          }
-        />
+          ) : (
+            <Login setAuth={setAuth} />
+          )
+        }
+      />
         <Route path="/account" element={isAuthenticated ? (
               userData ? (
                 <Account userData={userData} setUserData={setUserData} setAuth={setAuth} />

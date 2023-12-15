@@ -12,7 +12,7 @@ router.post('/createStore', async (req, res) => {
       return res.status(201).json(response);
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ error: 'Error al crear la tienda.' });
+      return res.status(500).json({ error: 'Error al crear la tienda.'});
     }
   });
 
@@ -41,6 +41,17 @@ router.post('/createStore', async (req, res) => {
 router.get('/getAllStores', async (req,res) => {
   try{
     const response = await tiendasController.getAllStores();
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json(error.message)
+  }
+})
+
+router.get('/getUserStore/:userId', async (req,res) => {
+  const { userId } = req.params
+
+  try{
+    const response = await tiendasController.getUserStore(userId);
     return res.status(200).json(response);
   } catch (error) {
     return res.status(500).json(error.message)

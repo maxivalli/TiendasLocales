@@ -30,7 +30,8 @@ import {
   GET_ALL_POSTS,
   UPDATE_STOCK,
   GET_USER_NOTIFICATIONS,
-  DELETE_USER_NOTIFICATIONS
+  DELETE_USER_NOTIFICATIONS,
+  GET_USER_STORE
 } from "./actionTypes";
 
 const initialState = {
@@ -64,6 +65,7 @@ const initialState = {
   matchedPairs: [],
   postDetail: [],
   userData: {},
+  userStore: {},
   userNotif: [],
 };
 
@@ -216,6 +218,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         allStores: action.payload,
       };
+
+      case GET_USER_STORE:
+        return {
+          ...state,
+          userStore: action.payload,
+        };
 
     case GET_FAVORITES:
       return {
