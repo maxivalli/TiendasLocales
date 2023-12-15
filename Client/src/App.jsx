@@ -33,11 +33,7 @@ let socket
 function App() {
   const dispatch = useDispatch()
   axios.defaults.baseURL = "http://localhost:3001/";
-<<<<<<< HEAD
   //axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/"
-=======
-  // axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/"
->>>>>>> 1424c3dcfea4a55388a7106b093d8d1fdd1a648a
   const {
     user,
     isAuthenticated: isAuthenticatedAuth0,
