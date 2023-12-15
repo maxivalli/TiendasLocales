@@ -45,8 +45,6 @@ User.hasMany(Compra);
 Compra.belongsTo(User);
 
 // User - Post
-User.hasMany(Post);
-Post.belongsTo(User);
 
 // User - Chat
 User.belongsToMany(Chat, {

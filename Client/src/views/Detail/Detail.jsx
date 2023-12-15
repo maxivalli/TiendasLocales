@@ -46,8 +46,13 @@ const handlePremium = async () => {
       } else {
         throw new Error ("Disculpe, no hay mas stock disponible");
       }
+      const result1 = await axios.get(`/posts/getPost/${selectedPost.id}`)
+
+      const result = await axios.get(`/users/anotherUserId/?id=${result1.data.userId}`)
+      
+      
         const paymentData = {
-          accT: userData.accT,
+          accT: result.data.accT,
           postId: selectedPost.id,
           userId: userData.id,
           title: selectedPost.title,
