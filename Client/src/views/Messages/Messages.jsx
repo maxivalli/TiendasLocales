@@ -4,7 +4,22 @@ import { ChatEngine } from "react-chat-engine";
 import "./Messages.css";
 
 const Messages = () => {
+
   useEffect(() => {
+    
+    if ("Notification" in window) {
+      if (
+        Notification.permission !== "granted" &&
+        Notification.permission !== "denied"
+      ) {
+        Notification.requestPermission().then((permission) => {
+          if (permission === "granted") {
+            console.log("Permiso para notificaciones concedido.");
+          }
+        });
+      }
+    }
+
     const updateDOMElements = () => {
       let people = document.querySelector(
         "#root > div.chat > div > div.ce-wrapper > div.ce-settings-column > div > div > div:nth-child(2) > div > div.ce-section-title-container.ce-person-title-container > div"

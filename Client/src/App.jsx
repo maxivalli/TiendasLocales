@@ -193,8 +193,8 @@ function App() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      socket = io("https://tiendaslocales-production.up.railway.app/")
-      //socket = io("http://localhost:3001/")
+      //socket = io("https://tiendaslocales-production.up.railway.app/")
+      socket = io("http://localhost:3001/")
       setShouldConnectSocket(true);
     }
   }, [isAuthenticated]);
