@@ -1,6 +1,6 @@
 .nav {
   position: fixed;
-  bottom: 50px;
+  bottom: 100px;
   right: 50px;
   border: none;
   width: 50px;
@@ -14,7 +14,7 @@
 .botonesExtras {
   display: grid;
   position: fixed;
-  bottom: 120px;
+  bottom: 160px;
   right: 50px;
   display: grid;
   gap: 20px;
