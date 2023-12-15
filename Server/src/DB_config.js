@@ -12,17 +12,10 @@ const sequelize = new Sequelize(`postgres:${DB_USER}:${DB_PASSWORD}@${DB_HOST}/t
   }
 );
 
-<<<<<<< HEAD
 /* const sequelize = new Sequelize(DB_DEPLOY, {
   logging: false,
   native: false,
 }); */
-=======
-// const sequelize = new Sequelize(DB_DEPLOY, {
-//   logging: false,
-//   native: false,
-// });
->>>>>>> 1424c3dcfea4a55388a7106b093d8d1fdd1a648a
 
 const basename = path.basename(__filename);
 

@@ -98,19 +98,9 @@ const More = () => {
                   }
                   link={`https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://362c-201-190-175-186.ngrok.io/tiendas/redirectUrl`}
                 />
-<<<<<<< HEAD
               )}
             </>
           )
-=======
-              }
-            />
-            {!userData.accT && <button onClick={handleConnectMP}>
-              Conectar MP
-            </button>}
-
-            </>)
->>>>>>> 1424c3dcfea4a55388a7106b093d8d1fdd1a648a
         )}
         <CardWide
           textButton={"Consultas"}
