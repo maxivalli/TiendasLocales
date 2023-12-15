@@ -29,3 +29,27 @@ exports.getUserNotif = async (userId) => {
       return 0;
     }
   };
+
+
+  exports.markNotiAsRead = async (notiId) => {
+    try {
+
+      const notification = await Notifications.findByPk(notiId);
+  
+      if (notification) {
+ 
+        await notification.update({
+          read: true,
+        });
+  
+        return notification;
+      } else {
+        console.log('Notificación no encontrada.');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error al actualizar la notificación:', error);
+      return null;
+    }
+  };
+  

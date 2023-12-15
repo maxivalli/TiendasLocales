@@ -39,6 +39,7 @@ import {
   UPDATE_STOCK,
   GET_USER_NOTIFICATIONS,
   DELETE_USER_NOTIFICATIONS,
+  MARK_NOTI_AS_READ
 } from "./actionTypes";
 
 export function getAllUsers() {
@@ -262,6 +263,17 @@ export function deleteUserNotif(userId) {
     try {
       const response = await axios.delete(`/notif/deleteUserNotif/${userId}`);
       dispatch({ type: DELETE_USER_NOTIFICATIONS, payload: response.data });
+    } catch (error) {
+      throw error
+    }
+  };
+}
+
+export function markNotiAsRead(notiId) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(`/notif/markNotiAsRead/${notiId}`);
+      dispatch({ type: MARK_NOTI_AS_READ, payload: response.data });
     } catch (error) {
       throw error
     }
