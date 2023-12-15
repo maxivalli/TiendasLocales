@@ -4,6 +4,10 @@ import { VitePWA } from "vite-plugin-pwa";
 
 const manifestForPlugIn = {
   registerType: "prompt",
+  workbox: {
+    CleanupOutdatedCaches: true,
+    globPatterns : ['**/*.{js, css, html, ico, png, svg, json, txt}']
+  },
   includeAssets: [
     "favicon.ico",
     "apple-touc-icon.png",
