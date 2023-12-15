@@ -32,8 +32,8 @@ let socket
 
 function App() {
   const dispatch = useDispatch()
-  //axios.defaults.baseURL = "http://localhost:3001/";
-  axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/"
+  axios.defaults.baseURL = "http://localhost:3001/";
+  //axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/"
   const {
     user,
     isAuthenticated: isAuthenticatedAuth0,
@@ -193,8 +193,8 @@ function App() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      socket = io("https://tiendaslocales-production.up.railway.app/")
-      //socket = io("http://localhost:3001/")
+      //socket = io("https://tiendaslocales-production.up.railway.app/")
+      socket = io("http://localhost:3001/")
       setShouldConnectSocket(true);
     }
   }, [isAuthenticated]);
