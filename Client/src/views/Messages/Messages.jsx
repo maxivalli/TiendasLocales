@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+/* import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ChatEngine } from "react-chat-engine";
 import "./Messages.css";
@@ -123,3 +123,14 @@ useEffect(() => {
 };
 
 export default Messages;
+ */
+
+import React from 'react'
+
+const Messages = () => {
+  return (
+    <div>Messages</div>
+  )
+}
+
+export default Messages

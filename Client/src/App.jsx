@@ -367,7 +367,7 @@ function App() {
             )
           }
         />
-        {/* <Route
+        <Route
           path="/messages"
           element={
             isAuthenticated || isAuthenticatedAuth0 ? (
@@ -384,7 +384,7 @@ function App() {
               <Login setAuth={setAuth} />
             )
           }
-        /> */}
+        />
         <Route
           path="/account"
           element={
