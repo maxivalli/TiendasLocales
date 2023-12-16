@@ -208,29 +208,54 @@ function App() {
     }
   }, [shouldConnectSocket, userId]);
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').then(registration => {
-      console.log('Service Worker registrado con éxito: ', registration);
-    }).catch(err => {
-      console.error('Error al registrar el Service Worker: ', err);
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then((registration) => {
+          console.log("Service Worker registrado con éxito: ", registration);
+        })
+        .catch((err) => {
+          console.error("Error al registrar el Service Worker: ", err);
+        });
     });
-  });
 
-  window.addEventListener('offline', () => {
-    Toast.fire({
-      icon: "warning",
-      title: "Estás fuera de línea, revisa tu conexión.",
-    });
-  });
+    window.addEventListener("offline", () => {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
 
-  window.addEventListener('online', () => {
-    Toast.fire({
-      icon: "success",
-      title: "¡Estás en línea de vuelta!",
+      Toast.fire({
+        icon: "warning",
+        title: "Estás fuera de línea, revisa tu conexión.",
+      });
     });
-  });
-}
+
+    window.addEventListener("online", () => {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon: "success",
+        title: "¡Estás en línea nuevamente!",
+      });
+    });
+  }
 
   return (
     <>
