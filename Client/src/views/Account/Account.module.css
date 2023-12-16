@@ -104,11 +104,12 @@
 }
 
 .modal {
-  position: absolute;
+  position: fixed;
   top: 20%;
   justify-self: center;
   background-color: rgb(210, 210, 210);
   border-radius: 10px;
+  z-index: 9;
 }
 
 .close {
@@ -161,5 +162,9 @@
   .misCompras {
     grid-template-columns: 1fr;
     margin-bottom: 250px;
+  }
+
+  .modal {
+    top: 70px;
   }
 }
