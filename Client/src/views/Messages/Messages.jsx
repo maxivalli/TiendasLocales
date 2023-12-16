@@ -5,53 +5,55 @@ import "./Messages.css";
 import { getUserStore } from "../../redux/actions";
 import { useNavigate } from "react-router";
 
-
 const Messages = () => {
-const dispatch = useDispatch()
-const navigate= useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-const [prevUrl, setPrevUrl] = useState(window.location.href);
-console.log(prevUrl);
+  const [prevUrl, setPrevUrl] = useState(window.location.href);
+  console.log(prevUrl);
 
-const [savedStoreData, setSavedStoreData] = useState(() => {
-  const storedData = localStorage.getItem('userStore');
-  return storedData ? JSON.parse(storedData) : null;
-});
+  const [savedStoreData, setSavedStoreData] = useState(() => {
+    const storedData = localStorage.getItem("userStore");
+    return storedData ? JSON.parse(storedData) : null;
+  });
 
+  const userData = useSelector((state) => state?.userData);
+  const userName = userData?.username;
+  const userEmail = userData?.email;
 
-const userData = useSelector((state) => state?.userData);
-const userName = userData?.username;
-const userEmail = userData?.email;
+  const userStore = useSelector((state) => state?.userStore);
+  const storeName = userStore?.nombre;
+  const storeEmail = userStore?.email;
 
-const userStore = useSelector((state) => state?.userStore);
-const storeName = userStore?.nombre;
-const storeEmail = userStore?.email;
-
-
-useEffect(() => {
-  if (userStore) {
-    localStorage.setItem('userStore', JSON.stringify(userStore));
-  }
-}, [userStore]);
-
+  useEffect(() => {
+    if (userStore) {
+      localStorage.setItem("userStore", JSON.stringify(userStore));
+    }
+  }, [userStore]);
 
   const url = new URL(window.location.href);
   const lastPathSegment = url.href.split("/").pop();
   const isUserAccount = lastPathSegment == "user";
-  const chatUserName = isUserAccount ? userName : (storeName ? storeName : savedStoreData.nombre);
-  const userSecret = isUserAccount ? userEmail : (storeEmail ? storeEmail : savedStoreData.email);
- 
+  const chatUserName = isUserAccount
+    ? userName
+    : storeName
+    ? storeName
+    : savedStoreData.nombre;
+  const userSecret = isUserAccount
+    ? userEmail
+    : storeEmail
+    ? storeEmail
+    : savedStoreData.email;
 
-  
   useEffect(() => {
     const handleUrlChange = () => {
       // Forzar la recarga de la página
       window.location.reload();
     };
-  
+
     // Suscribe al evento de cambio de URL
     window.addEventListener("popstate", handleUrlChange);
-  
+
     // Limpia el evento al desmontar el componente
     return () => {
       window.removeEventListener("popstate", handleUrlChange);
@@ -59,7 +61,6 @@ useEffect(() => {
   }, [navigate]);
 
   useEffect(() => {
-    
     if ("Notification" in window) {
       if (
         Notification.permission !== "granted" &&
@@ -104,16 +105,13 @@ useEffect(() => {
     return () => clearTimeout(timeout);
   }, []);
 
-
   return (
     <>
       <div className="chat">
         <ChatEngine
-          publicKey="59fa8828-96fe-4a26-a226-18d513d30b1e"
-
+          projectID="59fa8828-96fe-4a26-a226-18d513d30b1e"
           userName={chatUserName}
           userSecret={userSecret}
-
           height="calc(100vh - 60px)"
           offset={-3}
         />

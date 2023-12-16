@@ -10,8 +10,11 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.userData);
   const userStore = useSelector((state) => state.userStore);
-  console.log(userStore);
   const [showAccounts, setShowAccounts] = useState();
+
+  const selectAccount = () => {
+    setShowAccounts(false); 
+  };
 
   const {
     user,
@@ -66,49 +69,60 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
             </button>
           </Link>
           {userStore ? (
-  <button onClick={toggleAccounts}>
-    <img
-      width="32"
-      height="32"
-      src="https://img.icons8.com/sf-regular/48/FFFFFF/chat.png"
-      alt="chat"
-    />
-  </button>
-) : (
-  <Link to="/messages/user">
-    <button>
-      <img
-        width="32"
-        height="32"
-        src="https://img.icons8.com/sf-regular/48/FFFFFF/chat.png"
-        alt="chat"
-      />
-    </button>
-  </Link>
-)}
-{showAccounts && ( // Asegúrate de que showAccounts esté correctamente definido
-  <div className={style.modal}>
-    <Link to="/messages/user">
-      <button onClick={handleClick} className={style.profilePicture}>
-        <img
-          src={(user && user.picture) || (userData && userData.image)}
-          className={style.profilePicture}
-          alt="user"
-        />
-      </button>
-    </Link>
+            <button onClick={toggleAccounts}>
+              <img
+                width="32"
+                height="32"
+                src="https://img.icons8.com/sf-regular/48/FFFFFF/chat.png"
+                alt="chat"
+              />
+            </button>
+          ) : (
+            <Link to="/messages/user">
+              <button>
+                <img
+                  width="32"
+                  height="32"
+                  src="https://img.icons8.com/sf-regular/48/FFFFFF/chat.png"
+                  alt="chat"
+                />
+              </button>
+            </Link>
+          )}
+          {showAccounts && (
+            <div className={style.modal}>
+              <h3>Selecciona una una cuenta para chatear</h3>
+              <div className={style.accounts}>
+                <Link to="/messages/user">
+                  <button
+                    onClick={() => { handleClick(); selectAccount(); }}
+                    className={style.profilePicture}
+                  >
+                    <img
+                      src={
+                        (user && user.picture) || (userData && userData.image)
+                      }
+                      className={style.profilePicture}
+                      alt="user"
+                    />
+                  </button>
+                </Link>
 
-    <Link to="/messages/store">
-      <button onClick={handleClick} className={style.profilePicture}>
-        <img
-          src={userStore && userStore.image}
-          className={style.profilePicture}
-          alt="store"
-        />
-      </button>
-    </Link>
-  </div>
-)}
+                <Link to="/messages/store">
+                  <button
+                    onClick={() => { handleClick(); selectAccount(); }}
+                    className={style.profilePicture}
+                  >
+                    <img
+                      src={userStore && userStore.image}
+                      className={style.profilePicture}
+                      alt="store"
+                    />
+                  </button>
+                </Link>
+              </div>
+            </div>
+          )}
 
           <Link to="/account">
             {isAuthenticated || isAuthenticatedAuth0 ? (

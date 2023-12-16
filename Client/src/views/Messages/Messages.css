@@ -114,6 +114,12 @@ div.ce-active-chat-card {
   margin: 5px !important;
 }
 
+div.ce-chat-card.false {
+  background-color: grey !important;
+  border-radius: 10px;
+  margin: 5px;
+}
+
 div.ce-chat-feed {
   background-color: transparent !important;
 }

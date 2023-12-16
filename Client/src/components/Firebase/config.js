@@ -1,7 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getMessaging } from "firebase/messaging";
 import { v4 } from "uuid";
 
 const firebaseConfig = {
@@ -14,7 +12,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
 export const storage = getStorage(app)
 
 export async function uploadFile(file){
@@ -24,6 +22,5 @@ export async function uploadFile(file){
   return url
 }
 
-export const messaging = getMessaging(app);
 
 
