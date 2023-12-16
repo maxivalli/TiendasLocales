@@ -218,11 +218,17 @@ if ('serviceWorker' in navigator) {
   });
 
   window.addEventListener('offline', () => {
-    alert('Estás fuera de línea. Por favor, revisa tu conexión a internet.');
+    Toast.fire({
+      icon: "warning",
+      title: "Estás fuera de línea, revisa tu conexión.",
+    });
   });
 
   window.addEventListener('online', () => {
-    alert('¡Estás de vuelta en línea!');
+    Toast.fire({
+      icon: "success",
+      title: "¡Estás en línea de vuelta!",
+    });
   });
 }
 
