@@ -36,9 +36,9 @@ const More = () => {
     // Redirigir a la página de inicio en la ventana actual
     window.location.href = "/home";
     Swal.fire({
-      icon: 'success',
-      title: 'Como saber si mi token se genero?',
-      text: 'Ve a More, refresca la pagina y si el boton para concectar Mercado Pago no esta, significa que se genero correctamente!',
+      icon: "success",
+      title: "Como saber si mi token se genero?",
+      text: "Ve a More, refresca la pagina y si el boton para concectar Mercado Pago no esta, significa que se genero correctamente!",
     });
   };
 
@@ -75,51 +75,64 @@ const More = () => {
             }
             link={`/mystore/${storeData.id}`}
           />
-        ) : (
-          storeData &&
-          userData.vendedor === "noVendedor" && !userData.accT ? (
-            <>
-              <CardWide
-                  textButton={"En espera"}
+        ) : storeData &&
+          userData.vendedor === "noVendedor" &&
+          !userData.accT ? (
+          <>
+            <CardWide
+              textButton={"En espera"}
+              logo={
+                <img
+                  width="60"
+                  height="60"
+                  src="https://img.icons8.com/color/96/hourglass.png"
+                  alt="hourglass"
+                />
+              }
+            />
+            <div className={style.MP}>
+              <div className={style.modal}>
+                <p>
+                  Para que tu tienda sea aprobada primero necesitas conectar tu
+                  cuenta de Mercado Pago para poder recibir el dinero.
+                </p>
+              </div>
+
+              <button onClick={handleConnectMP} className={style.button}>
+                <CardWide
+                  textButton={"Conectar MP"}
                   logo={
                     <img
                       width="60"
                       height="60"
-                      src="https://img.icons8.com/color/96/hourglass.png"
-                      alt="hourglass"
+                      src="https://img.icons8.com/color/96/mercado-pago.png"
+                      alt="mercado-pago"
                     />
                   }
-              />
-              <div>
-                <h3>Para que tu tienda sea aprobada primero necesitas<br></br> conectar tu cuenta de Mercado Pago para poder recibir el dinero</h3>
-                <button onClick={handleConnectMP}>
+                />
+              </button>
+            </div>
+          </>
+        ) : (
+          storeData &&
+          userData.vendedor === "noVendedor" &&
+          userData.accT && (
+            <>
+              <h4>
+                Para que la tienda sea habilitada deberas pagar<br></br> la
+                cuota al centro comercial,<br></br> alli un empleado aprobara tu
+                cuenta!
+              </h4>
               <CardWide
-                textButton={"Conectar MP"}
+                textButton={"En espera"}
                 logo={
                   <img
                     width="60"
                     height="60"
-                    src="https://img.icons8.com/color/96/mercado-pago.png"
-                    alt="mercado-pago"
-                  />}
-              />
-              </button>
-              </div>
-            </>
-          ) : (storeData &&
-            userData.vendedor === "noVendedor" && userData.accT &&
-            <>
-            <h4>Para que la tienda sea habilitada deberas pagar<br></br> la cuota al centro comercial,<br></br> alli un empleado aprobara tu cuenta!</h4>
-            <CardWide
-                  textButton={"En espera"}
-                  logo={
-                    <img
-                      width="60"
-                      height="60"
-                      src="https://img.icons8.com/color/96/hourglass.png"
-                      alt="hourglass"
-                    />
-                  }
+                    src="https://img.icons8.com/color/96/hourglass.png"
+                    alt="hourglass"
+                  />
+                }
               />
             </>
           )
