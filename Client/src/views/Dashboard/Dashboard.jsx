@@ -19,7 +19,12 @@ const Dashboard = () => {
     const filtered = stores.filter(
       (store) => store.habilitado === "noHabilitado"
     );
-    setStores(filtered);
+    filtered.forEach(async (store) => {
+      const response = await axios.get(`/users/anotherUserId?id=${store.userId}`);
+      const userData = response.data;
+      if(userData.accT)
+        setStores([store])
+    })
   }, [dispatch, stores]);
 
   const handleHabilitacion = async (id) => {
@@ -41,8 +46,6 @@ const Dashboard = () => {
       console.error(error);
     }
   };
-
-  console.log(stores);
 
   return (
     <>

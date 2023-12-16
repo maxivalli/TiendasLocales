@@ -113,22 +113,24 @@ exports.habStore = async (id) => {
         id: id,
       },
     });
-
-    store.habilitado = "habilitado";
-    await store.save();
-
     if (store) {
       const user = await User.findOne({
         where: {
           id: store.userId,
-        },
-      });
+        },});
 
-      user.vendedor = "vendedor";
-      await user.save();
+      if(user.accT){
+        store.habilitado = "habilitado";
+        await store.save();
+
+        user.vendedor = "vendedor";
+        await user.save();
+
+        return true;
+      } else if(!store.accT){
+        throw new Error ("El usuario no a generado su access token!")
+      }
     }
-
-    return true;
   } catch (error) {
     throw error;
   }
