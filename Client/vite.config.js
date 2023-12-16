@@ -10,7 +10,7 @@ const manifestForPlugIn = {
         urlPattern: ({ url }) => {
           return url.pathname.startsWith("/");
         },
-        handler: "CacheFirst" as const,
+        handler: "CacheFirst",
         options: {
           cacheName: "api-cache",
           cacheableResponse: {
