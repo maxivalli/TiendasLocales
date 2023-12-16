@@ -208,18 +208,17 @@ function App() {
     }
   }, [shouldConnectSocket, userId]);
 
-  const OfflineAlert = () => {
-    useEffect(() => {
-      const handleOffline = () => {
-        alert('¡Estás fuera de línea, revisa tu conexión!');
-      };
-  
-      window.addEventListener('offline', handleOffline);
-  
-      return () => {
-        window.removeEventListener('offline', handleOffline);
-      };
-    }, []);
+  useEffect(() => {
+    const handleOffline = () => {
+      alert("¡Estás fuera de línea, revisa tu conexión!");
+    };
+
+    window.addEventListener("offline", handleOffline);
+
+    return () => {
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
 
   return (
     <>
