@@ -4,6 +4,22 @@ import { VitePWA } from "vite-plugin-pwa";
 
 const manifestForPlugIn = {
   registerType: "prompt",
+  workbox: {
+    runtimeCaching: [
+      {
+        urlPattern:
+          /^https:\/\/firebasestorage\.googleapis\.com\/.*\.(png|jpg|jpeg|svg)$/,
+        handler: "CacheFirst",
+        options: {
+          cacheName: "firebase-images-cache",
+          expiration: {
+            maxEntries: 50,
+            maxAgeSeconds: 30 * 24 * 60 * 60,
+          },
+        },
+      },
+    ],
+  },
   includeAssets: [
     "favicon.ico",
     "apple-touc-icon.png",
