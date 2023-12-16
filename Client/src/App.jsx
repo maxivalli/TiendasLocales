@@ -368,7 +368,7 @@ function App() {
           }
         />
         <Route
-          path="/messages"
+          path="/messages/*"
           element={
             isAuthenticated || isAuthenticatedAuth0 ? (
               user || userData ? (
