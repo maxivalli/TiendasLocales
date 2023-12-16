@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import style from "./ProductImages.module.css";
-import disc from "../../assets/disc.png";
 
 const ProductImages = ({ images }) => {
   
