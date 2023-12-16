@@ -110,8 +110,8 @@ const Messages = () => {
       <div className="chat">
         <ChatEngine
           projectID="59fa8828-96fe-4a26-a226-18d513d30b1e"
-          userName={chatUserName}
-          userSecret={userSecret}
+          userName={userData.username}
+          userSecret={userData.email}
           height="calc(100vh - 60px)"
           offset={-3}
         />
