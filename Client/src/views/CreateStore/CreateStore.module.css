@@ -23,7 +23,7 @@
 .container input {
   height: 35px;
   border-radius: 5px;
-  border: none;
+  border: 1px solid grey;
 }
 
 .container span {
