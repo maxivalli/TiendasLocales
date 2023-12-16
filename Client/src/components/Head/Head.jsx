@@ -17,6 +17,7 @@ const Head = () => {
     useState(null);
   const [clearNotifications, setClearNotifications] = useState(false);
   const stores = useSelector((state) => state.allStores);
+  const posts = useSelector((state) => state.allPosts);
   const userData = useSelector((state)=> state.userData)
   const savedNotif = useSelector((state)=> state.userNotif)
 
@@ -62,10 +63,46 @@ const Head = () => {
     }
   };
 
+  useEffect(() => {
+    const handleNewMessage = (data) => {
+      const {storeId, image, lastMessage, sender} = data
+      let messageNotificationText
+      if (storeId) {
+      if (lastMessage.length < 10){
+       messageNotificationText = `Tu tienda ha recibido un nuevo mensaje de ${sender}: "${lastMessage}"`
+      } else {
+       messageNotificationText = `Tu tienda ha recibido un nuevo mensaje de ${sender}`
+      }
+    } else {
+      if (lastMessage.length < 10){
+        messageNotificationText = `Has recibido un nuevo mensaje de ${sender}: "${lastMessage}"`
+       } else {
+        messageNotificationText = `Has recibido un nuevo mensaje de ${sender}`
+       }
+    }
+
+      setLiveNotifications((prevNotifications) => [
+        {
+          content: messageNotificationText,
+          image: image,
+          read: false,
+        },
+        ...prevNotifications,
+      ]);
+
+      setHasUnreadNotification(true);
+    };
+
+    socket?.on("newMessage", handleNewMessage);
+
+    return () => {
+      socket?.off("newMessage", handleNewMessage);
+    };
+  }, [stores]);
+
 
   useEffect(() => {
     const handleAddFavorite = (storeId) => {
-      console.log("socket addFavorite recibido por el front");
       const store = stores.find((store) => store.id == storeId);
 
       setLiveNotifications((prevNotifications) => [
@@ -84,6 +121,29 @@ const Head = () => {
 
     return () => {
       socket?.off("addFavorite", handleAddFavorite);
+    };
+  }, [stores]);
+
+  useEffect(() => {
+    const handleAddPostFavorite = (postId) => {
+      const post = posts.find((post) => post.id == postId);
+
+      setLiveNotifications((prevNotifications) => [
+        {
+          content: `¡Se ha agregado "${post.title}" a favoritos!`,
+          image: post.image,
+          read: false,
+        },
+        ...prevNotifications,
+      ]);
+
+      setHasUnreadNotification(true);
+    };
+
+    socket?.on("addFavoritePost", handleAddPostFavorite);
+
+    return () => {
+      socket?.off("addFavoritePost", handleAddPostFavorite);
     };
   }, [stores]);
 
@@ -107,7 +167,29 @@ const Head = () => {
       socket?.off("waitingStore", handleWaitingStore);
     };
   }, [stores]);
+  
+  useEffect(() => {
+    const handleApprovedStore = (data) => {
+      const { nombre, image } = data
+      setLiveNotifications((prevNotifications) => [
+        {
+          content: `Su tienda "${nombre}" fue aprobada!`,
+          image: image,
+          read: false,
+        },
+        ...prevNotifications,
+      ]);
+      setHasUnreadNotification(true);
+    };
 
+    socket?.on("approvedStore", handleApprovedStore);
+
+    return () => {
+      socket?.off("approvedStore", handleApprovedStore);
+    };
+  }, [stores]);
+
+  
   const handleClearNotifications = () => {
     setLiveNotifications([]);
     setHasUnreadNotification(false);

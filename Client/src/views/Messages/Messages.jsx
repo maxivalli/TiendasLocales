@@ -1,17 +1,14 @@
 import { React, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { ChatEngine } from "react-chat-engine";
 import "./Messages.css";
-import { getUserStore } from "../../redux/actions";
 import { useNavigate } from "react-router";
 
+import { socket } from "../../App"
+
 const Messages = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const [prevUrl, setPrevUrl] = useState(window.location.href);
-  console.log(prevUrl);
-
+  
   const [savedStoreData, setSavedStoreData] = useState(() => {
     const storedData = localStorage.getItem("userStore");
     return storedData ? JSON.parse(storedData) : null;
@@ -34,11 +31,7 @@ const Messages = () => {
   const url = new URL(window.location.href);
   const lastPathSegment = url.href.split("/").pop();
   const isUserAccount = lastPathSegment == "user";
-  const chatUserName = isUserAccount
-    ? userName
-    : storeName
-    ? storeName
-    : savedStoreData.nombre;
+  const chatUserName = isUserAccount ? userName : storeName ? storeName : savedStoreData.nombre;
   const userSecret = isUserAccount
     ? userEmail
     : storeEmail
@@ -47,14 +40,9 @@ const Messages = () => {
 
   useEffect(() => {
     const handleUrlChange = () => {
-      // Forzar la recarga de la página
       window.location.reload();
     };
-
-    // Suscribe al evento de cambio de URL
     window.addEventListener("popstate", handleUrlChange);
-
-    // Limpia el evento al desmontar el componente
     return () => {
       window.removeEventListener("popstate", handleUrlChange);
     };
@@ -105,13 +93,32 @@ const Messages = () => {
     return () => clearTimeout(timeout);
   }, []);
 
+
+  const [chats, setChats] = useState() 
+
   return (
     <>
       <div className="chat">
         <ChatEngine
-          projectID="59fa8828-96fe-4a26-a226-18d513d30b1e"
+
+          publicKey="59fa8828-96fe-4a26-a226-18d513d30b1e"
           userName={chatUserName}
           userSecret={userSecret}
+          
+          onGetChats={(chats)=> {
+            setChats(chats)
+          }}
+
+          onNewMessage={(chatId, message) => {
+            const chat = chats?.find((chat) => chat?.id === chatId)
+            const people = chat.people
+            const lastMessage = message.text.replace(/<\/?p>/g, '');
+            const sender = message.sender_username
+            const senderId = userData?.id
+            const messageData = { people, lastMessage, sender, senderId }
+            socket?.emit("newMessage", messageData);
+          }}
+
           height="calc(100vh - 60px)"
           offset={-3}
         />
