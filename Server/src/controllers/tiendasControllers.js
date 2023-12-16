@@ -128,7 +128,7 @@ exports.habStore = async (id) => {
       await user.save();
     }
 
-    return true;
+    return store;
   } catch (error) {
     throw error;
   }

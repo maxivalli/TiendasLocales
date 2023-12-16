@@ -1,65 +1,53 @@
 import { React, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { ChatEngine } from "react-chat-engine";
 import "./Messages.css";
-import { getUserStore } from "../../redux/actions";
 import { useNavigate } from "react-router";
-
+import { socket } from "../../App"
 
 const Messages = () => {
-const dispatch = useDispatch()
-const navigate= useNavigate()
+  const navigate = useNavigate();
+  
+  const [savedStoreData, setSavedStoreData] = useState(() => {
+    const storedData = localStorage.getItem("userStore");
+    return storedData ? JSON.parse(storedData) : null;
+  });
 
-const [prevUrl, setPrevUrl] = useState(window.location.href);
-console.log(prevUrl);
+  const userData = useSelector((state) => state?.userData);
+  const userName = userData?.username;
+  const userEmail = userData?.email;
 
-const [savedStoreData, setSavedStoreData] = useState(() => {
-  const storedData = localStorage.getItem('userStore');
-  return storedData ? JSON.parse(storedData) : null;
-});
+  const userStore = useSelector((state) => state?.userStore);
+  const storeName = userStore?.nombre;
+  const storeEmail = userStore?.email;
 
-
-const userData = useSelector((state) => state?.userData);
-const userName = userData?.username;
-const userEmail = userData?.email;
-
-const userStore = useSelector((state) => state?.userStore);
-const storeName = userStore?.nombre;
-const storeEmail = userStore?.email;
-
-
-useEffect(() => {
-  if (userStore) {
-    localStorage.setItem('userStore', JSON.stringify(userStore));
-  }
-}, [userStore]);
-
+  useEffect(() => {
+    if (userStore) {
+      localStorage.setItem("userStore", JSON.stringify(userStore));
+    }
+  }, [userStore]);
 
   const url = new URL(window.location.href);
   const lastPathSegment = url.href.split("/").pop();
   const isUserAccount = lastPathSegment == "user";
-  const chatUserName = isUserAccount ? userName : (storeName ? storeName : savedStoreData.nombre);
-  const userSecret = isUserAccount ? userEmail : (storeEmail ? storeEmail : savedStoreData.email);
- 
+  const chatUserName = isUserAccount ? userName : storeName ? storeName : savedStoreData.nombre;
+  const userSecret = isUserAccount
+    ? userEmail
+    : storeEmail
+    ? storeEmail
+    : savedStoreData.email;
 
-  
   useEffect(() => {
     const handleUrlChange = () => {
-      // Forzar la recarga de la página
       window.location.reload();
     };
-  
-    // Suscribe al evento de cambio de URL
     window.addEventListener("popstate", handleUrlChange);
-  
-    // Limpia el evento al desmontar el componente
     return () => {
       window.removeEventListener("popstate", handleUrlChange);
     };
   }, [navigate]);
 
   useEffect(() => {
-    
     if ("Notification" in window) {
       if (
         Notification.permission !== "granted" &&
@@ -104,15 +92,30 @@ useEffect(() => {
     return () => clearTimeout(timeout);
   }, []);
 
+  const [chats, setChats] = useState() 
 
   return (
     <>
       <div className="chat">
         <ChatEngine
           publicKey="59fa8828-96fe-4a26-a226-18d513d30b1e"
-
           userName={chatUserName}
           userSecret={userSecret}
+          
+          onGetChats={(chats)=> {
+            setChats(chats)
+          }}
+
+          onNewMessage={(chatId, message) => {
+            const chat = chats?.find((chat) => chat?.id === chatId)
+            const people = chat.people
+            const lastMessage = message.text.replace(/<\/?p>/g, '');
+            const sender = message.sender_username
+            const senderId = userData?.id
+            const messageData = { people, lastMessage, sender, senderId }
+            socket?.emit("newMessage", messageData);
+          }}
+
 
           height="calc(100vh - 60px)"
           offset={-3}

@@ -10,7 +10,6 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.userData);
   const userStore = useSelector((state) => state.userStore);
-  console.log(userStore);
   const [showAccounts, setShowAccounts] = useState();
 
   const {

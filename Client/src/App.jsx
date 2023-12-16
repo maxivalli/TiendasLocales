@@ -24,7 +24,7 @@ import Faq from "./views/FAQ/Faq";
 import Dashboard from "./views/Dashboard/Dashboard";
 import "./App.css";
 import UbiForm from "./components/UbiForm/UbiForm";
-import { getAllStores, getUserStore, saveUserData } from "./redux/actions";
+import { getAllPosts, getAllStores, getUserStore, saveUserData } from "./redux/actions";
 import { useDispatch } from "react-redux";
 import AddProduct from "./views/AddProduct/AddProduct";
 
@@ -122,6 +122,7 @@ function App() {
     setUserData(user);
     dispatch(saveUserData(user))
     dispatch(getUserStore(user?.id))
+    dispatch(getAllPosts())
   };
 
   useEffect(() => {
@@ -169,6 +170,8 @@ function App() {
                   accT: userDataResponse.data.accT,
                   }))
                   dispatch(getUserStore(userDataResponse?.data.id))
+                  dispatch(getAllPosts())
+
 
               })
               .catch((userDataError) => {
