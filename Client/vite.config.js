@@ -5,6 +5,7 @@ import { VitePWA } from "vite-plugin-pwa";
 const manifestForPlugIn = {
   registerType: "prompt",
   workbox: {
+    registerEvents: ['offline'],
     runtimeCaching: [
       {
         urlPattern: ({ request }) => {

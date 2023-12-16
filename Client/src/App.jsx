@@ -208,6 +208,16 @@ function App() {
     }
   }, [shouldConnectSocket, userId]);
 
+  window.addEventListener('load', () => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        if (event.data === 'offline') {
+          alert('No hay conexión a Internet. Por favor, revisa tu conexión.');
+        }
+      });
+    }
+  });
+
   return (
     <>
       <Navbar
