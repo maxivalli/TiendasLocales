@@ -80,15 +80,48 @@
 .modal {
   display: grid;
   position: fixed;
-  right: 120px;
-  margin-left: 30px;
-  top: 60px;
-  width: 60px;
-  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 150px;
   background-color: rgb(210, 210, 210);
   box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.3);
-  border-radius: 0px 0px 10px 10px;
+  border-radius: 10px;
   z-index: 9;
+}
+
+.modal h3 {
+  color: black;
+  font-size: 14px;
+  text-align: center;
+  margin: 0;
+  margin-top: 20px;
+  font-style: italic;
+}
+
+.accounts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 20px;
+}
+
+.accounts a {
+  justify-self: center;
+  width: 60px;
+  height: 60px;
+}
+
+.accounts button {
+  width: 60px;
+  height: 60px;
+  margin: 0;
+}
+
+.accounts img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
 }
 
 @media (max-width: 900px) {

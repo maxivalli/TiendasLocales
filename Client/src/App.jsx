@@ -372,7 +372,7 @@ function App() {
           element={
             isAuthenticated || isAuthenticatedAuth0 ? (
               user || userData ? (
-                <Messages key={key} userData={userData} setAuth={setAuth} />
+                <Messages userData={userData} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
