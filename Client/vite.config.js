@@ -5,8 +5,20 @@ import { VitePWA } from "vite-plugin-pwa";
 const manifestForPlugIn = {
   registerType: "prompt",
   workbox: {
-    cleanupOutdatedCaches: true,
-    globPatterns : ['**/*.{js, css, html, ico, png, svg, json, txt}']
+    runtimeCaching: [
+      {
+        urlPattern: ({ request }) => {
+          return request.destination === 'image';
+        },
+        handler: "CacheFirst",
+        options: {
+          cacheName: "image-cache",
+          cacheableResponse: {
+            statuses: [0, 200],
+          },
+        },
+      },
+    ],
   },
   includeAssets: [
     "favicon.ico",

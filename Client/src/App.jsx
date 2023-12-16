@@ -1,6 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-import { io } from 'socket.io-client';
+import { io } from "socket.io-client";
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
@@ -18,7 +18,7 @@ import Account from "./views/Account/Account";
 import More from "./views/More/More";
 import CreateStore from "./views/CreateStore/CreateStore";
 import MyStore from "./views/MyStore/MyStore";
-import Store from './views/Store/Store'
+import Store from "./views/Store/Store";
 import Queries from "./views/Queries/Queries";
 import Faq from "./views/FAQ/Faq";
 import Dashboard from "./views/Dashboard/Dashboard";
@@ -28,17 +28,12 @@ import { getAllPosts, getAllStores, getUserStore, saveUserData } from "./redux/a
 import { useDispatch } from "react-redux";
 import AddProduct from "./views/AddProduct/AddProduct";
 
-let socket
+let socket;
 
 function App() {
-  const dispatch = useDispatch()
-
-  const location = useLocation();
-  const key = location.pathname.substring('/messages/'.length);
-
-
-  axios.defaults.baseURL = "http://localhost:3001/";
-  //axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/"
+  const dispatch = useDispatch();
+  //axios.defaults.baseURL = "http://localhost:3001/";
+  axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/";
   const {
     user,
     isAuthenticated: isAuthenticatedAuth0,
@@ -93,7 +88,7 @@ function App() {
                 toast.addEventListener("mouseleave", Swal.resumeTimer);
               },
             });
-    
+
             Toast.fire({
               icon: "success",
               title: "Login exitoso",
@@ -171,8 +166,6 @@ function App() {
                   }))
                   dispatch(getUserStore(userDataResponse?.data.id))
                   dispatch(getAllPosts())
-
-
               })
               .catch((userDataError) => {
                 console.error(
@@ -194,29 +187,75 @@ function App() {
   }, [isAuthenticated]);
 
   useEffect(() => {
-    dispatch(getAllStores())
-  }, [dispatch])
+    dispatch(getAllStores());
+  }, [dispatch]);
 
-  const userId = userData?.id
+  const userId = userData?.id;
 
   const [shouldConnectSocket, setShouldConnectSocket] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
-
-      //socket = io("https://tiendaslocales-production.up.railway.app/")
-      socket = io("http://localhost:3001/")
-      
+      socket = io("https://tiendaslocales-production.up.railway.app/");
+      //socket = io("http://localhost:3001/")
       setShouldConnectSocket(true);
     }
   }, [isAuthenticated]);
 
   useEffect(() => {
     if (shouldConnectSocket && userId) {
-      socket.emit("assignSocketId", userId)
+      socket.emit("assignSocketId", userId);
     }
   }, [shouldConnectSocket, userId]);
 
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then((registration) => {
+          console.log("Service Worker registrado con éxito: ", registration);
+        })
+        .catch((err) => {
+          console.error("Error al registrar el Service Worker: ", err);
+        });
+    });
+
+    window.addEventListener("offline", () => {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 10000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon: "warning",
+        title: "Estás fuera de línea, revisa tu conexión.",
+      });
+    });
+
+    window.addEventListener("online", () => {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon: "success",
+        title: "¡Estás en línea nuevamente!",
+      });
+    });
+  }
 
   return (
     <>
@@ -265,7 +304,10 @@ function App() {
             )
           }
         />
-        <Route path="/home" element={isAuthenticated ? (
+        <Route
+          path="/home"
+          element={
+            isAuthenticated ? (
               userData ? (
                 <Home userData={userData} setAuth={setAuth} />
               ) : (
@@ -290,7 +332,10 @@ function App() {
             )
           }
         />
-        <Route path="/post/:id" element={isAuthenticated ? (
+        <Route
+          path="/post/:id"
+          element={
+            isAuthenticated ? (
               userData ? (
                 <Detail userData={userData} setAuth={setAuth} />
               ) : (
@@ -315,7 +360,10 @@ function App() {
             )
           }
         />
-        <Route path="favorites" element={isAuthenticated ? (
+        <Route
+          path="favorites"
+          element={
+            isAuthenticated ? (
               userData ? (
                 <Favorites userData={userData} setAuth={setAuth} />
               ) : (
@@ -340,9 +388,12 @@ function App() {
             )
           }
         />
-        <Route path="/ubiForm" element={isAuthenticated ? (
+        <Route
+          path="/ubiForm"
+          element={
+            isAuthenticated ? (
               userData ? (
-                <UbiForm userData={userData}/>
+                <UbiForm userData={userData} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -352,7 +403,7 @@ function App() {
               )
             ) : isAuthenticatedAuth0 ? (
               user ? (
-                <UbiForm userData={userData}/>
+                <UbiForm userData={userData} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -365,37 +416,12 @@ function App() {
             )
           }
         />
-             <Route
-        path="/messages/*"
-        element={
-          isAuthenticated || isAuthenticatedAuth0 ? (
-            user || userData ? (
-              <Messages key={key} userData={userData} setAuth={setAuth} />
-            ) : (
-              <div className="spinner">
-                <div className="bounce1"></div>
-                <div className="bounce2"></div>
-                <div className="bounce3"></div>
-              </div>
-            )
-          ) : (
-            <Login setAuth={setAuth} />
-          )
-        }
-      />
-        <Route path="/account" element={isAuthenticated ? (
-              userData ? (
-                <Account userData={userData} setUserData={setUserData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <Account userData={userData} setUserData={setUserData} setAuth={setAuth} />
+        <Route
+          path="/messages/*"
+          element={
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              user || userData ? (
+                <Messages userData={userData} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -408,7 +434,46 @@ function App() {
             )
           }
         />
-        <Route path="/more" element={isAuthenticated ? (
+        <Route
+          path="/account"
+          element={
+            isAuthenticated ? (
+              userData ? (
+                <Account
+                  userData={userData}
+                  setUserData={setUserData}
+                  setAuth={setAuth}
+                />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : isAuthenticatedAuth0 ? (
+              user ? (
+                <Account
+                  userData={userData}
+                  setUserData={setUserData}
+                  setAuth={setAuth}
+                />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : (
+              <Login setAuth={setAuth} />
+            )
+          }
+        />
+        <Route
+          path="/more"
+          element={
+            isAuthenticated ? (
               userData ? (
                 <More userData={userData} setAuth={setAuth} />
               ) : (
@@ -433,7 +498,10 @@ function App() {
             )
           }
         />
-        <Route path="/createstore" element={isAuthenticated ? (
+        <Route
+          path="/createstore"
+          element={
+            isAuthenticated ? (
               userData ? (
                 <CreateStore userData={userData} />
               ) : (
@@ -458,7 +526,10 @@ function App() {
             )
           }
         />
-        <Route path="/mystore/:storeId" element={isAuthenticated ? (
+        <Route
+          path="/mystore/:storeId"
+          element={
+            isAuthenticated ? (
               userData ? (
                 <MyStore userData={userData} setAuth={setAuth} />
               ) : (
@@ -483,7 +554,10 @@ function App() {
             )
           }
         />
-        <Route path="/store/:storeId" element={isAuthenticated ? (
+        <Route
+          path="/store/:storeId"
+          element={
+            isAuthenticated ? (
               userData ? (
                 <Store userData={userData} setAuth={setAuth} />
               ) : (
@@ -508,7 +582,10 @@ function App() {
             )
           }
         />
-        <Route path="/queries" element={isAuthenticated ? (
+        <Route
+          path="/queries"
+          element={
+            isAuthenticated ? (
               userData ? (
                 <Queries userData={userData} setAuth={setAuth} />
               ) : (
@@ -533,7 +610,10 @@ function App() {
             )
           }
         />
-        <Route path="/faq" element={isAuthenticated ? (
+        <Route
+          path="/faq"
+          element={
+            isAuthenticated ? (
               userData ? (
                 <Faq userData={userData} setAuth={setAuth} />
               ) : (
@@ -558,7 +638,10 @@ function App() {
             )
           }
         />
-        <Route path="/dashboard" element={isAuthenticated ? (
+        <Route
+          path="/dashboard"
+          element={
+            isAuthenticated ? (
               userData ? (
                 <Dashboard userData={userData} />
               ) : (
@@ -579,11 +662,14 @@ function App() {
                 </div>
               )
             ) : (
-              <Login setAuth={setAuth}/>
+              <Login setAuth={setAuth} />
             )
           }
         />
-         <Route path="/addproduct" element={isAuthenticated ? (
+        <Route
+          path="/addproduct"
+          element={
+            isAuthenticated ? (
               userData ? (
                 <AddProduct userData={userData} setAuth={setAuth} />
               ) : (
