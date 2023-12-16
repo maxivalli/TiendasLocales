@@ -220,6 +220,10 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('offline', () => {
     alert('Estás fuera de línea. Por favor, revisa tu conexión a internet.');
   });
+
+  window.addEventListener('online', () => {
+    alert('¡Estás de vuelta en línea!');
+  });
 }
 
   return (
