@@ -208,17 +208,19 @@ function App() {
     }
   }, [shouldConnectSocket, userId]);
 
-  useEffect(() => {
-    const handleOffline = () => {
-      alert("¡Estás fuera de línea, revisa tu conexión!");
-    };
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').then(registration => {
+      console.log('Service Worker registrado con éxito: ', registration);
+    }).catch(err => {
+      console.error('Error al registrar el Service Worker: ', err);
+    });
+  });
 
-    window.addEventListener("offline", handleOffline);
-
-    return () => {
-      window.removeEventListener("offline", handleOffline);
-    };
-  }, []);
+  window.addEventListener('offline', () => {
+    alert('Estás fuera de línea. Por favor, revisa tu conexión a internet.');
+  });
+}
 
   return (
     <>
