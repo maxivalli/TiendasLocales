@@ -7,12 +7,12 @@ const manifestForPlugIn = {
   workbox: {
     runtimeCaching: [
       {
-        urlPattern: ({ url }) => {
-          return url.pathname.startsWith("/");
+        urlPattern: ({ request }) => {
+          return request.destination === 'image';
         },
         handler: "CacheFirst",
         options: {
-          cacheName: "api-cache",
+          cacheName: "image-cache",
           cacheableResponse: {
             statuses: [0, 200],
           },
