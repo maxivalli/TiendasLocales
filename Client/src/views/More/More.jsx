@@ -30,11 +30,16 @@ const More = () => {
   const handleConnectMP = () => {
     // Abrir enlace de Mercado Pago en una nueva pestaña
     window.open(
-      `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://8778-201-190-175-186.ngrok.io/tiendas/redirectUrl`
+      `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://df5f-201-190-251-186.ngrok.io/tiendas/redirectUrl`
     );
 
     // Redirigir a la página de inicio en la ventana actual
     window.location.href = "/home";
+    Swal.fire({
+      icon: 'success',
+      title: 'Como saber si mi token se genero?',
+      text: 'Ve a More, refresca la pagina y si el boton para concectar Mercado Pago no esta, significa que se genero correctamente!',
+    });
   };
 
   return (
@@ -72,33 +77,50 @@ const More = () => {
           />
         ) : (
           storeData &&
-          userData.vendedor === "noVendedor" && (
+          userData.vendedor === "noVendedor" && !userData.accT ? (
             <>
               <CardWide
-                textButton={"En espera"}
-                logo={
-                  <img
-                    width="60"
-                    height="60"
-                    src="https://img.icons8.com/color/96/hourglass.png"
-                    alt="hourglass"
-                  />
-                }
-              />
-              {!userData.accT && (
-                <CardWide
-                  textButton={"Conectar MP"}
+                  textButton={"En espera"}
                   logo={
                     <img
                       width="60"
                       height="60"
-                      src="https://img.icons8.com/color/96/mercado-pago.png"
-                      alt="mercado-pago"
+                      src="https://img.icons8.com/color/96/hourglass.png"
+                      alt="hourglass"
                     />
                   }
-                  link={`https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://362c-201-190-175-186.ngrok.io/tiendas/redirectUrl`}
-                />
-              )}
+              />
+              <div>
+                <h3>Para que tu tienda sea aprobada primero necesitas<br></br> conectar tu cuenta de Mercado Pago para poder recibir el dinero</h3>
+                <button onClick={handleConnectMP}>
+              <CardWide
+                textButton={"Conectar MP"}
+                logo={
+                  <img
+                    width="60"
+                    height="60"
+                    src="https://img.icons8.com/color/96/mercado-pago.png"
+                    alt="mercado-pago"
+                  />}
+              />
+              </button>
+              </div>
+            </>
+          ) : (storeData &&
+            userData.vendedor === "noVendedor" && userData.accT &&
+            <>
+            <h4>Para que la tienda sea habilitada deberas pagar<br></br> la cuota al centro comercial,<br></br> alli un empleado aprobara tu cuenta!</h4>
+            <CardWide
+                  textButton={"En espera"}
+                  logo={
+                    <img
+                      width="60"
+                      height="60"
+                      src="https://img.icons8.com/color/96/hourglass.png"
+                      alt="hourglass"
+                    />
+                  }
+              />
             </>
           )
         )}

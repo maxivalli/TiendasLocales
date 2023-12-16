@@ -4,9 +4,6 @@ const { ACCESS_TOKEN, CLIENT_ID, CLIENT_SECRET } = process.env;
 const mercadopago = require("mercadopago");
 const axios = require("axios");
 
-// mercadopago.configure({
-//     access_token: ACCESS_TOKEN
-// }) 
 
 exports.createOrder = async (paymentData) => {
     try{
@@ -29,7 +26,7 @@ exports.createOrder = async (paymentData) => {
                 pending: "http://localhost:5173/#/account",
                 success: "http://localhost:5173/#/account"
             },
-            notification_url: "https://8778-201-190-175-186.ngrok.io/tiendas/webhook"
+            notification_url: "https://df5f-201-190-251-186.ngrok.io/tiendas/webhook"
         }
 
         const response = await mercadopago.preferences.create(preference);
@@ -118,7 +115,7 @@ exports.accT = async (code, state) => {
           client_secret: 'dbj3rL8bNBQ6UOzxaI4nOEjTcC22yAMa',
           code: code,
           grant_type: 'authorization_code',
-          redirect_uri: 'https://8778-201-190-175-186.ngrok.io/tiendas/redirectUrl',
+          redirect_uri: 'https://df5f-201-190-251-186.ngrok.io/tiendas/redirectUrl',
           test_token: true,
         }),
       });

@@ -3,6 +3,7 @@ const { conn } = require("./src/DB_config");
 
 const PORT = process.env.PORT || 3001;
 
+
 conn.sync({ force: false})
   .then(async () => {
     httpServer.listen(PORT, async () => {

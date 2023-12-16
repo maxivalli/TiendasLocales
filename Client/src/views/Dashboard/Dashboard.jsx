@@ -5,6 +5,8 @@ import style from "./Dashboard.module.css";
 import { getAllStores } from "../../redux/actions";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { socket } from "../../App";
+
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -19,18 +21,24 @@ const Dashboard = () => {
     const filtered = stores.filter(
       (store) => store.habilitado === "noHabilitado"
     );
-    setStores(filtered);
+    filtered.forEach(async (store) => {
+      const response = await axios.get(`/users/anotherUserId?id=${store.userId}`);
+      const userData = response.data;
+      if(userData.accT)
+        setStores([store])
+    })
   }, [dispatch, stores]);
 
   const handleHabilitacion = async (id) => {
     try {
       const response = await axios.post("/tiendas/habStore", { id: id });
       if (response) {
+        const storeData = response.data
         // Actualizar el estado local eliminando la tienda aprobada
         setStores((prevStores) =>
           prevStores.filter((store) => store.id !== id)
         );
-
+        socket?.emit("approvedStore", storeData)
         Swal.fire({
           icon: "success",
           title: `Tienda Aprobada!`,
@@ -41,8 +49,6 @@ const Dashboard = () => {
       console.error(error);
     }
   };
-
-  console.log(stores);
 
   return (
     <>
