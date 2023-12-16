@@ -208,15 +208,18 @@ function App() {
     }
   }, [shouldConnectSocket, userId]);
 
-  window.addEventListener('load', () => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.addEventListener('message', (event) => {
-        if (event.data === 'offline') {
-          alert('No hay conexión a Internet. Por favor, revisa tu conexión.');
-        }
-      });
-    }
-  });
+  const OfflineAlert = () => {
+    useEffect(() => {
+      const handleOffline = () => {
+        alert('¡Estás fuera de línea, revisa tu conexión!');
+      };
+  
+      window.addEventListener('offline', handleOffline);
+  
+      return () => {
+        window.removeEventListener('offline', handleOffline);
+      };
+    }, []);
 
   return (
     <>
