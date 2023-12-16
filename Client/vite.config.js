@@ -7,14 +7,14 @@ const manifestForPlugIn = {
   workbox: {
     runtimeCaching: [
       {
-        urlPattern:
-          /^https:\/\/firebasestorage\.googleapis\.com\/.*\.(png|jpg|jpeg|svg)$/,
-        handler: "CacheFirst",
+        urlPattern: ({ url }) => {
+          return url.pathname.startsWith("/");
+        },
+        handler: "CacheFirst" as const,
         options: {
-          cacheName: "firebase-images-cache",
-          expiration: {
-            maxEntries: 50,
-            maxAgeSeconds: 30 * 24 * 60 * 60,
+          cacheName: "api-cache",
+          cacheableResponse: {
+            statuses: [0, 200],
           },
         },
       },
