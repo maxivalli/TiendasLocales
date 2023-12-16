@@ -175,7 +175,6 @@ const More = () => {
             </Link>
           </div>
         )}
-        <div></div>
         <Link>
           <button className={style.tyc}>Términos y condiciones</button>
         </Link>
