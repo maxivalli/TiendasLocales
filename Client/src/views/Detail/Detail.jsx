@@ -6,7 +6,6 @@ import style from "./Detail.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostById } from "../../redux/actions";
 import axios from "axios";
-import disc from "../../assets/disc.png";
 
 const Detail = ({ userData }) => {
   const { id } = useParams();
@@ -76,22 +75,6 @@ const Detail = ({ userData }) => {
       console.error("Error al realizar solicitud de compra", error);
     }
   };
-
-  const [online, setOnline] = useState(navigator.onLine);
-
-  useEffect(() => {
-    const updateOnlineStatus = () => {
-      setOnline(navigator.onLine);
-    };
-
-    window.addEventListener("online", updateOnlineStatus);
-    window.addEventListener("offline", updateOnlineStatus);
-
-    return () => {
-      window.removeEventListener("online", updateOnlineStatus);
-      window.removeEventListener("offline", updateOnlineStatus);
-    };
-  }, []);
 
   return (
     <>

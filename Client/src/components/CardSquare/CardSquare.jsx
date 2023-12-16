@@ -6,7 +6,6 @@ import {
   getFavorites,
   removeFavoritePost,
 } from "../../redux/actions";
-import disc from "../../assets/disc.png";
 import { socket } from "../../App";
 
 import style from "./CardSquare.module.css";
@@ -59,22 +58,6 @@ const CardSquare = ({
     }
   }, [userId]);
 
-  const [online, setOnline] = useState(navigator.onLine);
-
-  useEffect(() => {
-    const updateOnlineStatus = () => {
-      setOnline(navigator.onLine);
-    };
-
-    window.addEventListener('online', updateOnlineStatus);
-    window.addEventListener('offline', updateOnlineStatus);
-
-    return () => {
-      window.removeEventListener('online', updateOnlineStatus);
-      window.removeEventListener('offline', updateOnlineStatus);
-    };
-  }, []);
-
   return (
     <>
       <div className={style.cardSquare}>
@@ -90,11 +73,7 @@ const CardSquare = ({
           />
         </div>
         <Link to={`/post/${id}`}>
-          {online ? (
-            <img src={image} alt="image" />
-          ) : (
-            <img src={disc} alt="default image" />
-          )}
+          <img src={image} alt="image" />
           <h2>{title}</h2>
           <h3>{marca ? marca : <p></p>}</h3>
           <h3>${price}</h3>
