@@ -10,6 +10,7 @@ import {
 import { socket } from "../../App";
 
 import style from "./CardSquare.module.css";
+import ProductUpdate from "../ProductUpdate/ProductUpdate";
 
 const CardSquare = ({
   id,
@@ -69,6 +70,12 @@ const CardSquare = ({
     }
   }
 
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
   return (
     <>
       <div className={style.cardSquare}>
@@ -93,7 +100,7 @@ const CardSquare = ({
         </Link>
         {location.hash.includes(`/mystore/`) && (
           <div>
-            <button className={style.edit}>
+            <button className={style.edit} onClick={openModal}>
               <img
                 width="30"
                 height="30"
@@ -109,6 +116,20 @@ const CardSquare = ({
                 alt="filled-trash"
               />
             </button>
+          </div>
+        )}
+
+        {showModal && (
+          <div className={style.modal}>
+            <div className={style.modalContent}>
+              <button
+                className={style.close}
+                onClick={() => setShowModal(false)}
+              >
+                X
+              </button>
+              <ProductUpdate id={id} />
+            </div>
           </div>
         )}
       </div>
