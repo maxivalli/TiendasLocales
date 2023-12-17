@@ -8,11 +8,11 @@ const manifestForPlugIn = {
     runtimeCaching: [
       {
         urlPattern: ({ request }) => {
-          return request.destination === 'image';
+          return true;
         },
         handler: "CacheFirst",
         options: {
-          cacheName: "image-cache",
+          cacheName: "all-cache",
           expiration: {
             maxEntries: 30,
             maxAgeSeconds: 60 * 60 * 24 * 1
