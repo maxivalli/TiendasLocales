@@ -7,9 +7,7 @@ const manifestForPlugIn = {
   workbox: {
     runtimeCaching: [
       {
-        urlPattern: ({ request }) => {
-          return request.destination === '*';
-        },
+        urlPattern: /.*/,
         handler: "CacheFirst",
         options: {
           cacheName: "all-cache",
