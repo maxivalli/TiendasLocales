@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import { VitePWA } from "vite-plugin-pwa";
 
 const manifestForPlugIn = {
-  registerType: "prompt",
+  registerType: "autoUpdate",
   workbox: {
     runtimeCaching: [
       {
@@ -12,7 +12,7 @@ const manifestForPlugIn = {
         options: {
           cacheName: "all-cache",
           expiration: {
-            maxEntries: 30,
+            maxEntries: 40,
             maxAgeSeconds: 60 * 60 * 24 * 1
           },
           cacheableResponse: {
