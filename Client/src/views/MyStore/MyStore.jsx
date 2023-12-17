@@ -16,12 +16,12 @@ const MyStore = () => {
 
   const stores = useSelector((state) => state.allStores);
   const storePosts = useSelector((state) => state.storePosts)
-
+  const allPosts = useSelector((state) => state.allPosts)
   const selectedStore = stores.find((store) => store.id == storeId);
 
   useEffect(() => {
     dispatch(getStorePosts(storeId))
-  }, [dispatch])
+  }, [dispatch, allPosts])
   
   return (
     <>

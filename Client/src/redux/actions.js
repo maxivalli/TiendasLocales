@@ -371,10 +371,10 @@ export function updatePost(id, post) {
 
 export function deletePost(id) {
   return async (dispatch) => {
-    const result = await axios.delete(`/posts/${id}`);
+    const result = await axios.delete(`/posts/deletePost/${id}`);
     dispatch({
       type: DELETE_POST,
-      payload: result.data,
+      payload: id,
     });
   };
 }
