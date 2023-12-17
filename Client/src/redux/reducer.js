@@ -347,7 +347,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allPosts: state.allPosts.filter(
-          (post) => post.id !== action.payload.id
+          (post) => post.id !== action.payload
         ),
       };
 

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   addFavoritePost,
+  deletePost,
   getFavorites,
   removeFavoritePost,
 } from "../../redux/actions";
@@ -58,6 +59,16 @@ const CardSquare = ({
     }
   }, [userId]);
 
+  function handleDelete(id) {
+    const confirmDelete = window.confirm(
+      "¿Estás seguro que quieres eliminar esta publicación?"
+    );
+
+    if (confirmDelete) {
+      dispatch(deletePost(id));
+    }
+  }
+
   return (
     <>
       <div className={style.cardSquare}>
@@ -80,6 +91,26 @@ const CardSquare = ({
           <h4>Stock: {stock}</h4>
           <h4>{delivery ? "Envío disponible 🛵" : "Retiro en tienda 🙋🏻‍♂️"}</h4>
         </Link>
+        {location.hash.includes(`/mystore/`) && (
+          <div>
+            <button className={style.edit}>
+              <img
+                width="30"
+                height="30"
+                src="https://img.icons8.com/glyph-neue/64/FFFFFF/edit--v1.png"
+                alt="edit--v1"
+              />
+            </button>
+            <button className={style.delete} onClick={() => handleDelete(id)}>
+              <img
+                width="24"
+                height="24"
+                src="https://img.icons8.com/pulsar-line/48/FFFFFF/filled-trash.png"
+                alt="filled-trash"
+              />
+            </button>
+          </div>
+        )}
       </div>
     </>
   );
