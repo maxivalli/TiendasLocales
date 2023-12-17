@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react-swc";
 import { VitePWA } from "vite-plugin-pwa";
 
 const manifestForPlugIn = {
-  registerType: "autoUpdate",
+  registerType: "prompt",
   workbox: {
     runtimeCaching: [
       {
