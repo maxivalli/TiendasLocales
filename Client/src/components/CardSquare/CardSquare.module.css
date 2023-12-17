@@ -97,7 +97,7 @@
   width: 40px;
   border-radius: 50%;
   border: none;
-  z-index: 9999;
+  z-index: 1;
 }
 
 .delete img {
