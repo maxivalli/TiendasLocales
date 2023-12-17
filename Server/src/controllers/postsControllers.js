@@ -84,7 +84,7 @@ exports.createPost = async (postData) => {
     }
 };
 
-exports.updatePost = async (id, updatedData) => {
+exports.updatePost = async (id, postData) => {
   try {
     const post = await Post.findByPk(id);
 
@@ -92,7 +92,7 @@ exports.updatePost = async (id, updatedData) => {
       throw new Error("Post not found");
     }
 
-    await post.update(updatedData);
+    await post.update(postData);
 
     return post;
   } catch (error) {
