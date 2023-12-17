@@ -81,6 +81,29 @@
   font-style: italic;
 }
 
+.edit {
+  justify-self: center;
+  background-color: cornflowerblue;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: none;
+}
+
+.delete {
+  justify-self: center;
+  background-color: red;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: none;
+  z-index: 9999;
+}
+
+.delete img {
+  padding-top: 2px;
+}
+
 @media (max-width: 768px) {
   .cardSquare {
     width: 340px;
