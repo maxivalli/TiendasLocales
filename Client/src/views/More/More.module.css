@@ -3,6 +3,13 @@
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   text-align: center;
+  align-items: last baseline;
+  margin-bottom: 100px;
+}
+
+.button {
+  background-color: transparent;
+  border: none;
 }
 
 .more .tyc {
@@ -10,9 +17,26 @@
   background-color: transparent;
 }
 
+.MP {
+  display: grid;
+  justify-self: left;
+}
+
+.MP button {
+  padding: 0;
+}
+
 .more .pdp {
   border: none;
   background-color: transparent;
+}
+
+.modal {
+  display: grid;
+  width: 300px;
+  justify-self: center;
+  color: initial;
+  font-size: 12px;
 }
 
 .admin {

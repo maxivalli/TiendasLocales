@@ -13,6 +13,10 @@ const manifestForPlugIn = {
         handler: "CacheFirst",
         options: {
           cacheName: "image-cache",
+          expiration: {
+            maxEntries: 30,
+            maxAgeSeconds: 60 * 60 * 24 * 1
+          },
           cacheableResponse: {
             statuses: [0, 200],
           },

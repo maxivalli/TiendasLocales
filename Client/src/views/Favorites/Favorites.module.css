@@ -16,7 +16,7 @@
   height: 50px;
   justify-self: center;
   font-style: italic;
-  color: grey;
+  color: initial;
 }
 
 .stores {

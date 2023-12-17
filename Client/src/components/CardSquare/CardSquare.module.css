@@ -104,6 +104,7 @@
   padding-top: 2px;
 }
 
+
 .modal {
   position: fixed;
   top: 20%;
@@ -123,6 +124,25 @@
   border-radius: 50%;
   border: none;
   background-color: grey;
+
+.prodBut {
+  display: grid;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.prodBut img {
+  width: 24px;
+  height: 24px;
+}
+
+.prodBut .edit {
+  background-color: transparent;
+}
+
+.prodBut .delete {
+  background-color: transparent;
 }
 
 @media (max-width: 768px) {

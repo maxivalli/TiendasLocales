@@ -99,7 +99,7 @@ const CardSquare = ({
           <h4>{delivery ? "Envío disponible 🛵" : "Retiro en tienda 🙋🏻‍♂️"}</h4>
         </Link>
         {location.hash.includes(`/mystore/`) && (
-          <div>
+          <div className={style.prodBut}>
             <button className={style.edit} onClick={openModal}>
               <img
                 width="30"
