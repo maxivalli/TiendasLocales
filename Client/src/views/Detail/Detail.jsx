@@ -18,8 +18,9 @@ const Detail = ({ userData }) => {
   const [totalPrice, setTotalPrice] = useState(selectedPost.price);
 
   const selectedStore = stores?.find(
-    (store) => store.id == selectedPost?.storeId
+  (store) => store.id == selectedPost?.storeId
   );
+  const linkName = selectedStore?.nombre.replace(/\s/g, '-');
   const isBuyButtonDisabled = quantity <= 0 || selectedPost.stock === 0;
 
   function decrement() {
@@ -81,7 +82,7 @@ const Detail = ({ userData }) => {
       <Head />
       <div className={style.detail}>
         <div className={style.sidebar}>
-          <Link to="/store">
+        <Link to={`/store/${linkName}`}>
             <div className={style.avatar}>
               <img src={selectedStore?.image} alt="image" />
 
