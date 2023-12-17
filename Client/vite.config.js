@@ -8,7 +8,7 @@ const manifestForPlugIn = {
     runtimeCaching: [
       {
         urlPattern: /.*/,
-        handler: "CacheFirst",
+        handler: "NetworkFirst",
         options: {
           cacheName: "all-cache",
           expiration: {
