@@ -8,7 +8,7 @@ const manifestForPlugIn = {
     runtimeCaching: [
       {
         urlPattern: ({ request }) => {
-          return true;
+          return request.destination === '*';
         },
         handler: "CacheFirst",
         options: {
