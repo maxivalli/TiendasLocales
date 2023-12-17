@@ -11,12 +11,12 @@ import { getStorePosts } from "../../redux/actions";
 const Store = () => {
   
   const dispatch = useDispatch();
-  const { storeId } = useParams();
-
+  const { linkName } = useParams();
   const stores = useSelector((state) => state.allStores);
   const storePosts = useSelector((state) => state.storePosts)
-
-  const selectedStore = stores.find((store) => store.id == storeId);
+  const storeName = linkName.replace(/-/g, ' ');
+  const selectedStore = stores.find((store) => store.nombre == storeName);
+  const storeId = selectedStore?.id
 
   useEffect(() => {
     dispatch(getStorePosts(storeId))

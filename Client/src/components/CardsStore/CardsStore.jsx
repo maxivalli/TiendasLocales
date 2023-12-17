@@ -19,6 +19,7 @@ const CardsStore = ({
   const favorites = useSelector((state) => state.favorites);
   const userId = userData?.id;
   const storeId = id;
+  const linkName = nombre.replace(/\s/g, '-');
 
   const isStoreFavorite = favorites && favorites.some((favorite) => favorite.storeId === storeId && favorite.postId === null);
   const [isFavorite, setIsFavorite] = useState(isStoreFavorite);
@@ -63,7 +64,7 @@ const CardsStore = ({
         />
       </div>
 
-      <Link to={`/store/${id}`}>
+      <Link to={`/store/${linkName}`}>
        
           <div className={style.imagen}>
             <img src={image} alt="avatar" />
