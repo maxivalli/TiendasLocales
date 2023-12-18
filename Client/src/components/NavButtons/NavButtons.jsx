@@ -54,6 +54,17 @@ const NavButtons = ({ storeId }) => {
     }
   };
 
+  const handleShareButtonClick = async () => {
+    const storeLink = window.location.href;
+
+    try {
+      await navigator.clipboard.writeText(storeLink);
+      alert("Enlace copiado al portapapeles:", storeLink);
+    } catch (error) {
+      alert("Error al copiar al portapapeles:", error);
+    }
+  };
+
   return (
     <>
       <button className={style.chat} onClick={handleChatButtonClick}>
@@ -75,35 +86,43 @@ const NavButtons = ({ storeId }) => {
       {mostrarBotonesExtras && (
         <div className={style.botonesExtras}>
           <Link to={store.whatsapp} target="_blank">
-          <button>
-            <img
-              width="40"
-              height="40"
-              src="https://img.icons8.com/color/48/whatsapp--v1.png"
-              alt="whatsapp--v1"
-            />
-          </button>
-          </Link >
+            <button>
+              <img
+                width="40"
+                height="40"
+                src="https://img.icons8.com/color/48/whatsapp--v1.png"
+                alt="whatsapp--v1"
+              />
+            </button>
+          </Link>
           <Link to={store.facebook} target="_blank">
-          <button>
-            <img
-              width="40"
-              height="40"
-              src="https://img.icons8.com/fluency/48/facebook-new.png"
-              alt="facebook-new"
-            />
-          </button>
+            <button>
+              <img
+                width="40"
+                height="40"
+                src="https://img.icons8.com/fluency/48/facebook-new.png"
+                alt="facebook-new"
+              />
+            </button>
           </Link>
           <Link to={store.instagram} target="_blank">
-          <button>
+            <button>
+              <img
+                width="40"
+                height="40"
+                src="https://img.icons8.com/fluency/48/instagram-new.png"
+                alt="instagram-new"
+              />
+            </button>
+          </Link>
+          <button className={style.share} onClick={handleShareButtonClick}>
             <img
-              width="40"
-              height="40"
-              src="https://img.icons8.com/fluency/48/instagram-new.png"
-              alt="instagram-new"
+              width="30"
+              height="30"
+              src="https://img.icons8.com/material-sharp/48/FFFFFF/share.png"
+              alt="share"
             />
           </button>
-          </Link>
         </div>
       )}
     </>
