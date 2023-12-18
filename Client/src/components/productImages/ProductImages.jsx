@@ -18,7 +18,7 @@ const ProductImages = ({ images }) => {
         stopOnHover={true}
       >
         <div>
-          <img src={images} alt="image" />
+          <img src={images} alt="image" /> 
         </div>
       </Carousel>
     </div>
