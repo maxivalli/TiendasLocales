@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CardSquare from "../../components/CardSquare/CardSquare";
 import Filters from "../../components/Filters/Filters";
 import Head from "../../components/Head/Head";
@@ -18,10 +18,28 @@ const MyStore = () => {
   const storePosts = useSelector((state) => state.storePosts)
   const allPosts = useSelector((state) => state.allPosts)
   const selectedStore = stores.find((store) => store.id == storeId);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     dispatch(getStorePosts(storeId))
-  }, [dispatch, allPosts])
+      .then(() => {
+        setLoading(false); 
+      })
+      .catch((error) => {
+        console.error("Error fetching store posts:", error);
+        setLoading(false); 
+      });
+  }, [dispatch, storeId, allPosts]);
+
+  if (loading) {
+    return (
+      <div className={style.spinner}>
+        <div className={style.bounce1}></div>
+        <div className={style.bounce2}></div>
+        <div className={style.bounce3}></div>
+      </div>
+    );
+  }
   
   return (
     <>
