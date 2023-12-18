@@ -10,7 +10,7 @@ exports.createOrder = async (paymentData) => {
         mercadopago.configure({
             access_token: paymentData.accT
         });
-        console.log(paymentData)
+        console.log(paymentData.accT)
         let preference = {
             items: [{
                 postId: paymentData.postId,
@@ -26,7 +26,7 @@ exports.createOrder = async (paymentData) => {
                 pending: "http://localhost:5173/#/account",
                 success: "http://localhost:5173/#/account"
             },
-            notification_url: "https://df5f-201-190-251-186.ngrok.io/tiendas/webhook"
+            notification_url: "https://986e-201-190-251-186.ngrok-free.app/tiendas/webhook"
         }
 
         const response = await mercadopago.preferences.create(preference);
@@ -40,34 +40,70 @@ exports.createOrder = async (paymentData) => {
         res.status(400).json({error: error.message});
     }
 } 
-
 exports.webhook = async (allData) => {
-    if (allData.data.type === "payment") {
+  console.log("AAA", allData)
+      try {
+        if (allData.data.type === "payment") {
 
-        const post = await Post.findOne({
-            where: {
-                id: allData.payUserData.postId,
-            },
-          });
+          if(allData.payUserData.postId){
+            const post = await Post.findOne({
+              where: {
+                  id: allData.payUserData.postId,
+              },
+            });
+  
+          post.stock = post.stock - allData.payUserData.quantity;
+          await post.save();
+          }
+          if(allData.payUserData.postId){
+            const newCompra = await Compra.create({
+              userId: allData.payUserData.userId,
+              postId: allData.payUserData.postId,
+              storeId: post.storeId,
+              title: allData.payUserData.title,
+              quantity: allData.payUserData.quantity,
+              unit_price: allData.payUserData.unit_price,
+              currency_id: allData.payUserData.currency_id,
+              description: allData.payUserData.description,
+              productImage: post.image
+            });
+          }
+        
+          return true
+        }
+      } catch (error) {
+          return {
+              error: error.message
+          };
+      }
+  }
+// exports.webhook = async (allData) => {
+    // if (allData.data.type === "payment") {
 
-        post.stock = post.stock - allData.payUserData.quantity;
-        await post.save();
+    //     const post = await Post.findOne({
+    //         where: {
+    //             id: allData.payUserData.postId,
+    //         },
+    //       });
 
-        const newCompra = await Compra.create({
-            userId: allData.payUserData.userId,
-            postId: allData.payUserData.postId,
-            storeId: post.storeId,
-            title: allData.payUserData.title,
-            quantity: allData.payUserData.quantity,
-            unit_price: allData.payUserData.unit_price,
-            currency_id: allData.payUserData.currency_id,
-            description: allData.payUserData.description,
-            productImage: post.image
-          });
-    } else {
-        throw new Error("Invalid webhook event type");
-    }
-}
+    //     post.stock = post.stock - allData.payUserData.quantity;
+    //     await post.save();
+
+    //     const newCompra = await Compra.create({
+    //         userId: allData.payUserData.userId,
+    //         postId: allData.payUserData.postId,
+    //         storeId: post.storeId,
+    //         title: allData.payUserData.title,
+    //         quantity: allData.payUserData.quantity,
+    //         unit_price: allData.payUserData.unit_price,
+    //         currency_id: allData.payUserData.currency_id,
+    //         description: allData.payUserData.description,
+    //         productImage: post.image
+    //       });
+//     } else {
+//         throw new Error("Invalid webhook event type");
+//     }
+// }
 
 
 exports.allCompras = async (id) => {

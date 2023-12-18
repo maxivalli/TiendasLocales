@@ -7,7 +7,7 @@ import { validateProductForm } from "./validations";
 import { uploadFile } from "../../components/Firebase/config";
 
 
-const ProductUpdate = ({id}) => {
+const ProductUpdate = ({ id }) => {
   const [productData, setProductData] = useState({
     title: "",
     marca: "",
@@ -100,8 +100,9 @@ const ProductUpdate = ({id}) => {
       >
         <h3>Actualizar datos de producto</h3>
         <form className={style.create}>
-
           <div className={style.part1}>
+            
+          <div className={style.title}>
             <label>
               Titulo
               <input
@@ -109,6 +110,7 @@ const ProductUpdate = ({id}) => {
                 type="text"
                 name="title"
                 value={productData.title}
+                placeholder="Inserte el título del producto"
                 onChange={handleInputChange}
               />
               {errors.title && (
@@ -117,7 +119,7 @@ const ProductUpdate = ({id}) => {
             </label>
           </div>
 
-          <div className={style.part1}>
+          <div className={style.brand}>
             <label>
               Marca
               <input
@@ -125,6 +127,7 @@ const ProductUpdate = ({id}) => {
                 type="text"
                 name="marca"
                 value={productData.marca}
+                placeholder="Inserte la marca del producto"
                 onChange={handleInputChange}
               />
               {errors.marca && (
@@ -133,7 +136,7 @@ const ProductUpdate = ({id}) => {
             </label>
           </div>
 
-          <div className={style.part1}>
+          <div className={style.price}>
             <label>
               Precio
               <input
@@ -141,6 +144,7 @@ const ProductUpdate = ({id}) => {
                 type="text"
                 name="price"
                 value={productData.price}
+                placeholder="Inserte el precio del producto"
                 onChange={handleInputChange}
               />
               {errors.price && (
@@ -148,8 +152,10 @@ const ProductUpdate = ({id}) => {
               )}
             </label>
           </div>
+          </div>
 
-          <div className={style.part1}>
+          <div className={style.part2}>
+          <div className={style.stock}>
             <label>
               Stock
               <input
@@ -157,6 +163,7 @@ const ProductUpdate = ({id}) => {
                 type="text"
                 name="stock"
                 value={productData.depto}
+                placeholder="Inserte la cantidad disponible"
                 onChange={handleInputChange}
               />
               {errors.stock && (
@@ -165,42 +172,41 @@ const ProductUpdate = ({id}) => {
             </label>
           </div>
 
-          <div className={style.part1}>
-              <label>
-                Descripcion
+          <div className={style.desc}>
+            <label>
+              Descripcion
               <input
+                className={style.input}
                 id="description"
                 name="description"
                 value={productData.description}
                 onChange={handleInputChange}
-                placeholder="Inserte una breve descripcion del producto"
+                placeholder="Inserte una breve descripción"
                 required
               />
               {errors.description && (
                 <span className={style.error}>{errors.description}</span>
               )}
-              </label>
-            </div>
-
-          <div className={style.part1}>
-            <label>
-              Delivery
-              <input
-                type="checkbox"
-                name="delivery"
-                value={productData.delivery}
-                onChange={handleInputChange}
-                required
-              />
-              {errors.delivery && (
-                <span className={style.error}>{errors.delivery}</span>
-              )}
             </label>
           </div>
 
-          <div className={style.part1}>
-              <label>
-                Imagenes
+          <div className={style.delivery}>
+            <p>Tiene envío a domicilio</p>
+            <input
+              type="checkbox"
+              name="delivery"
+              value={productData.delivery}
+              onChange={handleInputChange}
+              required
+            />
+            {errors.delivery && (
+              <span className={style.error}>{errors.delivery}</span>
+            )}
+          </div>
+
+          <div className={style.images}>
+            <label>
+              Imagenes
               <input
                 type="file"
                 accept="image/*"
@@ -220,9 +226,9 @@ const ProductUpdate = ({id}) => {
                   <button onClick={handleImageClear}>x</button>
                 </div>
               )}
-              </label>
+            </label>
             </div>
-
+          </div>
         </form>
 
         <button type="submit" onClick={handleSubmit} className={style.button}>

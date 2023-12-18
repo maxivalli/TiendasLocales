@@ -121,15 +121,10 @@ const CardSquare = ({
 
         {showModal && (
           <div className={style.modal}>
-            <div className={style.modalContent}>
-              <button
-                className={style.close}
-                onClick={() => setShowModal(false)}
-              >
-                X
-              </button>
-              <ProductUpdate id={id} />
-            </div>
+            <button className={style.close} onClick={() => setShowModal(false)}>
+              X
+            </button>
+            <ProductUpdate id={id} />
           </div>
         )}
       </div>

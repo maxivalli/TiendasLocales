@@ -43,12 +43,14 @@ const Cards = () => {
     ],
   };
 
+  const sortedPosts = posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 20);
+
   return (
     <>
       <div className={style.cards}>
         <Slider {...settings}>
          
-          {posts.map((post, index) => (
+          {sortedPosts.map((post, index) => (
           <CardSquare key={index} {...post}/>
           ))}
 
