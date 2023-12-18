@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import style from "./Head.module.css";
 import { socket } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,24 +13,27 @@ const Head = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [liveNotifications, setLiveNotifications] = useState([]);
   const [hasUnreadNotification, setHasUnreadNotification] = useState(false);
-  const [hoveredNotificationIndex, setHoveredNotificationIndex] =
-    useState(null);
+  const [hoveredNotificationIndex, setHoveredNotificationIndex] = useState(null);
   const [clearNotifications, setClearNotifications] = useState(false);
   const stores = useSelector((state) => state.allStores);
   const posts = useSelector((state) => state.allPosts);
-  const userData = useSelector((state)=> state.userData)
-  const savedNotif = useSelector((state)=> state.userNotif)
+  const userData = useSelector((state) => state.userData);
+  const savedNotif = useSelector((state) => state.userNotif);
 
   const mixturedNotifications = [...liveNotifications, ...savedNotif];
   const notifications = Array.from(
-    new Set(mixturedNotifications.map(notification => notification.content))
-  ).map(content => mixturedNotifications.find(notification => notification.content === content));
-  
-  const userId = userData?.id
+    new Set(mixturedNotifications.map((notification) => notification.content))
+  ).map((content) =>
+    mixturedNotifications.find(
+      (notification) => notification.content === content
+    )
+  );
+
+  const userId = userData?.id;
 
   useEffect(() => {
-    if(userId){
-    dispatch(getUserNotif(userId));
+    if (userId) {
+      dispatch(getUserNotif(userId));
     }
   }, [dispatch, showNotifications]);
 
@@ -43,7 +46,6 @@ const Head = () => {
     }
   }, [dispatch, notifications, hoveredNotificationIndex]);
 
-
   const toggleNotifications = () => {
     setShowNotifications((prevState) => !prevState);
     if (hasUnreadNotification) {
@@ -53,7 +55,6 @@ const Head = () => {
       setClearNotifications(false);
     }
   };
-
 
   const handleMouseOver = (index) => {
     setHoveredNotificationIndex(index);
@@ -65,21 +66,21 @@ const Head = () => {
 
   useEffect(() => {
     const handleNewMessage = (data) => {
-      const {storeId, image, lastMessage, sender} = data
-      let messageNotificationText
+      const { storeId, image, lastMessage, sender } = data;
+      let messageNotificationText;
       if (storeId) {
-      if (lastMessage.length < 10){
-       messageNotificationText = `Tu tienda ha recibido un nuevo mensaje de ${sender}: "${lastMessage}"`
+        if (lastMessage.length < 10) {
+          messageNotificationText = `Tu tienda ha recibido un nuevo mensaje de ${sender}: "${lastMessage}"`;
+        } else {
+          messageNotificationText = `Tu tienda ha recibido un nuevo mensaje de ${sender}`;
+        }
       } else {
-       messageNotificationText = `Tu tienda ha recibido un nuevo mensaje de ${sender}`
+        if (lastMessage.length < 10) {
+          messageNotificationText = `Has recibido un nuevo mensaje de ${sender}: "${lastMessage}"`;
+        } else {
+          messageNotificationText = `Has recibido un nuevo mensaje de ${sender}`;
+        }
       }
-    } else {
-      if (lastMessage.length < 10){
-        messageNotificationText = `Has recibido un nuevo mensaje de ${sender}: "${lastMessage}"`
-       } else {
-        messageNotificationText = `Has recibido un nuevo mensaje de ${sender}`
-       }
-    }
 
       setLiveNotifications((prevNotifications) => [
         {
@@ -99,7 +100,6 @@ const Head = () => {
       socket?.off("newMessage", handleNewMessage);
     };
   }, [stores]);
-
 
   useEffect(() => {
     const handleAddFavorite = (storeId) => {
@@ -149,7 +149,7 @@ const Head = () => {
 
   useEffect(() => {
     const handleWaitingStore = (data) => {
-      const { nombre, image } = data
+      const { nombre, image } = data;
       setLiveNotifications((prevNotifications) => [
         {
           content: `Su tienda "${nombre}" se encuentra en espera de aprobación`,
@@ -167,10 +167,10 @@ const Head = () => {
       socket?.off("waitingStore", handleWaitingStore);
     };
   }, [stores]);
-  
+
   useEffect(() => {
     const handleApprovedStore = (data) => {
-      const { nombre, image } = data
+      const { nombre, image } = data;
       setLiveNotifications((prevNotifications) => [
         {
           content: `Su tienda "${nombre}" fue aprobada!`,
@@ -189,7 +189,6 @@ const Head = () => {
     };
   }, [stores]);
 
-  
   const handleClearNotifications = () => {
     setLiveNotifications([]);
     setHasUnreadNotification(false);
@@ -227,7 +226,11 @@ const Head = () => {
       {showNotifications && (
         <div className={style.modal}>
           {notifications.map((notification, index) => (
-            <div key={index} onMouseOver={() => handleMouseOver(index)}>
+            <div
+              key={index}
+              onMouseOver={() => handleMouseOver(index)}
+              className={style.noti}
+            >
               <button className={style.notifAcces}>
                 <img src={notification.image} alt="" />
                 <p>{notification.content}</p>

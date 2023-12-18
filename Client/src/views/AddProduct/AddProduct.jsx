@@ -128,7 +128,7 @@ const AddProduct = () => {
                 name="title"
                 value={newProduct.title}
                 onChange={handleInputChange}
-                placeholder="Nombre de producto"
+                placeholder="Inserte el título del producto"
                 required
               />
               {errors.title && (
@@ -143,7 +143,7 @@ const AddProduct = () => {
                 name="description"
                 value={newProduct.description}
                 onChange={handleInputChange}
-                placeholder="Inserte una breve descripcion del producto"
+                placeholder="Inserte una breve descripción"
                 required
               />
               {errors.description && (
@@ -171,7 +171,7 @@ const AddProduct = () => {
                     name="marca"
                     value={newProduct.marca}
                     onChange={handleInputChange}
-                    placeholder="Marca del producto"
+                    placeholder="Inserte la marca del producto"
                     required
                   />
                   {errors.marca && (
@@ -206,7 +206,7 @@ const AddProduct = () => {
                 name="price"
                 value={newProduct.price}
                 onChange={handleInputChange}
-                placeholder="Inserte precio"
+                placeholder="Inserte el precio del producto"
                 required
               />
               {errors.price && (
@@ -221,7 +221,7 @@ const AddProduct = () => {
                 name="stock"
                 value={newProduct.stock}
                 onChange={handleInputChange}
-                placeholder="Inserte stock disponible"
+                placeholder="Inserte la cantidad disponible"
                 required
               />
               {errors.stock && (
