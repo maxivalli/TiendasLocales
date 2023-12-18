@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import style from "./CreateStore.module.css";
+import style from "./StoreUpdate.module.css"
 import Swal from "sweetalert2";
-import { uploadFile } from "../../components/Firebase/config";
 import { validateStoreForm } from "./validations";
-import Head from '../../components/Head/Head'
-import { socket } from "../../App";
+import { uploadFile } from "../../components/Firebase/config";
 
-const CreateStore = ({ userData }) => {
-  const navigate = useNavigate();
+
+const StoreUpdate = ({ storeId }) => {
   const [showFacebookInput, setShowFacebookInput] = useState(false);
   const [showInstagramInput, setShowInstagramInput] = useState(false);
   const [showWhatsappInput, setShowWhatsappInput] = useState(false);
@@ -52,7 +49,8 @@ const CreateStore = ({ userData }) => {
         break;
     }
   };
-  const [formData, setFormData] = useState({
+
+  const [storeData, setStoreData] = useState({
     nombre: "",
     image: "",
     calle: "",
@@ -84,18 +82,18 @@ const CreateStore = ({ userData }) => {
   });
 
   useEffect(() => {
-    formData.categoria = selectedCategory;
+    storeData.categoria = selectedCategory;
   }, [selectedCategory]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
     if (type === "checkbox") {
-      setFormData({ ...formData, [name]: checked });
+      setStoreData({ ...storeData, [name]: checked });
     } else {
-      setFormData({ ...formData, [name]: value });
+      setStoreData({ ...storeData, [name]: value });
     }
-    const newErrors = validateStoreForm({ ...formData, [name]: value });
+    const newErrors = validateStoreForm({ ...storeData, [name]: value });
     setErrors({ ...errors, [name]: newErrors[name] || "" });
   };
 
@@ -103,15 +101,16 @@ const CreateStore = ({ userData }) => {
     const file = event.target.files[0];
     if (file) {
       const imageUrl = await uploadFile(file);
-      setFormData({
-        ...formData,
+      setStoreData({
+        ...storeData,
         image: imageUrl,
       });
     }
   };
+
   const handleImageClear = () => {
-    setFormData({
-      ...formData,
+    setStoreData({
+      ...storeData,
       image: "",
     });
   };
@@ -119,169 +118,161 @@ const CreateStore = ({ userData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formErrors = validateStoreForm(formData);
+    const formErrors = validateStoreForm(storeData);
 
     if (Object.values(formErrors).some((error) => error)) {
       setErrors(formErrors);
-      return;
+      console.log(formErrors);
+      return
     }
 
-    let storeData = {
-      nombre: formData.nombre,
-      direccion: {
-        calle: formData.calle,
-        numero: formData.numero,
-      },
-      indicaciones: formData.indicaciones,
-      image: formData.image,
-      categoria: formData.categoria,
-      horarios: formData.horarios,
-      userId: userData.id,
-      facebook: formData.facebook,
-      instagram: formData.instagram,
-      whatsapp: formData.whatsapp,
-      email: userData.email,
-      dias: formData.dias,
-    };
-    if (formData.pisoDeptoChecked) {
-      storeData.piso = formData.piso;
-      storeData.depto = formData.depto;
+    let updatedStoreData = { ...storeData };
+
+    if (storeData.calle !== "" || storeData.numero !== "" || storeData.depto !== "" || storeData.piso !== "") {
+      updatedStoreData.direccion = {
+        ...updatedStoreData.direccion,
+        calle: storeData.calle,
+        numero: storeData.numero,
+        piso: storeData.piso,
+        depto: storeData.depto
+      };
+    } else {
+      delete updatedStoreData.direccion;
     }
-    
-    try {
-      const response = await axios.post("/tiendas/createStore", storeData);
   
+    Object.keys(updatedStoreData).forEach(
+      (key) =>
+        (updatedStoreData[key] === "" || updatedStoreData[key] === null) &&
+        delete updatedStoreData[key]
+    );
+
+    try {
+      const response = await axios.put(`/tiendas/updateStore/${storeId}`, updatedStoreData);
       if (response) {
-        navigate("/more");
-        socket?.emit("waitingStore", storeData);
         Swal.fire({
           icon: "success",
-          title: `Tienda en Proceso de Aprobación!`,
-          text: "Debes esperar que tu tienda sea aprobada, nosotros te avisaremos por mail!",
+          title: `Tienda actualizada con exito!`,
+          text: "Echale un vistazo para comprobar que haya quedado bien!",
         });
-      } else {
-        console.log('Hubo un error al crear la tienda.');
       }
-      
     } catch (error) {
-      console.error('Error al enviar los datos al servidor:', error);
-
-      if (error.response && error.response.data === "Ya existe una tienda con este nombre.") {
-      Swal.fire({
-        icon: "error",
-        title: "Error al crear la tienda",
-        text: "Lo sentimos, ya existe una tienda con el mismo nombre",
-      });
+      console.error(error);
     }
   };
-}
-
 
   return (
     <>
-      <Head />
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         className={style.container}
       >
-        <h3>Crear tienda</h3>
-
+        <h3>Actualizar datos de tienda</h3>
         <form className={style.create}>
           <div className={style.part1}>
-            <div className={style.nombre}>
-              <p>Nombre de la tienda</p>
+            <label>
+              Nombre de la tienda
               <input
                 className={style.input}
                 type="text"
                 name="nombre"
-                value={formData.nombre}
+                value={storeData.nombre}
                 onChange={handleChange}
                 placeholder="Ej: Ferreteria Manolo"
               />
               {errors.nombre && (
                 <span className={style.error}>{errors.nombre}</span>
               )}
-            </div>
+            </label>
+          </div>
 
-            <div className={style.calle}>
-              <p>Calle</p>
+          <div className={style.part1}>
+            <label>
+              Calle
               <input
                 className={style.input}
                 type="text"
                 name="calle"
-                value={formData.calle}
+                value={storeData.calle}
                 onChange={handleChange}
                 placeholder="Ej: Necochea"
               />
               {errors.calle && (
                 <span className={style.error}>{errors.calle}</span>
               )}
-            </div>
+            </label>
+          </div>
 
-            <div className={style.numero}>
-              <p>Numero de Casa</p>
+          <div className={style.part1}>
+            <label>
+              Numero (altura de calle)
               <input
                 className={style.input}
                 type="text"
                 name="numero"
-                value={formData.numero}
+                value={storeData.numero}
                 onChange={handleChange}
                 placeholder="Ej: 1900"
               />
               {errors.numero && (
                 <span className={style.error}>{errors.numero}</span>
               )}
-            </div>
+            </label>
+          </div>
 
-            <div className={style.pisoDto}>
-              <p>Piso/Departamento</p>
+          <div className={style.part1}>
+            <label>
+              Piso/Numero de local
               <input
                 className={style.inputCheck}
                 type="checkbox"
                 name="pisoDeptoChecked"
-                checked={formData.pisoDeptoChecked}
+                checked={storeData.pisoDeptoChecked}
                 onChange={handleChange}
               />
-            </div>
+            </label>
+          </div>
 
-            {formData.pisoDeptoChecked && (
-              <>
-                <div className={style.piso}>
-                  <p>Piso</p>
+          {storeData.pisoDeptoChecked && (
+            <>
+              <div className={style.part1}>
+                <label>
+                  Piso
                   <input
                     className={style.input}
                     type="text"
                     name="piso"
-                    value={formData.piso}
+                    value={storeData.piso}
                     onChange={handleChange}
                     placeholder="Ej: 1"
                   />
                   {errors.piso && (
                     <span className={style.error}>{errors.piso}</span>
                   )}
-                </div>
-                <div className={style.dto}>
-                  <p>Depto</p>
+                </label>
+              </div>
+              <div className={style.part1}>
+                <label>
+                  N° de local
                   <input
                     className={style.input}
                     type="text"
                     name="depto"
-                    value={formData.depto}
+                    value={storeData.depto}
                     onChange={handleChange}
                     placeholder='Ej: "A"'
                   />
                   {errors.depto && (
                     <span className={style.error}>{errors.depto}</span>
                   )}
-                </div>
-              </>
-            )}
+                </label>
+              </div>
+            </>
+          )}
 
-          </div>
-          <div className={style.part2}>
-            <div className={style.categoria}>
-              <p>Categoría</p>
+          <div className={style.part1}>
+            <label>
+              Categoria
               <select
                 name="categoria"
                 value={selectedCategory}
@@ -297,140 +288,160 @@ const CreateStore = ({ userData }) => {
               {errors.categoria && (
                 <span className={style.error}>{errors.categoria}</span>
               )}
-            </div>
-            <div className={style.horarios}>
-              <p>Horarios (formato: número - número)</p>
+            </label>
+          </div>
+
+          <div className={style.part1}>
+            <label>
+              Horarios (formato: número - número)
               <input
                 className={style.input}
                 type="text"
                 name="horarios"
-                value={formData.horarios}
+                value={storeData.horarios}
                 onChange={handleChange}
                 placeholder="Ej: 9 - 5"
               />
               {errors.horarios && (
                 <span className={style.error}>{errors.horarios}</span>
               )}
-            </div>
+            </label>
+          </div>
 
-            <div className={style.dias}>
-              <p>Dias (formato: dia - dia)</p>
+          <div className={style.part1}>
+            <label>
+              Dias (formato: dia - dia)
               <input
                 className={style.input}
                 type="text"
                 name="dias"
-                value={formData.dias}
+                value={storeData.dias}
                 onChange={handleChange}
                 placeholder="Ej: lunes - viernes"
               />
-            </div>
+            </label>
+          </div>
 
-            <div className={style.face}>
-              <p>Facebook</p>
+          <div className={style.part1}>
+            <label>
+              Facebook
               <input
                 type="checkbox"
                 checked={showFacebookInput}
                 onChange={() => handleCheckboxChange("facebook")}
               />
-            </div>
+            </label>
+          </div>
 
-            {showFacebookInput && (
-              <div className={style.faceIn}>
-                <p>Facebook URL</p>
+          {showFacebookInput && (
+            <div className={style.part1}>
+              <label>
+                Facebook URL
                 <input
                   type="text"
                   name="facebook"
-                  value={formData.facebook}
+                  value={storeData.facebook}
                   onChange={handleChange}
                   placeholder="Ej: https://www.facebook.com/tu_pagina"
                 />
                 {errors.facebook && (
                   <span className={style.error}>{errors.facebook}</span>
                 )}
-              </div>
-            )}
+              </label>
+            </div>
+          )}
 
-            <div className={style.insta}>
-              <p>Instagram</p>
+          <div className={style.part1}>
+            <label>
+              Instagram
               <input
                 type="checkbox"
                 checked={showInstagramInput}
                 onChange={() => handleCheckboxChange("instagram")}
               />
-            </div>
+            </label>
+          </div>
 
-            {showInstagramInput && (
-              <div className={style.instaIn}>
-                <p>Instagram URL</p>
+          {showInstagramInput && (
+            <div className={style.part1}>
+              <label>
+                Instagram URL
                 <input
                   type="text"
                   name="instagram"
-                  value={formData.instagram}
+                  value={storeData.instagram}
                   onChange={handleChange}
                   placeholder="Ej: https://www.instagram.com/tu_cuenta"
                 />
                 {errors.instagram && (
                   <span className={style.error}>{errors.instagram}</span>
                 )}
-              </div>
-            )}
+              </label>
+            </div>
+          )}
 
-            <div className={style.whats}>
-              <p>Whatsapp</p>
+          <div className={style.part1}>
+            <label>
+              Whatsapp
               <input
                 type="checkbox"
                 checked={showWhatsappInput}
                 onChange={() => handleCheckboxChange("whatsapp")}
               />
-            </div>
+            </label>
+          </div>
 
-            {showWhatsappInput && (
-              <div className={style.whatsIn}>
-                <p>WhatsApp URL</p>
+          {showWhatsappInput && (
+            <div className={style.part1}>
+              <label>
+                WhatsApp URL
                 <input
                   type="text"
                   name="whatsapp"
-                  value={formData.whatsapp}
+                  value={storeData.whatsapp}
                   onChange={handleChange}
                   placeholder="Ej: https://wa.me/1234567890"
                 />
                 {errors.whatsapp && (
                   <span className={style.error}>{errors.whatsapp}</span>
                 )}
+              </label>
+            </div>
+          )}
+
+          <div className={style.foto}>
+           <label>
+            Logo Tienda
+            <input
+              type="file"
+              accept="image/*"
+              name="image"
+              onChange={handleFile}
+              />
+            {errors.image && (
+                <span className={style.error}>{errors.image}</span>
+                )}
+            {storeData.image && (
+                <div className={style.imagePreview}>
+                <img
+                  src={storeData.image}
+                  alt="Preview"
+                  className={style.imgUser}
+                  />
+                <button onClick={handleImageClear}>x</button>
               </div>
             )}
-
-            <div className={style.foto}>
-              <p>Logo tienda</p>
-              <input
-                type="file"
-                accept="image/*"
-                name="image"
-                onChange={handleFile}
-              />
-              {errors.image && (
-                <span className={style.error}>{errors.image}</span>
-              )}
-              {formData.image && (
-                <div className={style.imagePreview}>
-                  <img
-                    src={formData.image}
-                    alt="Preview"
-                    className={style.imgUser}
-                  />
-                  <button onClick={handleImageClear}>x</button>
-                </div>
-              )}
-            </div>
+            </label>
           </div>
+
         </form>
 
         <button type="submit" onClick={handleSubmit} className={style.button}>
-          Enviar
+          Actualizar
         </button>
       </motion.div>
     </>
   );
 };
 
-export default CreateStore;
+export default StoreUpdate;
