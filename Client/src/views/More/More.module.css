@@ -4,17 +4,12 @@
   gap: 20px;
   text-align: center;
   align-items: last baseline;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 .button {
   background-color: transparent;
   border: none;
-}
-
-.more .tyc {
-  border: none;
-  background-color: transparent;
 }
 
 .MP {
@@ -24,11 +19,6 @@
 
 .MP button {
   padding: 0;
-}
-
-.more .pdp {
-  border: none;
-  background-color: transparent;
 }
 
 .modal {
@@ -50,16 +40,44 @@
   background-color: transparent;
 }
 
+.bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 100px;
+}
+
+.bottom a {
+  justify-self: center;
+  transition: 200ms;
+  margin: 10px;
+}
+
+.bottom a:hover {
+  transform: scale(1.02);
+}
+
+.bottom button {
+  background-color: transparent;
+  border: none;
+  color: initial;
+}
+
+.bottom button:hover {
+  color: cornflowerblue;
+}
+
 @media (max-width: 768px) {
   .more {
     grid-template-columns: 1fr;
+    margin-top: 10px;
   }
 
   .section {
     margin-top: 120px;
   }
 
-  .more .pdp {
-    margin-bottom: 100px;
+  .bottom {
+    grid-template-columns: 1fr;
   }
+
 }

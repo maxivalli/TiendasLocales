@@ -259,11 +259,13 @@ function App() {
 
   return (
     <>
+      {isAuthenticated || isAuthenticatedAuth0 ? (
       <Navbar
         isAuthenticated={isAuthenticated}
         setAuth={setAuth}
         userData={userData}
-      ></Navbar>
+      />
+    ) : null}
       <Routes>
         <Route
           path="/"
