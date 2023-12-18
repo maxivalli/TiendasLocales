@@ -37,7 +37,8 @@ import {
   GET_USER_NOTIFICATIONS,
   DELETE_USER_NOTIFICATIONS,
   MARK_NOTI_AS_READ,
-  GET_USER_STORE
+  GET_USER_STORE,
+  DELETE_STORE
 } from "./actionTypes";
 
 export function getAllUsers() {
@@ -374,6 +375,16 @@ export function deletePost(id) {
     const result = await axios.delete(`/posts/deletePost/${id}`);
     dispatch({
       type: DELETE_POST,
+      payload: id,
+    });
+  };
+}
+
+export function deleteStore(id) {
+  return async (dispatch) => {
+    const result = await axios.delete(`/tiendas/deleteStore/${id}`);
+    dispatch({
+      type: DELETE_STORE,
       payload: id,
     });
   };

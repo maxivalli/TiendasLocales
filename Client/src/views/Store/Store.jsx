@@ -17,6 +17,11 @@ const Store = () => {
   const storeName = linkName.replace(/-/g, ' ');
   const selectedStore = stores.find((store) => store.nombre == storeName);
   const storeId = selectedStore?.id
+  const direccionObj = JSON.parse(selectedStore.direccion || '{}');
+  const calle = direccionObj.calle || '';
+  const numero = direccionObj.numero || '';
+  const piso = direccionObj.piso || '';
+  const depto = direccionObj.depto || '';
 
   useEffect(() => {
     dispatch(getStorePosts(storeId))
@@ -35,7 +40,7 @@ const Store = () => {
 
           <div className={style.info}>
             <h2>{selectedStore.nombre}</h2>
-            <p>📍 {selectedStore.direccion}</p>
+            <p>📍 {calle} {numero} (piso: {piso} local: {depto})</p>
             <p>⏰ {selectedStore.horarios}</p>
             <p>{selectedStore.categoria}</p>
           </div>

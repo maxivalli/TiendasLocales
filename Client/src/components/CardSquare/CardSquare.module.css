@@ -108,6 +108,8 @@
 .modal {
   position: fixed;
   top: 20%;
+  max-height: 80vh; 
+  overflow-y: auto; 
   justify-self: center;
   background-color: rgb(210, 210, 210);
   border-radius: 10px;
@@ -124,6 +126,7 @@
   border-radius: 50%;
   border: none;
   background-color: grey;
+}
 
 .prodBut {
   display: grid;
