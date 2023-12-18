@@ -47,10 +47,10 @@ router.post("/createPost", async (req, res) => {
 
 router.put("/updatePost/:id", async (req, res) => {
   const { id } = req.params;
-  const updatedData = req.body;
+  const postData = req.body;
   try {
-    const updatedPost = await postsController.updatePost(id, updatedData);
-    return res.status(200).json({ message: "Resource updated successfully" });
+    const updatedPost = await postsController.updatePost(id, postData);
+    return res.status(200).json(updatedPost);
   } catch (error) {
     return res.status(404).json({ error: error.message });
   }
