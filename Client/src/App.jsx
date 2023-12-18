@@ -24,7 +24,12 @@ import Faq from "./views/FAQ/Faq";
 import Dashboard from "./views/Dashboard/Dashboard";
 import "./App.css";
 import UbiForm from "./components/UbiForm/UbiForm";
-import { getAllPosts, getAllStores, getUserStore, saveUserData } from "./redux/actions";
+import {
+  getAllPosts,
+  getAllStores,
+  getUserStore,
+  saveUserData,
+} from "./redux/actions";
 import { useDispatch } from "react-redux";
 import AddProduct from "./views/AddProduct/AddProduct";
 
@@ -115,9 +120,9 @@ function App() {
   const setAuth = (status, user) => {
     setIsAuthenticated(status);
     setUserData(user);
-    dispatch(saveUserData(user))
-    dispatch(getUserStore(user?.id))
-    dispatch(getAllPosts())
+    dispatch(saveUserData(user));
+    dispatch(getUserStore(user?.id));
+    dispatch(getAllPosts());
   };
 
   useEffect(() => {
@@ -152,20 +157,22 @@ function App() {
                   vendedor: userDataResponse.data.vendedor,
                   accT: userDataResponse.data.accT,
                 });
-                dispatch(saveUserData({
-                  email: userDataResponse.data.email,
-                  id: userDataResponse.data.id,
-                  username: userDataResponse.data.username,
-                  image: userDataResponse.data.image,
-                  direccion: userDataResponse.data.direccion,
-                  rol: userDataResponse.data.rol,
-                  averageRating: userDataResponse.data.averageRating,
-                  tiendas: userDataResponse.data.tiendas,
-                  vendedor: userDataResponse.data.vendedor,
-                  accT: userDataResponse.data.accT,
-                  }))
-                  dispatch(getUserStore(userDataResponse?.data.id))
-                  dispatch(getAllPosts())
+                dispatch(
+                  saveUserData({
+                    email: userDataResponse.data.email,
+                    id: userDataResponse.data.id,
+                    username: userDataResponse.data.username,
+                    image: userDataResponse.data.image,
+                    direccion: userDataResponse.data.direccion,
+                    rol: userDataResponse.data.rol,
+                    averageRating: userDataResponse.data.averageRating,
+                    tiendas: userDataResponse.data.tiendas,
+                    vendedor: userDataResponse.data.vendedor,
+                    accT: userDataResponse.data.accT,
+                  })
+                );
+                dispatch(getUserStore(userDataResponse?.data.id));
+                dispatch(getAllPosts());
               })
               .catch((userDataError) => {
                 console.error(
@@ -259,11 +266,13 @@ function App() {
 
   return (
     <>
-      <Navbar
-        isAuthenticated={isAuthenticated}
-        setAuth={setAuth}
-        userData={userData}
-      ></Navbar>
+      {isAuthenticated && (
+        <Navbar
+          isAuthenticated={isAuthenticated}
+          setAuth={setAuth}
+          userData={userData}
+        />
+      )}
       <Routes>
         <Route
           path="/"

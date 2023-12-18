@@ -199,7 +199,7 @@ const Register = ({setAuth}) => {
 
   return (
     <>
-    <Head/>
+    <div className={style.view}>
     <div className={style.container}>
       <img src={Logo} className={style.logo}/>
       <div className={style.title}>
@@ -302,6 +302,7 @@ const Register = ({setAuth}) => {
           </div>}
         </form>
       </div>
+    </div>
     </div>
     </>
   );
