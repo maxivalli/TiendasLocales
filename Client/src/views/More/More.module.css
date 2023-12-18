@@ -53,17 +53,17 @@
 }
 
 .bottom a:hover {
-  transform: scale(1.01);
+  transform: scale(1.02);
 }
 
 .bottom button {
   background-color: transparent;
   border: none;
-  color: gray;
+  color: initial;
 }
 
 .bottom button:hover {
-  color: initial;
+  color: cornflowerblue;
 }
 
 @media (max-width: 768px) {
