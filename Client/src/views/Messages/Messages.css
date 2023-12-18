@@ -24,7 +24,7 @@
   padding: 20px;
   border-radius: 8px;
   text-align: center;
-  z-index: 999999;
+  z-index: 14;
 }
 
 div.ce-chat-list-column

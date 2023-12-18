@@ -128,7 +128,7 @@
   position: fixed;
   bottom: 100px;
   right: 50px;
-  z-index: 9;
+  z-index: 5;
 }
 
 @media (max-width: 1280px) {
@@ -172,7 +172,7 @@
 
   .store2 {
     grid-template-columns: 1fr;
-    margin-bottom: 100px;
+    margin-bottom: 150px;
     justify-self: center;
   }
 
