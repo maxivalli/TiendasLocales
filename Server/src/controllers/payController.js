@@ -4,12 +4,12 @@ const { ACCESS_TOKEN, CLIENT_ID, CLIENT_SECRET } = process.env;
 const mercadopago = require("mercadopago");
 const axios = require("axios");
 
-
+mercadopago.configure({
+  access_token:  ACCESS_TOKEN
+});
 exports.createOrder = async (paymentData) => {
     try{
-        mercadopago.configure({
-            access_token: paymentData.accT
-        });
+
         console.log(paymentData.accT)
         let preference = {
             items: [{
@@ -26,7 +26,7 @@ exports.createOrder = async (paymentData) => {
                 pending: "http://localhost:5173/#/account",
                 success: "http://localhost:5173/#/account"
             },
-            notification_url: "https://986e-201-190-251-186.ngrok-free.app/tiendas/webhook"
+            notification_url: "https://204d-201-190-251-186.ngrok-free.app/tiendas/webhook"
         }
 
         const response = await mercadopago.preferences.create(preference);
@@ -41,7 +41,7 @@ exports.createOrder = async (paymentData) => {
     }
 } 
 exports.webhook = async (allData) => {
-  console.log("AAA", allData)
+console.log(allData)
       try {
         if (allData.data.type === "payment") {
 
@@ -54,8 +54,7 @@ exports.webhook = async (allData) => {
   
           post.stock = post.stock - allData.payUserData.quantity;
           await post.save();
-          }
-          if(allData.payUserData.postId){
+    
             const newCompra = await Compra.create({
               userId: allData.payUserData.userId,
               postId: allData.payUserData.postId,
@@ -67,8 +66,8 @@ exports.webhook = async (allData) => {
               description: allData.payUserData.description,
               productImage: post.image
             });
+            await newCompra.save();
           }
-        
           return true
         }
       } catch (error) {
@@ -151,7 +150,7 @@ exports.accT = async (code, state) => {
           client_secret: 'dbj3rL8bNBQ6UOzxaI4nOEjTcC22yAMa',
           code: code,
           grant_type: 'authorization_code',
-          redirect_uri: 'https://df5f-201-190-251-186.ngrok.io/tiendas/redirectUrl',
+          redirect_uri: 'https://204d-201-190-251-186.ngrok-free.app/tiendas/redirectUrl',
           test_token: true,
         }),
       });

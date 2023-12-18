@@ -30,7 +30,7 @@ const More = () => {
   const handleConnectMP = () => {
     // Abrir enlace de Mercado Pago en una nueva pestaña
     window.open(
-      `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://df5f-201-190-251-186.ngrok.io/tiendas/redirectUrl`
+      `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://204d-201-190-251-186.ngrok-free.app/tiendas/redirectUrl`
     );
 
     // Redirigir a la página de inicio en la ventana actual
