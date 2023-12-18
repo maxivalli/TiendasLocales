@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import style from "./ProductUpdate.module.css";
 import Swal from "sweetalert2";
 import { validateProductForm } from "./validations";
+import { uploadFile } from "../../components/Firebase/config";
+
 
 const ProductUpdate = ({ id }) => {
   const [productData, setProductData] = useState({
@@ -79,8 +81,11 @@ const ProductUpdate = ({ id }) => {
           icon: "success",
           title: `Producto actualizado con exito!`,
           text: "Echale un vistazo para comprobar que haya quedado bien!",
-        });
-      }
+        }).then(() => {
+          // Esta función se ejecutará después de que el usuario haga clic en "OK"
+          window.location.reload();
+      })
+    }
     } catch (error) {
       console.error(error);
     }
@@ -126,7 +131,7 @@ const ProductUpdate = ({ id }) => {
                 onChange={handleInputChange}
               />
               {errors.marca && (
-                <span className={style.error}>{errors.nummarcaro}</span>
+                <span className={style.error}>{errors.marca}</span>
               )}
             </label>
           </div>

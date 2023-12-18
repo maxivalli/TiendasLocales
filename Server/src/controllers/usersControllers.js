@@ -121,7 +121,7 @@ exports.createUser = async (user) => {
         formData.append("avatar", imageBlob, "avatar.png");
 
         const config = {
-          method: "post",
+          method: "put",
           url: "https://api.chatengine.io/users/",
           headers: {
             "PRIVATE-KEY": "a4751e26-0b61-4563-b34c-88729b25c792",
@@ -166,7 +166,7 @@ exports.createUser = async (user) => {
         formData.append("avatar", imageBlob, "avatar.png");
 
         const config = {
-          method: "post",
+          method: "put",
           url: "https://api.chatengine.io/users/",
           headers: {
             "PRIVATE-KEY": "a4751e26-0b61-4563-b34c-88729b25c792",
@@ -209,7 +209,7 @@ exports.createUser = async (user) => {
         formData.append("avatar", imageBlob, "avatar.png");
 
         const config = {
-          method: "post",
+          method: "put",
           url: "https://api.chatengine.io/users/",
           headers: {
             "PRIVATE-KEY": "a4751e26-0b61-4563-b34c-88729b25c792",
@@ -253,7 +253,7 @@ exports.createUser = async (user) => {
         formData.append("avatar", imageBlob, "avatar.png");
 
         const config = {
-          method: "post",
+          method: "put",
           url: "https://api.chatengine.io/users/",
           headers: {
             "PRIVATE-KEY": "a4751e26-0b61-4563-b34c-88729b25c792",

@@ -15,6 +15,7 @@ export const UPDATE_USER_DATA = "UPDATE_USER_DATA"
 
 export const GET_STORES = "GET_STORES"
 export const GET_USER_STORE = "GET_USER_STORE"
+export const DELETE_STORE = "DELETE_STORE"
 
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE"

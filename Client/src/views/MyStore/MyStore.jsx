@@ -13,12 +13,19 @@ const MyStore = () => {
   
   const dispatch = useDispatch();
   const { storeId } = useParams();
-
   const stores = useSelector((state) => state.allStores);
   const storePosts = useSelector((state) => state.storePosts)
   const allPosts = useSelector((state) => state.allPosts)
   const selectedStore = stores.find((store) => store.id == storeId);
+
+  const direccionObj = JSON.parse(selectedStore.direccion || '{}');
+  const calle = direccionObj.calle || '';
+  const numero = direccionObj.numero || '';
+  const piso = direccionObj.piso || '';
+  const depto = direccionObj.depto || '';
+
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     dispatch(getStorePosts(storeId))
@@ -54,7 +61,7 @@ const MyStore = () => {
 
           <div className={style.info}>
             <h2>{selectedStore.nombre}</h2>
-            <p>📍 {selectedStore.direccion}</p>
+            <p>📍 {calle} {numero} (piso: {piso} local: {depto})</p>
             <p>⏰ {selectedStore.horarios}</p>
             <p>{selectedStore.categoria}</p>
           </div>
@@ -77,7 +84,7 @@ const MyStore = () => {
           <CardSquare key={index} {...post} storeId={storeId}/>
           ))}
         </div>
-        <OptButtons/>
+        <OptButtons storeId={storeId} />
       </div>
     </>
   );
