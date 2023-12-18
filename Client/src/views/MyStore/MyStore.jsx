@@ -18,11 +18,11 @@ const MyStore = () => {
   const allPosts = useSelector((state) => state.allPosts)
   const selectedStore = stores.find((store) => store.id == storeId);
 
-  const direccionObj = JSON.parse(selectedStore.direccion || '{}');
+/*   const direccionObj = JSON.parse(selectedStore.direccion || '{}');
   const calle = direccionObj.calle || '';
   const numero = direccionObj.numero || '';
   const piso = direccionObj.piso || '';
-  const depto = direccionObj.depto || '';
+  const depto = direccionObj.depto || ''; */
 
   const [loading, setLoading] = useState(true);
 
@@ -61,7 +61,7 @@ const MyStore = () => {
 
           <div className={style.info}>
             <h2>{selectedStore.nombre}</h2>
-            <p>📍 {calle} {numero} (piso: {piso} local: {depto})</p>
+            {/* <p>📍 {calle} {numero} (piso: {piso} local: {depto})</p> */}
             <p>⏰ {selectedStore.horarios}</p>
             <p>{selectedStore.categoria}</p>
           </div>
