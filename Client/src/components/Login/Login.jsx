@@ -85,12 +85,12 @@ const Login = ({ setAuth, userData }) => {
 
   return (
     <>
-    <Head/>
       {showModal && (
         <div className={style.modal}>
           <img src={Logo} alt="" />
         </div>
       )}
+      <div className={style.login}>
       <div className={style.container}>
         <img src={Logo} />
         <div>
@@ -145,6 +145,7 @@ const Login = ({ setAuth, userData }) => {
           <Link to='/forgotpassword' className={style.register}>Recuperar</Link>
           </span>
         </div> */}
+      </div>
       </div>
     </>
   );
