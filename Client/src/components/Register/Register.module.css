@@ -9,7 +9,7 @@
   display: grid;
   background-color: white;
   width: 250px;
-  height: 550px;
+  height: auto;
   justify-self: center;
   border-radius: 10px;
   padding: 30px;
