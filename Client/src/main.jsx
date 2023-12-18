@@ -26,7 +26,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    if (confirm("Hay nuevo contenido disponible. ¿Deseas actualizar?")) {
+    if (confirm("Hay una actualización. ¿Deseas actualizar?")) {
       updateSW();
     }
   },
