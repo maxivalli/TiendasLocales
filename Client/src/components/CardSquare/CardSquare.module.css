@@ -110,7 +110,6 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  z-index: 7;
   background-color: rgb(210, 210, 210);
   border-radius: 10px;
   z-index: 8;
