@@ -1,134 +1,133 @@
 .container {
-    display: grid;
-    width: 340px;
-    height: auto;
-    justify-content: center;
-    justify-self: center;
-    text-align: left;
-    border-radius: 10px;
-  }
-  
-  .container h3 {
-    margin-top: 60px;
-    text-align: center;
-    align-self: center;
-    color: gray;
+  display: grid;
+  height: auto;
+  justify-content: center;
+  justify-self: center;
+  text-align: left;
+  border-radius: 10px;
+}
+
+.container h3 {
+  padding: 0;
+  margin: 20px;
+  margin-top: 30px;
+  text-align: center;
+  align-self: center;
+  color: gray;
+  font-size: 16px;
+}
+
+.container h6 {
+  border: 2px solid rgba(128, 128, 128, 0.3);
+  color: gray;
+  text-align: center;
+  padding-top: 17px;
+  height: 30px;
+  margin: 0;
+  border-radius: 5px;
+}
+
+.create {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.create label {
+  display: grid;
+  margin-left: 30px;
+  margin-right: 30px;
+  width: auto;
+  font-size: 12px;
+  color: grey;
+}
+
+.input {
+  margin-bottom: 10px;
+  min-width: 235px;
+  height: 30px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: none;
+  align-self: center;
+  padding-left: 10px;
+  box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.2);
+  outline: none;
+}
+
+.inputCheck {
+  justify-self: left;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.button {
+  background-color: red;
+  width: 90px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  margin: 15px;
+  box-shadow: 0px 5px 10px rgba(125, 125, 125, 0.3);
+  font-size: 14px;
+  justify-self: center;
+}
+
+.imagePreview {
+  display: grid;
+}
+
+.imagePreview button {
+  width: 20px;
+  height: 20px;
+  border: none;
+  justify-self: center;
+  background-color: gray;
+  padding: 0;
+  margin-top: 5px;
+  border-radius: 2px;
+}
+
+.imgUser {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  justify-self: center;
+}
+
+.error {
+  display: grid;
+  font-size: 12px;
+  color: red;
+  margin-top: -15px;
+}
+
+.delivery {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.delivery p {
+  color: grey;
+  font-size: 12px;
+  padding-left: 30px;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .create {
+    grid-template-columns: 1fr;
   }
 
-  .container h6 {
-    border: 2px solid rgba(128, 128, 128, 0.3);
-    color: gray;
-    text-align: center;
-    padding-top: 17px;
-    height: 30px;
-    margin: 0;
-    border-radius: 5px;
-  }
-  
   .create select {
-    display: grid;
-    width: 243px;
-    height: 31px;
-    margin-left: 30px;
-    border: none;
-    border-radius: 5px;
-    font-size: 12px;
-    color: gray;
-    background-color: white;
-    margin-bottom: 20px;
-    box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.2);
-    outline: none;
-  }
-  
-  .create label {
-    display: grid;
-    margin-left: 30px;
-    margin-right: 30px;
-    width: auto;
-    font-size: 12px;
-    color: grey;
-  }
-  
-  .input {
-    margin-bottom: 20px;
-    min-width: 235px;
-    height: 30px;
-    font-size: 14px;
-    border-radius: 5px;
-    border: none;
-    align-self: center;
-    padding-left: 10px;
-    box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.2);
-    outline: none;
-  }
-  
-  .inputCheck {
-    justify-self: left;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .button {
-    background-color: red;
-    width: 90px;
-    height: 40px;
-    border: none;
-    border-radius: 5px;
-    margin: 15px;
-    box-shadow: 0px 5px 10px rgba(125, 125, 125, 0.3);
-    font-size: 14px;
-    justify-self: center;
-  }
-  
-  .container p:hover {
-    background-color: #1a535c;
-    color: whitesmoke;
+    width: 250px;
   }
 
-  .imagePreview {
-    display: grid;
+  .create option {
+    text-align: left;
   }
-
-  .imagePreview button {
-    width: 20px;
-    height: 20px;
-    border: none;
-    justify-self: center;
-    background-color: gray;
-    padding: 0;
-    margin-top: 5px;
-    border-radius: 2px;
+}
+@keyframes l24 {
+  100% {
+    transform: rotate(1turn);
   }
-
-  .imgUser {
-    width: 60px;
-    height: 60px;
-    border-radius: 10px;
-    justify-self: center;
-  }
-  
-  .error {
-    display: grid;
-    font-size: 12px;
-    color: red;
-    margin-top: -15px;
-  }
-  
-  @media (max-width: 768px) {
-    .create {
-      grid-template-columns: 1fr;
-    }
-  
-    .create select {
-      width: 250px;
-    }
-  
-    .create option {
-      text-align: left;
-    }
-  }
-  @keyframes l24 {
-    100% {
-      transform: rotate(1turn);
-    }
-  }
+}
