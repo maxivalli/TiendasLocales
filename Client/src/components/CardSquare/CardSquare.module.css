@@ -104,14 +104,16 @@
   padding-top: 2px;
 }
 
-
 .modal {
+  display: grid;
   position: fixed;
-  top: 20%;
-  justify-self: center;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 7;
   background-color: rgb(210, 210, 210);
   border-radius: 10px;
-  z-index: 9;
+  z-index: 8;
 }
 
 .close {
@@ -125,6 +127,7 @@
   border: none;
   background-color: grey;
 }
+
 .prodBut {
   display: grid;
   position: absolute;
@@ -148,8 +151,5 @@
 @media (max-width: 768px) {
   .cardSquare {
     width: 340px;
-  }
-  .modal {
-    top: 70px;
   }
 }

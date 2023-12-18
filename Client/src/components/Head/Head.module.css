@@ -3,7 +3,7 @@
   left: 15%;
   display: inline-flex;
   top: 15px;
-  z-index: 2;
+  z-index: 10;
 }
 
 .bellMove {
@@ -42,7 +42,7 @@
   background-color: rgb(210, 210, 210);
   box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.3);
   border-radius: 0px 0px 10px 10px;
-  z-index: 9;
+  z-index: 8;
 }
 
 .modal .notifAcces {
@@ -85,7 +85,7 @@
     height: 60px;
     justify-self: center;
     background-color: red;
-    z-index: 2;
+    z-index: 9;
   }
 
   .modal {
