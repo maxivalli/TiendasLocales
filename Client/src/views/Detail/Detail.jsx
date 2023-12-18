@@ -17,10 +17,12 @@ const Detail = ({ userData }) => {
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(selectedPost.price);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const selectedStore = stores?.find(
-  (store) => store.id == selectedPost?.storeId
+    (store) => store.id == selectedPost?.storeId
   );
-  const linkName = selectedStore?.nombre.replace(/\s/g, '-');
+  const linkName = selectedStore?.nombre.replace(/\s/g, "-");
   const isBuyButtonDisabled = quantity <= 0 || selectedPost.stock === 0;
 
   function decrement() {
@@ -39,8 +41,13 @@ const Detail = ({ userData }) => {
   }, [quantity, selectedPost.price]);
 
   useEffect(() => {
-    dispatch(getPostById(id));
-  }, [dispatch]);
+    dispatch(getPostById(id))
+      .then(() => setIsLoading(false))
+      .catch((error) => {
+        setIsLoading(false);
+        console.error("Error fetching post by ID:", error);
+      });
+  }, [dispatch, id]);
 
   const handlePremium = async () => {
     try {
@@ -77,12 +84,22 @@ const Detail = ({ userData }) => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className={style.spinner}>
+        <div className={style.bounce1}></div>
+        <div className={style.bounce2}></div>
+        <div className={style.bounce3}></div>
+      </div>
+    );
+  }
+
   return (
     <>
       <Head />
       <div className={style.detail}>
         <div className={style.sidebar}>
-        <Link to={`/store/${linkName}`}>
+          <Link to={`/store/${linkName}`}>
             <div className={style.avatar}>
               <img src={selectedStore?.image} alt="image" />
 
