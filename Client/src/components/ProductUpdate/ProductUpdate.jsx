@@ -105,7 +105,7 @@ const ProductUpdate = ({ id }) => {
                 type="text"
                 name="title"
                 value={productData.title}
-                placeholder="Inserte el título descripcion del producto"
+                placeholder="Inserte el título del producto"
                 onChange={handleInputChange}
               />
               {errors.title && (
@@ -176,7 +176,7 @@ const ProductUpdate = ({ id }) => {
                 name="description"
                 value={productData.description}
                 onChange={handleInputChange}
-                placeholder="Inserte una breve descripcion del producto"
+                placeholder="Inserte una breve descripción"
                 required
               />
               {errors.description && (
