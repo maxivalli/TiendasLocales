@@ -1,16 +1,40 @@
 import React, { useState } from "react";
 import style from "./OptButtons.module.css";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import StoreUpdate from "../StoreUpdate/StoreUpdate.jsx";
+import { deleteStore } from "../../redux/actions.js";
 
 const OptButtons = ({ storeId }) => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const stores = useSelector((state) => state.allStores);
   const [mostrarBotonesExtras, setMostrarBotonesExtras] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
   const store = stores.find((store) => store.id == storeId);
 
   const handleNavButtonClick = () => {
     setMostrarBotonesExtras(!mostrarBotonesExtras);
   };
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  function handleDelete() {
+    const confirmDelete = window.confirm(
+      "¿Estás seguro que quieres eliminar tu tienda?"
+    );
+
+    if (confirmDelete) {
+      dispatch(deleteStore(storeId));
+      navigate("/").then(() => {
+        // Esta función se ejecutará después de que el usuario haga clic en "OK"
+        window.location.reload();
+    })
+    }
+  }
 
   return (
     <>
@@ -24,16 +48,15 @@ const OptButtons = ({ storeId }) => {
       </button>
       {mostrarBotonesExtras && (
         <div className={style.botonesExtras}>
-          <Link to={"/editstore"}>
-            <button className={style.edit}>
-              <img
-                width="30"
-                height="30"
-                src="https://img.icons8.com/glyph-neue/64/FFFFFF/edit--v1.png"
-                alt="edit--v1"
-              />
-            </button>
-          </Link>
+          <button className={style.edit} onClick={openModal}>
+            <img
+              width="30"
+              height="30"
+              src="https://img.icons8.com/glyph-neue/64/FFFFFF/edit--v1.png"
+              alt="edit--v1"
+            />
+          </button>
+
           <Link to={"/sales"}>
             <button className={style.edit}>
               <img
@@ -45,7 +68,7 @@ const OptButtons = ({ storeId }) => {
             </button>
           </Link>
 
-          <button className={style.delete}>
+          <button className={style.delete} onClick={() => handleDelete()}>
             <img
               width="24"
               height="24"
@@ -53,6 +76,17 @@ const OptButtons = ({ storeId }) => {
               alt="filled-trash"
             />
           </button>
+        </div>
+      )}
+
+      {showModal && (
+        <div className={style.modal}>
+          <div className={style.modalContent}>
+            <button className={style.close} onClick={() => setShowModal(false)}>
+              X
+            </button>
+            <StoreUpdate storeId={storeId}/>
+          </div>
         </div>
       )}
     </>

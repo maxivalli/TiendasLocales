@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     direccion: {
-      type: DataTypes.STRING,
+      type: DataTypes.JSON,
     },
     habilitado: {
       type: DataTypes.STRING,

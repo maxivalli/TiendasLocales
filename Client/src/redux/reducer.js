@@ -31,7 +31,8 @@ import {
   UPDATE_STOCK,
   GET_USER_NOTIFICATIONS,
   DELETE_USER_NOTIFICATIONS,
-  GET_USER_STORE
+  GET_USER_STORE,
+  DELETE_STORE
 } from "./actionTypes";
 
 const initialState = {
@@ -350,6 +351,14 @@ function rootReducer(state = initialState, action) {
           (post) => post.id !== action.payload
         ),
       };
+
+      case DELETE_STORE:
+        return {
+          ...state,
+          allStores: state.allStores.filter(
+            (store) => store.id !== action.payload
+          ),
+        };
 
       case DELETE_USER_NOTIFICATIONS:
         return {
