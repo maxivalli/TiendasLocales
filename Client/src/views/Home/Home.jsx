@@ -26,6 +26,8 @@ const Home = () => {
     setStores(filtered);
   }, [dispatch, stores]);
 
+  const sortedStores = filterStores.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 10);
+
   return (
     <>
       <SearchBar />
@@ -36,8 +38,8 @@ const Home = () => {
         </div>
 
         <div className={style.title}>
-          <h2>Productos destacados</h2>
-          <p>Mirá los últimos productos que publicaron</p>
+          <h2>Recién llegados</h2>
+          <p>Mira los últimos productos que publicaron</p>
         </div>
 
         <div className={style.cards}>
@@ -50,7 +52,7 @@ const Home = () => {
         </div>
 
         <div className={style.stores}>
-          {filterStores.map((store, index) => (
+          {sortedStores.map((store, index) => (
             <CardsStore key={index} {...store} />
           ))}
         </div>
