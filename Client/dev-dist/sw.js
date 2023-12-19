@@ -69,7 +69,6 @@ if (!self.define) {
 }
 define(['./workbox-e21a23a0'], (function (workbox) { 'use strict';
 
-  importScripts("./firebase-messaging-sw.js");
   self.addEventListener('message', event => {
     if (event.data && event.data.type === 'SKIP_WAITING') {
       self.skipWaiting();
@@ -83,7 +82,7 @@ define(['./workbox-e21a23a0'], (function (workbox) { 'use strict';
    */
   workbox.precacheAndRoute([{
     "url": "index.html",
-    "revision": "0.5qe9mlb5a2o"
+    "revision": "0.bffjq5kchv8"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {

@@ -27,15 +27,15 @@
 .cardsStore .imagen {
   display: grid;
   padding-top: 40px;
-  padding-bottom: 20px;
 }
 
-.cardsStore img {
+.cardsStore .imagen img {
   width: 120px;
   height: 120px;
   border-radius: 50%;
   justify-self: center;
   align-self: center;
+  border: 3px solid red;
 }
 
 .texto {
@@ -50,6 +50,12 @@
 
 .texto h4 {
   margin: 0;
+  font-size: 14px;
+}
+
+.texto h5 {
+  margin: 0;
+  font-size: 14px;
 }
 
 .boton {
