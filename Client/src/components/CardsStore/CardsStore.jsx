@@ -92,7 +92,7 @@ const CardsStore = ({
               color: isStoreOpen(dias, horarios) ? "cornflowerblue" : "red",
             }}
           >
-            {isStoreOpen(dias, horarios) ? "Abierto ✅" : "Cerrado ❗️"}
+            {isStoreOpen(dias, horarios) ? "✅ Abierto" : "❗️ Cerrado"}
           </h5>
             <h4>📆 {dias}</h4>
             <h4>
