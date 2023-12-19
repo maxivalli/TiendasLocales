@@ -81,26 +81,6 @@ export const validateStoreForm = (formData) => {
     }
   }
 
-  const VALID_TIME_REGEX = /^[0-9\s:-]+(?:\s*(am|pm|hs)\s*(.*))?$/i;
-  if (formData.horarios.trim() === "") {
-    errors.horarios = "";
-  } else {
-    if (!VALID_TIME_REGEX.test(formData.horarios)) {
-      errors.horarios =
-        "El horario debe contener solo dígitos del 0 al 9, espacios, guiones, barra diagonal, y las palabras am o pm";
-    }
-  }
-
-  const validDiasRegex =
-    /^(Lunes|Martes|Miércoles|Jueves|Viernes|Sabado|Domingo)( ?- ?(Lunes|Martes|Miércoles|Jueves|Viernes|Sabado|Domingo))*$/i;
-  if (formData.dias.trim() === "") {
-    errors.dias = "";
-  } else {
-    if (!validDiasRegex.test(formData.dias)) {
-      errors.dias =
-        "Ingrese días válidos separados por espacios o guiones. Ej: Lunes - Viernes";
-    }
-  }
 
   const urlRegex = /^(https?:\/\/)?([\w.]+)\.([a-z]{2,})(\/?[\w .-]*)*\/?$/;
   if (formData.facebook && !urlRegex.test(formData.facebook)) {
@@ -112,9 +92,11 @@ export const validateStoreForm = (formData) => {
     errors.instagram = "La URL de perfil de Instagram no es válida";
   }
 
+  const numRegex = /^(?:(?:11|2[0-9]|3[0-8]|4[1-9]|5[0-4]|6[0-9]|7[0-9]|9[0-1])\d{6,8}|(?:3[9]|4[0]|5[5])\d{7})$/
+
   // Validaciones para la URL de WhatsApp
-  if (formData.whatsapp && !urlRegex.test(formData.whatsapp)) {
-    errors.whatsapp = "La URL de WhatsApp no es válida";
+  if (formData.whatsapp && !numRegex.test(formData.whatsapp)) {
+    errors.whatsapp = 'El numero ingresado no es valido';
   }
 
   return errors;

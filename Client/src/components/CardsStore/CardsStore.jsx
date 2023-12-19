@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import { addFavorite, getFavorites, removeFavorite } from "../../redux/actions";
 import { socket } from "../../App";
 
+
 import style from "./CardsStore.module.css";
+import isStoreOpen from "../isStoreOpen/isStoreOpen";
 
 const CardsStore = ({
   id,
@@ -13,6 +15,7 @@ const CardsStore = ({
   horarios,
   calificacion,
   categoria,
+  dias
 }) => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userData);
@@ -72,7 +75,9 @@ const CardsStore = ({
 
           <div className={style.texto}>
             <h2>{nombre}</h2>
-            <h4>{horarios}</h4>
+            <h4>{isStoreOpen(dias, horarios) ? 'Abierto' : 'Cerrado'}</h4>
+            <h4>📆 {dias}</h4>
+            <h4>⏰ {horarios.horario_de_apertura}hs a {horarios.horario_de_cierre}hs</h4>
             {calificacion ? (
               <h4>{calificacion}</h4>
             ) : (

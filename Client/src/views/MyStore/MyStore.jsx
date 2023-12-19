@@ -8,6 +8,7 @@ import style from "./MyStore.module.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getStorePosts } from "../../redux/actions";
+import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 
 const MyStore = () => {
   const dispatch = useDispatch();
@@ -53,13 +54,15 @@ const MyStore = () => {
 
           <div className={style.info}>
             <h2>{selectedStore.nombre}</h2>
+            <p>{isStoreOpen(selectedStore?.dias, selectedStore?.horarios) ? 'Abierto' : 'Cerrado'}</p>
             <p>
               📍 {selectedStore.direccion.calle}{" "}
               {selectedStore.direccion.numero} (piso:{" "}
               {selectedStore.direccion.piso} local:{" "}
               {selectedStore.direccion.depto})
             </p>
-            <p>⏰ {selectedStore.horarios}</p>
+            <p>📆 {selectedStore.dias}</p>
+            <p>⏰ {selectedStore.horarios.horario_de_apertura}hs a {selectedStore.horarios.horario_de_cierre}hs</p>
             <p>{selectedStore.categoria}</p>
           </div>
 
