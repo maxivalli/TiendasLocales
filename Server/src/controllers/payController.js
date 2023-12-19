@@ -3,11 +3,12 @@ require("dotenv").config();
 const { ACCESS_TOKEN, CLIENT_ID, CLIENT_SECRET, CRYPTO_KEY } = process.env;
 const mercadopago = require("mercadopago");
 const axios = require("axios");
-
+const CryptoJS = require('crypto-js');
 
 exports.createOrder = async (paymentData) => {
     try{
       const decryptedData = CryptoJS.AES.decrypt(paymentData.accT, secretKey).toString(CryptoJS.enc.Utf8);
+
       mercadopago.configure({
         access_token: decryptedData
       });
@@ -27,7 +28,7 @@ exports.createOrder = async (paymentData) => {
                 pending: "http://localhost:5173/#/account",
                 success: "http://localhost:5173/#/account"
             },
-            notification_url: "https://9c6a-201-190-251-186.ngrok-free.app/tiendas/webhook"
+            notification_url: "https://2eaf-201-190-251-186.ngrok-free.app/tiendas/webhook"
         }
 
         const response = await mercadopago.preferences.create(preference);
@@ -124,7 +125,7 @@ exports.accT = async (code, state) => {
           client_secret: 'dbj3rL8bNBQ6UOzxaI4nOEjTcC22yAMa',
           code: code,
           grant_type: 'authorization_code',
-          redirect_uri: 'https://9c6a-201-190-251-186.ngrok-free.app/tiendas/redirectUrl',
+          redirect_uri: 'https://2eaf-201-190-251-186.ngrok-free.app/tiendas/redirectUrl',
           test_token: true,
         }),
       });
@@ -140,7 +141,7 @@ exports.accT = async (code, state) => {
         },
       });
   
-      user.accT = accessToken;
+      user.accT = encryptedData;
       await user.save();
   
       return true
