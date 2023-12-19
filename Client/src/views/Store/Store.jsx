@@ -7,6 +7,7 @@ import style from "./Store.module.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getStorePosts } from "../../redux/actions";
+import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 
 const Store = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Store = () => {
   const storeName = linkName.replace(/-/g, " ");
   const selectedStore = stores.find((store) => store.nombre == storeName);
   const storeId = selectedStore?.id;
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -51,8 +53,34 @@ const Store = () => {
 
           <div className={style.info}>
             <h2>{selectedStore.nombre}</h2>
-            <p>📍 {selectedStore.direccion}</p>
-            <p>⏰ {selectedStore.horarios}</p>
+            <p>
+              {" "}
+              <span
+                style={{
+                  color: isStoreOpen(
+                    selectedStore?.dias,
+                    selectedStore?.horarios
+                  )
+                    ? "cornflowerblue"
+                    : "red",
+                }}
+              >
+                {isStoreOpen(selectedStore?.dias, selectedStore?.horarios)
+                  ? "✅ Abierto"
+                  : "❗️ Cerrado"}
+              </span>
+            </p>
+            <p>
+              📍 {selectedStore.direccion.calle}{" "}
+              {selectedStore.direccion.numero} (piso:{" "}
+              {selectedStore.direccion.piso} local:{" "}
+              {selectedStore.direccion.depto})
+            </p>
+            <p>📆 {selectedStore.dias}</p>
+            <p>
+              ⏰ {selectedStore.horarios.horario_de_apertura}hs a{" "}
+              {selectedStore.horarios.horario_de_cierre}hs
+            </p>
             <p>{selectedStore.categoria}</p>
           </div>
 

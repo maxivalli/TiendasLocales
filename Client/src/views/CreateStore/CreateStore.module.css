@@ -26,6 +26,12 @@
   border: 1px solid grey;
 }
 
+.container select {
+  height: 35px;
+  border-radius: 5px;
+  border: 1px solid grey;
+}
+
 .container span {
   color: red;
   font-size: 12px;

@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     direccion: {
-      type: DataTypes.STRING,
+      type: DataTypes.JSON,
     },
     habilitado: {
       type: DataTypes.STRING,
@@ -42,6 +42,9 @@ module.exports = (sequelize) => {
     type: DataTypes.STRING,
     },
     horarios: {
+      type: DataTypes.JSON,
+    },
+    dias: {
       type: DataTypes.STRING,
     },
     facebook:{
