@@ -37,7 +37,7 @@ exports.createStore = async (storeData) => {
       nombre: storeData.nombre,
       email: storeData.email,
       indicaciones: storeData.indicaciones,
-      direccion: direccionCompleta,
+      direccion: storeData.direccion,
       image: storeData.image,
       categoria: storeData.categoria,
       horarios: storeData.horarios,

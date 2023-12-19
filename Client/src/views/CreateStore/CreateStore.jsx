@@ -204,10 +204,8 @@ const CreateStore = ({ userData }) => {
       storeData.depto = formData.depto;
     }
     if (formData.horarioCortado) {
-      storeData.horarios = {
-        horario_de_apertura2: formData.horario_de_apertura2,
-        horario_de_cierre2: formData.horario_de_cierre2,
-      };
+      storeData.horarios.horario_de_apertura2 = formData.horario_de_apertura2;
+      storeData.horarios.horario_de_cierre2 = formData.horario_de_cierre2;
     }
 
     try {
