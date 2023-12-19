@@ -169,7 +169,7 @@ router.get("/redirectUrl", async (req, res) => {
     state: state
   }
   try {
-    console.log(allData)
+    console.log("data",allData)
     const response = await payController.accT(allData);
     if (response) {
       return res.status(200).json("Token generado correctamente! Vuelve al sitio para continuar con tu proceso de aprobacion.");
