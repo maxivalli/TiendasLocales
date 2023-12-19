@@ -126,7 +126,6 @@ exports.accT = async (code, state) => {
         code: code,
         grant_type: 'authorization_code',
         redirect_uri: 'https://tiendaslocales-production.up.railway.app/tiendas/redirectUrl',
-        test_token: true,
       }),
     });
 
