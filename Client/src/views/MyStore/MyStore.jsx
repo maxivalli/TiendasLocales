@@ -80,6 +80,14 @@ const MyStore = () => {
             <p>
               ⏰ {selectedStore.horarios.horario_de_apertura}hs a{" "}
               {selectedStore.horarios.horario_de_cierre}hs
+              {selectedStore.horarios.horario_de_apertura2 &&
+                selectedStore.horarios.horario_de_cierre2 && (
+                  <>
+                    {" y "}
+                    {selectedStore.horarios.horario_de_apertura2}hs a{" "}
+                    {selectedStore.horarios.horario_de_cierre2}hs
+                  </>
+                )}
             </p>
             <p>{selectedStore.categoria}</p>
           </div>

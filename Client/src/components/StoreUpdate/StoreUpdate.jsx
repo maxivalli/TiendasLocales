@@ -36,10 +36,10 @@ const StoreUpdate = ({ storeId }) => {
   const diasSemana = [
     "lunes",
     "martes",
-    "miércoles",
+    "miercoles",
     "jueves",
     "viernes",
-    "sábado",
+    "sabado",
     "domingo",
   ];
 
@@ -71,6 +71,9 @@ const StoreUpdate = ({ storeId }) => {
     categoria: "",
     horario_de_apertura: "",
     horario_de_cierre: "",
+    horarioCortado: false,
+    horario_de_apertura2: "",
+    horario_de_cierre2: "",
     primerDia: "",
     ultimoDia: "",
     diaExcluido: "",
@@ -81,13 +84,13 @@ const StoreUpdate = ({ storeId }) => {
   });
 
   const generarHorario = () => {
-    console.log("holi");
+    
     if (storeData.primerDia !== "" && storeData.ultimoDia !== "") {
-      let horarioString = `(De ${storeData.primerDia} a ${storeData.ultimoDia}`;
+      let horarioString = `De ${storeData.primerDia} a ${storeData.ultimoDia}`;
       if (storeData.diaExcluido !== "") {
-        horarioString = `${horarioString} excepto ${storeData.diaExcluido})`;
+        horarioString = `${horarioString} (excepto ${storeData.diaExcluido})`;
       } else {
-        horarioString = `${horarioString})`;
+        horarioString = `${horarioString}`;
       }
 
       setStoreData((prevStoreData) => ({
@@ -106,6 +109,8 @@ const StoreUpdate = ({ storeId }) => {
     categoria: "",
     horario_de_apertura: "",
     horario_de_cierre: "",
+    horario_de_apertura2: "",
+    horario_de_cierre2: "",
     primerDia: "",
     ultimoDia: "",
     diaExcluido: "",
@@ -206,12 +211,16 @@ const StoreUpdate = ({ storeId }) => {
 
     if (
       storeData.horario_de_apertura !== "" ||
-      storeData.horario_de_cierre !== ""
+      storeData.horario_de_cierre !== "" || 
+      storeData.horario_de_apertura2 !== "" ||
+      storeData.horario_de_cierre2 !== ""
     ) {
       updatedStoreData.horarios = {
         ...updatedStoreData.horarios,
         horario_de_apertura: storeData.horario_de_apertura,
         horario_de_cierre: storeData.horario_de_cierre,
+        horario_de_apertura2: storeData.horario_de_apertura2,
+        horario_de_cierre2: storeData.horario_de_cierre2,
       };
     } else {
       delete updatedStoreData.horarios;
@@ -233,8 +242,10 @@ const StoreUpdate = ({ storeId }) => {
           icon: "success",
           title: `Tienda actualizada con exito!`,
           text: "Echale un vistazo para comprobar que haya quedado bien!",
-        });
-      }
+        }).then(() => {
+          window.location.reload();
+      })
+    }
     } catch (error) {
       console.error(error);
     }
@@ -408,6 +419,57 @@ const StoreUpdate = ({ storeId }) => {
               )}
             </label>
           </div>
+
+          <div className={style.part1}>
+            <label>
+            Horario cortado?
+              <input
+                className={style.inputCheck}
+                type="checkbox"
+                name="horarioCortado"
+                checked={storeData.horarioCortado}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+
+          {storeData.horarioCortado && (
+              <>
+                <div className={style.horarios}>
+                  <label>
+                    Segundo horario de apertura
+                  <input
+                    className={style.input}
+                    type="time"
+                    name="horario_de_apertura2"
+                    value={storeData.horario_de_apertura2}
+                    onChange={handleChange}
+                    pattern="(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
+                  />
+                  {errors.horario_de_apertura2 && (
+                    <span className={style.error}>{errors.horario_de_apertura2}</span>
+                  )}
+                  </label>
+                </div>
+
+                <div className={style.horarios}>
+                  <label>
+                    Segundo horario de cierre
+                  <input
+                    className={style.input}
+                    type="time"
+                    name="horario_de_cierre2"
+                    value={storeData.horario_de_cierre2}
+                    onChange={handleChange}
+                    pattern="(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
+                  />
+                  {errors.horario_de_cierre2 && (
+                    <span className={style.error}>{errors.horario_de_cierre2}</span>
+                  )}
+                  </label>
+                </div>
+              </>
+            )}
 
           <div className={style.dias}>
             <label>

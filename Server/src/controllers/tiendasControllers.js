@@ -32,9 +32,6 @@ exports.createStore = async (storeData) => {
     throw new Error("Ya tienes una tienda creada o en espera de aprobación.");
   }
   try {
-    let direccionCompleta = storeData.direccion || {};
-    direccionCompleta.piso = storeData.piso || "";
-    direccionCompleta.depto = storeData.depto || "";
 
     const newStore = await Tienda.create({
       nombre: storeData.nombre,
@@ -150,6 +147,18 @@ if(storeData?.direccion) {
       tienda.horarios = {
         ...tienda.horarios,
         horario_de_cierre: storeData?.horarios?.horario_de_cierre,
+      };
+    }
+    if (storeData?.horarios?.horario_de_apertura2 != "") {
+      tienda.horarios = {
+        ...tienda.horarios,
+        horario_de_apertura2: storeData?.horarios?.horario_de_apertura2,
+      };
+    }
+    if (storeData?.horarios?.horario_de_cierre2 != "") {
+      tienda.horarios = {
+        ...tienda.horarios,
+        horario_de_cierre2: storeData?.horarios?.horario_de_cierre2,
       };
     }
   }

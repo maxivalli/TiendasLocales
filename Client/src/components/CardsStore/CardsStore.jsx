@@ -57,6 +57,16 @@ const CardsStore = ({
     }
   }, [userId]);
 
+  const diasSemana = [
+    "domingo",
+    "lunes",
+    "martes",
+    "miercoles",
+    "jueves",
+    "viernes",
+    "sabado",
+  ];
+
   return (
     <div className={style.cardsStore}>
       <div className={style.favorite} onClick={toggleFavorite}>
@@ -75,23 +85,37 @@ const CardsStore = ({
         <div className={style.imagen}>
           <img src={image} alt="avatar" />
         </div>
-
-        <div className={style.texto}>
-          <h2>{nombre}</h2>
-          <h5
+          <div className={style.texto}>
+            <h2>{nombre}</h2>
+            <h5
             style={{
               color: isStoreOpen(dias, horarios) ? "cornflowerblue" : "red",
             }}
           >
             {isStoreOpen(dias, horarios) ? "Abierto ✅" : "Cerrado ❗️"}
           </h5>
-          <h4>📆 {dias}</h4>
-          <h4>
-            ⏰ {horarios.horario_de_apertura}hs a {horarios.horario_de_cierre}hs
-          </h4>
-          {calificacion ? <h4>{calificacion}</h4> : <h4>Sin calificaciones</h4>}
-          <h4>{categoria}</h4>
-        </div>
+            <h4>📆 {dias}</h4>
+            <h4>
+              ⏰ {horarios.horario_de_apertura}hs a{" "}
+              {horarios.horario_de_cierre}hs</h4>
+
+              {horarios.horario_de_apertura2 &&
+                horarios.horario_de_cierre2 && (
+                  <>
+                  <h4> 
+                  {horarios.horario_de_apertura2}hs a{" "}
+                    {horarios.horario_de_cierre2}hs
+                  </h4>
+                  </>
+                )}
+
+            {calificacion ? (
+              <h4>{calificacion}</h4>
+            ) : (
+              <h4>Sin calificaciones</h4>
+            )}
+            <h4>{categoria}</h4>
+          </div>
       </Link>
     </div>
   );
