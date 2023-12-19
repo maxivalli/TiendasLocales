@@ -52,7 +52,7 @@ export const validateStoreForm = (formData) => {
   }
 
   const MAX_DEPTO_LENGTH = 4;
-  const VALID_DEPTO_REGEX = /^[a-zA-Z0-9]+$/;
+  const VALID_DEPTO_REGEX = /^[a-zA-Z0-9-]+$/;
   if (formData.depto.trim() === "") {
     errors.depto = "";
   } else {

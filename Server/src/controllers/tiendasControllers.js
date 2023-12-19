@@ -18,25 +18,24 @@ exports.createStore = async (storeData) => {
       nombre: storeData.nombre,
     },
   });
-    const existStoreByUserId = await Tienda.findOne({
-      where: {
-        userId: storeData.userId,
-      },
-    });
-    console.log(existStoreByUserId);
+  const existStoreByUserId = await Tienda.findOne({
+    where: {
+      userId: storeData.userId,
+    },
+  });
+  console.log(existStoreByUserId);
 
-    if (existStoreByName?.length !== 0) {
-      throw new Error("Ya existe una tienda con este nombre.");
-    }
-    if (existStoreByUserId) {
-      throw new Error("Ya tienes una tienda creada o en espera de aprobación.");
-    }
-    try {
-    
+  if (existStoreByName?.length !== 0) {
+    throw new Error("Ya existe una tienda con este nombre.");
+  }
+  if (existStoreByUserId) {
+    throw new Error("Ya tienes una tienda creada o en espera de aprobación.");
+  }
+  try {
     let direccionCompleta = storeData.direccion || {};
     direccionCompleta.piso = storeData.piso || "";
     direccionCompleta.depto = storeData.depto || "";
-    
+
     const newStore = await Tienda.create({
       nombre: storeData.nombre,
       email: storeData.email,
@@ -98,44 +97,60 @@ exports.updateStore = async (storeId, storeData) => {
       throw new Error("Store not found");
     }
 
-    if (storeData.direccion) {
-      const direccionObj = JSON.parse(tienda.direccion || '{}');
+    if (storeData?.direccion?.calle !== "") {
+      tienda.direccion = {
+        ...tienda.direccion,
+        calle: storeData?.direccion?.calle
+      };
+    }
 
-      direccionObj.calle = storeData.direccion.calle || direccionObj.calle;
-      direccionObj.numero = storeData.direccion.numero || direccionObj.numero;
-      direccionObj.piso = storeData.direccion.piso || direccionObj.piso;
-      direccionObj.depto = storeData.direccion.depto || direccionObj.depto;
+    if (storeData?.direccion?.numero !== "") {
+      tienda.direccion = {
+        ...tienda.direccion,
+        numero: storeData?.direccion?.numero
+      };
+    }
 
-      tienda.direccion = direccionObj
+    if (storeData?.direccion?.piso !== "") {
+      tienda.direccion = {
+        ...tienda.direccion,
+        piso: storeData?.direccion?.piso
+      };
+    }
+
+    if (storeData?.direccion?.depto !== "") {
+      tienda.direccion = {
+        ...tienda.direccion,
+        depto: storeData?.direccion?.depto
+      };
     }
     if (storeData.nombre) {
-      tienda.nombre = storeData.nombre
+      tienda.nombre = storeData.nombre;
     }
     if (storeData.image) {
-      tienda.image = storeData.image
+      tienda.image = storeData.image;
     }
     if (storeData.indicaciones) {
-      tienda.indicaciones = storeData.indicaciones
+      tienda.indicaciones = storeData.indicaciones;
     }
     if (storeData.categoria) {
-      tienda.categoria = storeData.categoria
+      tienda.categoria = storeData.categoria;
     }
     if (storeData.horarios) {
-      tienda.horarios = storeData.horarios
+      tienda.horarios = storeData.horarios;
     }
     if (storeData.dias) {
-      tienda.dias = storeData.dias
+      tienda.dias = storeData.dias;
     }
     if (storeData.facebook) {
-      tienda.facebook = storeData.facebook
+      tienda.facebook = storeData.facebook;
     }
     if (storeData.instagram) {
-      tienda.instagram = storeData.instagram
+      tienda.instagram = storeData.instagram;
     }
     if (storeData.whatsapp) {
-      tienda.whatsapp = storeData.whatsapp
+      tienda.whatsapp = storeData.whatsapp;
     }
-
 
     await tienda.save();
     return tienda;
@@ -158,7 +173,6 @@ exports.getStore = async (id) => {
   }
 };
 
-
 exports.deleteStore = async (storeId) => {
   try {
     const store = await Tienda.findByPk(storeId);
@@ -168,7 +182,6 @@ exports.deleteStore = async (storeId) => {
     } else {
       await store.destroy({ force: true });
     }
-
 
     return true;
   } catch (error) {
@@ -187,9 +200,10 @@ exports.habStore = async (id) => {
       const user = await User.findOne({
         where: {
           id: store.userId,
-        },});
+        },
+      });
 
-      if(user.accT){
+      if (user.accT) {
         store.habilitado = "habilitado";
         await store.save();
 
@@ -197,8 +211,8 @@ exports.habStore = async (id) => {
         await user.save();
 
         return true;
-      } else if(!store.accT){
-        throw new Error ("El usuario no a generado su access token!")
+      } else if (!store.accT) {
+        throw new Error("El usuario no a generado su access token!");
       }
     }
   } catch (error) {
@@ -215,18 +229,16 @@ exports.getAllStores = async () => {
   }
 };
 
-
 exports.getUserStore = async (userId) => {
   try {
-  const userStore = await Tienda.findOne({
-    where: {
-      userId: userId,
-    },
-  });
+    const userStore = await Tienda.findOne({
+      where: {
+        userId: userId,
+      },
+    });
 
-  return userStore;
-} catch (error) {
-  console.log("El usuario no tiene tienda aun")
-}
+    return userStore;
+  } catch (error) {
+    console.log("El usuario no tiene tienda aun");
+  }
 };
-
