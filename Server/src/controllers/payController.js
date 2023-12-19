@@ -113,39 +113,39 @@ exports.pedidosCompras = async (id) => {
 }
 const secretKey = CRYPTO_KEY;
 
-exports.accT = async (allData) => {
-    try {
-      const response = await fetch('https://api.mercadopago.com/oauth/token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          client_id: '6356168129471214',
-          client_secret: 'dbj3rL8bNBQ6UOzxaI4nOEjTcC22yAMa',
-          code: allData.code,
-          grant_type: 'authorization_code',
-          redirect_uri: 'https://tiendaslocales-production.up.railway.app/tiendas/redirectUrl',
-          test_token: true,
-        }),
-      });
-  
-      const data = await response.json();
-      const accessToken = data.access_token;
-      console.log("secret", secretKey);
-      const encryptedData = CryptoJS.AES.encrypt(accessToken, secretKey).toString();
-      console.log("enc",encryptedData);
-      const user = await User.findOne({
-        where: {
-          id: allData.state,
-        },
-      });
-  
-      user.accT = encryptedData;
-      await user.save();
-  
-      return true
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
+exports.accT = async (code, state) => {
+  try {
+    const response = await fetch('https://api.mercadopago.com/oauth/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        client_id: '6356168129471214',
+        client_secret: 'dbj3rL8bNBQ6UOzxaI4nOEjTcC22yAMa',
+        code: code,
+        grant_type: 'authorization_code',
+        redirect_uri: 'https://tiendaslocales-production.up.railway.app/tiendas/redirectUrl',
+        test_token: true,
+      }),
+    });
+
+    const data = await response.json();
+    const accessToken = data.access_token;
+    console.log(1)
+    const encryptedData = CryptoJS.AES.encrypt(accessToken, secretKey).toString();
+    console.log("enc", encryptedData)
+    const user = await User.findOne({
+      where: {
+        id: state,
+      },
+    });
+    console.log("user",user)
+    user.accT = encryptedData;
+    await user.save();
+
+    return true
+  } catch (error) {
+    throw new Error(error);
+  }
+};

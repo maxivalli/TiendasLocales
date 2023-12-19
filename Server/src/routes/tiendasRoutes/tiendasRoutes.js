@@ -164,13 +164,9 @@ router.get("/pedidosCompras", async (req, res) => {
 
 router.get("/redirectUrl", async (req, res) => {
   const { code, state } = req.query;
-  const allData = {
-    code: code,
-    state: state
-  }
+
   try {
-    console.log("data",allData)
-    const response = await payController.accT(allData);
+    const response = await payController.accT(code, state);
     if (response) {
       return res.status(200).json("Token generado correctamente! Vuelve al sitio para continuar con tu proceso de aprobacion.");
     }
