@@ -75,7 +75,8 @@ const Detail = ({ userData }) => {
       const response = await axios.post("/tiendas/create-order", paymentData);
 
       if (response) {
-        window.location.href = response.data.response.body.init_point;
+        window.open(response.data.response.body.init_point);
+        console.log(response);
       } else {
         console.error("Init point not found in the response");
       }
@@ -144,7 +145,6 @@ const Detail = ({ userData }) => {
                   </>
                 )}
             </h4>
-
           </div>
         </div>
         <div className={style.images}>
