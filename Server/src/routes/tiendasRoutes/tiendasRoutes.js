@@ -41,7 +41,9 @@ router.delete("/deleteStore/:storeId", async (req, res) => {
       return res.status(404).json("Store not found");
     }
   } catch (error) {
-    return res.status(500).json({ error: "There was an error deleting the store" });
+    return res
+      .status(500)
+      .json({ error: "There was an error deleting the store" });
   }
 });
 
@@ -170,7 +172,11 @@ router.get("/redirectUrl", async (req, res) => {
     // que lo redirija al usuario a more ahora mientras procesa el token
     const response = await payController.accT(code, state);
     if (response) {
-      return true;
+      return res
+        .status(200)
+        .json(
+          "Token generado correctamente! Vuelve al sitio para continuar con tu proceso de aprobacion."
+        );
     }
   } catch (error) {
     return res.status(400).json(error.message);

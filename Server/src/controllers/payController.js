@@ -24,11 +24,11 @@ exports.createOrder = async (paymentData) => {
                 description: paymentData.description,
             }],
             back_urls: {  // Corrected property name to 'back_urls'
-                failure: "http://localhost:5173/#/account",
-                pending: "http://localhost:5173/#/account",
-                success: "http://localhost:5173/#/account"
+                failure: "https://tiendaslocales.com.ar/#/account",
+                pending: "https://tiendaslocales.com.ar/#/account",
+                success: "https://tiendaslocales.com.ar/#/account"
             },
-            notification_url: "https://2eaf-201-190-251-186.ngrok-free.app/tiendas/webhook"
+            notification_url: "https://tiendaslocales-production.up.railway.app/tiendas/webhook"
         }
 
         const response = await mercadopago.preferences.create(preference);
@@ -125,7 +125,7 @@ exports.accT = async (code, state) => {
           client_secret: 'dbj3rL8bNBQ6UOzxaI4nOEjTcC22yAMa',
           code: code,
           grant_type: 'authorization_code',
-          redirect_uri: 'https://2eaf-201-190-251-186.ngrok-free.app/tiendas/redirectUrl',
+          redirect_uri: 'https://tiendaslocales-production.up.railway.app/tiendas/redirectUrl',
           test_token: true,
         }),
       });
