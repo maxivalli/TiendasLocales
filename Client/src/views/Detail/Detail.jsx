@@ -6,22 +6,22 @@ import style from "./Detail.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostById } from "../../redux/actions";
 import axios from "axios";
+import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 
 const Detail = ({ userData }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
-
   const selectedPost = useSelector((state) => state.selectedPost);
   const stores = useSelector((state) => state.allStores);
-
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(selectedPost.price);
-
+  
   const [isLoading, setIsLoading] = useState(true);
-
+  
   const selectedStore = stores?.find(
     (store) => store.id == selectedPost?.storeId
-  );
+    );
+
   const linkName = selectedStore?.nombre.replace(/\s/g, "-");
   const isBuyButtonDisabled = quantity <= 0 || selectedPost.stock === 0;
 
@@ -107,6 +107,7 @@ const Detail = ({ userData }) => {
             </div>
           </Link>
           <div className={style.contact}>
+            <h4>{isStoreOpen(selectedStore?.dias, selectedStore?.horarios) ? 'Abierto' : 'Cerrado'}</h4>
             <h4>
               📍 {selectedStore?.direccion.calle}{" "}
               {selectedStore?.direccion.numero} (piso:{" "}
@@ -114,7 +115,11 @@ const Detail = ({ userData }) => {
               {selectedStore?.direccion.depto})
             </h4>
             <h4>{selectedStore?.categoria}</h4>
-            <h4>⏰ {selectedStore?.horarios}</h4>
+            <h4>📆 {selectedStore.dias}</h4>
+            <h4>
+              ⏰ {selectedStore.horarios.horario_de_apertura}hs a{" "}
+              {selectedStore.horarios.horario_de_cierre}hs
+            </h4>
           </div>
         </div>
         <div className={style.images}>

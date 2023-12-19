@@ -42,6 +42,9 @@ module.exports = (sequelize) => {
     type: DataTypes.STRING,
     },
     horarios: {
+      type: DataTypes.JSON,
+    },
+    dias: {
       type: DataTypes.STRING,
     },
     facebook:{

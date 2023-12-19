@@ -6,7 +6,7 @@ import style from "./CreateStore.module.css";
 import Swal from "sweetalert2";
 import { uploadFile } from "../../components/Firebase/config";
 import { validateStoreForm } from "./validations";
-import Head from '../../components/Head/Head'
+import Head from "../../components/Head/Head";
 import { socket } from "../../App";
 
 const CreateStore = ({ userData }) => {
@@ -37,6 +37,16 @@ const CreateStore = ({ userData }) => {
     "🛒 Sin categoría",
   ];
 
+  const diasSemana = [
+    "lunes",
+    "martes",
+    "miércoles",
+    "jueves",
+    "viernes",
+    "sábado",
+    "domingo",
+  ];
+
   const handleCheckboxChange = (socialMedia) => {
     switch (socialMedia) {
       case "facebook":
@@ -62,8 +72,11 @@ const CreateStore = ({ userData }) => {
     depto: "",
     indicaciones: "",
     categoria: "",
-    horarios: "",
-    dias: "",
+    horario_de_apertura: "",
+    horario_de_cierre: "",
+    primerDia: "",
+    ultimoDia: "",
+    diaExcluido: "",
     facebook: "",
     instagram: "",
     whatsapp: "",
@@ -75,8 +88,11 @@ const CreateStore = ({ userData }) => {
     depto: "",
     nombre: "",
     categoria: "",
-    horarios: "",
-    dias: "",
+    horario_de_apertura: "",
+    horario_de_cierre: "",
+    primerDia: "",
+    ultimoDia: "",
+    diaExcluido: "",
     facebook: "",
     instagram: "",
     whatsapp: "",
@@ -92,9 +108,13 @@ const CreateStore = ({ userData }) => {
 
     if (type === "checkbox") {
       setFormData({ ...formData, [name]: checked });
+    } else if (type === "time") {
+      // Actualizar el estado según el nombre del campo (apertura/cierre)
+      setFormData({ ...formData, [name]: value });
     } else {
       setFormData({ ...formData, [name]: value });
     }
+
     const newErrors = validateStoreForm({ ...formData, [name]: value });
     setErrors({ ...errors, [name]: newErrors[name] || "" });
   };
@@ -116,6 +136,37 @@ const CreateStore = ({ userData }) => {
     });
   };
 
+
+  const generateDayOptions = () => {
+    if (formData.primerDia && formData.ultimoDia) {
+      const primerDiaIndex = diasSemana.indexOf(formData.primerDia);
+      const ultimoDiaIndex = diasSemana.indexOf(formData.ultimoDia);
+      const diasEntreSeleccionados =
+        ultimoDiaIndex >= primerDiaIndex
+          ? diasSemana.slice(primerDiaIndex + 1, ultimoDiaIndex)
+          : [
+              ...diasSemana.slice(primerDiaIndex),
+              ...diasSemana.slice(0, ultimoDiaIndex + 1),
+            ];
+      return diasSemana.filter((dia) => diasEntreSeleccionados.includes(dia));
+    }
+    return diasSemana;
+  };
+
+
+  const generarHorario = () => {
+    if (formData.primerDia !== "" && formData.ultimoDia !== "") {
+      let horarioString = `(De ${formData.primerDia} a ${formData.ultimoDia}`;
+      if (formData.diaExcluido !== "") {
+         horarioString = `${horarioString} excepto ${formData.diaExcluido})`
+      } else {
+        horarioString = `${horarioString})`
+      }
+      return horarioString;
+    }
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -135,22 +186,25 @@ const CreateStore = ({ userData }) => {
       indicaciones: formData.indicaciones,
       image: formData.image,
       categoria: formData.categoria,
-      horarios: formData.horarios,
+      horarios: {
+        horario_de_apertura: formData.horario_de_apertura,
+        horario_de_cierre: formData.horario_de_cierre,
+      },
       userId: userData.id,
       facebook: formData.facebook,
       instagram: formData.instagram,
-      whatsapp: formData.whatsapp,
+      whatsapp: `https://wa.me/+54${formData.whatsapp}`,
       email: userData.email,
-      dias: formData.dias,
+      dias: generarHorario(),
     };
     if (formData.pisoDeptoChecked) {
       storeData.piso = formData.piso;
       storeData.depto = formData.depto;
     }
-    
+
     try {
       const response = await axios.post("/tiendas/createStore", storeData);
-  
+
       if (response) {
         navigate("/more");
         socket?.emit("waitingStore", storeData);
@@ -160,22 +214,23 @@ const CreateStore = ({ userData }) => {
           text: "Debes esperar que tu tienda sea aprobada, nosotros te avisaremos por mail!",
         });
       } else {
-        console.log('Hubo un error al crear la tienda.');
+        console.log("Hubo un error al crear la tienda.");
       }
-      
     } catch (error) {
-      console.error('Error al enviar los datos al servidor:', error);
+      console.error("Error al enviar los datos al servidor:", error);
 
-      if (error.response && error.response.data === "Ya existe una tienda con este nombre.") {
-      Swal.fire({
-        icon: "error",
-        title: "Error al crear la tienda",
-        text: "Lo sentimos, ya existe una tienda con el mismo nombre",
-      });
+      if (
+        error.response &&
+        error.response.data === "Ya existe una tienda con este nombre."
+      ) {
+        Swal.fire({
+          icon: "error",
+          title: "Error al crear la tienda",
+          text: "Lo sentimos, ya existe una tienda con el mismo nombre",
+        });
+      }
     }
   };
-}
-
 
   return (
     <>
@@ -277,7 +332,6 @@ const CreateStore = ({ userData }) => {
                 </div>
               </>
             )}
-
           </div>
           <div className={style.part2}>
             <div className={style.categoria}>
@@ -298,15 +352,33 @@ const CreateStore = ({ userData }) => {
                 <span className={style.error}>{errors.categoria}</span>
               )}
             </div>
+
             <div className={style.horarios}>
-              <p>Horarios (formato: número - número)</p>
+              <p>Horario de apertura</p>
               <input
                 className={style.input}
-                type="text"
-                name="horarios"
-                value={formData.horarios}
+                type="time"
+                name="horario_de_apertura"
+                value={formData.horario_de_apertura}
                 onChange={handleChange}
-                placeholder="Ej: 9 - 5"
+                placeholder="Enter the duration time in HH:mm"
+                pattern="(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
+              />
+              {errors.horarios && (
+                <span className={style.error}>{errors.horarios}</span>
+              )}
+            </div>
+
+            <div className={style.horarios}>
+              <p>Horario de cierre</p>
+              <input
+                className={style.input}
+                type="time"
+                name="horario_de_cierre"
+                value={formData.horario_de_cierre}
+                onChange={handleChange}
+                placeholder="Enter the duration time in HH:mm"
+                pattern="(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
               />
               {errors.horarios && (
                 <span className={style.error}>{errors.horarios}</span>
@@ -314,16 +386,68 @@ const CreateStore = ({ userData }) => {
             </div>
 
             <div className={style.dias}>
-              <p>Dias (formato: dia - dia)</p>
-              <input
-                className={style.input}
-                type="text"
-                name="dias"
-                value={formData.dias}
+              <p>Primer día de la semana que abren:</p>
+              <select
+                name="primerDia"
+                value={formData.primerDia}
                 onChange={handleChange}
-                placeholder="Ej: lunes - viernes"
-              />
+              >
+                <option value="">Selecciona un día</option>
+                {diasSemana.map((dia) => (
+                  <option key={dia} value={dia}>
+                    {dia.charAt(0).toUpperCase() + dia.slice(1)}
+                  </option>
+                ))}
+              </select>
+              {errors.primerDia && (
+                <span className={style.error}>{errors.primerDia}</span>
+              )}
             </div>
+
+            <div className={style.dias}>
+              <p>Último día de la semana que abren:</p>
+              <select
+                name="ultimoDia"
+                value={formData.ultimoDia}
+                onChange={handleChange}
+              >
+                <option value="">Selecciona un día</option>
+                {diasSemana.map((dia) => (
+                  <option key={dia} value={dia}>
+                    {dia.charAt(0).toUpperCase() + dia.slice(1)}
+                  </option>
+                ))}
+              </select>
+              {errors.ultimoDia && (
+                <span className={style.error}>{errors.ultimoDia}</span>
+              )}
+            </div>
+
+            <div className={style.dias}>
+              <p>Día a excluir:</p>
+              <select
+                name="diaExcluido"
+                value={formData.diaExcluido}
+                onChange={handleChange}
+              >
+                <option value="">Selecciona un día</option>
+                {generateDayOptions().map((dia) => (
+                  <option key={dia} value={dia}>
+                    {dia.charAt(0).toUpperCase() + dia.slice(1)}
+                  </option>
+                ))}
+              </select>
+              {errors.diaExcluido && (
+                <span className={style.error}>{errors.diaExcluido}</span>
+              )}
+            </div>
+
+            {formData.primerDia !== "" && formData.ultimoDia !== "" && (
+              <div>
+                <p>Dias abiertos:</p>
+                <h4>{generarHorario()}</h4>
+              </div>
+            )}
 
             <div className={style.face}>
               <p>Facebook</p>
@@ -386,13 +510,13 @@ const CreateStore = ({ userData }) => {
 
             {showWhatsappInput && (
               <div className={style.whatsIn}>
-                <p>WhatsApp URL</p>
+                <p>Ingrese su numero de telefono sin 0 ni 15</p>
                 <input
                   type="text"
                   name="whatsapp"
                   value={formData.whatsapp}
                   onChange={handleChange}
-                  placeholder="Ej: https://wa.me/1234567890"
+                  placeholder="Ej: 3414875921"
                 />
                 {errors.whatsapp && (
                   <span className={style.error}>{errors.whatsapp}</span>

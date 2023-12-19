@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import style from "./StoreUpdate.module.css"
+import style from "./StoreUpdate.module.css";
 import Swal from "sweetalert2";
 import { validateStoreForm } from "./validations";
 import { uploadFile } from "../../components/Firebase/config";
-
 
 const StoreUpdate = ({ storeId }) => {
   const [showFacebookInput, setShowFacebookInput] = useState(false);
@@ -34,6 +33,16 @@ const StoreUpdate = ({ storeId }) => {
     "🛒 Sin categoría",
   ];
 
+  const diasSemana = [
+    "lunes",
+    "martes",
+    "miércoles",
+    "jueves",
+    "viernes",
+    "sábado",
+    "domingo",
+  ];
+
   const handleCheckboxChange = (socialMedia) => {
     switch (socialMedia) {
       case "facebook":
@@ -60,12 +69,34 @@ const StoreUpdate = ({ storeId }) => {
     depto: "",
     indicaciones: "",
     categoria: "",
-    horarios: "",
+    horario_de_apertura: "",
+    horario_de_cierre: "",
+    primerDia: "",
+    ultimoDia: "",
+    diaExcluido: "",
     dias: "",
     facebook: "",
     instagram: "",
     whatsapp: "",
   });
+
+  const generarHorario = () => {
+    console.log("holi");
+    if (storeData.primerDia !== "" && storeData.ultimoDia !== "") {
+      let horarioString = `(De ${storeData.primerDia} a ${storeData.ultimoDia}`;
+      if (storeData.diaExcluido !== "") {
+        horarioString = `${horarioString} excepto ${storeData.diaExcluido})`;
+      } else {
+        horarioString = `${horarioString})`;
+      }
+
+      setStoreData((prevStoreData) => ({
+        ...prevStoreData,
+        dias: horarioString,
+      }));
+    }
+  };
+
   const [errors, setErrors] = useState({
     calle: "",
     numero: "",
@@ -73,13 +104,25 @@ const StoreUpdate = ({ storeId }) => {
     depto: "",
     nombre: "",
     categoria: "",
-    horarios: "",
-    dias: "",
+    horario_de_apertura: "",
+    horario_de_cierre: "",
+    primerDia: "",
+    ultimoDia: "",
+    diaExcluido: "",
     facebook: "",
     instagram: "",
     whatsapp: "",
     image: "",
   });
+
+  useEffect(() => {
+    const handleHorarioGeneration = () => {
+      if (storeData.primerDia !== "" && storeData.ultimoDia !== "") {
+        generarHorario();
+      }
+    };
+    handleHorarioGeneration();
+  }, [storeData.primerDia, storeData.ultimoDia, storeData.diaExcluido]);
 
   useEffect(() => {
     storeData.categoria = selectedCategory;
@@ -115,6 +158,22 @@ const StoreUpdate = ({ storeId }) => {
     });
   };
 
+  const generateDayOptions = () => {
+    if (storeData.primerDia && storeData.ultimoDia) {
+      const primerDiaIndex = diasSemana.indexOf(storeData.primerDia);
+      const ultimoDiaIndex = diasSemana.indexOf(storeData.ultimoDia);
+      const diasEntreSeleccionados =
+        ultimoDiaIndex >= primerDiaIndex
+          ? diasSemana.slice(primerDiaIndex + 1, ultimoDiaIndex)
+          : [
+              ...diasSemana.slice(primerDiaIndex),
+              ...diasSemana.slice(0, ultimoDiaIndex + 1),
+            ];
+      return diasSemana.filter((dia) => diasEntreSeleccionados.includes(dia));
+    }
+    return diasSemana;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -123,23 +182,41 @@ const StoreUpdate = ({ storeId }) => {
     if (Object.values(formErrors).some((error) => error)) {
       setErrors(formErrors);
       console.log(formErrors);
-      return
+      return;
     }
 
     let updatedStoreData = { ...storeData };
 
-    if (storeData.calle !== "" || storeData.numero !== "" || storeData.depto !== "" || storeData.piso !== "") {
+    if (
+      storeData.calle !== "" ||
+      storeData.numero !== "" ||
+      storeData.depto !== "" ||
+      storeData.piso !== ""
+    ) {
       updatedStoreData.direccion = {
         ...updatedStoreData.direccion,
         calle: storeData.calle,
         numero: storeData.numero,
         piso: storeData.piso,
-        depto: storeData.depto
+        depto: storeData.depto,
       };
     } else {
       delete updatedStoreData.direccion;
     }
-  
+
+    if (
+      storeData.horario_de_apertura !== "" ||
+      storeData.horario_de_cierre !== ""
+    ) {
+      updatedStoreData.horarios = {
+        ...updatedStoreData.horarios,
+        horario_de_apertura: storeData.horario_de_apertura,
+        horario_de_cierre: storeData.horario_de_cierre,
+      };
+    } else {
+      delete updatedStoreData.horarios;
+    }
+
     Object.keys(updatedStoreData).forEach(
       (key) =>
         (updatedStoreData[key] === "" || updatedStoreData[key] === null) &&
@@ -147,7 +224,10 @@ const StoreUpdate = ({ storeId }) => {
     );
 
     try {
-      const response = await axios.put(`/tiendas/updateStore/${storeId}`, updatedStoreData);
+      const response = await axios.put(
+        `/tiendas/updateStore/${storeId}`,
+        updatedStoreData
+      );
       if (response) {
         Swal.fire({
           icon: "success",
@@ -291,36 +371,113 @@ const StoreUpdate = ({ storeId }) => {
             </label>
           </div>
 
-          <div className={style.part1}>
+          <div className={style.horarios}>
             <label>
-              Horarios (formato: número - número)
+              Horario de apertura
               <input
                 className={style.input}
-                type="text"
-                name="horarios"
-                value={storeData.horarios}
+                type="time"
+                name="horario_de_apertura"
+                value={storeData.horario_de_apertura}
                 onChange={handleChange}
-                placeholder="Ej: 9 - 5"
+                placeholder="Enter the duration time in HH:mm"
+                pattern="(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
               />
-              {errors.horarios && (
-                <span className={style.error}>{errors.horarios}</span>
+              {errors.horario_de_apertura && (
+                <span className={style.error}>
+                  {errors.horario_de_apertura}
+                </span>
               )}
             </label>
           </div>
 
-          <div className={style.part1}>
+          <div className={style.horarios}>
             <label>
-              Dias (formato: dia - dia)
+              Horario de cierre
               <input
                 className={style.input}
-                type="text"
-                name="dias"
-                value={storeData.dias}
+                type="time"
+                name="horario_de_cierre"
+                value={storeData.horario_de_cierre}
                 onChange={handleChange}
-                placeholder="Ej: lunes - viernes"
+                placeholder="Enter the duration time in HH:mm"
+                pattern="(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
               />
+              {errors.horario_de_cierre && (
+                <span className={style.error}>{errors.horario_de_cierre}</span>
+              )}
             </label>
           </div>
+
+          <div className={style.dias}>
+            <label>
+              Primer día de la semana que abren:
+              <select
+                name="primerDia"
+                value={storeData.primerDia}
+                onChange={handleChange}
+              >
+                <option value="">Selecciona un día</option>
+                {diasSemana.map((dia) => (
+                  <option key={dia} value={dia}>
+                    {dia.charAt(0).toUpperCase() + dia.slice(1)}
+                  </option>
+                ))}
+              </select>
+              {errors.primerDia && (
+                <span className={style.error}>{errors.primerDia}</span>
+              )}
+            </label>
+          </div>
+
+          <div className={style.dias}>
+            <label>
+              Último día de la semana que abren:
+              <select
+                name="ultimoDia"
+                value={storeData.ultimoDia}
+                onChange={handleChange}
+              >
+                <option value="">Selecciona un día</option>
+                {diasSemana.map((dia) => (
+                  <option key={dia} value={dia}>
+                    {dia.charAt(0).toUpperCase() + dia.slice(1)}
+                  </option>
+                ))}
+              </select>
+              {errors.ultimoDia && (
+                <span className={style.error}>{errors.ultimoDia}</span>
+              )}
+            </label>
+          </div>
+
+          <div className={style.dias}>
+            <label>
+              Día a excluir:
+              <select
+                name="diaExcluido"
+                value={storeData.diaExcluido}
+                onChange={handleChange}
+              >
+                <option value="">Selecciona un día</option>
+                {generateDayOptions().map((dia) => (
+                  <option key={dia} value={dia}>
+                    {dia.charAt(0).toUpperCase() + dia.slice(1)}
+                  </option>
+                ))}
+              </select>
+              {errors.diaExcluido && (
+                <span className={style.error}>{errors.diaExcluido}</span>
+              )}
+            </label>
+          </div>
+
+          {storeData.primerDia !== "" && storeData.ultimoDia !== "" && (
+            <div>
+              <label>Dias abiertos:</label>
+              <h4>{storeData.dias}</h4>
+            </div>
+          )}
 
           <div className={style.part1}>
             <label>
@@ -394,13 +551,13 @@ const StoreUpdate = ({ storeId }) => {
           {showWhatsappInput && (
             <div className={style.part1}>
               <label>
-                WhatsApp URL
+                Ingrese su numero de telefono sin 0 ni 15
                 <input
                   type="text"
                   name="whatsapp"
                   value={storeData.whatsapp}
                   onChange={handleChange}
-                  placeholder="Ej: https://wa.me/1234567890"
+                  placeholder="Ej: 3414875921"
                 />
                 {errors.whatsapp && (
                   <span className={style.error}>{errors.whatsapp}</span>
@@ -410,30 +567,29 @@ const StoreUpdate = ({ storeId }) => {
           )}
 
           <div className={style.foto}>
-           <label>
-            Logo Tienda
-            <input
-              type="file"
-              accept="image/*"
-              name="image"
-              onChange={handleFile}
+            <label>
+              Logo Tienda
+              <input
+                type="file"
+                accept="image/*"
+                name="image"
+                onChange={handleFile}
               />
-            {errors.image && (
+              {errors.image && (
                 <span className={style.error}>{errors.image}</span>
-                )}
-            {storeData.image && (
+              )}
+              {storeData.image && (
                 <div className={style.imagePreview}>
-                <img
-                  src={storeData.image}
-                  alt="Preview"
-                  className={style.imgUser}
+                  <img
+                    src={storeData.image}
+                    alt="Preview"
+                    className={style.imgUser}
                   />
-                <button onClick={handleImageClear}>x</button>
-              </div>
-            )}
+                  <button onClick={handleImageClear}>x</button>
+                </div>
+              )}
             </label>
           </div>
-
         </form>
 
         <button type="submit" onClick={handleSubmit} className={style.button}>

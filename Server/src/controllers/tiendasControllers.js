@@ -43,7 +43,8 @@ exports.createStore = async (storeData) => {
       direccion: direccionCompleta,
       image: storeData.image,
       categoria: storeData.categoria,
-      horarios: `${storeData.dias}, ${storeData.horarios}`,
+      horarios: storeData.horarios,
+      dias: storeData.dias,
       userId: storeData.userId,
       facebook: storeData.facebook,
       instagram: storeData.instagram,
@@ -92,38 +93,40 @@ exports.createStore = async (storeData) => {
 exports.updateStore = async (storeId, storeData) => {
   try {
     const tienda = await Tienda.findByPk(storeId);
+    console.log(storeData);
 
     if (!tienda) {
       throw new Error("Store not found");
     }
-
-    if (storeData?.direccion?.calle !== "") {
+if(storeData?.direccion) {
+    if (storeData?.direccion?.calle != "") {
       tienda.direccion = {
         ...tienda.direccion,
-        calle: storeData?.direccion?.calle
+        calle: storeData?.direccion?.calle,
       };
     }
 
-    if (storeData?.direccion?.numero !== "") {
+    if (storeData?.direccion?.numero != "") {
       tienda.direccion = {
         ...tienda.direccion,
-        numero: storeData?.direccion?.numero
+        numero: storeData?.direccion?.numero,
       };
     }
 
-    if (storeData?.direccion?.piso !== "") {
+    if (storeData?.direccion?.piso != "") {
       tienda.direccion = {
         ...tienda.direccion,
-        piso: storeData?.direccion?.piso
+        piso: storeData?.direccion?.piso,
       };
     }
 
-    if (storeData?.direccion?.depto !== "") {
+    if (storeData?.direccion?.depto != "") {
       tienda.direccion = {
         ...tienda.direccion,
-        depto: storeData?.direccion?.depto
+        depto: storeData?.direccion?.depto,
       };
     }
+  }
     if (storeData.nombre) {
       tienda.nombre = storeData.nombre;
     }
@@ -136,9 +139,21 @@ exports.updateStore = async (storeId, storeData) => {
     if (storeData.categoria) {
       tienda.categoria = storeData.categoria;
     }
-    if (storeData.horarios) {
-      tienda.horarios = storeData.horarios;
+    if (storeData?.horarios) {
+    if (storeData?.horarios?.horario_de_apertura != "") {
+      tienda.horarios = {
+        ...tienda.horarios,
+        horario_de_apertura: storeData?.horarios?.horario_de_apertura,
+      };
     }
+    if (storeData?.horarios?.horario_de_cierre != "") {
+      tienda.horarios = {
+        ...tienda.horarios,
+        horario_de_cierre: storeData?.horarios?.horario_de_cierre,
+      };
+    }
+  }
+    console.log(tienda.dias, storeData.dias);
     if (storeData.dias) {
       tienda.dias = storeData.dias;
     }
