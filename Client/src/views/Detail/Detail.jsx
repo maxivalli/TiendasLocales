@@ -135,7 +135,16 @@ const Detail = ({ userData }) => {
             <h4>
               ⏰ {selectedStore.horarios.horario_de_apertura}hs a{" "}
               {selectedStore.horarios.horario_de_cierre}hs
+              {selectedStore.horarios.horario_de_apertura2 &&
+                selectedStore.horarios.horario_de_cierre2 && (
+                  <>
+                    {" y "}
+                    {selectedStore.horarios.horario_de_apertura2}hs a{" "}
+                    {selectedStore.horarios.horario_de_cierre2}hs
+                  </>
+                )}
             </h4>
+
           </div>
         </div>
         <div className={style.images}>

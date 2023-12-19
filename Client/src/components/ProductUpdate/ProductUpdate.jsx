@@ -63,8 +63,7 @@ const ProductUpdate = ({ id }) => {
 
     if (Object.values(formErrors).some((error) => error)) {
       setErrors(formErrors);
-      console.log(formErrors);
-      return "wey valio verga";
+      return
     }
 
     let postData = {};
@@ -82,7 +81,6 @@ const ProductUpdate = ({ id }) => {
           title: `Producto actualizado con exito!`,
           text: "Echale un vistazo para comprobar que haya quedado bien!",
         }).then(() => {
-          // Esta función se ejecutará después de que el usuario haga clic en "OK"
           window.location.reload();
       })
     }

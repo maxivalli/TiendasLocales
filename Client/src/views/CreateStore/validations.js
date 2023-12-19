@@ -84,13 +84,20 @@ export const validateStoreForm = (formData) => {
     errors.horario_de_cierre = 'Los horarios son requeridos';
   }
 
+  if (formData.horarioCortado && !formData.horario_de_apertura2) {
+    errors.horario_de_apertura2 = 'Los horarios son requeridos';
+  }
+  if (formData.horarioCortado && !formData.horario_de_cierre2) {
+    errors.horario_de_cierre2 = 'Los horarios son requeridos';
+  }
+
 
 
   if (!formData.primerDia) {
     errors.primerDia = 'El dia de apertura es requerido';
   }
   if (!formData.ultimoDia) {
-    errors.ultimoDia = 'El dia de apertura es requerido';
+    errors.ultimoDia = 'El dia de cierre es requerido';
   }
 
   const urlRegex = /^(https?:\/\/)?([\w.]+)\.([a-z]{2,})(\/?[\w .-]*)*\/?$/;

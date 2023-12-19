@@ -40,10 +40,10 @@ const CreateStore = ({ userData }) => {
   const diasSemana = [
     "lunes",
     "martes",
-    "miércoles",
+    "miercoles",
     "jueves",
     "viernes",
-    "sábado",
+    "sabado",
     "domingo",
   ];
 
@@ -74,6 +74,9 @@ const CreateStore = ({ userData }) => {
     categoria: "",
     horario_de_apertura: "",
     horario_de_cierre: "",
+    horarioCortado: false,
+    horario_de_apertura2: "",
+    horario_de_cierre2: "",
     primerDia: "",
     ultimoDia: "",
     diaExcluido: "",
@@ -90,6 +93,8 @@ const CreateStore = ({ userData }) => {
     categoria: "",
     horario_de_apertura: "",
     horario_de_cierre: "",
+    horario_de_apertura2: "",
+    horario_de_cierre2: "",
     primerDia: "",
     ultimoDia: "",
     diaExcluido: "",
@@ -136,7 +141,6 @@ const CreateStore = ({ userData }) => {
     });
   };
 
-
   const generateDayOptions = () => {
     if (formData.primerDia && formData.ultimoDia) {
       const primerDiaIndex = diasSemana.indexOf(formData.primerDia);
@@ -153,19 +157,17 @@ const CreateStore = ({ userData }) => {
     return diasSemana;
   };
 
-
   const generarHorario = () => {
     if (formData.primerDia !== "" && formData.ultimoDia !== "") {
       let horarioString = `(De ${formData.primerDia} a ${formData.ultimoDia}`;
       if (formData.diaExcluido !== "") {
-         horarioString = `${horarioString} excepto ${formData.diaExcluido})`
+        horarioString = `${horarioString} excepto ${formData.diaExcluido})`;
       } else {
-        horarioString = `${horarioString})`
+        horarioString = `${horarioString})`;
       }
       return horarioString;
     }
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -200,6 +202,12 @@ const CreateStore = ({ userData }) => {
     if (formData.pisoDeptoChecked) {
       storeData.piso = formData.piso;
       storeData.depto = formData.depto;
+    }
+    if (formData.horarioCortado) {
+      storeData.horarios = {
+        horario_de_apertura2: formData.horario_de_apertura2,
+        horario_de_cierre2: formData.horario_de_cierre2,
+      };
     }
 
     try {
@@ -384,6 +392,50 @@ const CreateStore = ({ userData }) => {
                 <span className={style.error}>{errors.horarios}</span>
               )}
             </div>
+
+            <div className={style.pisoDto}>
+              <p>Horario cortado?</p>
+              <input
+                className={style.inputCheck}
+                type="checkbox"
+                name="horarioCortado"
+                checked={formData.horarioCortado}
+                onChange={handleChange}
+              />
+            </div>
+
+            {formData.horarioCortado && (
+              <>
+                <div className={style.horarios}>
+                  <p>Segundo horario de apertura</p>
+                  <input
+                    className={style.input}
+                    type="time"
+                    name="horario_de_apertura2"
+                    value={formData.horario_de_apertura2}
+                    onChange={handleChange}
+                    pattern="(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
+                  />
+                  {errors.horario_de_apertura2 && (
+                    <span className={style.error}>{errors.horario_de_apertura2}</span>
+                  )}
+                </div>
+                <div className={style.horarios}>
+                  <p>Segundo horario de cierre</p>
+                  <input
+                    className={style.input}
+                    type="time"
+                    name="horario_de_cierre2"
+                    value={formData.horario_de_cierre2}
+                    onChange={handleChange}
+                    pattern="(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
+                  />
+                  {errors.horario_de_cierre2 && (
+                    <span className={style.error}>{errors.horario_de_cierre2}</span>
+                  )}
+                </div>
+              </>
+            )}
 
             <div className={style.dias}>
               <p>Primer día de la semana que abren:</p>
