@@ -72,10 +72,10 @@ const Dashboard = () => {
               <div className={style.info}>
                 <p>{store.email}</p>
                 <p>
-              📍 {selectedStore.direccion.calle}{" "}
-              {selectedStore.direccion.numero} (piso:{" "}
-              {selectedStore.direccion.piso} local:{" "}
-              {selectedStore.direccion.depto})
+              📍 {store.direccion.calle}{" "}
+              {store.direccion.numero} (piso:{" "}
+              {store.direccion.piso} local:{" "}
+              {store.direccion.depto})
             </p>
                 <p>{store.categoria}</p>
               </div>
