@@ -6,7 +6,7 @@
 
 .store {
   display: grid;
-  grid-template-columns: 200px 6fr 1fr;
+  grid-template-columns: 200px 6fr;
   width: 100vw;
   height: 200px;
   justify-self: center;
@@ -51,13 +51,12 @@
   display: grid;
   text-align: center;
   align-self: center;
-  padding-right: 20px;
 }
 
 .info2 h3 {
   margin: 0;
   align-self: center;
-  justify-self: right;
+  justify-self: center;
   padding-right: 5px;
 }
 
@@ -168,7 +167,7 @@
 
   .store {
     width: 100vw;
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-columns: 1fr 3fr;
     height: 120px;
   }
 
@@ -178,7 +177,7 @@
   }
 
   .info {
-    padding-left: 0px;
+    padding-left: 10px;
   }
 
   .info h2 {

@@ -84,7 +84,6 @@ const StoreUpdate = ({ storeId }) => {
   });
 
   const generarHorario = () => {
-    
     if (storeData.primerDia !== "" && storeData.ultimoDia !== "") {
       let horarioString = `De ${storeData.primerDia} a ${storeData.ultimoDia}`;
       if (storeData.diaExcluido !== "") {
@@ -211,7 +210,7 @@ const StoreUpdate = ({ storeId }) => {
 
     if (
       storeData.horario_de_apertura !== "" ||
-      storeData.horario_de_cierre !== "" || 
+      storeData.horario_de_cierre !== "" ||
       storeData.horario_de_apertura2 !== "" ||
       storeData.horario_de_cierre2 !== ""
     ) {
@@ -244,8 +243,8 @@ const StoreUpdate = ({ storeId }) => {
           text: "Echale un vistazo para comprobar que haya quedado bien!",
         }).then(() => {
           window.location.reload();
-      })
-    }
+        });
+      }
     } catch (error) {
       console.error(error);
     }
@@ -260,127 +259,114 @@ const StoreUpdate = ({ storeId }) => {
       >
         <h3>Actualizar datos de tienda</h3>
         <form className={style.create}>
-          <div className={style.part1}>
-            <label>
-              Nombre de la tienda
-              <input
-                className={style.input}
-                type="text"
-                name="nombre"
-                value={storeData.nombre}
-                onChange={handleChange}
-                placeholder="Ej: Ferreteria Manolo"
-              />
-              {errors.nombre && (
-                <span className={style.error}>{errors.nombre}</span>
-              )}
-            </label>
-          </div>
+          <label>
+            Nombre de la tienda
+            <input
+              className={style.input}
+              type="text"
+              name="nombre"
+              value={storeData.nombre}
+              onChange={handleChange}
+              placeholder="Ej: Ferreteria Manolo"
+            />
+            {errors.nombre && (
+              <span className={style.error}>{errors.nombre}</span>
+            )}
+          </label>
 
-          <div className={style.part1}>
-            <label>
-              Calle
-              <input
-                className={style.input}
-                type="text"
-                name="calle"
-                value={storeData.calle}
-                onChange={handleChange}
-                placeholder="Ej: Necochea"
-              />
-              {errors.calle && (
-                <span className={style.error}>{errors.calle}</span>
-              )}
-            </label>
-          </div>
+          <label>
+            Calle
+            <input
+              className={style.input}
+              type="text"
+              name="calle"
+              value={storeData.calle}
+              onChange={handleChange}
+              placeholder="Ej: Necochea"
+            />
+            {errors.calle && (
+              <span className={style.error}>{errors.calle}</span>
+            )}
+          </label>
 
-          <div className={style.part1}>
-            <label>
-              Numero (altura de calle)
-              <input
-                className={style.input}
-                type="text"
-                name="numero"
-                value={storeData.numero}
-                onChange={handleChange}
-                placeholder="Ej: 1900"
-              />
-              {errors.numero && (
-                <span className={style.error}>{errors.numero}</span>
-              )}
-            </label>
-          </div>
+          <label>
+            Numero (altura de calle)
+            <input
+              className={style.input}
+              type="text"
+              name="numero"
+              value={storeData.numero}
+              onChange={handleChange}
+              placeholder="Ej: 1900"
+            />
+            {errors.numero && (
+              <span className={style.error}>{errors.numero}</span>
+            )}
+          </label>
 
-          <div className={style.part1}>
-            <label>
-              Piso/Numero de local
-              <input
-                className={style.inputCheck}
-                type="checkbox"
-                name="pisoDeptoChecked"
-                checked={storeData.pisoDeptoChecked}
-                onChange={handleChange}
-              />
-            </label>
+          <div className={style.cortado}>
+            <p>Piso/Numero de local</p>
+            <input
+              className={style.inputCheck}
+              type="checkbox"
+              name="pisoDeptoChecked"
+              checked={storeData.pisoDeptoChecked}
+              onChange={handleChange}
+            />
           </div>
 
           {storeData.pisoDeptoChecked && (
             <>
-              <div className={style.part1}>
-                <label>
-                  Piso
-                  <input
-                    className={style.input}
-                    type="text"
-                    name="piso"
-                    value={storeData.piso}
-                    onChange={handleChange}
-                    placeholder="Ej: 1"
-                  />
-                  {errors.piso && (
-                    <span className={style.error}>{errors.piso}</span>
-                  )}
-                </label>
-              </div>
-              <div className={style.part1}>
-                <label>
-                  N° de local
-                  <input
-                    className={style.input}
-                    type="text"
-                    name="depto"
-                    value={storeData.depto}
-                    onChange={handleChange}
-                    placeholder='Ej: "A"'
-                  />
-                  {errors.depto && (
-                    <span className={style.error}>{errors.depto}</span>
-                  )}
-                </label>
-              </div>
+              <label>
+                Piso
+                <input
+                  className={style.input}
+                  type="text"
+                  name="piso"
+                  value={storeData.piso}
+                  onChange={handleChange}
+                  placeholder="Ej: 1"
+                />
+                {errors.piso && (
+                  <span className={style.error}>{errors.piso}</span>
+                )}
+              </label>
+
+              <label>
+                N° de local
+                <input
+                  className={style.input}
+                  type="text"
+                  name="depto"
+                  value={storeData.depto}
+                  onChange={handleChange}
+                  placeholder='Ej: "A"'
+                />
+                {errors.depto && (
+                  <span className={style.error}>{errors.depto}</span>
+                )}
+              </label>
             </>
           )}
 
-          <div className={style.part1}>
-            <label>
-              Categoria
-              <select
-                name="categoria"
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-              >
-                <option value="Elige una categoría">Categoría</option>
-                {categories.map((categoria, index) => (
-                  <option key={index} value={categoria}>
-                    {categoria}
-                  </option>
-                ))}
-              </select>
-              {errors.categoria && (
-                <span className={style.error}>{errors.categoria}</span>
-              )}
-            </label>
-          </div>
+          <label>
+            Categoria
+            <select
+              name="categoria"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              <option value="Elige una categoría">Categoría</option>
+              {categories.map((categoria, index) => (
+                <option key={index} value={categoria}>
+                  {categoria}
+                </option>
+              ))}
+            </select>
+            {errors.categoria && (
+              <span className={style.error}>{errors.categoria}</span>
+            )}
+          </label>
 
           <div className={style.horarios}>
             <label>
@@ -420,24 +406,22 @@ const StoreUpdate = ({ storeId }) => {
             </label>
           </div>
 
-          <div className={style.part1}>
-            <label>
-            Horario cortado?
-              <input
-                className={style.inputCheck}
-                type="checkbox"
-                name="horarioCortado"
-                checked={storeData.horarioCortado}
-                onChange={handleChange}
-              />
-            </label>
+          <div className={style.cortado}>
+            <p>¿Tiene horario cortado?</p>
+            <input
+              className={style.inputCheck}
+              type="checkbox"
+              name="horarioCortado"
+              checked={storeData.horarioCortado}
+              onChange={handleChange}
+            />
           </div>
 
           {storeData.horarioCortado && (
-              <>
-                <div className={style.horarios}>
-                  <label>
-                    Segundo horario de apertura
+            <>
+              <div className={style.horarios}>
+                <label>
+                  Segundo horario de apertura
                   <input
                     className={style.input}
                     type="time"
@@ -447,14 +431,16 @@ const StoreUpdate = ({ storeId }) => {
                     pattern="(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
                   />
                   {errors.horario_de_apertura2 && (
-                    <span className={style.error}>{errors.horario_de_apertura2}</span>
+                    <span className={style.error}>
+                      {errors.horario_de_apertura2}
+                    </span>
                   )}
-                  </label>
-                </div>
+                </label>
+              </div>
 
-                <div className={style.horarios}>
-                  <label>
-                    Segundo horario de cierre
+              <div className={style.horarios}>
+                <label>
+                  Segundo horario de cierre
                   <input
                     className={style.input}
                     type="time"
@@ -464,12 +450,14 @@ const StoreUpdate = ({ storeId }) => {
                     pattern="(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]"
                   />
                   {errors.horario_de_cierre2 && (
-                    <span className={style.error}>{errors.horario_de_cierre2}</span>
+                    <span className={style.error}>
+                      {errors.horario_de_cierre2}
+                    </span>
                   )}
-                  </label>
-                </div>
-              </>
-            )}
+                </label>
+              </div>
+            </>
+          )}
 
           <div className={style.dias}>
             <label>
@@ -541,91 +529,82 @@ const StoreUpdate = ({ storeId }) => {
             </div>
           )}
 
-          <div className={style.part1}>
-            <label>
-              Facebook
-              <input
-                type="checkbox"
-                checked={showFacebookInput}
-                onChange={() => handleCheckboxChange("facebook")}
-              />
-            </label>
+          <div className={style.cortado}>
+            <input
+              type="checkbox"
+              checked={showFacebookInput}
+              onChange={() => handleCheckboxChange("facebook")}
+            />
+            <p>Facebook</p>
           </div>
 
           {showFacebookInput && (
-            <div className={style.part1}>
-              <label>
-                Facebook URL
-                <input
-                  type="text"
-                  name="facebook"
-                  value={storeData.facebook}
-                  onChange={handleChange}
-                  placeholder="Ej: https://www.facebook.com/tu_pagina"
-                />
-                {errors.facebook && (
-                  <span className={style.error}>{errors.facebook}</span>
-                )}
-              </label>
-            </div>
+            <label>
+              Facebook URL
+              <input
+                type="text"
+                name="facebook"
+                value={storeData.facebook}
+                onChange={handleChange}
+                placeholder="Ej: https://www.facebook.com/tu_pagina"
+                className={style.input}
+              />
+              {errors.facebook && (
+                <span className={style.error}>{errors.facebook}</span>
+              )}
+            </label>
           )}
 
-          <div className={style.part1}>
-            <label>
-              Instagram
-              <input
-                type="checkbox"
-                checked={showInstagramInput}
-                onChange={() => handleCheckboxChange("instagram")}
-              />
-            </label>
+          <div className={style.cortado}>
+            <input
+              type="checkbox"
+              checked={showInstagramInput}
+              onChange={() => handleCheckboxChange("instagram")}
+            />
+            <p>Instagram</p>
           </div>
 
           {showInstagramInput && (
-            <div className={style.part1}>
-              <label>
-                Instagram URL
-                <input
-                  type="text"
-                  name="instagram"
-                  value={storeData.instagram}
-                  onChange={handleChange}
-                  placeholder="Ej: https://www.instagram.com/tu_cuenta"
-                />
-                {errors.instagram && (
-                  <span className={style.error}>{errors.instagram}</span>
-                )}
-              </label>
-            </div>
+            <label>
+              Instagram URL
+              <input
+                type="text"
+                name="instagram"
+                value={storeData.instagram}
+                onChange={handleChange}
+                placeholder="Ej: https://www.instagram.com/tu_cuenta"
+                className={style.input}
+              />
+              {errors.instagram && (
+                <span className={style.error}>{errors.instagram}</span>
+              )}
+            </label>
           )}
 
-          <div className={style.part1}>
-            <label>
-              Whatsapp
-              <input
-                type="checkbox"
-                checked={showWhatsappInput}
-                onChange={() => handleCheckboxChange("whatsapp")}
-              />
-            </label>
+          <div className={style.cortado}>
+            <input
+              type="checkbox"
+              checked={showWhatsappInput}
+              onChange={() => handleCheckboxChange("whatsapp")}
+            />
+            <p>Whatsapp</p>
           </div>
 
           {showWhatsappInput && (
-            <div className={style.part1}>
-              <label>
-                Ingrese su numero de telefono sin 0 ni 15
-                <input
-                  type="text"
-                  name="whatsapp"
-                  value={storeData.whatsapp}
-                  onChange={handleChange}
-                  placeholder="Ej: 3414875921"
-                />
-                {errors.whatsapp && (
-                  <span className={style.error}>{errors.whatsapp}</span>
-                )}
-              </label>
-            </div>
+            <label>
+              Ingrese su numero de telefono sin 0 ni 15
+              <input
+                type="text"
+                name="whatsapp"
+                value={storeData.whatsapp}
+                onChange={handleChange}
+                placeholder="Ej: 3414875921"
+                className={style.input}
+              />
+              {errors.whatsapp && (
+                <span className={style.error}>{errors.whatsapp}</span>
+              )}
+            </label>
           )}
 
           <div className={style.foto}>

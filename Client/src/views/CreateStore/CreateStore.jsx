@@ -392,7 +392,7 @@ const CreateStore = ({ userData }) => {
             </div>
 
             <div className={style.pisoDto}>
-              <p>Horario cortado?</p>
+              <p>¿Tiene horario cortado?</p>
               <input
                 className={style.inputCheck}
                 type="checkbox"

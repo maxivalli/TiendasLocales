@@ -59,7 +59,9 @@ const Dashboard = () => {
         </div>
 
         <div className={style.stores}>
+
           {filterStores.map((store, index) => (
+
             <div key={index} className={style.storeCard}>
               <div className={style.avatar}>
                 <h2>{store.nombre}</h2>
@@ -86,6 +88,7 @@ const Dashboard = () => {
               </div>
             </div>
           ))}
+          
         </div>
       </div>
     </>

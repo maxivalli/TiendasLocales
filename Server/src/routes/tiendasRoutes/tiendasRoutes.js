@@ -41,7 +41,9 @@ router.delete("/deleteStore/:storeId", async (req, res) => {
       return res.status(404).json("Store not found");
     }
   } catch (error) {
-    return res.status(500).json({ error: "There was an error deleting the store" });
+    return res
+      .status(500)
+      .json({ error: "There was an error deleting the store" });
   }
 });
 

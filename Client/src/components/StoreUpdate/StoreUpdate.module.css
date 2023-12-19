@@ -1,140 +1,108 @@
 .container {
-    display: grid;
-    width: 340px;
-    height: auto;
-    justify-content: center;
-    justify-self: center;
+  display: grid;
+  width: 340px;
+  height: auto;
+  justify-content: center;
+  justify-self: center;
+  text-align: left;
+  border-radius: 10px;
+}
+
+.container h3 {
+  margin-top: 60px;
+  text-align: center;
+  align-self: center;
+  color: gray;
+}
+
+.create select {
+  height: 35px;
+  border-radius: 5px;
+  font-size: 12px;
+  margin-bottom: 20px;
+  outline: none;
+}
+
+.create label {
+  display: grid;
+  margin-left: 30px;
+  margin-right: 30px;
+  width: auto;
+  font-size: 12px;
+  color: black;
+}
+
+.input {
+  margin-bottom: 20px;
+  min-width: 235px;
+  height: 30px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: none;
+  align-self: center;
+  padding-left: 10px;
+  outline: none;
+}
+
+.cortado {
+  display: flex;
+  margin-left: 30px;
+  font-size: 12px;
+  color: black;
+}
+
+.button {
+  background-color: red;
+  width: 90px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  margin: 15px;
+  box-shadow: 0px 5px 10px rgba(125, 125, 125, 0.3);
+  font-size: 14px;
+  justify-self: center;
+}
+
+.imagePreview {
+  display: grid;
+}
+
+.imagePreview button {
+  width: 20px;
+  height: 20px;
+  border: none;
+  justify-self: center;
+  background-color: gray;
+  padding: 0;
+  margin-top: 5px;
+  border-radius: 2px;
+}
+
+.imgUser {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  justify-self: center;
+}
+
+.error {
+  display: grid;
+  font-size: 12px;
+  color: red;
+  margin-top: -15px;
+}
+
+@media (max-width: 768px) {
+  .create {
+    grid-template-columns: 1fr;
+  }
+
+  .create option {
     text-align: left;
-    border-radius: 10px;
   }
-  
-  .container h3 {
-    margin-top: 60px;
-    text-align: center;
-    align-self: center;
-    color: gray;
+}
+@keyframes l24 {
+  100% {
+    transform: rotate(1turn);
   }
-
-  .container h4 {
-    text-align: center;
-    align-self: center;
-    color: gray;
-  }
-
-  .container h6 {
-    border: 2px solid rgba(128, 128, 128, 0.3);
-    color: gray;
-    text-align: center;
-    padding-top: 17px;
-    height: 30px;
-    margin: 0;
-    border-radius: 5px;
-  }
-  
-  .create select {
-    display: grid;
-    width: 243px;
-    height: 31px;
-    margin-left: 30px;
-    border: none;
-    border-radius: 5px;
-    font-size: 12px;
-    color: gray;
-    background-color: white;
-    margin-bottom: 20px;
-    box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.2);
-    outline: none;
-  }
-  
-  .create label {
-    display: grid;
-    margin-left: 30px;
-    margin-right: 30px;
-    width: auto;
-    font-size: 12px;
-    color: grey;
-  }
-  
-  .input {
-    margin-bottom: 20px;
-    min-width: 235px;
-    height: 30px;
-    font-size: 14px;
-    border-radius: 5px;
-    border: none;
-    align-self: center;
-    padding-left: 10px;
-    box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.2);
-    outline: none;
-  }
-  
-  .inputCheck {
-    justify-self: left;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .button {
-    background-color: red;
-    width: 90px;
-    height: 40px;
-    border: none;
-    border-radius: 5px;
-    margin: 15px;
-    box-shadow: 0px 5px 10px rgba(125, 125, 125, 0.3);
-    font-size: 14px;
-    justify-self: center;
-  }
-  
-  .container p:hover {
-    background-color: #1a535c;
-    color: whitesmoke;
-  }
-
-  .imagePreview {
-    display: grid;
-  }
-
-  .imagePreview button {
-    width: 20px;
-    height: 20px;
-    border: none;
-    justify-self: center;
-    background-color: gray;
-    padding: 0;
-    margin-top: 5px;
-    border-radius: 2px;
-  }
-
-  .imgUser {
-    width: 60px;
-    height: 60px;
-    border-radius: 10px;
-    justify-self: center;
-  }
-  
-  .error {
-    display: grid;
-    font-size: 12px;
-    color: red;
-    margin-top: -15px;
-  }
-  
-  @media (max-width: 768px) {
-    .create {
-      grid-template-columns: 1fr;
-    }
-  
-    .create select {
-      width: 250px;
-    }
-  
-    .create option {
-      text-align: left;
-    }
-  }
-  @keyframes l24 {
-    100% {
-      transform: rotate(1turn);
-    }
-  }
+}

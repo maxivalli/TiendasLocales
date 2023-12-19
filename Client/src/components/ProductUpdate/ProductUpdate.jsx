@@ -153,6 +153,7 @@ const ProductUpdate = ({ id }) => {
           </div>
 
           <div className={style.part2}>
+            
           <div className={style.stock}>
             <label>
               Stock

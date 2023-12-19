@@ -24,11 +24,11 @@ exports.createOrder = async (paymentData) => {
                 description: paymentData.description,
             }],
             back_urls: {  // Corrected property name to 'back_urls'
-                failure: "http://localhost:5173/#/account",
-                pending: "http://localhost:5173/#/account",
-                success: "http://localhost:5173/#/account"
+                failure: "https://tiendaslocales.com.ar/#/account",
+                pending: "https://tiendaslocales.com.ar/#/account",
+                success: "https://tiendaslocales.com.ar/#/account"
             },
-            notification_url: "https://2eaf-201-190-251-186.ngrok-free.app/tiendas/webhook"
+            notification_url: "https://tiendaslocales-production.up.railway.app/tiendas/webhook"
         }
 
         const response = await mercadopago.preferences.create(preference);
@@ -114,38 +114,37 @@ exports.pedidosCompras = async (id) => {
 const secretKey = CRYPTO_KEY;
 
 exports.accT = async (code, state) => {
-    try {
-      const response = await fetch('https://api.mercadopago.com/oauth/token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          client_id: '6356168129471214',
-          client_secret: 'dbj3rL8bNBQ6UOzxaI4nOEjTcC22yAMa',
-          code: code,
-          grant_type: 'authorization_code',
-          redirect_uri: 'https://2eaf-201-190-251-186.ngrok-free.app/tiendas/redirectUrl',
-          test_token: true,
-        }),
-      });
-  
-      const data = await response.json();
-      const accessToken = data.access_token;
+  try {
+    const response = await fetch('https://api.mercadopago.com/oauth/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        client_id: '6356168129471214',
+        client_secret: 'dbj3rL8bNBQ6UOzxaI4nOEjTcC22yAMa',
+        code: code,
+        grant_type: 'authorization_code',
+        redirect_uri: 'https://tiendaslocales-production.up.railway.app/tiendas/redirectUrl',
+      }),
+    });
 
-      const encryptedData = CryptoJS.AES.encrypt(accessToken, secretKey).toString();
+    const data = await response.json();
+    const accessToken = data.access_token;
+    console.log(1)
+    const encryptedData = CryptoJS.AES.encrypt(accessToken, secretKey).toString();
+    console.log("enc", encryptedData)
+    const user = await User.findOne({
+      where: {
+        id: state,
+      },
+    });
+    console.log("user",user)
+    user.accT = encryptedData;
+    await user.save();
 
-      const user = await User.findOne({
-        where: {
-          id: state,
-        },
-      });
-  
-      user.accT = encryptedData;
-      await user.save();
-  
-      return true
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
+    return true
+  } catch (error) {
+    throw new Error(error);
+  }
+};

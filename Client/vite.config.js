@@ -4,9 +4,6 @@ import { VitePWA } from "vite-plugin-pwa";
 
 const manifestForPlugIn = {
   registerType: "prompt",
-  devOptions: {
-    enabled: true,
-  },
   workbox: {
     runtimeCaching: [
       {
