@@ -49,6 +49,7 @@ const Messages = () => {
   }, [navigate]);
 
   useEffect(() => {
+    
     if ("Notification" in window) {
       if (
         Notification.permission !== "granted" &&

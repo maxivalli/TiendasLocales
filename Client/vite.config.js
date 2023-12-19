@@ -4,6 +4,9 @@ import { VitePWA } from "vite-plugin-pwa";
 
 const manifestForPlugIn = {
   registerType: "prompt",
+  devOptions: {
+    enabled: true,
+  },
   workbox: {
     runtimeCaching: [
       {
@@ -13,7 +16,7 @@ const manifestForPlugIn = {
           cacheName: "all-cache",
           expiration: {
             maxEntries: 40,
-            maxAgeSeconds: 60 * 60 * 24 * 1
+            maxAgeSeconds: 60 * 60 * 24 * 1,
           },
           cacheableResponse: {
             statuses: [0, 200],
