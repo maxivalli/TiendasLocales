@@ -24,7 +24,12 @@ import Faq from "./views/FAQ/Faq";
 import Dashboard from "./views/Dashboard/Dashboard";
 import "./App.css";
 import UbiForm from "./components/UbiForm/UbiForm";
-import { getAllPosts, getAllStores, getUserStore, saveUserData } from "./redux/actions";
+import {
+  getAllPosts,
+  getAllStores,
+  getUserStore,
+  saveUserData,
+} from "./redux/actions";
 import { useDispatch } from "react-redux";
 import AddProduct from "./views/AddProduct/AddProduct";
 
@@ -115,9 +120,9 @@ function App() {
   const setAuth = (status, user) => {
     setIsAuthenticated(status);
     setUserData(user);
-    dispatch(saveUserData(user))
-    dispatch(getUserStore(user?.id))
-    dispatch(getAllPosts())
+    dispatch(saveUserData(user));
+    dispatch(getUserStore(user?.id));
+    dispatch(getAllPosts());
   };
 
   useEffect(() => {
@@ -152,20 +157,22 @@ function App() {
                   vendedor: userDataResponse.data.vendedor,
                   accT: userDataResponse.data.accT,
                 });
-                dispatch(saveUserData({
-                  email: userDataResponse.data.email,
-                  id: userDataResponse.data.id,
-                  username: userDataResponse.data.username,
-                  image: userDataResponse.data.image,
-                  direccion: userDataResponse.data.direccion,
-                  rol: userDataResponse.data.rol,
-                  averageRating: userDataResponse.data.averageRating,
-                  tiendas: userDataResponse.data.tiendas,
-                  vendedor: userDataResponse.data.vendedor,
-                  accT: userDataResponse.data.accT,
-                  }))
-                  dispatch(getUserStore(userDataResponse?.data.id))
-                  dispatch(getAllPosts())
+                dispatch(
+                  saveUserData({
+                    email: userDataResponse.data.email,
+                    id: userDataResponse.data.id,
+                    username: userDataResponse.data.username,
+                    image: userDataResponse.data.image,
+                    direccion: userDataResponse.data.direccion,
+                    rol: userDataResponse.data.rol,
+                    averageRating: userDataResponse.data.averageRating,
+                    tiendas: userDataResponse.data.tiendas,
+                    vendedor: userDataResponse.data.vendedor,
+                    accT: userDataResponse.data.accT,
+                  })
+                );
+                dispatch(getUserStore(userDataResponse?.data.id));
+                dispatch(getAllPosts());
               })
               .catch((userDataError) => {
                 console.error(
@@ -197,7 +204,7 @@ function App() {
   useEffect(() => {
     if (isAuthenticated) {
       //socket = io("https://tiendaslocales-production.up.railway.app/");
-      socket = io("http://localhost:3001/")
+      socket = io("http://localhost:3001/");
       setShouldConnectSocket(true);
     }
   }, [isAuthenticated]);
@@ -208,64 +215,66 @@ function App() {
     }
   }, [shouldConnectSocket, userId]);
 
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker
-        .register("/sw.js")
-        .then((registration) => {
-          console.log("Service Worker registrado con éxito: ", registration);
-        })
-        .catch((err) => {
-          console.error("Error al registrar el Service Worker: ", err);
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("/sw.js")
+          .then((registration) => {
+            console.log("Service Worker registrado con éxito: ", registration);
+          })
+          .catch((err) => {
+            console.error("Error al registrar el Service Worker: ", err);
+          });
+      });
+
+      window.addEventListener("offline", () => {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 10000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
         });
-    });
 
-    window.addEventListener("offline", () => {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 10000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener("mouseleave", Swal.resumeTimer);
-        },
+        Toast.fire({
+          icon: "warning",
+          title: "Estás fuera de línea, revisa tu conexión.",
+        });
       });
 
-      Toast.fire({
-        icon: "warning",
-        title: "Estás fuera de línea, revisa tu conexión.",
-      });
-    });
+      window.addEventListener("online", () => {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
 
-    window.addEventListener("online", () => {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener("mouseleave", Swal.resumeTimer);
-        },
+        Toast.fire({
+          icon: "success",
+          title: "¡Estás en línea nuevamente!",
+        });
       });
-
-      Toast.fire({
-        icon: "success",
-        title: "¡Estás en línea nuevamente!",
-      });
-    });
-  }
+    }
+  }, []);
 
   return (
     <>
       {isAuthenticated || isAuthenticatedAuth0 ? (
-      <Navbar
-        isAuthenticated={isAuthenticated}
-        setAuth={setAuth}
-        userData={userData}
-      />
-    ) : null}
+        <Navbar
+          isAuthenticated={isAuthenticated}
+          setAuth={setAuth}
+          userData={userData}
+        />
+      ) : null}
       <Routes>
         <Route
           path="/"

@@ -18,7 +18,6 @@ const MyStore = () => {
   const allPosts = useSelector((state) => state.allPosts);
   const selectedStore = stores.find((store) => store.id == storeId);
 
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -54,7 +53,23 @@ const MyStore = () => {
 
           <div className={style.info}>
             <h2>{selectedStore.nombre}</h2>
-            <p>{isStoreOpen(selectedStore?.dias, selectedStore?.horarios) ? 'Abierto' : 'Cerrado'}</p>
+            <p>
+              {" "}
+              <span
+                style={{
+                  color: isStoreOpen(
+                    selectedStore?.dias,
+                    selectedStore?.horarios
+                  )
+                    ? "cornflowerblue"
+                    : "red",
+                }}
+              >
+                {isStoreOpen(selectedStore?.dias, selectedStore?.horarios)
+                  ? "✅ Abierto"
+                  : "❗️ Cerrado"}
+              </span>
+            </p>
             <p>
               📍 {selectedStore.direccion.calle}{" "}
               {selectedStore.direccion.numero} (piso:{" "}
@@ -62,7 +77,10 @@ const MyStore = () => {
               {selectedStore.direccion.depto})
             </p>
             <p>📆 {selectedStore.dias}</p>
-            <p>⏰ {selectedStore.horarios.horario_de_apertura}hs a {selectedStore.horarios.horario_de_cierre}hs</p>
+            <p>
+              ⏰ {selectedStore.horarios.horario_de_apertura}hs a{" "}
+              {selectedStore.horarios.horario_de_cierre}hs
+            </p>
             <p>{selectedStore.categoria}</p>
           </div>
 

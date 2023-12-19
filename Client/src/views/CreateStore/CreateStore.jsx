@@ -424,7 +424,7 @@ const CreateStore = ({ userData }) => {
             </div>
 
             <div className={style.dias}>
-              <p>Día a excluir:</p>
+              <p>Día a excluir: (Ej: De lunes a viernes, excepto el jueves)</p>
               <select
                 name="diaExcluido"
                 value={formData.diaExcluido}
@@ -516,7 +516,7 @@ const CreateStore = ({ userData }) => {
                   name="whatsapp"
                   value={formData.whatsapp}
                   onChange={handleChange}
-                  placeholder="Ej: 3414875921"
+                  placeholder="Ej: 3408612345"
                 />
                 {errors.whatsapp && (
                   <span className={style.error}>{errors.whatsapp}</span>
