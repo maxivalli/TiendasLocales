@@ -53,7 +53,23 @@ const Store = () => {
 
           <div className={style.info}>
             <h2>{selectedStore.nombre}</h2>
-            <p>{isStoreOpen(selectedStore?.dias, selectedStore?.horarios) ? 'Abierto' : 'Cerrado'}</p>
+            <p>
+              {" "}
+              <span
+                style={{
+                  color: isStoreOpen(
+                    selectedStore?.dias,
+                    selectedStore?.horarios
+                  )
+                    ? "cornflowerblue"
+                    : "red",
+                }}
+              >
+                {isStoreOpen(selectedStore?.dias, selectedStore?.horarios)
+                  ? "✅ Abierto"
+                  : "❗️ Cerrado"}
+              </span>
+            </p>
             <p>
               📍 {selectedStore.direccion.calle}{" "}
               {selectedStore.direccion.numero} (piso:{" "}
@@ -64,6 +80,7 @@ const Store = () => {
             <p>
               ⏰ {selectedStore.horarios.horario_de_apertura}hs a{" "}
               {selectedStore.horarios.horario_de_cierre}hs
+
               {selectedStore.horarios.horario_de_apertura2 &&
                 selectedStore.horarios.horario_de_cierre2 && (
                   <>

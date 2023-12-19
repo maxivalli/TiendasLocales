@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { addFavorite, getFavorites, removeFavorite } from "../../redux/actions";
 import { socket } from "../../App";
 
-
 import style from "./CardsStore.module.css";
 import isStoreOpen from "../isStoreOpen/isStoreOpen";
 
@@ -15,25 +14,29 @@ const CardsStore = ({
   horarios,
   calificacion,
   categoria,
-  dias
+  dias,
 }) => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userData);
   const favorites = useSelector((state) => state.favorites);
   const userId = userData?.id;
   const storeId = id;
-  const linkName = nombre.replace(/\s/g, '-');
+  const linkName = nombre.replace(/\s/g, "-");
 
-  const isStoreFavorite = favorites && favorites.some((favorite) => favorite.storeId === storeId && favorite.postId === null);
+  const isStoreFavorite =
+    favorites &&
+    favorites.some(
+      (favorite) => favorite.storeId === storeId && favorite.postId === null
+    );
   const [isFavorite, setIsFavorite] = useState(isStoreFavorite);
 
   const toggleFavorite = () => {
-    const addText = `¡Se ha agregado "${nombre}" a favoritos!`
+    const addText = `¡Se ha agregado "${nombre}" a favoritos!`;
     const addData = { userId, storeId, addText, image };
     if (isFavorite) {
       setIsFavorite(false);
       dispatch(removeFavorite(userId, storeId));
-     // socket.emit("removeFavorite", data);
+      // socket.emit("removeFavorite", data);
     } else {
       setIsFavorite(true);
       dispatch(addFavorite(userId, storeId));
@@ -42,13 +45,15 @@ const CardsStore = ({
   };
 
   useEffect(() => {
-    const isStoreFavorite = favorites.some((favorite) => favorite.storeId === storeId && favorite.postId === null);
+    const isStoreFavorite = favorites.some(
+      (favorite) => favorite.storeId === storeId && favorite.postId === null
+    );
     setIsFavorite(isStoreFavorite);
   }, [favorites, storeId]);
 
   useEffect(() => {
-    if(userId !== undefined) {
-    dispatch(getFavorites(userId));
+    if (userId !== undefined) {
+      dispatch(getFavorites(userId));
     }
   }, [userId]);
 
@@ -64,7 +69,6 @@ const CardsStore = ({
 
   return (
     <div className={style.cardsStore}>
-
       <div className={style.favorite} onClick={toggleFavorite}>
         <img
           src={
@@ -78,14 +82,18 @@ const CardsStore = ({
       </div>
 
       <Link to={`/store/${linkName}`}>
-       
-          <div className={style.imagen}>
-            <img src={image} alt="avatar" />
-          </div>
-
+        <div className={style.imagen}>
+          <img src={image} alt="avatar" />
+        </div>
           <div className={style.texto}>
             <h2>{nombre}</h2>
-            <h4>{isStoreOpen(dias, horarios) ? 'Abierto' : 'Cerrado'}</h4>
+            <h5
+            style={{
+              color: isStoreOpen(dias, horarios) ? "cornflowerblue" : "red",
+            }}
+          >
+            {isStoreOpen(dias, horarios) ? "Abierto ✅" : "Cerrado ❗️"}
+          </h5>
             <h4>📆 {dias}</h4>
             <h4>
               ⏰ {horarios.horario_de_apertura}hs a{" "}
@@ -108,7 +116,6 @@ const CardsStore = ({
             )}
             <h4>{categoria}</h4>
           </div>
-   
       </Link>
     </div>
   );
