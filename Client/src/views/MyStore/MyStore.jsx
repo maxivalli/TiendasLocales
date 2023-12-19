@@ -49,6 +49,9 @@ const MyStore = () => {
         <div className={style.store}>
           <div className={style.avatar}>
             <img src={selectedStore.image} alt="avatar" />
+            <div className={style.info2}>
+              <h3>⭐️⭐️⭐️⭐️</h3>
+            </div>
           </div>
 
           <div className={style.info}>
@@ -90,10 +93,6 @@ const MyStore = () => {
                 )}
             </p>
             <p>{selectedStore.categoria}</p>
-          </div>
-
-          <div className={style.info2}>
-            <h3>⭐️⭐️⭐️⭐️</h3>
           </div>
         </div>
         <Link to="/addproduct">
