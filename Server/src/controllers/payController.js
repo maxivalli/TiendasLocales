@@ -133,7 +133,7 @@ exports.accT = async (code, state) => {
       const data = await response.json();
       const accessToken = data.access_token;
 
-      const encryptedData = CryptoJS.AES.encrypt(accessToken, secretKey).toString();
+      const encryptedData = CryptoJS.AES.encrypt(accessToken, secretKey).toString(CryptoJS.enc.Hex);
 
       const user = await User.findOne({
         where: {
