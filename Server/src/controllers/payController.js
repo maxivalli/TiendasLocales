@@ -113,7 +113,7 @@ exports.pedidosCompras = async (id) => {
 }
 const secretKey = CRYPTO_KEY;
 
-exports.accT = async (code, state) => {
+exports.accT = async (allData) => {
     try {
       const response = await fetch('https://api.mercadopago.com/oauth/token', {
         method: 'POST',
@@ -123,7 +123,7 @@ exports.accT = async (code, state) => {
         body: JSON.stringify({
           client_id: '6356168129471214',
           client_secret: 'dbj3rL8bNBQ6UOzxaI4nOEjTcC22yAMa',
-          code: code,
+          code: allData.code,
           grant_type: 'authorization_code',
           redirect_uri: 'https://tiendaslocales-production.up.railway.app/tiendas/redirectUrl',
           test_token: true,
@@ -132,12 +132,12 @@ exports.accT = async (code, state) => {
   
       const data = await response.json();
       const accessToken = data.access_token;
-
+      console.log(secretKey);
       const encryptedData = CryptoJS.AES.encrypt(accessToken, secretKey).toString(CryptoJS.enc.Hex);
-
+      console.log(encryptedData);
       const user = await User.findOne({
         where: {
-          id: state,
+          id: allData.state,
         },
       });
   

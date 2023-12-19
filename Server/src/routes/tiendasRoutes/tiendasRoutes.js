@@ -164,19 +164,15 @@ router.get("/pedidosCompras", async (req, res) => {
 
 router.get("/redirectUrl", async (req, res) => {
   const { code, state } = req.query;
-
+  const allData = {
+    code: code,
+    state: state
+  }
   try {
-    // que aca reciba el code, genere el acces token y te lleve a more de tiendas locales.
-    // que pregunte en un boton donde dice espera si el usuario tiene access token, si no lo tiene que le aparezca el boton que lo lleva al link, y si lo tiene que muestre 1/2
-    // Que a donde dice en espera diga 0/2 si no se hizo el acces token y 2/2 si se hizo el token y se pago a la empresa.
-    // que lo redirija al usuario a more ahora mientras procesa el token
-    const response = await payController.accT(code, state);
+    console.log(allData)
+    const response = await payController.accT(allData);
     if (response) {
-      return res
-        .status(200)
-        .json(
-          "Token generado correctamente! Vuelve al sitio para continuar con tu proceso de aprobacion."
-        );
+      return res.status(200).json("Token generado correctamente! Vuelve al sitio para continuar con tu proceso de aprobacion.");
     }
   } catch (error) {
     return res.status(400).json(error.message);
