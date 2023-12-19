@@ -1,15 +1,15 @@
 const { User, Compra, Post } = require("../DB_config");
 require("dotenv").config();
-const { ACCESS_TOKEN, CLIENT_ID, CLIENT_SECRET } = process.env;
+const { ACCESS_TOKEN, CLIENT_ID, CLIENT_SECRET, CRYPTO_KEY } = process.env;
 const mercadopago = require("mercadopago");
 const axios = require("axios");
 
 
 exports.createOrder = async (paymentData) => {
     try{
-      
+      const decryptedData = CryptoJS.AES.decrypt(paymentData.accT, secretKey).toString(CryptoJS.enc.Utf8);
       mercadopago.configure({
-        access_token:  ACCESS_TOKEN
+        access_token: decryptedData
       });
 
         let preference = {
@@ -27,7 +27,7 @@ exports.createOrder = async (paymentData) => {
                 pending: "http://localhost:5173/#/account",
                 success: "http://localhost:5173/#/account"
             },
-            notification_url: "https://9c20-201-190-251-186.ngrok-free.app/tiendas/webhook"
+            notification_url: "https://9c6a-201-190-251-186.ngrok-free.app/tiendas/webhook"
         }
 
         const response = await mercadopago.preferences.create(preference);
@@ -42,7 +42,6 @@ exports.createOrder = async (paymentData) => {
     }
 } 
 exports.webhook = async (allData) => {
-console.log(allData)
       try {
         if (allData.data.type === "payment") {
 
@@ -111,6 +110,8 @@ exports.pedidosCompras = async (id) => {
        throw new Error(error)
     }
 }
+const secretKey = CRYPTO_KEY;
+
 exports.accT = async (code, state) => {
     try {
       const response = await fetch('https://api.mercadopago.com/oauth/token', {
@@ -123,14 +124,16 @@ exports.accT = async (code, state) => {
           client_secret: 'dbj3rL8bNBQ6UOzxaI4nOEjTcC22yAMa',
           code: code,
           grant_type: 'authorization_code',
-          redirect_uri: 'https://9c20-201-190-251-186.ngrok-free.app/tiendas/redirectUrl',
+          redirect_uri: 'https://9c6a-201-190-251-186.ngrok-free.app/tiendas/redirectUrl',
           test_token: true,
         }),
       });
   
       const data = await response.json();
       const accessToken = data.access_token;
-  
+
+      const encryptedData = CryptoJS.AES.encrypt(accessToken, secretKey).toString();
+
       const user = await User.findOne({
         where: {
           id: state,
