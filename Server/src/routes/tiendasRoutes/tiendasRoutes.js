@@ -180,7 +180,7 @@ router.get("/redirectUrl", async (req, res) => {
   try {
     const response = await payController.accT(code, state);
     if (response) {
-      return res.status(200).json("Token generado correctamente! Vuelve al sitio para continuar con tu proceso de aprobacion.");
+      return res.status(200).json("Token generado correctamente! Puedes cerrar esta pestaña");
     }
   } catch (error) {
     return res.status(400).json(error.message);
