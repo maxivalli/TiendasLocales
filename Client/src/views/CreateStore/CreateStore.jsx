@@ -31,10 +31,10 @@ const CreateStore = ({ userData }) => {
     "🪑 Muebles y hogar",
     "🍰 Panaderia y reposteria",
     "🍕 Rotisería y restaurantes",
-    "🛍️ Regalería",
+    "🛍️ Regalerías",
     "👕 Ropa e indumentaría",
     "🚗 Vehículos",
-    "🛒 Sin categoría",
+    "🛒 Otra categoría",
   ];
 
   const diasSemana = [
@@ -217,7 +217,7 @@ const CreateStore = ({ userData }) => {
         Swal.fire({
           icon: "success",
           title: `Tienda en Proceso de Aprobación!`,
-          text: "Debes esperar que tu tienda sea aprobada, nosotros te avisaremos por mail!",
+          text: "¡Debes esperar que tu tienda sea aprobada, nosotros te avisaremos por mail!",
         });
       } else {
         console.log("Hubo un error al crear la tienda.");

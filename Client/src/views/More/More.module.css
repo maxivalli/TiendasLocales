@@ -7,6 +7,22 @@
   margin-bottom: 50px;
 }
 
+.cenC {
+  display: grid;
+  width: 350px;
+  height: 100px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgb(128, 128, 128, 0.2);
+  align-self: flex-end;
+}
+
+.cenC p {
+  font-size: 14px;
+  margin: 0;
+  align-self: center;
+}
+
 .button {
   background-color: transparent;
   border: none;
@@ -79,5 +95,4 @@
   .bottom {
     grid-template-columns: 1fr;
   }
-
 }

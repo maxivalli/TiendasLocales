@@ -6,7 +6,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { socket } from "../../App";
 
-
 const Dashboard = () => {
   const dispatch = useDispatch();
   const stores = useSelector((state) => state.allStores);
@@ -37,7 +36,7 @@ const Dashboard = () => {
         setStores((prevStores) =>
           prevStores.filter((store) => store.id !== id)
         );
-        socket?.emit("approvedStore", storeData)
+        socket?.emit("approvedStore", storeData);
         Swal.fire({
           icon: "success",
           title: `Tienda Aprobada!`,
@@ -52,33 +51,31 @@ const Dashboard = () => {
   return (
     <>
       <div className={style.home}>
-        <div className={style.title}>
+        <div className={style.head}>
           <h2>Panel de control</h2>
           <p>Tiendas en espera de aprobacion</p>
         </div>
 
         <div className={style.stores}>
-
           {filterStores.map((store, index) => (
-
             <div key={index} className={style.storeCard}>
-              <div className={style.avatar}>
+              <div className={style.title}>
                 <h2>{store.nombre}</h2>
-                <img
-                  src={store.image}
-                  className={style.image}
-                  alt={store.nombre}
-                />
               </div>
+
               <div className={style.info}>
-                <p>{store.email}</p>
-                <p>
-              📍 {store.direccion.calle}{" "}
-              {store.direccion.numero} (piso:{" "}
-              {store.direccion.piso} local:{" "}
-              {store.direccion.depto})
-            </p>
-                <p>{store.categoria}</p>
+                <div className={style.avatar}>
+                  <img src={store.image} alt={store.nombre} />
+                </div>
+
+                <div className={style.text}>
+                  <p>📬 {store.email}</p>
+                  <p>
+                    📍 {store.direccion.calle} {store.direccion.numero} (piso:{" "}
+                    {store.direccion.piso} local: {store.direccion.depto})
+                  </p>
+                  <p>{store.categoria}</p>
+                </div>
               </div>
               <div className={style.button}>
                 <button onClick={() => handleHabilitacion(store.id)}>
@@ -87,7 +84,6 @@ const Dashboard = () => {
               </div>
             </div>
           ))}
-          
         </div>
       </div>
     </>
