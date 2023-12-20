@@ -39,7 +39,7 @@ const More = () => {
     Swal.fire({
       icon: "success",
       title: "¡Ya tenés tu tienda conectada a MP!",
-      text: "Ve al ícono de más y actualiza la página",
+      text: "Ahora actualiza la página",
     });
   };
 
