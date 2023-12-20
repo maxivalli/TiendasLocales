@@ -95,7 +95,7 @@ const More = () => {
               <div className={style.modal}>
                 <p>
                   Para que tu tienda sea aprobada primero necesitas conectar tu
-                  cuenta de Mercado Pago para poder recibir el dinero.
+                  cuenta de Mercado Pago para poder recibir el dinero de tus ventas.
                 </p>
               </div>
 
@@ -120,9 +120,9 @@ const More = () => {
             <>
             <div className={style.cenC}>
               <p>
-                Para que la tienda sea habilitada deberas pagar<br></br> la
-                cuota al centro comercial,<br></br> alli un empleado aprobara tu
-                cuenta!
+                Para que la tienda sea habilitada deberás pagar<br></br>
+                la suscripción en el centro Centro Comercial,<br></br>
+                allí el personal aprobará tu cuenta.
               </p>
               </div>
               <CardWide
