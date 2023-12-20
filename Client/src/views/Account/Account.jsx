@@ -6,10 +6,12 @@ import CardSquare from "../../components/CardSquare/CardSquare";
 import Filters from '../../components/Filters/Filters'
 import pizza from "../../assets/pizza.jpg";
 import style from "./Account.module.css";
+import axios from "axios";
 
 const Account = ({ setAuth, userData, setUserData }) => {
   const { user, logout } = useAuth0(); // Fix here: destructure 'logout' correctly
   const [showModal, setShowModal] = useState(false);
+  const [comprasData, setCompras ] = useState([])
 
   const openModal = () => {
     setShowModal(true);
@@ -28,6 +30,25 @@ const Account = ({ setAuth, userData, setUserData }) => {
     }));
     setShowModal(false);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/tiendas/comprasRecibidas/${userData.id}`);
+        if (response) {
+          setCompras(response.data);
+          console.log(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+
+
+  // EN comprasData esta toda la info de las compras hechas/
   return (
     <>
       <Filters/>
