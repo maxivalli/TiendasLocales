@@ -35,7 +35,7 @@ const More = () => {
     );
 
     
-    window.location.href = "/";
+    window.location.href = "/#/more";
     Swal.fire({
       icon: "success",
       title: "¡Ya tenés tu tienda conectada a MP!",
