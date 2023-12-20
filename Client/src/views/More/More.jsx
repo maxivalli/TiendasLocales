@@ -5,6 +5,7 @@ import Head from "../../components/Head/Head";
 import style from "./More.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const More = () => {
   const userData = useSelector((state) => state.userData);
@@ -33,12 +34,12 @@ const More = () => {
       `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://tiendaslocales-production.up.railway.app/tiendas/redirectUrl`
     );
 
-    // Redirigir a la página de inicio en la ventana actual
-    window.location.href = "/home";
+    
+    window.location.href = "/";
     Swal.fire({
       icon: "success",
-      title: "Como saber si mi token se genero?",
-      text: "Ve a More, actualiza la pagina y si el boton para concectar Mercado Pago no esta, significa que se genero correctamente!",
+      title: "¡Ya tenés tu tienda conectada a MP!",
+      text: "Ve al ícono de más y actualiza la página",
     });
   };
 
