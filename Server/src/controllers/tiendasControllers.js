@@ -234,7 +234,7 @@ exports.habStore = async (id) => {
         user.vendedor = "vendedor";
         await user.save();
 
-        return true;
+        return store;
       } else if (!store.accT) {
         throw new Error("El usuario no a generado su access token!");
       }

@@ -1,13 +1,13 @@
 
 export default function isStoreOpen(dias, horarios)  {
     const diasSemana = [
-      "domingo",
       "lunes",
       "martes",
       "miercoles",
       "jueves",
       "viernes",
       "sabado",
+      "domingo",
     ];
 
     const now = new Date();
