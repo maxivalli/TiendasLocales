@@ -112,7 +112,7 @@ router.get("/success", async (req, res) => {
 
 router.get("/failed", async (req, res) => {
   try {
-    return res.sebd("Failure");
+    return res.send("Failure");
   } catch (error) {
     return res.status(400).json(error.message);
   }
@@ -151,11 +151,23 @@ router.get("/allCompras", async (req, res) => {
   }
 });
 
-router.get("/pedidosCompras", async (req, res) => {
-  const id = req.body;
+router.get("/pedidosCompras/:id", async (req, res) => {
+  const id = req.params.id;
 
   try {
     const response = await payController.pedidosCompras(id);
+    return res.json(response);
+  } catch (error) {
+    return res.status(400).json(error.message);
+  }
+});
+
+
+router.get("/comprasRecibidas/:id", async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const response = await payController.comprasRecibidas(id);
     return res.json(response);
   } catch (error) {
     return res.status(400).json(error.message);
