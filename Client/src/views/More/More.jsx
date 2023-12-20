@@ -38,7 +38,7 @@ const More = () => {
     Swal.fire({
       icon: "success",
       title: "Como saber si mi token se genero?",
-      text: "Ve a More, refresca la pagina y si el boton para concectar Mercado Pago no esta, significa que se genero correctamente!",
+      text: "Ve a More, actualiza la pagina y si el boton para concectar Mercado Pago no esta, significa que se genero correctamente!",
     });
   };
 
@@ -97,19 +97,19 @@ const More = () => {
                   cuenta de Mercado Pago para poder recibir el dinero.
                 </p>
               </div>
-              <button onClick={handleConnectMP} className={style.button}>
-                <CardWide
-                  textButton={"Conectar MP"}
-                  logo={
-                    <img
-                      width="60"
-                      height="60"
-                      src="https://img.icons8.com/color/96/mercado-pago.png"
-                      alt="mercado-pago"
-                    />
-                  }
-                />
-              </button>
+
+              <CardWide
+                Fn={handleConnectMP}
+                textButton={"Conectar MP"}
+                logo={
+                  <img
+                    width="60"
+                    height="60"
+                    src="https://img.icons8.com/color/96/mercado-pago.png"
+                    alt="mercado-pago"
+                  />
+                }
+              />
             </div>
           </>
         ) : (
@@ -117,11 +117,13 @@ const More = () => {
           userData.vendedor === "noVendedor" &&
           userData.accT && (
             <>
-              <h4>
+            <div className={style.cenC}>
+              <p>
                 Para que la tienda sea habilitada deberas pagar<br></br> la
                 cuota al centro comercial,<br></br> alli un empleado aprobara tu
                 cuenta!
-              </h4>
+              </p>
+              </div>
               <CardWide
                 textButton={"En espera"}
                 logo={

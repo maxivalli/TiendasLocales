@@ -31,10 +31,10 @@ const CreateStore = ({ userData }) => {
     "🪑 Muebles y hogar",
     "🍰 Panaderia y reposteria",
     "🍕 Rotisería y restaurantes",
-    "🛍️ Regalería",
+    "🛍️ Regalerías",
     "👕 Ropa e indumentaría",
     "🚗 Vehículos",
-    "🛒 Sin categoría",
+    "🛒 Otra categoría",
   ];
 
   const diasSemana = [
