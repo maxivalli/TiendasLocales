@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CardsStore from "../../components/CardsStore/CardsStore";
 import style from "./Dashboard.module.css";
 import { getAllStores } from "../../redux/actions";
 import axios from "axios";
@@ -10,8 +9,8 @@ import { socket } from "../../App";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const stores = useSelector((state) => state.allStores);
-  const [filterStores, setStores] = useState([]);
   const storesRef = useRef(stores);
+  const [filterStores, setStores] = useState([]);
 
   useEffect(() => {
     dispatch(getAllStores());
@@ -22,20 +21,18 @@ const Dashboard = () => {
       (store) => store.habilitado === "noHabilitado"
     );
     filtered.map(async (store) => {
-      const response = await axios.get(
-        `/users/anotherUserId?id=${store.userId}`
-      );
+      const response = await axios.get(`/users/anotherUserId?id=${store.userId}`);
       const userData = response.data;
-      if (userData.accT) setStores((prevStores) => [...prevStores, store]);
-    });
-  }, [dispatch, storesRef]);
+      if(userData.accT)
+      setStores((prevStores) => [...prevStores, store]);
+    })
+}, [dispatch, storesRef]);
 
   const handleHabilitacion = async (id) => {
     try {
       const response = await axios.post("/tiendas/habStore", { id: id });
       if (response) {
-        const storeData = response.data;
-        // Actualizar el estado local eliminando la tienda aprobada
+        const storeData = response.data
         setStores((prevStores) =>
           prevStores.filter((store) => store.id !== id)
         );
