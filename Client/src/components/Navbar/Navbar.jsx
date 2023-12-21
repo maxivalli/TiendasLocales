@@ -32,9 +32,10 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
   };
 
   const handleClick = () => {
-    if (location.pathname.startsWith("/messages")) {
-      console.log(location.pathname);
-      window.location.reload();
+    if (location.hash.startsWith("#/messages")) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     }
   };
 

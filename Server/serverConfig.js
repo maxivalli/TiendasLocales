@@ -1,10 +1,24 @@
 const express = require("express");
 const { createServer } = require("node:http");
 const { Server } = require("socket.io");
+
 const { User, Notifications, Tienda } = require("./src/DB_config");
 
 const router = require("./src/routes/routes");
 const { Message } = require("./src/DB_config");
+
+
+
+const admin = require("firebase-admin");
+const serviceAccount = require("./src/keys/tiendaslocales-7bbf8-firebase-adminsdk-m33z6-85cb8f0439.json");
+    
+
+admin.initializeApp({    
+    credential: admin.credential.cert(serviceAccount),
+});
+
+
+
 
 const app = express();
 const httpServer = createServer(app);
@@ -31,8 +45,26 @@ io.on("connection", (socket) => {
   });
 
   socket.on("addFavorite", async (addData) => {
-    const { userId, storeId, addText, image } = addData;
-  
+    const { userId, storeId, addText, image, userData } = addData;
+
+    if(userData?.FCMtoken) {
+    const message = {
+      data: {
+        title: `${userData.username}`,
+        text: addText
+      },
+      token: userData.FCMtoken
+    };
+    
+    admin.messaging().send(message)
+      .then((response) => {
+        console.log('Successfully sent message:', response);
+      })
+      .catch((error) => {
+        console.log('Error sending message:', error);
+      });
+    }
+
     try {
       const existingNotification = await Notifications.findOne({
         where: {
@@ -66,7 +98,25 @@ io.on("connection", (socket) => {
   });
 
   socket.on("addFavoritePost", async (addData) => {
-    const { userId, postId, addText, image } = addData;
+    const { userId, postId, addText, image, userData } = addData;
+
+    if(userData?.FCMtoken) {
+      const message = {
+        data: {
+          title: `${userData?.username}`,
+          text: addText
+        },
+        token: userData?.FCMtoken
+      };
+      
+      admin.messaging().send(message)
+        .then((response) => {
+          console.log('Successfully sent message:', response);
+        })
+        .catch((error) => {
+          console.log('Error sending message:', error);
+        });
+      }
   
     try {
       const existingNotification = await Notifications.findOne({
@@ -100,8 +150,28 @@ io.on("connection", (socket) => {
   });
   
 
-  socket.on("waitingStore", async (storeData) => {
+  socket.on("waitingStore", async (data) => {
+    const { storeData, userData } = data
     const { nombre, image, userId } = storeData
+
+    if(userData?.FCMtoken) {
+    const message = {
+      data: {
+        title: `${userData?.username}`,
+        text: `Su tienda "${nombre}" se encuentra en espera de aprobación`
+      },
+      token: userData?.FCMtoken
+    };
+    
+    admin.messaging().send(message)
+      .then((response) => {
+        console.log('Successfully sent message:', response);
+      })
+      .catch((error) => {
+        console.log('Error sending message:', error);
+      });
+    }
+
     const waiterText = `Su tienda "${nombre}" se encuentra en espera de aprobación`
     try {
       await Notifications.create({
@@ -118,12 +188,34 @@ io.on("connection", (socket) => {
     }
     const user = await User.findByPk(userId);
     const userSocket = user.socketId;
-    const data = { nombre: nombre, image: image }
-    io.to(userSocket).emit("waitingStore", data);
+    const userdata = { nombre: nombre, image: image }
+    io.to(userSocket).emit("waitingStore", userdata);
   });
 
-  socket.on("approvedStore", async (storeData) => {
+  socket.on("approvedStore", async (data) => {
+    const { storeData, userData } = data
     const { nombre, image, userId } = storeData
+
+    if(userData?.FCMtoken) {
+    const message = {
+      data: {
+        title: `${userData?.username}`,
+        text: `Su tienda "${nombre}" fue aprobada!`
+      },
+      token: userData?.FCMtoken
+    };
+    
+    admin.messaging().send(message)
+      .then((response) => {
+        console.log('Successfully sent message:', response);
+      })
+      .catch((error) => {
+        console.log('Error sending message:', error);
+      });
+    }
+
+
+
     const approvedText = `Su tienda "${nombre}" fue aprobada!`
     try {
       await Notifications.create({
@@ -140,14 +232,18 @@ io.on("connection", (socket) => {
     }
     const user = await User.findByPk(userId);
     const userSocket = user.socketId;
-    const data = { nombre: nombre, image: image }
-    io.to(userSocket).emit("approvedStore", data);
+    const userdata = { nombre: nombre, image: image }
+    io.to(userSocket).emit("approvedStore", userdata);
   });
 
 
   socket.on("newMessage", async (messageData) => {
     const { people, lastMessage, sender, senderId } = messageData
     const addressee = people.find((people)=> people.person.username !== sender)
+
+  
+
+
      try {
       // busca el destinatario entre los usuarios
       const user = await User.findOne({
@@ -162,6 +258,7 @@ io.on("connection", (socket) => {
             nombre: addressee.person.username,
           }
         })
+
         // Si es una tienda guarda la noti en la DB y manda el evento
         const userId = store.userId
         const image = store.image
@@ -172,6 +269,8 @@ io.on("connection", (socket) => {
         } else {
          messageNotificationText = `Tu tienda ha recibido un nuevo mensaje de ${sender}`
         }
+
+
         await Notifications.create({
           content: messageNotificationText,
           userId: userId,
@@ -179,6 +278,25 @@ io.on("connection", (socket) => {
         });
         const user = await User.findByPk(userId);
         const userSocket = user.socketId;
+
+if (user.FCMtoken) {
+        const message = {
+          data: {
+            title: store.nombre,
+            text: messageNotificationText
+          },
+          token: user.FCMtoken
+        };
+        
+        admin.messaging().send(message)
+          .then((response) => {
+            console.log('Successfully sent message:', response);
+          })
+          .catch((error) => {
+            console.log('Error sending message:', error);
+          });
+        }
+
         const data = { storeId: storeId, image: image, lastMessage: lastMessage, sender: sender }
         io.to(userSocket).emit("newMessage", data);
       } 
@@ -197,6 +315,26 @@ io.on("connection", (socket) => {
           userId: userId,
           image: image,
         });
+
+        if (user.FCMtoken) {
+          const message = {
+            data: {
+              title: user.username,
+              text: messageNotificationText
+            },
+            token: user.FCMtoken
+          };
+          
+          admin.messaging().send(message)
+            .then((response) => {
+              console.log('Successfully sent message:', response);
+            })
+            .catch((error) => {
+              console.log('Error sending message:', error);
+            });
+          }
+
+
         const userSocket = user?.socketId;
         const data = { nombre: user?.username, image: image, lastMessage: lastMessage, sender: sender }
         io.to(userSocket).emit("newMessage", data);

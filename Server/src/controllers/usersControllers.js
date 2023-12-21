@@ -356,7 +356,7 @@ exports.updateUser = async (id, updatedData) => {
     const user = await User.findByPk(id);
 
     if (!user) {
-      throw new Error("Post not found");
+      throw new Error("User not found");
     }
 
     await user.update(updatedData);

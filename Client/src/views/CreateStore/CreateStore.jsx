@@ -8,9 +8,11 @@ import { uploadFile } from "../../components/Firebase/config";
 import { validateStoreForm } from "./validations";
 import Head from "../../components/Head/Head";
 import { socket } from "../../App";
+import { useSelector } from "react-redux";
 
-const CreateStore = ({ userData }) => {
+const CreateStore = () => {
   const navigate = useNavigate();
+  const userData = useSelector((state) => state.userData)
   const [showFacebookInput, setShowFacebookInput] = useState(false);
   const [showInstagramInput, setShowInstagramInput] = useState(false);
   const [showWhatsappInput, setShowWhatsappInput] = useState(false);
@@ -213,7 +215,8 @@ const CreateStore = ({ userData }) => {
 
       if (response) {
         navigate("/more");
-        socket?.emit("waitingStore", storeData);
+        const data = {storeData, userData}
+        socket?.emit("waitingStore", data);
         Swal.fire({
           icon: "success",
           title: `Tienda en Proceso de Aprobación!`,

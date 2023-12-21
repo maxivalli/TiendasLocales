@@ -23,7 +23,6 @@ exports.createStore = async (storeData) => {
       userId: storeData.userId,
     },
   });
-  console.log(existStoreByUserId);
 
   if (existStoreByName?.length !== 0) {
     throw new Error("Ya existe una tienda con este nombre.");

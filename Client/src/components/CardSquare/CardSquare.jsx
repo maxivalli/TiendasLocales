@@ -36,7 +36,7 @@ const CardSquare = ({
 
   const toggleFavorite = () => {
     const addText = `¡Se ha agregado "${title}" a favoritos!`;
-    const addData = { userId, storeId, addText, image, postId };
+    const addData = { userId, storeId, addText, image, postId, userData };
     if (isFavorite) {
       setIsFavorite(false);
       dispatch(removeFavoritePost(userId, storeId, postId));

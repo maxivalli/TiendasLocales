@@ -32,7 +32,7 @@ const CardsStore = ({
 
   const toggleFavorite = () => {
     const addText = `¡Se ha agregado "${nombre}" a favoritos!`;
-    const addData = { userId, storeId, addText, image };
+    const addData = { userId, storeId, addText, image, userData };
     if (isFavorite) {
       setIsFavorite(false);
       dispatch(removeFavorite(userId, storeId));
