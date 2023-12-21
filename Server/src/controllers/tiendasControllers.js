@@ -223,8 +223,6 @@ exports.habStore = async (id) => {
           id: store.userId,
         },
       });
-
-      if (user.accT) {
         store.habilitado = "habilitado";
         await store.save();
 
@@ -232,9 +230,6 @@ exports.habStore = async (id) => {
         await user.save();
 
         return store;
-      } else if (!store.accT) {
-        throw new Error("El usuario no a generado su access token!");
-      }
     }
   } catch (error) {
     throw error;

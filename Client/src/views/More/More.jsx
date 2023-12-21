@@ -5,7 +5,6 @@ import Head from "../../components/Head/Head";
 import style from "./More.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Swal from "sweetalert2";
 
 const More = () => {
   const userData = useSelector((state) => state.userData);
@@ -27,21 +26,6 @@ const More = () => {
 
     fetchData();
   }, [userData.id]);
-
-  const handleConnectMP = () => {
-    // Abrir enlace de Mercado Pago en una nueva pestaña
-    window.open(
-      `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://tiendaslocales-production.up.railway.app/tiendas/redirectUrl`
-    );
-
-    
-    window.location.href = "/#/more";
-    Swal.fire({
-      icon: "success",
-      title: "¡Ya tenés tu tienda conectada a MP!",
-      text: "Ahora actualiza la página",
-    });
-  };
 
   return (
     <>
@@ -76,47 +60,10 @@ const More = () => {
             }
             link={`/mystore/${storeData.id}`}
           />
-        ) : storeData &&
-          userData.vendedor === "noVendedor" &&
-          !userData.accT ? (
-          <>
-            <CardWide
-              textButton={"En espera"}
-              logo={
-                <img
-                  width="60"
-                  height="60"
-                  src="https://img.icons8.com/color/96/hourglass.png"
-                  alt="hourglass"
-                />
-              }
-            />
-            <div className={style.MP}>
-              <div className={style.modal}>
-                <p>
-                  Para que tu tienda sea aprobada primero necesitas conectar tu
-                  cuenta de Mercado Pago para poder recibir el dinero.
-                </p>
-              </div>
-
-              <CardWide
-                Fn={handleConnectMP}
-                textButton={"Conectar MP"}
-                logo={
-                  <img
-                    width="60"
-                    height="60"
-                    src="https://img.icons8.com/color/96/mercado-pago.png"
-                    alt="mercado-pago"
-                  />
-                }
-              />
-            </div>
-          </>
         ) : (
           storeData &&
           userData.vendedor === "noVendedor" &&
-          userData.accT && (
+          (
             <>
             <div className={style.cenC}>
               <p>

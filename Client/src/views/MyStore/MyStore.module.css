@@ -18,7 +18,22 @@
   display: grid;
   justify-content: center;
 }
+.MP {
+  display: grid;
+  justify-self: left;
+}
 
+.MP button {
+  padding: 0;
+}
+
+.modal {
+  display: grid;
+  width: 300px;
+  justify-self: center;
+  color: initial;
+  font-size: 12px;
+}
 .avatar img {
   width: 150px;
   height: 150px;
