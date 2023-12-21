@@ -100,7 +100,7 @@ export default defineConfig({
 
     VitePWA({
       strategies: "injectManifest",
-      srcDir: "sw",
+      srcDir: "src",
       filename: "firebase-messaging-sw.js",
       workbox: {
         globPatterns: [],
