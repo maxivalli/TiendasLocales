@@ -77,8 +77,6 @@ exports.createStore = async (storeData) => {
       await axios(config);
 
       return true;
-    } else {
-      throw new Error("No se ha podido crear la tienda");
     }
   } catch (error) {
     console.error(error.message);

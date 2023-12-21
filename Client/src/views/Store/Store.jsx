@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import CardSquare from "../../components/CardSquare/CardSquare";
 import Filters from "../../components/Filters/Filters";
 import Head from "../../components/Head/Head";
@@ -8,7 +9,6 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getStorePosts } from "../../redux/actions";
 import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
-import axios from "axios";
 
 const Store = ({ userData }) => {
   const dispatch = useDispatch();
@@ -20,7 +20,38 @@ const Store = ({ userData }) => {
   const storeId = selectedStore?.id;
 
   const [loading, setLoading] = useState(true);
-  const [alreadyReview, setAlReview] = useState(false);
+  const [alreadyReview, setAlredyReview] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+    try {
+      const response = await axios.get(
+        `/reviews/${userData.id}/${selectedStore.userId}`
+      );
+      if (response) {
+        setAlredyReview(true);
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+    fetchData()
+    }, []);
+
+  useEffect(() => {
+    async function getAverageRating() {
+    try {
+      const userId = selectedStore?.userId;
+      console.log(userId);
+      const response = await axios.get(`/reviews/getAverageRating/${userId}`);
+      console.log(response.data, "respuesta");
+    } catch (error) {
+      console.log("error al hacer solicitud get");
+      throw error;
+    }
+  }
+  getAverageRating()
+  }, []);
 
   useEffect(() => {
     dispatch(getStorePosts(storeId))
@@ -31,30 +62,7 @@ const Store = ({ userData }) => {
         console.error("Error fetching store posts:", error);
         setLoading(false);
       });
-
-    const fetchTienda = async () => {
-      const response2 = await axios.get(
-        `/tiendas/getUserStore/${selectedStore.userId}`
-      );
-      if (response2) {
-        selectedStore.averageRating = response2.data.averageRating;
-      }
-      const response = await axios.get(`/reviews/${userData.id}/${selectedStore.userId}`);
-      if (response) {
-          setAlReview(true);
-          console.log("1", response)
-        }
-        const response3 = await axios.get(
-          `/reviews/averageRating/${selectedStore.userId}`
-        );
-        console.log(response3)
-        if (response3) {
-          selectedStore.averageRating = response3.data;
-        }
-    };
-    fetchTienda();
   }, [dispatch, storeId, alreadyReview]);
-
 
   const handleRating = async (value) => {
     try {
@@ -64,12 +72,12 @@ const Store = ({ userData }) => {
         rating: value,
       };
 
-      const newRating = await axios.post("/reviews/", newReview);
+      const newRating = await axios.post("/reviews/postReview", newReview);
 
       if (newRating) {
-        setAlReview(true);
+        setAlredyReview(true);
         const response = await axios.get(
-          `/reviews/averageRating/${selectedStore.userId}`
+          `/reviews/getAverageRating/${selectedStore?.userId}`
         );
 
         if (response) {
