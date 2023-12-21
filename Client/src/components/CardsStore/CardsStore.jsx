@@ -81,7 +81,7 @@ const CardsStore = ({
         />
       </div>
 
-      <Link to={`/store/${linkName}`}>
+      <Link to={`/tienda/${linkName}`}>
         <div className={style.imagen}>
           <img src={image} alt="avatar" />
         </div>

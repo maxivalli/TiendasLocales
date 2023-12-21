@@ -57,7 +57,7 @@ const OptButtons = ({ storeId }) => {
             />
           </button>
 
-          <Link to={"/sales"}>
+          <Link to={"/misventas"}>
             <button className={style.edit}>
               <img
                 width="24"

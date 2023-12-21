@@ -47,7 +47,7 @@ const NavButtons = ({ storeId }) => {
       }
 
       console.log("Chat created successfully");
-      navigate("/messages/user");
+      navigate("/mensajes/usuario");
     } catch (error) {
       console.error("Error creating chat:", error.message);
       throw error;

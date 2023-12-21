@@ -12,11 +12,24 @@ const manifestForPlugIn = {
         options: {
           cacheName: "all-cache",
           expiration: {
-            maxEntries: 40,
-            maxAgeSeconds: 60 * 60 * 24 * 1,
+            maxEntries: 50,
+            maxAgeSeconds: 60 * 60 * 24 * 2,
           },
           cacheableResponse: {
             statuses: [0, 200],
+          },
+        },
+      },
+      {
+        handler: "NetworkOnly",
+        urlPattern: /\/api\/.*\/*.json/,
+        method: "POST",
+        options: {
+          backgroundSync: {
+            name: "myQueueName",
+            options: {
+              maxRetentionTime: 24 * 60,
+            },
           },
         },
       },
