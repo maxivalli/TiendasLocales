@@ -41,16 +41,23 @@ import AddProduct from "./views/AddProduct/AddProduct";
 let socket;
 
 function App() {
-
+  
   if ("serviceWorker" in navigator) {
+    // Registra el Service Worker de Firebase
     navigator.serviceWorker
-        .register("./firebase-messaging-sw.js")
-        .then(function (registration) {
-            console.log("Registration successful, scope is:", registration.scope);
-        })
-        .catch(function (err) {
-            console.log("Service worker registration failed, error:", err);
-        });
+      .register("./firebase-messaging-sw.js", { scope: "./" })
+      .then((registration) => {
+        console.log(
+          "Service Worker de Firebase registrado con éxito:",
+          registration
+        );
+      })
+      .catch((error) => {
+        console.error(
+          "Error al registrar el Service Worker de Firebase:",
+          error
+        );
+      });
   }
 
   const dispatch = useDispatch();
@@ -287,13 +294,13 @@ function App() {
 
   useEffect(() => {
     onMessage(messaging, (message) => {
-      toast(message.data.text)
+      toast(message.data.text);
     });
   }, []);
 
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       {isAuthenticated || isAuthenticatedAuth0 ? (
         <Navbar
           isAuthenticated={isAuthenticated}
