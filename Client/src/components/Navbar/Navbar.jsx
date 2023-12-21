@@ -41,14 +41,14 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
   return (
     <>
       <div className={style.navbar}>
-        <Link to="/home" className={style.toHome}>
+        <Link to="/inicio" className={style.toHome}>
           <div className={style.logo}>
             <img src={Logo} alt="logo" />
           </div>
         </Link>
         <div className={style.search}></div>
         <div className={style.directAccess}>
-          <Link to="/home">
+          <Link to="/inicio">
             <button>
               <img
                 width="28"
@@ -58,7 +58,7 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
               />
             </button>
           </Link>
-          <Link to="/favorites">
+          <Link to="/favoritos">
             <button>
               <img
                 width="28"
@@ -78,7 +78,7 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
               />
             </button>
           ) : (
-            <Link to="/messages/user">
+            <Link to="/mensajes/usuario">
               <button>
                 <img
                   width="32"
@@ -93,7 +93,7 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
             <div className={style.modal}>
               <h3>Selecciona una una cuenta para chatear</h3>
               <div className={style.accounts}>
-                <Link to="/messages/user">
+                <Link to="/mensajes/usuario">
                   <button
                     onClick={() => { handleClick(); selectAccount(); }}
                     className={style.profilePicture}
@@ -108,7 +108,7 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
                   </button>
                 </Link>
 
-                <Link to="/messages/store">
+                <Link to="/mensajes/tienda">
                   <button
                     onClick={() => { handleClick(); selectAccount(); }}
                     className={style.profilePicture}
@@ -124,7 +124,7 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
             </div>
           )}
 
-          <Link to="/account">
+          <Link to="/micuenta">
             {isAuthenticated || isAuthenticatedAuth0 ? (
               <button className={style.profilePicture}>
                 <img
@@ -143,7 +143,7 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
               </button>
             )}
           </Link>
-          <Link to="/more">
+          <Link to="/mas">
             <button>
               <img
                 width="32"

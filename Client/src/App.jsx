@@ -18,6 +18,7 @@ import Account from "./views/Account/Account";
 import More from "./views/More/More";
 import CreateStore from "./views/CreateStore/CreateStore";
 import MyStore from "./views/MyStore/MyStore";
+import MySales from "./views/MySales/MySales";
 import Store from "./views/Store/Store";
 import Queries from "./views/Queries/Queries";
 import Faq from "./views/FAQ/Faq";
@@ -316,7 +317,7 @@ function App() {
           }
         />
         <Route
-          path="/home"
+          path="/inicio"
           element={
             isAuthenticated ? (
               userData ? (
@@ -372,7 +373,7 @@ function App() {
           }
         />
         <Route
-          path="favorites"
+          path="favoritos"
           element={
             isAuthenticated ? (
               userData ? (
@@ -428,7 +429,7 @@ function App() {
           }
         />
         <Route
-          path="/messages/*"
+          path="/mensajes/*"
           element={
             isAuthenticated || isAuthenticatedAuth0 ? (
               user || userData ? (
@@ -446,7 +447,7 @@ function App() {
           }
         />
         <Route
-          path="/account"
+          path="/micuenta"
           element={
             isAuthenticated ? (
               userData ? (
@@ -482,7 +483,7 @@ function App() {
           }
         />
         <Route
-          path="/more"
+          path="/mas"
           element={
             isAuthenticated ? (
               userData ? (
@@ -538,7 +539,7 @@ function App() {
           }
         />
         <Route
-          path="/mystore/:storeId"
+          path="/mitienda/:storeId"
           element={
             isAuthenticated ? (
               userData ? (
@@ -566,7 +567,35 @@ function App() {
           }
         />
         <Route
-          path="/store/:linkName"
+          path="/misventas"
+          element={
+            isAuthenticated ? (
+              userData ? (
+                <MySales userData={userData} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : isAuthenticatedAuth0 ? (
+              user ? (
+                <MySales userData={user.name} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : (
+              <Login setAuth={setAuth} />
+            )
+          }
+        />
+        <Route
+          path="/tienda/:linkName"
           element={
             isAuthenticated ? (
               userData ? (
@@ -594,7 +623,7 @@ function App() {
           }
         />
         <Route
-          path="/queries"
+          path="/consultas"
           element={
             isAuthenticated ? (
               userData ? (
@@ -678,7 +707,7 @@ function App() {
           }
         />
         <Route
-          path="/addproduct"
+          path="/agregarproducto"
           element={
             isAuthenticated ? (
               userData ? (

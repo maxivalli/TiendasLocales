@@ -3,16 +3,12 @@ import react from "@vitejs/plugin-react-swc";
 import { VitePWA } from "vite-plugin-pwa";
 
 const manifestForPlugIn = {
-  devOptions: {
-    enabled: true,
-  },
   registerType: "prompt",
   workbox: {
-    navigateFallbackDenylist: [/^https:\/\/api\.chatengine\.io\/.*/i],
     runtimeCaching: [
       {
         urlPattern: /.*/,
-        handler: "CacheFirst",
+        handler: "NetworkFirst",
         options: {
           cacheName: "all-cache",
           expiration: {

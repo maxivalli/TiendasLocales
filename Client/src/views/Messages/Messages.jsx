@@ -30,7 +30,7 @@ const Messages = () => {
 
   const url = new URL(window.location.href);
   const lastPathSegment = url.href.split("/").pop();
-  const isUserAccount = lastPathSegment == "user";
+  const isUserAccount = lastPathSegment == "usuario";
   const chatUserName = isUserAccount
     ? userName
     : storeName

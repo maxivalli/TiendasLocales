@@ -111,7 +111,7 @@ const MyStore = () => {
             <p>{selectedStore.categoria}</p>
           </div>
         </div>
-        <Link to="/addproduct">
+        <Link to="/agregarproducto">
           <div className={style.agregar}>
             <button>Agregar</button>
           </div>

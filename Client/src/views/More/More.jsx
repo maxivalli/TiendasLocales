@@ -74,7 +74,7 @@ const More = () => {
                 alt="online-order"
               />
             }
-            link={`/mystore/${storeData.id}`}
+            link={`/mitienda/${storeData.id}`}
           />
         ) : storeData &&
           userData.vendedor === "noVendedor" &&
@@ -149,7 +149,7 @@ const More = () => {
               alt="mail"
             />
           }
-          link={"/queries"}
+          link={"/consultas"}
         />
         <CardWide
           textButton={"FAQ"}

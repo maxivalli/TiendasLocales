@@ -67,7 +67,7 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-7ac181c0'], (function (workbox) { 'use strict';
+define(['./workbox-d0afe723'], (function (workbox) { 'use strict';
 
   self.addEventListener('message', event => {
     if (event.data && event.data.type === 'SKIP_WAITING') {
@@ -82,14 +82,13 @@ define(['./workbox-7ac181c0'], (function (workbox) { 'use strict';
    */
   workbox.precacheAndRoute([{
     "url": "index.html",
-    "revision": "0.tk620m98hjo"
+    "revision": "0.gtreg2u8728"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {
-    allowlist: [/^\/$/],
-    denylist: [/^https:\/\/api\.chatengine\.io\/.*/i]
+    allowlist: [/^\/$/]
   }));
-  workbox.registerRoute(/.*/, new workbox.CacheFirst({
+  workbox.registerRoute(/.*/, new workbox.NetworkFirst({
     "cacheName": "all-cache",
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 50,
