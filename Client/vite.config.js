@@ -97,16 +97,6 @@ export default defineConfig({
         orientation: "portrait",
       },
     }),
-
-    VitePWA({
-      strategies: "injectManifest",
-      srcDir: "src",
-      filename: "firebase-messaging-sw.js",
-      workbox: {
-        globPatterns: [],
-        globIgnores: ["*"],
-      },
-    }),
   ],
   base: "",
   build: {
