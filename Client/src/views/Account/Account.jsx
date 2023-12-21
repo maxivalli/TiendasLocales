@@ -6,8 +6,11 @@ import CardSquare from "../../components/CardSquare/CardSquare";
 import Filters from '../../components/Filters/Filters'
 import pizza from "../../assets/pizza.jpg";
 import style from "./Account.module.css";
+import { useSelector } from "react-redux";
 
-const Account = ({ setAuth, userData, setUserData }) => {
+const Account = ({ setAuth, setUserData }) => {
+  const userData = useSelector((state) => state.userData)
+  console.log(userData);
   const { user, logout } = useAuth0(); // Fix here: destructure 'logout' correctly
   const [showModal, setShowModal] = useState(false);
 

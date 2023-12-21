@@ -173,9 +173,7 @@ function rootReducer(state = initialState, action) {
     case UPDATE_USER:
       return {
         ...state,
-        allUsers: state.allUsers.map((user) =>
-          user.id === action.payload.id ? action.payload : user
-        ),
+        userData: action.payload
       };
 
     case DELETE_USER:

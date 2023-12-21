@@ -1,7 +1,11 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import { io } from "socket.io-client";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useAuth0 } from "@auth0/auth0-react";
+import { messaging } from "./components/Firebase/config";
+import { onMessage } from "firebase/messaging";
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
@@ -156,6 +160,7 @@ function App() {
                   tiendas: userDataResponse.data.tiendas,
                   vendedor: userDataResponse.data.vendedor,
                   accT: userDataResponse.data.accT,
+                  FCMtoken: userDataResponse.data.FCMtoken,
                 });
                 dispatch(
                   saveUserData({
@@ -169,6 +174,7 @@ function App() {
                     tiendas: userDataResponse.data.tiendas,
                     vendedor: userDataResponse.data.vendedor,
                     accT: userDataResponse.data.accT,
+                    FCMtoken: userDataResponse.data.FCMtoken,
                   })
                 );
                 dispatch(getUserStore(userDataResponse?.data.id));
@@ -266,8 +272,15 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    onMessage(messaging, (message) => {
+      toast(message.data.text)
+    });
+  }, []);
+
   return (
     <>
+    <ToastContainer/>
       {isAuthenticated || isAuthenticatedAuth0 ? (
         <Navbar
           isAuthenticated={isAuthenticated}

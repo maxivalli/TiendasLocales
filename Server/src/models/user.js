@@ -51,6 +51,9 @@ module.exports = (sequelize) => {
     },
     accT: {
       type: DataTypes.STRING,
+    },
+    FCMtoken: {
+      type: DataTypes.STRING,
     }
   },
   {

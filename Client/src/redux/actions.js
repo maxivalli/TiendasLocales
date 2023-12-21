@@ -38,7 +38,8 @@ import {
   DELETE_USER_NOTIFICATIONS,
   MARK_NOTI_AS_READ,
   GET_USER_STORE,
-  DELETE_STORE
+  DELETE_STORE,
+  SET_FCMTOKEN_USERDATA
 } from "./actionTypes";
 
 export function getAllUsers() {
@@ -114,9 +115,10 @@ export function createUser(user) {
   };
 }
 
-export function updateUser(id, user) {
+export function updateUser(id, userData) {
   return async (dispatch) => {
-    const result = await axios.put(`/users/${id}`, user);
+    const result = await axios.put(`/users/${id}`, userData);
+    console.log(result.data);
     dispatch({
       type: UPDATE_USER,
       payload: result.data,
