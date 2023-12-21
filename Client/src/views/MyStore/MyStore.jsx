@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getStorePosts } from "../../redux/actions";
 import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
+import axios from "axios";
 
 const MyStore = () => {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const MyStore = () => {
   const storePosts = useSelector((state) => state.storePosts);
   const allPosts = useSelector((state) => state.allPosts);
   const selectedStore = stores.find((store) => store.id == storeId);
-
+  const [comprasData, setCompras ] = useState([])
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,8 +30,23 @@ const MyStore = () => {
         console.error("Error fetching store posts:", error);
         setLoading(false);
       });
+      
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/tiendas/pedidosCompras/${storeId}`);
+        if (response) {
+          setCompras(response.data);
+          console.log(comprasData)
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
   }, [dispatch, storeId, allPosts]);
-
+  
+  
   if (loading) {
     return (
       <div className={style.spinner}>

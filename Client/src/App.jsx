@@ -565,7 +565,7 @@ function App() {
               )
             ) : isAuthenticatedAuth0 ? (
               user ? (
-                <MyStore userData={user.name} setAuth={setAuth} />
+                <MyStore userData={userData} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>

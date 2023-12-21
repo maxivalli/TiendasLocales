@@ -7,12 +7,14 @@ import Filters from '../../components/Filters/Filters'
 import pizza from "../../assets/pizza.jpg";
 import style from "./Account.module.css";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const Account = ({ setAuth, setUserData }) => {
   const userData = useSelector((state) => state.userData)
   console.log(userData);
   const { user, logout } = useAuth0(); // Fix here: destructure 'logout' correctly
   const [showModal, setShowModal] = useState(false);
+  const [comprasData, setCompras ] = useState([])
 
   const openModal = () => {
     setShowModal(true);
@@ -31,6 +33,25 @@ const Account = ({ setAuth, setUserData }) => {
     }));
     setShowModal(false);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/tiendas/comprasRecibidas/${userData.id}`);
+        if (response) {
+          setCompras(response.data);
+          console.log(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+
+
+  // EN comprasData esta toda la info de las compras hechas/
   return (
     <>
       <Filters/>

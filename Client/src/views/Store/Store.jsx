@@ -8,17 +8,19 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getStorePosts } from "../../redux/actions";
 import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
+import axios from "axios";
 
-const Store = () => {
+const Store = ({ userData }) => {
   const dispatch = useDispatch();
   const { linkName } = useParams();
   const stores = useSelector((state) => state.allStores);
   const storePosts = useSelector((state) => state.storePosts);
   const storeName = linkName.replace(/-/g, " ");
-  const selectedStore = stores.find((store) => store.nombre == storeName);
+  const selectedStore = stores.find((store) => store.nombre === storeName);
   const storeId = selectedStore?.id;
 
   const [loading, setLoading] = useState(true);
+  const [alreadyReview, setAlReview] = useState(false);
 
   useEffect(() => {
     dispatch(getStorePosts(storeId))
@@ -29,7 +31,55 @@ const Store = () => {
         console.error("Error fetching store posts:", error);
         setLoading(false);
       });
-  }, [dispatch, storeId]);
+
+    const fetchTienda = async () => {
+      const response2 = await axios.get(
+        `/tiendas/getUserStore/${selectedStore.userId}`
+      );
+      if (response2) {
+        selectedStore.averageRating = response2.data.averageRating;
+      }
+      const response = await axios.get(`/reviews/${userData.id}/${selectedStore.userId}`);
+      if (response) {
+          setAlReview(true);
+          console.log("1", response)
+        }
+        const response3 = await axios.get(
+          `/reviews/averageRating/${selectedStore.userId}`
+        );
+        console.log(response3)
+        if (response3) {
+          selectedStore.averageRating = response3.data;
+        }
+    };
+    fetchTienda();
+  }, [dispatch, storeId, alreadyReview]);
+
+
+  const handleRating = async (value) => {
+    try {
+      let newReview = {
+        userId: userData.id,
+        reviewedUserId: selectedStore.userId,
+        rating: value,
+      };
+
+      const newRating = await axios.post("/reviews/", newReview);
+
+      if (newRating) {
+        setAlReview(true);
+        const response = await axios.get(
+          `/reviews/averageRating/${selectedStore.userId}`
+        );
+
+        if (response) {
+          selectedStore.averageRating = response.data;
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (loading) {
     return (
@@ -50,8 +100,53 @@ const Store = () => {
           <div className={style.avatar}>
             <img src={selectedStore.image} alt="avatar" />
             <div className={style.info2}>
-            <h3>⭐️⭐️⭐️⭐️</h3>
-          </div>
+              {selectedStore.averageRating && alreadyReview ? (
+                <div>
+                  {Array.from(
+                    { length: selectedStore.averageRating },
+                    (_, index) => (
+                      <span key={index}>⭐️</span>
+                    )
+                  )}
+                </div>
+              ) : (
+                <>
+                  {alreadyReview ? (
+                    <h3>¡Ya calificaste esta tienda!</h3>
+                  ) : selectedStore.averageRating ? (
+                    <>
+                      <div>
+                        {Array.from(
+                          { length: selectedStore.averageRating },
+                          (_, index) => (
+                            <span key={index}>⭐️</span>
+                          )
+                        )}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div>
+                        <h3>¡Sé el primero en calificar!</h3>
+                        <div className={style.ratingg}>
+                          {[1, 2, 3, 4, 5].map((value) => (
+                            <label key={value}>
+                              <input
+                                type="radio"
+                                name="rating"
+                                value={value}
+                                onClick={() => handleRating(value)}
+                              />
+                              {value}
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </>
+              )}
+            </div>
           </div>
 
           <div className={style.info}>
@@ -83,7 +178,6 @@ const Store = () => {
             <p>
               ⏰ {selectedStore.horarios.horario_de_apertura}hs a{" "}
               {selectedStore.horarios.horario_de_cierre}hs
-
               {selectedStore.horarios.horario_de_apertura2 &&
                 selectedStore.horarios.horario_de_cierre2 && (
                   <>
