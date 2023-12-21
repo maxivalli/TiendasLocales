@@ -49,17 +49,17 @@ const getReviewById = async (reviewId, othId) => {
   }
 };
 
-const getAverageRatingByUser = async (userId) => {
+const getAverageRatingByUser = async (usuarioId) => {
   try {
-    if(!userId) {
+    if(!usuarioId) {
       throw new Error("No estoy recibiendo userId"); 
     }
     const result = await Review.findAll({
       where: {
-        reviewedUserId: userId,
+        reviewedUserId: usuarioId,
       },
     });
-    console.log(result);
+
     if (!result || result.length === 0) {
       throw new Error("No se encontraron reseñas para este usuario");
     }
@@ -73,14 +73,19 @@ const getAverageRatingByUser = async (userId) => {
     // Actualiza la propiedad averageRating del usuario en la base de datos
     const resultado = await Tienda.findOne({
       where: {
-        userId: userId,
+        userId: usuarioId,
       },
     });
 
     resultado.averageRating = averageRating;
     await resultado.save();
-    console.log("1", resultado.averageRating);
-    return resultado;
+
+    const resultado2 = await Tienda.findOne({
+      where: {
+        userId: usuarioId,
+      },
+    });
+    return resultado2.averageRating;
   } catch (error) {
     throw error;
   }

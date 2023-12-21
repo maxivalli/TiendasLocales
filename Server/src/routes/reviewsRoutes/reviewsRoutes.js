@@ -32,12 +32,13 @@ router.get("/:id/:othId", async (req, res) => {
   }
 });
 
-router.get("/getAverageRating/:userId", async (req, res) => {
-    const {userId} = req.params
-    console.log(userId);
+router.get("/getAverageRating/", async (req, res) => {
+  console.log("CHAU", req)
+    const {usuarioId} = req.body
+    console.log("HOLA", usuarioId)
   try {
-    const response = await reviewController.getAverageRatingByUser(userId);
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAa", response);
+    const response = await reviewController.getAverageRatingByUser(usuarioId);
+
     return res.status(200).json(response);
   } catch (error) {
     return res.status(400).json(error.message);

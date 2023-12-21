@@ -36,7 +36,6 @@ module.exports = (sequelize) => {
     },
     averageRating: {
       type: DataTypes.FLOAT,
-      defaultValue: 0, 
     },
     categoria:{
     type: DataTypes.STRING,

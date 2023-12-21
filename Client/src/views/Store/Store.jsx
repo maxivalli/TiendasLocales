@@ -36,22 +36,8 @@ const Store = ({ userData }) => {
     }
   }
     fetchData()
-    }, []);
+    }, [alreadyReview]);
 
-  useEffect(() => {
-    async function getAverageRating() {
-    try {
-      const userId = selectedStore?.userId;
-      console.log(userId);
-      const response = await axios.get(`/reviews/getAverageRating/${userId}`);
-      console.log(response.data, "respuesta");
-    } catch (error) {
-      console.log("error al hacer solicitud get");
-      throw error;
-    }
-  }
-  getAverageRating()
-  }, []);
 
   useEffect(() => {
     dispatch(getStorePosts(storeId))
@@ -76,9 +62,10 @@ const Store = ({ userData }) => {
 
       if (newRating) {
         setAlredyReview(true);
-        const response = await axios.get(
-          `/reviews/getAverageRating/${selectedStore?.userId}`
-        );
+        let usuarioId = newRating.data.reviewedUserId
+        
+        console.log(usuarioId)
+        const response = await axios.get("/reviews/getAverageRating", usuarioId);
 
         if (response) {
           selectedStore.averageRating = response.data;
@@ -108,7 +95,7 @@ const Store = ({ userData }) => {
           <div className={style.avatar}>
             <img src={selectedStore.image} alt="avatar" />
             <div className={style.info2}>
-              {selectedStore.averageRating && alreadyReview ? (
+              {selectedStore.averageRating && (
                 <div>
                   {Array.from(
                     { length: selectedStore.averageRating },
@@ -116,26 +103,13 @@ const Store = ({ userData }) => {
                       <span key={index}>⭐️</span>
                     )
                   )}
-                </div>
-              ) : (
-                <>
-                  {alreadyReview ? (
-                    <h3>¡Ya calificaste esta tienda!</h3>
-                  ) : selectedStore.averageRating ? (
-                    <>
+                </div>)}
+          
+                  {alreadyReview ? 
+                    <p>¡Ya calificaste esta tienda!</p>
+                     : 
+                   (<>
                       <div>
-                        {Array.from(
-                          { length: selectedStore.averageRating },
-                          (_, index) => (
-                            <span key={index}>⭐️</span>
-                          )
-                        )}
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div>
-                        <h3>¡Sé el primero en calificar!</h3>
                         <div className={style.ratingg}>
                           {[1, 2, 3, 4, 5].map((value) => (
                             <label key={value}>
@@ -150,10 +124,8 @@ const Store = ({ userData }) => {
                           ))}
                         </div>
                       </div>
-                    </>
-                  )}
-                </>
-              )}
+                    </>)
+                    }
             </div>
           </div>
 
