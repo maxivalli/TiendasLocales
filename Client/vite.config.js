@@ -20,19 +20,6 @@ const manifestForPlugIn = {
           },
         },
       },
-      {
-        handler: "NetworkOnly",
-        urlPattern: /\/api\/.*\/*.json/,
-        method: "POST",
-        options: {
-          backgroundSync: {
-            name: "myQueueName",
-            options: {
-              maxRetentionTime: 24 * 60,
-            },
-          },
-        },
-      },
     ],
   },
   includeAssets: [
@@ -109,7 +96,19 @@ const manifestForPlugIn = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), VitePWA(manifestForPlugIn)],
+  plugins: [
+    react(),
+    VitePWA(manifestForPlugIn),
+    VitePWA({
+      strategies: "injectManifest",
+      srcDir: "src",
+      filename: "firebase-messaging-sw.js",
+      workbox: {
+        globPatterns: [],
+        globIgnores: ["*"],
+      },
+    }),
+  ],
   base: "",
   build: {
     chunkSizeWarningLimit: 1000000,
