@@ -4,11 +4,11 @@ import { ChatEngine } from "react-chat-engine";
 import "./Messages.css";
 import { useNavigate } from "react-router";
 
-import { socket } from "../../App"
+import { socket } from "../../App";
 
 const Messages = () => {
   const navigate = useNavigate();
-  
+
   const [savedStoreData, setSavedStoreData] = useState(() => {
     const storedData = localStorage.getItem("userStore");
     return storedData ? JSON.parse(storedData) : null;
@@ -31,7 +31,11 @@ const Messages = () => {
   const url = new URL(window.location.href);
   const lastPathSegment = url.href.split("/").pop();
   const isUserAccount = lastPathSegment == "user";
-  const chatUserName = isUserAccount ? userName : storeName ? storeName : savedStoreData.nombre;
+  const chatUserName = isUserAccount
+    ? userName
+    : storeName
+    ? storeName
+    : savedStoreData.nombre;
   const userSecret = isUserAccount
     ? userEmail
     : storeEmail
@@ -49,7 +53,6 @@ const Messages = () => {
   }, [navigate]);
 
   useEffect(() => {
-    
     if ("Notification" in window) {
       if (
         Notification.permission !== "granted" &&
@@ -94,32 +97,27 @@ const Messages = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-
-  const [chats, setChats] = useState() 
+  const [chats, setChats] = useState();
 
   return (
     <>
       <div className="chat">
         <ChatEngine
-
           publicKey="59fa8828-96fe-4a26-a226-18d513d30b1e"
           userName={chatUserName}
           userSecret={userSecret}
-          
-          onGetChats={(chats)=> {
-            setChats(chats)
+          onGetChats={(chats) => {
+            setChats(chats);
           }}
-
           onNewMessage={(chatId, message) => {
-            const chat = chats?.find((chat) => chat?.id === chatId)
-            const people = chat.people
-            const lastMessage = message.text.replace(/<\/?p>/g, '');
-            const sender = message.sender_username
-            const senderId = userData?.id
-            const messageData = { people, lastMessage, sender, senderId }
+            const chat = chats?.find((chat) => chat?.id === chatId);
+            const people = chat.people;
+            const lastMessage = message.text.replace(/<\/?p>/g, "");
+            const sender = message.sender_username;
+            const senderId = userData?.id;
+            const messageData = { people, lastMessage, sender, senderId };
             socket?.emit("newMessage", messageData);
           }}
-
           height="calc(100vh - 60px)"
           offset={-3}
         />

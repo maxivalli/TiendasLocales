@@ -233,7 +233,7 @@ function App() {
           toast: true,
           position: "top-end",
           showConfirmButton: false,
-          timer: 10000,
+          timer: 200000,
           timerProgressBar: true,
           didOpen: (toast) => {
             toast.addEventListener("mouseleave", Swal.resumeTimer);
