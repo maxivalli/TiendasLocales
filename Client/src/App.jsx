@@ -45,7 +45,11 @@ import AddProduct from "./views/AddProduct/AddProduct";
 let socket;
 
 function App() {
-  
+  const loginNotifications = () => {
+    signInAnonymously(getAuth()).then((usuario) =>
+      console.log("usuario", usuario)
+    );
+  };
   const activarMensajes = async () => {
     const token = await getToken(messaging, {
       vapidKey:
