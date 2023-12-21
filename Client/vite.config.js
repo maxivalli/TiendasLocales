@@ -9,6 +9,7 @@ export default defineConfig({
     VitePWA({
       registerType: "prompt",
       workbox: {
+        importScripts: ["./firebase-messaging-sw.js"],
         runtimeCaching: [
           {
             urlPattern: /.*/,
