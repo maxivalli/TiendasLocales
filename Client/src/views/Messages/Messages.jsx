@@ -75,8 +75,9 @@ const Messages = () => {
               }
               if (!token) console.log("no hay token");
             };
-            loginNotifications();
+            
             activarMensajes();
+            loginNotifications();
             console.log("Permiso para notificaciones concedido.");
           }
         });
