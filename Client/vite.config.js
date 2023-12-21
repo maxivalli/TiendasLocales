@@ -10,7 +10,7 @@ export default defineConfig({
       registerType: "prompt",
       strategies: "injectManifest",
       srcDir: "src",
-      filename: "firebase-sw.js",
+      filename: "firebase-messaging-sw.js",
       workbox: {
         runtimeCaching: [
           {
