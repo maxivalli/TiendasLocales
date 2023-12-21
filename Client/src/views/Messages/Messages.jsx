@@ -55,28 +55,27 @@ const Messages = () => {
       ) {
         Notification.requestPermission().then((permission) => {
           if (permission === "granted") {
+
             const loginNotifications = () => {
-              signInAnonymously(getAuth()).then((usuario) =>
-                console.log(usuario)
-              );
-            };
-            const activarMensajes = async () => {
-              const token = await getToken(messaging, {
-                vapidKey:
-                  "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
-              }).catch((error) =>
-                console.log("Error al generar el token", error)
-              );
-              if (token) {
-                console.log("tu token: ", token);
-                userData.FCMtoken = token;
-                const id = userData.id;
-                dispatch(updateUser(id, userData));
+              signInAnonymously(getAuth()).then((usuario) => {
+                console.log(usuario);
+                const token = getToken(messaging, {
+                  vapidKey:
+                    "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
+                }).catch((error) =>
+                  console.log("Error al generar el token", error)
+                );
+                if (token) {
+                  console.log("tu token: ", token);
+                  userData.FCMtoken = token;
+                  const id = userData.id;
+                  dispatch(updateUser(id, userData));
+                }
+                if (!token) console.log("no hay token");
               }
-              if (!token) console.log("no hay token");
+              );
             };
-            
-            activarMensajes();
+
             loginNotifications();
             console.log("Permiso para notificaciones concedido.");
           }
