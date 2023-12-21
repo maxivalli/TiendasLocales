@@ -41,6 +41,18 @@ import AddProduct from "./views/AddProduct/AddProduct";
 let socket;
 
 function App() {
+
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+        .register("./firebase-messaging-sw.js")
+        .then(function (registration) {
+            console.log("Registration successful, scope is:", registration.scope);
+        })
+        .catch(function (err) {
+            console.log("Service worker registration failed, error:", err);
+        });
+  }
+
   const dispatch = useDispatch();
   //axios.defaults.baseURL = "http://localhost:3001/";
   axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/";
