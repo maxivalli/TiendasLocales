@@ -35,7 +35,7 @@ const Detail = ({ userData }) => {
       }
     }
     fetchDataAcct()
-  },[])
+  },[selectedStore])
 
 
   const linkName = selectedStore?.nombre.replace(/\s/g, "-");
