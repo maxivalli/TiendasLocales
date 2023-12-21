@@ -1,4 +1,4 @@
-const { Review, User, conn } = require("../DB_config");
+const { Review, User, Tienda } = require("../DB_config");
 
 const createReview = async (req, res) => {
     try {
@@ -10,7 +10,7 @@ const createReview = async (req, res) => {
                 reviewedUserId: reviewedUserId,
             },
         });
-        console.log(result)
+
         if(result.length != 0){
             throw new Error("Ya haz calificado a este usuario")
         } else {
@@ -39,19 +39,26 @@ const allReviews = async (req, res) => {
 
 const getReviewById = async (req, res) => {
     const reviewId = req.params.id;
+    const othId = req.params.othId;
     try {
-        const review = await Review.findByPk(reviewId);
+        const review = await Review.findOne({
+            where: {
+                userId: reviewId,
+                reviewedUserId: othId
+            },
+        });
 
         if (!review) {
-        res.status(404).json({ error: 'Review no encontrada.' });
+        throw new Error("Ya haz calificado a este usuario")
         }
-        res.json(review);
+        return review
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener la review.' });
     }
 };
 
 const getAverageRatingByUser = async (req, res) => {
+    console.log("hola")
     try {
         const userId = req.params.userId;
         
@@ -73,13 +80,16 @@ const getAverageRatingByUser = async (req, res) => {
 
         const averageRating = parseInt(promedioFinal)
         // Actualiza la propiedad averageRating del usuario en la base de datos
-        await User.update({ averageRating }, {
+        const resultado = await Tienda.findOne({
             where: {
-                id: userId,
+                userId: userId,
             },
-        });
+          });
 
-        res.json({ averageRating });
+          resultado.averageRating = averageRating;
+          await resultado.save();
+          console.log("1", resultado.averageRating)
+        return resultado.averageRating
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error al calcular el promedio de calificaciones", error: error.message });
