@@ -84,7 +84,7 @@ router.put("/:id", async (req, res) => {
   const updatedData = req.body;
   try {
     const updatedUser = await userController.updateUser(id, updatedData);
-    return res.status(200).json({ message: "Resource updated successfully" });
+    return res.status(200).json(updatedUser);
   } catch (error) {
     return res.status(404).json({ error: error.message });
   }

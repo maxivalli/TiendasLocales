@@ -9,6 +9,7 @@ import { socket } from "../../App";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const stores = useSelector((state) => state.allStores);
+  const userData = useSelector((state) => state.userData);
   const storesRef = useRef(stores);
   const [filterStores, setStores] = useState([]);
 
@@ -36,7 +37,9 @@ const Dashboard = () => {
         setStores((prevStores) =>
           prevStores.filter((store) => store.id !== id)
         );
-        socket?.emit("approvedStore", storeData);
+
+        const data = {storeData, userData}
+        socket?.emit("approvedStore", data)
         Swal.fire({
           icon: "success",
           title: `Tienda Aprobada!`,

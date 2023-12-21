@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
+import { getAnalytics } from "firebase/analytics";
+import { getMessaging } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAiXwnw-mIc8s-DkV2y8JaSwjKa__KF6i8",
@@ -9,6 +11,7 @@ const firebaseConfig = {
   storageBucket: "tiendaslocales-7bbf8.appspot.com",
   messagingSenderId: "611326584535",
   appId: "1:611326584535:web:0e3aa3aeb59818cbe57292",
+  measurementId: "G-4XX5WVVHL0",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -63,3 +66,6 @@ export async function uploadFile(file) {
   const url = await getDownloadURL(storageRef);
   return url;
 }
+
+const analytics = getAnalytics(app);
+export const messaging = getMessaging(app);

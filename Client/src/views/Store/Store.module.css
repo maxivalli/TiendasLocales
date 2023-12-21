@@ -47,6 +47,9 @@
   color: cornflowerblue;
 }
 
+.ratingg{
+  position: absolute;
+}
 .info2 {
   display: grid;
   text-align: center;

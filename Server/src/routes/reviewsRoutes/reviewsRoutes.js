@@ -18,25 +18,30 @@ router.post('/', async (req, res) => {
         const response = await reviewController.allReviews(req, res);
         res.status(200).json(response);
     } catch (error) {
-        res.status(500).json(error.message);
+        return res.status(400).json(error.message);
     }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id/:othId', async (req, res) => {
     try {
         const response = await reviewController.getReviewById(req, res);
-        res.status(200).json(response);
+        if(response){
+            return response
+        } else {
+            return res.status(400)
+        }
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        return res.status(400)
     }
 });
 
 router.get('/averageRating/:userId', async (req, res) => {
     try {
         const response = await reviewController.getAverageRatingByUser(req, res);
-        res.status(200).json(response);
+        console.log("2", response)
+        return response;
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        return res.status(400)
     }
 });
 
