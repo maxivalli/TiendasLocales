@@ -82,7 +82,16 @@ const MyStore = () => {
           <div className={style.avatar}>
             <img src={selectedStore.image} alt="avatar" />
             <div className={style.info2}>
-              <h3>⭐️⭐️⭐️⭐️</h3>
+            {selectedStore.averageRating ? (
+                <div>
+                  {Array.from(
+                    { length: selectedStore.averageRating },
+                    (_, index) => (
+                      <span key={index}>⭐️</span>
+                    )
+                  )}
+                </div>
+              ) : (<p>Todavia nadie a calificado tu tienda</p>)}
             </div>
           </div>
 
