@@ -57,8 +57,6 @@ function buildStrategy() {
   }
 }
 
-const manifest = self.__WB_MANIFEST || [];
-
 const cacheEntries = [];
 
 const manifestURLs = manifest.map(
