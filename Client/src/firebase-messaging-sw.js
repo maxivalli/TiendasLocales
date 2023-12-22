@@ -6,8 +6,8 @@ importScripts(
 );
 
 import { precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
-import { registerRoute } from 'workbox-routing';
-import { NetworkFirst } from 'workbox-strategies';
+import { registerRoute } from "workbox-routing";
+import { NetworkFirst } from "workbox-strategies";
 
 precacheAndRoute(self.__WB_MANIFEST);
 cleanupOutdatedCaches();
@@ -15,13 +15,15 @@ cleanupOutdatedCaches();
 registerRoute(
   /(.*)/,
   new NetworkFirst({
-    cacheName: 'all-cache',
+    cacheName: "all-cache",
     plugins: [
       {
         expiration: {
           maxEntries: 60,
           maxAgeSeconds: 60 * 60 * 24 * 2,
         },
+      },
+      {
         cacheableResponse: {
           statuses: [0, 200],
         },
@@ -49,20 +51,20 @@ messaging.onBackgroundMessage((payload) => {
   return self.registration.showNotification(payload.data.title, {
     body: payload.data.text,
     icon: "https://firebasestorage.googleapis.com/v0/b/tiendaslocales-7bbf8.appspot.com/o/logo.png?alt=media&token=bca80e33-79d3-4b7e-8e50-e7cb026a2a58",
-    badge: "https://img.icons8.com/color/96/map-pin.png"
+    badge:
+      "https://firebasestorage.googleapis.com/v0/b/tiendaslocales-7bbf8.appspot.com/o/badge.png?alt=media&token=cb641376-612e-4760-801a-a6ea969b6f8e",
   });
 });
 
-self.addEventListener('notificationclick', function(event) {
-  event.notification.close(); 
-  
-  const url = 'https://tiendaslocales.com.ar'; 
-  
-  event.waitUntil(
-    clients.matchAll({ type: 'window' }).then(windowClients => {
+self.addEventListener("notificationclick", function (event) {
+  event.notification.close();
 
+  const url = "https://tiendaslocales.com.ar";
+
+  event.waitUntil(
+    clients.matchAll({ type: "window" }).then((windowClients) => {
       for (let client of windowClients) {
-        if (client.url === url && 'focus' in client) {
+        if (client.url === url && "focus" in client) {
           return client.focus();
         }
       }

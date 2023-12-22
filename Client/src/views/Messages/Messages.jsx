@@ -14,7 +14,6 @@ import { updateUser, updateUserData } from "../../redux/actions";
 const Messages = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [permissionGranted, setPermissionGranted] = useState(false);
   const [savedStoreData, setSavedStoreData] = useState(() => {
     const storedData = localStorage.getItem("userStore");
     return storedData ? JSON.parse(storedData) : null;
@@ -53,27 +52,25 @@ const Messages = () => {
       Notification.requestPermission().then((permission) => {
         if (permission === "granted") {
           console.log("permiso garantizado");
+          activarMensajes();
         }
       });
     };
     requestNotificationPermission();
-    activarMensajes();
   });
 
   const activarMensajes = async () => {
-    if (permissionGranted) {
-      const token = await getToken(messaging, {
-        vapidKey:
-          "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
-      }).catch((error) => console.log("Error al generar el token", error));
-      if (token) {
-        console.log("tu token: ", token);
-        userData.FCMtoken = token;
-        const id = userData.id;
-        dispatch(updateUser(id, userData));
-      }
-      if (!token) console.log("no hay token");
+    const token = await getToken(messaging, {
+      vapidKey:
+        "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
+    }).catch((error) => console.log("Error al generar el token", error));
+    if (token) {
+      console.log("tu token: ", token);
+      userData.FCMtoken = token;
+      const id = userData.id;
+      dispatch(updateUser(id, userData));
     }
+    if (!token) console.log("no hay token");
   };
 
   useEffect(() => {
