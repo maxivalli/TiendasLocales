@@ -64,6 +64,9 @@ const Messages = () => {
             .then((currentToken) => {
               if (currentToken) {
                 console.log("Client Token: ", currentToken);
+                userData.FCMtoken = currentToken;
+                const id = userData?.id;
+                dispatch(updateUser(id, userData));
               } else {
                 console.log("Failed to generate the app registration token.");
               }
