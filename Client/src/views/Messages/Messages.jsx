@@ -46,48 +46,52 @@ const Messages = () => {
     ? storeEmail
     : savedStoreData.email;
 
-  const loginNotifications = () => {
-    signInAnonymously(getAuth()).then((usuario) => console.log(usuario));
-  };
-
-  const requestPermission = () => {
-    console.log("Requesting User Permission......");
-    Notification.requestPermission().then((permission) => {
-      if (permission === "granted") {
-        console.log("Notification User Permission Granted.");
-        console.log("waiting...");
-        setTimeout(() => {
-          return getToken(messaging, {
-            vapidKey:
-              "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
-          })
-            .then((currentToken) => {
+    const loginNotifications = () => {
+      signInAnonymously(getAuth())
+        .then((usuario) => console.log("usuario", usuario))
+        .catch((error) => {
+          console.error('Error al iniciar sesión anónima:', error);
+        });
+    };
+    
+    const requestPermission = async () => {
+      try {
+        console.log('Solicitando permiso de notificación...');
+        const permission = await Notification.requestPermission();
+    
+        if (permission === 'granted') {
+          console.log('Permiso de notificación concedido.');
+    
+          setTimeout(async () => {
+            try {
+              const currentToken = await getToken(messaging, {
+                vapidKey: 'BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA',
+              });
+    
               if (currentToken) {
-                console.log("Client Token: ", currentToken);
+                console.log('Token FCM:', currentToken);
                 userData.FCMtoken = currentToken;
                 const id = userData?.id;
                 dispatch(updateUser(id, userData));
               } else {
-                console.log("Failed to generate the app registration token.");
+                console.log('No se pudo generar el token de registro de la aplicación.');
               }
-            })
-            .catch((err) => {
-              console.log(
-                "An error occurred when requesting to receive the token.",
-                err
-              );
-            });
-        }, 1500);
-      } else {
-        console.log("User Permission Denied.");
+            } catch (error) {
+              console.error('Error al solicitar el token FCM:', error);
+            }
+          }, 1500);
+        } else {
+          console.log('Permiso de notificación denegado.');
+        }
+      } catch (error) {
+        console.error('Error al solicitar permiso de notificación:', error);
       }
-    });
-  };
-
-  useEffect(() => {
-    loginNotifications();
-    requestPermission();
-  }, []);
+    };
+    
+    useEffect(() => {
+      loginNotifications();
+      requestPermission();
+    }, []);    
 
   useEffect(() => {
     const updateDOMElements = () => {
