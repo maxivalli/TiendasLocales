@@ -12,10 +12,8 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 
-import { getToken } from "firebase/messaging";
-
-
 import Navbar from "./components/Navbar/Navbar";
+
 import Home from "./views/Home/Home";
 import Detail from "./views/Detail/Detail";
 import Favorites from "./views/Favorites/Favorites";
@@ -43,24 +41,6 @@ import AddProduct from "./views/AddProduct/AddProduct";
 let socket;
 
 function App() {
-
-  useEffect(() => {
-    const activarMensajes = async () => {
-      const token = await getToken(messaging, {
-        vapidKey:
-          "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
-      }).catch((error) => console.log("Error al generar el token", error));
-      if (token) {
-        console.log("tu token: ", token);
-        userData.FCMtoken = token;
-        const id = userData.id;
-        dispatch(updateUser(id, userData));
-      }
-      if (!token) console.log("no hay token");
-    };
-    activarMensajes();
-  },[])
-  
   const dispatch = useDispatch();
   //axios.defaults.baseURL = "http://localhost:3001/";
   axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/";
