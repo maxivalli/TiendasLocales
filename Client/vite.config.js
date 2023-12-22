@@ -11,24 +11,6 @@ export default defineConfig({
       strategies: "injectManifest",
       srcDir: "src",
       filename: "firebase-messaging-sw.js",
-      workbox: {
-        runtimeCaching: [
-          {
-            urlPattern: /.*/,
-            handler: "NetworkFirst",
-            options: {
-              cacheName: "all-cache",
-              expiration: {
-                maxEntries: 60,
-                maxAgeSeconds: 60 * 60 * 24 * 2,
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
-        ],
-      },
       includeAssets: [
         "favicon.ico",
         "apple-touc-icon.png",

@@ -8,21 +8,24 @@ importScripts(
 import { precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
 import { NetworkFirst } from "workbox-strategies";
+import { clientsClaim } from 'workbox-core'
 
+self.skipWaiting()
+clientsClaim()
 precacheAndRoute(self.__WB_MANIFEST);
 cleanupOutdatedCaches();
+
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING')
+    self.skipWaiting()
+})
 
 registerRoute(
   /(.*)/,
   new NetworkFirst({
     cacheName: "all-cache",
     plugins: [
-      {
-        expiration: {
-          maxEntries: 60,
-          maxAgeSeconds: 60 * 60 * 24 * 2,
-        },
-      },
+      new ExpirationPlugin({ maxEntries: 30 }),
       {
         cacheableResponse: {
           statuses: [0, 200],
