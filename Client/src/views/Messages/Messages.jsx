@@ -3,10 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { ChatEngine } from "react-chat-engine";
 import "./Messages.css";
 import { useNavigate } from "react-router";
-import { getAuth, signInAnonymously } from "firebase/auth";
-import { getToken } from "firebase/messaging";
-
-import { messaging } from "../../components/Firebase/config";
 
 import { socket } from "../../App";
 import { updateUser, updateUserData } from "../../redux/actions";
@@ -52,26 +48,11 @@ const Messages = () => {
       Notification.requestPermission().then((permission) => {
         if (permission === "granted") {
           console.log("permiso garantizado");
-          activarMensajes();
         }
       });
     };
     requestNotificationPermission();
-  });
-
-  const activarMensajes = async () => {
-    const token = await getToken(messaging, {
-      vapidKey:
-        "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
-    }).catch((error) => console.log("Error al generar el token", error));
-    if (token) {
-      console.log("tu token: ", token);
-      userData.FCMtoken = token;
-      const id = userData.id;
-      dispatch(updateUser(id, userData));
-    }
-    if (!token) console.log("no hay token");
-  };
+  },[]);
 
   useEffect(() => {
     const updateDOMElements = () => {
