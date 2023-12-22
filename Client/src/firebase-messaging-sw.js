@@ -9,6 +9,7 @@ import { precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
 import { NetworkFirst } from "workbox-strategies";
 import { clientsClaim } from 'workbox-core'
+import { ExpirationPlugin } from 'workbox-expiration';
 
 self.skipWaiting()
 clientsClaim()
