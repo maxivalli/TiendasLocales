@@ -15,12 +15,28 @@ const Detail = ({ userData }) => {
   const stores = useSelector((state) => state.allStores);
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(selectedPost.price);
-
+  const [ buyButton, setBuyButton ] = useState(false)
   const [isLoading, setIsLoading] = useState(true);
 
   const selectedStore = stores?.find(
     (store) => store.id == selectedPost?.storeId
   );
+
+  useEffect(()=>{
+    const fetchDataAcct = async () => {
+      if(selectedStore){
+        const result = await axios.get(
+          `/users/anotherUserId/?id=${selectedStore.userId}`
+        );
+
+        if(result.data.accT){
+          setBuyButton(true)
+        }
+      }
+    }
+    fetchDataAcct()
+  },[selectedStore])
+
 
   const linkName = selectedStore?.nombre.replace(/\s/g, "-");
   const isBuyButtonDisabled = quantity <= 0 || selectedPost.stock === 0;
@@ -49,7 +65,7 @@ const Detail = ({ userData }) => {
       });
   }, [dispatch, id]);
 
-  const handlePremium = async () => {
+  const handleBuy = async () => {
     try {
       if (quantity > 0 && quantity <= selectedPost.stock) {
       } else {
@@ -180,11 +196,22 @@ const Detail = ({ userData }) => {
                 : "Retiro en tienda 🙋🏻‍♂️"}
             </h5>
           </div>
-          <div className={style.comprar}>
-            <button onClick={handlePremium} disabled={isBuyButtonDisabled}>
-              Comprar
-            </button>
-          </div>
+          {buyButton ? 
+            (
+              <div className={style.comprar}>
+                <button onClick={handleBuy} disabled={isBuyButtonDisabled}>
+                  Comprar
+                </button>
+              </div>
+            ) : 
+            (<div>
+              <div className={style.comprar}>
+                <button disabled={isBuyButtonDisabled}>
+                  Consultar
+                </button>
+              </div>
+            </div>)
+          }
         </div>
       </div>
       <div className={style.desc}>

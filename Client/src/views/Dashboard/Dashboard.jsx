@@ -21,12 +21,7 @@ const Dashboard = () => {
     const filtered = stores.filter(
       (store) => store.habilitado === "noHabilitado"
     );
-    filtered.map(async (store) => {
-      const response = await axios.get(`/users/anotherUserId?id=${store.userId}`);
-      const userData = response.data;
-      if(userData.accT)
-      setStores((prevStores) => [...prevStores, store]);
-    })
+    setStores(filtered);
 }, [dispatch, storesRef]);
 
   const handleHabilitacion = async (id) => {

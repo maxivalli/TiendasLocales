@@ -10,10 +10,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getStorePosts } from "../../redux/actions";
 import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 import axios from "axios";
+import Swal from "sweetalert2";
+import CardWide from "../../components/CardWide/CardWide";
 
 const MyStore = () => {
   const dispatch = useDispatch();
   const { storeId } = useParams();
+  const userData = useSelector((state) => state.userData);
   const stores = useSelector((state) => state.allStores);
   const storePosts = useSelector((state) => state.storePosts);
   const allPosts = useSelector((state) => state.allPosts);
@@ -46,6 +49,19 @@ const MyStore = () => {
     fetchData();
   }, [dispatch, storeId, allPosts]);
   
+  const handleConnectMP = () => {
+    window.open(
+      `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://tiendaslocales-production.up.railway.app/tiendas/redirectUrl`
+    );
+
+    
+    window.location.href = `/#/mystore/${storeId}`;
+    Swal.fire({
+      icon: "success",
+      title: "¡Ya tenés tu tienda conectada a MP!",
+      text: "Ahora actualiza la página",
+    });
+  };
   
   if (loading) {
     return (
@@ -66,7 +82,16 @@ const MyStore = () => {
           <div className={style.avatar}>
             <img src={selectedStore.image} alt="avatar" />
             <div className={style.info2}>
-              <h3>⭐️⭐️⭐️⭐️</h3>
+            {selectedStore.averageRating ? (
+                <div>
+                  {Array.from(
+                    { length: selectedStore.averageRating },
+                    (_, index) => (
+                      <span key={index}>⭐️</span>
+                    )
+                  )}
+                </div>
+              ) : (<p>Todavia nadie a calificado tu tienda</p>)}
             </div>
           </div>
 
@@ -111,7 +136,36 @@ const MyStore = () => {
             <p>{selectedStore.categoria}</p>
           </div>
         </div>
+<<<<<<< HEAD
         <Link to="/agregarproducto">
+=======
+        {!userData.accT && 
+          <div className={style.store}>
+            <div className={style.MP}>
+                <div className={style.modal}>
+                  <p>
+                    Para publicar productos con la opcion de compra primero necesitas conectar tu
+                    cuenta de Mercado Pago para poder recibir el dinero.
+                  </p>
+                </div> 
+
+                <CardWide
+                  Fn={handleConnectMP}
+                  textButton={"Conectar MP"}
+                  logo={
+                    <img
+                      width="60"
+                      height="60"
+                      src="https://img.icons8.com/color/96/mercado-pago.png"
+                      alt="mercado-pago"
+                    />
+                  }
+                />
+              </div> 
+          </div>
+        }
+        <Link to="/addproduct">
+>>>>>>> 690f2eb4d50eab6e90988beada90cd7c5c27a7c9
           <div className={style.agregar}>
             <button>Agregar</button>
           </div>

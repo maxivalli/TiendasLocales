@@ -5,7 +5,6 @@ import Head from "../../components/Head/Head";
 import style from "./More.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Swal from "sweetalert2";
 
 const More = () => {
   const userData = useSelector((state) => state.userData);
@@ -27,21 +26,6 @@ const More = () => {
 
     fetchData();
   }, [userData.id]);
-
-  const handleConnectMP = () => {
-    // Abrir enlace de Mercado Pago en una nueva pestaña
-    window.open(
-      `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://tiendaslocales-production.up.railway.app/tiendas/redirectUrl`
-    );
-
-    
-    window.location.href = "/#/more";
-    Swal.fire({
-      icon: "success",
-      title: "¡Ya tenés tu tienda conectada a MP!",
-      text: "Ahora actualiza la página",
-    });
-  };
 
   return (
     <>
@@ -76,6 +60,7 @@ const More = () => {
             }
             link={`/mitienda/${storeData.id}`}
           />
+<<<<<<< HEAD
         ) : storeData &&
           userData.vendedor === "noVendedor" &&
           !userData.accT ? (
@@ -113,10 +98,12 @@ const More = () => {
               />
             </div>
           </>
+=======
+>>>>>>> 690f2eb4d50eab6e90988beada90cd7c5c27a7c9
         ) : (
           storeData &&
           userData.vendedor === "noVendedor" &&
-          userData.accT && (
+          (
             <>
             <div className={style.cenC}>
               <p>
