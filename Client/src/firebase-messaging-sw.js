@@ -18,6 +18,10 @@ registerRoute(
     cacheName: 'all-cache',
     plugins: [
       {
+        expiration: {
+          maxEntries: 60,
+          maxAgeSeconds: 60 * 60 * 24 * 2,
+        },
         cacheableResponse: {
           statuses: [0, 200],
         },
@@ -45,7 +49,7 @@ messaging.onBackgroundMessage((payload) => {
   return self.registration.showNotification(payload.data.title, {
     body: payload.data.text,
     icon: "https://firebasestorage.googleapis.com/v0/b/tiendaslocales-7bbf8.appspot.com/o/logo.png?alt=media&token=bca80e33-79d3-4b7e-8e50-e7cb026a2a58",
-    badge: "https://firebasestorage.googleapis.com/v0/b/tiendaslocales-7bbf8.appspot.com/o/badge.png?alt=media&token=b561d310-48e6-4ef3-9f1e-5a0baace738f"
+    badge: "https://img.icons8.com/ios-filled/50/FAB005/appointment-reminders--v1.png"
   });
 });
 
