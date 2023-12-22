@@ -7,7 +7,7 @@ import { getToken } from "firebase/messaging";
 import { getAuth, signInAnonymously } from "firebase/auth";
 import { messaging } from "../../components/Firebase/config";
 
-import { socket } from "../../App";
+import { socket, SWregistration } from "../../App";
 import { updateUser, updateUserData } from "../../redux/actions";
 
 const Messages = () => {
@@ -46,52 +46,30 @@ const Messages = () => {
     ? storeEmail
     : savedStoreData.email;
 
+  useEffect(() => {
     const loginNotifications = () => {
-      signInAnonymously(getAuth())
-        .then((usuario) => console.log("usuario", usuario))
-        .catch((error) => {
-          console.error('Error al iniciar sesión anónima:', error);
-        });
+      signInAnonymously(getAuth()).then((usuario) => console.log(usuario));
     };
-    
-    const requestPermission = async () => {
-      try {
-        console.log('Solicitando permiso de notificación...');
-        const permission = await Notification.requestPermission();
-    
-        if (permission === 'granted') {
-          console.log('Permiso de notificación concedido.');
-    
-          setTimeout(async () => {
-            try {
-              const currentToken = await getToken(messaging, {
-                vapidKey: 'BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA',
-              });
-    
-              if (currentToken) {
-                console.log('Token FCM:', currentToken);
-                userData.FCMtoken = currentToken;
-                const id = userData?.id;
-                dispatch(updateUser(id, userData));
-              } else {
-                console.log('No se pudo generar el token de registro de la aplicación.');
-              }
-            } catch (error) {
-              console.error('Error al solicitar el token FCM:', error);
-            }
-          }, 1500);
-        } else {
-          console.log('Permiso de notificación denegado.');
-        }
-      } catch (error) {
-        console.error('Error al solicitar permiso de notificación:', error);
+    const activarMensajes = async () => {
+      const token = await getToken(messaging, {
+        vapidKey:
+          "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
+        serviceWorkerRegistration: SWregistration,
+      }).catch((error) => {
+        window.location.reload();
+        console.log("Error al generar el token", error);
+      });
+      if (token) {
+        console.log("tu token: ", token);
+        userData.FCMtoken = token;
+        const id = userData.id;
+        dispatch(updateUser(id, userData));
       }
+      if (!token) console.log("no hay token");
     };
-    
-    useEffect(() => {
-      loginNotifications();
-      requestPermission();
-    }, []);    
+    loginNotifications();
+    activarMensajes();
+  }, []);
 
   useEffect(() => {
     const updateDOMElements = () => {
@@ -130,7 +108,7 @@ const Messages = () => {
   return (
     <>
       <div className="chat">
-        <ChatEngine
+        {/* <ChatEngine
           publicKey="59fa8828-96fe-4a26-a226-18d513d30b1e"
           userName={chatUserName}
           userSecret={userSecret}
@@ -147,7 +125,7 @@ const Messages = () => {
           }}
           height="calc(100vh - 60px)"
           offset={-3}
-        />
+        /> */}
       </div>
     </>
   );

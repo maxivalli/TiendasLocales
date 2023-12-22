@@ -41,6 +41,7 @@ import { useDispatch } from "react-redux";
 import "./App.css";
 
 let socket;
+let SWregistration;
 
 function App() {
   const dispatch = useDispatch();
@@ -231,11 +232,13 @@ function App() {
           .register("/firebase-messaging-sw.js")
           .then((registration) => {
             console.log("Service Worker registrado con éxito: ", registration);
+            SWregistration = registration;
           })
           .catch((err) => {
             console.error("Error al registrar el Service Worker: ", err);
           });
       });
+    }
 
       window.addEventListener("offline", () => {
         const Toast = Swal.mixin({
@@ -272,7 +275,7 @@ function App() {
           title: "¡Estás en línea nuevamente!",
         });
       });
-    }
+    
   }, []);
 
   useEffect(() => {
@@ -754,6 +757,6 @@ function App() {
   );
 }
 
-export { App, socket };
+export { App, socket, SWregistration };
 
 //
