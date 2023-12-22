@@ -49,7 +49,7 @@ messaging.onBackgroundMessage((payload) => {
   return self.registration.showNotification(payload.data.title, {
     body: payload.data.text,
     icon: "https://firebasestorage.googleapis.com/v0/b/tiendaslocales-7bbf8.appspot.com/o/logo.png?alt=media&token=bca80e33-79d3-4b7e-8e50-e7cb026a2a58",
-    badge: "https://img.icons8.com/ios-filled/50/FAB005/appointment-reminders--v1.png"
+    badge: "https://img.icons8.com/color/96/map-pin.png"
   });
 });
 

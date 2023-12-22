@@ -19,7 +19,7 @@ export default defineConfig({
             options: {
               cacheName: "all-cache",
               expiration: {
-                maxEntries: 50,
+                maxEntries: 60,
                 maxAgeSeconds: 60 * 60 * 24 * 2,
               },
               cacheableResponse: {

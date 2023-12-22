@@ -14,6 +14,7 @@ import { updateUser, updateUserData } from "../../redux/actions";
 const Messages = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [permissionGranted, setPermissionGranted] = useState(false);
   const [savedStoreData, setSavedStoreData] = useState(() => {
     const storedData = localStorage.getItem("userStore");
     return storedData ? JSON.parse(storedData) : null;
@@ -47,30 +48,37 @@ const Messages = () => {
     ? storeEmail
     : savedStoreData.email;
 
-  useEffect(() => {
-    
-    const loginNotifications = () => {
-      signInAnonymously(getAuth()).then((usuario) => console.log(usuario));
-    };
-    const activarMensajes = async () => {
-      const token = await getToken(messaging, {
-        vapidKey:
-          "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
-      }).catch((error) => console.log("Error al generar el token", error));
-      if (token) {
-        console.log("tu token: ", token);
-        userData.FCMtoken = token;
-        const id = userData.id;
-        dispatch(updateUser(id, userData));
+  const requestNotificationPermission = () => {
+    Notification.requestPermission().then((permission) => {
+      if (permission === "granted") {
+        setPermissionGranted(true); 
       }
-      if (!token) console.log("no hay token");
-    };
-    loginNotifications();
-    activarMensajes();
-  }, []);
+    });
+  };
 
   useEffect(() => {
+    const activarMensajes = async () => {
+      if (permissionGranted) {
+        const token = await getToken(messaging, {
+          vapidKey:
+            "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
+        }).catch((error) => console.log("Error al generar el token", error));
+        if (token) {
+          console.log("tu token: ", token);
+          userData.FCMtoken = token;
+          const id = userData.id;
+          dispatch(updateUser(id, userData));
+        }
+        if (!token) console.log("no hay token");
+      }
+    };
 
+    requestNotificationPermission();
+
+    activarMensajes();
+  }, [permissionGranted]);
+
+  useEffect(() => {
     const updateDOMElements = () => {
       let people = document.querySelector(
         "#root > div.chat > div > div.ce-wrapper > div.ce-settings-column > div > div > div:nth-child(2) > div > div.ce-section-title-container.ce-person-title-container > div"
