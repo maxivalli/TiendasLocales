@@ -4,7 +4,7 @@ import { ChatEngine } from "react-chat-engine";
 import "./Messages.css";
 import { useNavigate } from "react-router";
 import { getToken } from "firebase/messaging";
-
+import { getAuth, signInAnonymously } from "firebase/auth";
 import { messaging } from "../../components/Firebase/config";
 
 import { socket } from "../../App";
@@ -46,28 +46,35 @@ const Messages = () => {
     ? storeEmail
     : savedStoreData.email;
 
+  const loginNotifications = () => {
+    signInAnonymously(getAuth()).then((usuario) => console.log(usuario));
+  };
+
   const requestPermission = () => {
     console.log("Requesting User Permission......");
     Notification.requestPermission().then((permission) => {
       if (permission === "granted") {
         console.log("Notification User Permission Granted.");
-        return getToken(messaging, {
-          vapidKey:
-            "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
-        })
-          .then((currentToken) => {
-            if (currentToken) {
-              console.log("Client Token: ", currentToken);
-            } else {
-              console.log("Failed to generate the app registration token.");
-            }
+        console.log("waiting...");
+        setTimeout(() => {
+          return getToken(messaging, {
+            vapidKey:
+              "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
           })
-          .catch((err) => {
-            console.log(
-              "An error occurred when requesting to receive the token.",
-              err
-            );
-          });
+            .then((currentToken) => {
+              if (currentToken) {
+                console.log("Client Token: ", currentToken);
+              } else {
+                console.log("Failed to generate the app registration token.");
+              }
+            })
+            .catch((err) => {
+              console.log(
+                "An error occurred when requesting to receive the token.",
+                err
+              );
+            });
+        }, 1500);
       } else {
         console.log("User Permission Denied.");
       }
@@ -75,6 +82,7 @@ const Messages = () => {
   };
 
   useEffect(() => {
+    loginNotifications();
     requestPermission();
   }, []);
 
