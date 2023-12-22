@@ -6,17 +6,20 @@ importScripts(
 );
 
 import { precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
-import { NetworkFirst, CacheableResponsePlugin } from 'workbox-strategies';
+import {
+  NetworkFirst,
+  Strategy
+} from 'workbox-strategies'
 
 precacheAndRoute(self.__WB_MANIFEST);
 cleanupOutdatedCaches();
 
-registerRoute(
+Strategy(
   /(.*)/,
   new NetworkFirst({
     cacheName: 'all-cache',
     plugins: [
-      new CacheableResponsePlugin({
+      new CacheableResponse({
         statuses: [0, 200],
       }),
     ],
