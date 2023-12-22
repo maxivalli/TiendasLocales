@@ -108,8 +108,8 @@ const Messages = () => {
   return (
     <>
       <div className="chat">
-        {/* <ChatEngine
-          publicKey="59fa8828-96fe-4a26-a226-18d513d30b1e"
+        <ChatEngine
+          publicKey="8592741f-0f29-4f09-bcfc-6669ac97b3a5"
           userName={chatUserName}
           userSecret={userSecret}
           onGetChats={(chats) => {
@@ -125,7 +125,7 @@ const Messages = () => {
           }}
           height="calc(100vh - 60px)"
           offset={-3}
-        /> */}
+        />
       </div>
     </>
   );
