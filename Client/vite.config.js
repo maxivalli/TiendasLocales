@@ -11,24 +11,6 @@ export default defineConfig({
       strategies: "injectManifest",
       srcDir: "src",
       filename: "firebase-messaging-sw.js",
-      workbox: {
-        runtimeCaching: [
-          {
-            urlPattern: /.*/,
-            handler: "NetworkFirst",
-            options: {
-              cacheName: "all-cache",
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 * 2,
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
-        ],
-      },
       includeAssets: [
         "favicon.ico",
         "apple-touc-icon.png",
@@ -71,7 +53,7 @@ export default defineConfig({
           {
             name: "Agregar",
             description: "Agregar un producto",
-            url: "https://tiendaslocales.com.ar/#/addproduct",
+            url: "https://tiendaslocales.com.ar/#/agregarproducto",
             icons: [
               {
                 src: "add.png",
@@ -82,7 +64,7 @@ export default defineConfig({
           {
             name: "Mensajes",
             description: "Mis mensajes",
-            url: "https://tiendaslocales.com.ar/#/messages",
+            url: "https://tiendaslocales.com.ar/#/mensajes",
             icons: [
               {
                 src: "user.png",
