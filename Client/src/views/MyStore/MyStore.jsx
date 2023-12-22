@@ -136,9 +136,6 @@ const MyStore = () => {
             <p>{selectedStore.categoria}</p>
           </div>
         </div>
-<<<<<<< HEAD
-        <Link to="/agregarproducto">
-=======
         {!userData.accT && 
           <div className={style.store}>
             <div className={style.MP}>
@@ -165,7 +162,6 @@ const MyStore = () => {
           </div>
         }
         <Link to="/addproduct">
->>>>>>> 690f2eb4d50eab6e90988beada90cd7c5c27a7c9
           <div className={style.agregar}>
             <button>Agregar</button>
           </div>
