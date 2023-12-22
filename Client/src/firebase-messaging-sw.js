@@ -9,7 +9,6 @@ import { precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
 import { registerRoute } from "workbox-routing";
 import { NetworkFirst } from "workbox-strategies";
 import { clientsClaim } from 'workbox-core'
-import { ExpirationPlugin } from 'workbox-expiration';
 
 self.skipWaiting()
 clientsClaim()
@@ -26,7 +25,6 @@ registerRoute(
   new NetworkFirst({
     cacheName: "all-cache",
     plugins: [
-      new ExpirationPlugin({ maxEntries: 30 }),
       {
         cacheableResponse: {
           statuses: [0, 200],
