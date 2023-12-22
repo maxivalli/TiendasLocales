@@ -8,7 +8,7 @@ import { messaging } from "./components/Firebase/config";
 import { onMessage } from "firebase/messaging";
 import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-
+import { registerSW } from "virtual:pwa-register";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 
@@ -41,16 +41,23 @@ import AddProduct from "./views/AddProduct/AddProduct";
 let socket;
 
 function App() {
- 
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker
-        .register("/firebase-messaging-sw.js") 
-        .then((registration) => {
-          console.log("Service Worker registrado con éxito.", registration);
+
+  const updateSW = registerSW({
+    onNeedRefresh() {
+      if (confirm("Hay una actualización. ¿Deseas actualizar?")) {
+        updateSW();
+      }
+    },
+  });
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => {
+          console.log('Service Worker registrado con éxito:', registration);
         })
-        .catch((error) => {
-          console.error("Error al registrar el Service Worker:", error);
+        .catch(error => {
+          console.error('Error al registrar el Service Worker:', error);
         });
     });
   }

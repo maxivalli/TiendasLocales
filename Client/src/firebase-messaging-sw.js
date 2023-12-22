@@ -7,18 +7,17 @@ importScripts(
 
 import { precacheAndRoute } from "workbox-precaching";
 precacheAndRoute(self.__WB_MANIFEST);
-/* import { registerRoute } from "workbox-routing";
+import { registerRoute } from "workbox-routing";
 import { NetworkFirst } from "workbox-strategies";
-import { clientsClaim } from 'workbox-core'
+import { clientsClaim } from "workbox-core";
 
-self.skipWaiting()
-clientsClaim()
+self.skipWaiting();
+clientsClaim();
 cleanupOutdatedCaches();
 
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING')
-    self.skipWaiting()
-})
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
+});
 
 registerRoute(
   /(.*)/,
@@ -26,13 +25,14 @@ registerRoute(
     cacheName: "all-cache",
     plugins: [
       {
+        expiration: { maxEntries: 50, maxAgeSeconds: 172800 },
         cacheableResponse: {
           statuses: [0, 200],
         },
       },
     ],
   })
-); */
+);
 
 const firebaseConfig = {
   apiKey: "AIzaSyAiXwnw-mIc8s-DkV2y8JaSwjKa__KF6i8",

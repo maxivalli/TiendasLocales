@@ -6,7 +6,6 @@ import store from "./redux/store";
 import { App } from "./App.jsx";
 import "./index.css";
 import { Auth0Provider } from "@auth0/auth0-react";
-import { registerSW } from "virtual:pwa-register";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Auth0Provider
@@ -24,10 +23,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   </Auth0Provider>
 );
 
-const updateSW = registerSW({
-  onNeedRefresh() {
-    if (confirm("Hay una actualización. ¿Deseas actualizar?")) {
-      updateSW();
-    }
-  },
-});
+

@@ -4,24 +4,9 @@ import { VitePWA } from "vite-plugin-pwa";
 
 const manifestForPlugIn = {
   registerType: "prompt",
-  workbox: {
-    runtimeCaching: [
-      {
-        urlPattern: /.*/,
-        handler: "NetworkFirst",
-        options: {
-          cacheName: "all-cache",
-          expiration: {
-            maxEntries: 50,
-            maxAgeSeconds: 60 * 60 * 24 * 2,
-          },
-          cacheableResponse: {
-            statuses: [0, 200],
-          },
-        },
-      },
-    ],
-  },
+  strategies: "injectManifest",
+  srcDir: "src",
+  filename: "firebase-messaging-sw.js",
   includeAssets: [
     "favicon.ico",
     "apple-touc-icon.png",
@@ -96,19 +81,7 @@ const manifestForPlugIn = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    VitePWA(manifestForPlugIn),
-    VitePWA({
-      strategies: "injectManifest",
-      srcDir: "src",
-      filename: "firebase-messaging-sw.js",
-      workbox: {
-        globPatterns: [],
-        globIgnores: ["*"],
-      },
-    }),
-  ],
+  plugins: [react(), VitePWA(manifestForPlugIn)],
   base: "",
   build: {
     chunkSizeWarningLimit: 1000000,
