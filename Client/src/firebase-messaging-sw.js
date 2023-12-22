@@ -7,6 +7,7 @@ importScripts(
 import { registerRoute } from "workbox-routing";
 import { NetworkFirst } from "workbox-strategies";
 import { clientsClaim } from "workbox-core";
+import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
 
 precacheAndRoute(self.__WB_MANIFEST);
@@ -23,8 +24,10 @@ registerRoute(
   new NetworkFirst({
     cacheName: "all-cache",
     plugins: [
+      new ExpirationPlugin({
+        maxEntries: 60,
+      }),
       {
-        expiration: { maxEntries: 50, maxAgeSeconds: 172800 },
         cacheableResponse: {
           statuses: [0, 200],
         },

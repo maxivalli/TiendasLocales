@@ -1,19 +1,14 @@
-import axios from "axios";
-import Swal from "sweetalert2";
 import { io } from "socket.io-client";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { messaging } from "./components/Firebase/config";
 import { onMessage } from "firebase/messaging";
+
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
-import { registerSW } from "virtual:pwa-register";
+import { Routes, Route} from "react-router-dom";
+
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
-
-import Navbar from "./components/Navbar/Navbar";
-
+import UbiForm from "./components/UbiForm/UbiForm";
 import Home from "./views/Home/Home";
 import Detail from "./views/Detail/Detail";
 import Favorites from "./views/Favorites/Favorites";
@@ -27,8 +22,14 @@ import Store from "./views/Store/Store";
 import Queries from "./views/Queries/Queries";
 import Faq from "./views/FAQ/Faq";
 import Dashboard from "./views/Dashboard/Dashboard";
-import "./App.css";
-import UbiForm from "./components/UbiForm/UbiForm";
+import AddProduct from "./views/AddProduct/AddProduct";
+
+import axios from "axios";
+import Swal from "sweetalert2";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Navbar from "./components/Navbar/Navbar";
+
 import {
   getAllPosts,
   getAllStores,
@@ -36,32 +37,12 @@ import {
   saveUserData,
 } from "./redux/actions";
 import { useDispatch } from "react-redux";
-import AddProduct from "./views/AddProduct/AddProduct";
+
+import "./App.css";
 
 let socket;
 
 function App() {
-
-  const updateSW = registerSW({
-    onNeedRefresh() {
-      if (confirm("Hay una actualización. ¿Deseas actualizar?")) {
-        updateSW();
-      }
-    },
-  });
-
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/firebase-messaging-sw.js')
-        .then(registration => {
-          console.log('Service Worker registrado con éxito:', registration);
-        })
-        .catch(error => {
-          console.error('Error al registrar el Service Worker:', error);
-        });
-    });
-  }
-
   const dispatch = useDispatch();
   //axios.defaults.baseURL = "http://localhost:3001/";
   axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/";
@@ -247,7 +228,7 @@ function App() {
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker
-          .register("/sw.js")
+          .register("/firebase-messaging-sw.js")
           .then((registration) => {
             console.log("Service Worker registrado con éxito: ", registration);
           })
@@ -296,13 +277,13 @@ function App() {
 
   useEffect(() => {
     onMessage(messaging, (message) => {
-      toast(message.data.text);
+      toast(message.data.text)
     });
   }, []);
 
   return (
     <>
-      <ToastContainer />
+    <ToastContainer/>
       {isAuthenticated || isAuthenticatedAuth0 ? (
         <Navbar
           isAuthenticated={isAuthenticated}
