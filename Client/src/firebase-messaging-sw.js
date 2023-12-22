@@ -27,5 +27,7 @@ messaging.onBackgroundMessage((payload) => {
 
   return self.registration.showNotification(payload.data.title, {
     body: payload.data.text,
+    tag: 'Tiendas Locales',
+    icon: './assets/logo.png'
   });
 });
