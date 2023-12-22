@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { ChatEngine } from "react-chat-engine";
 import "./Messages.css";
 import { useNavigate } from "react-router";
-import { getAuth, signInAnonymously } from "firebase/auth";
 import { getToken } from "firebase/messaging";
 
 import { messaging } from "../../components/Firebase/config";
@@ -47,25 +46,36 @@ const Messages = () => {
     ? storeEmail
     : savedStoreData.email;
 
-  useEffect(() => {
-    const loginNotifications = () => {
-      signInAnonymously(getAuth()).then((usuario) => console.log(usuario));
-    };
-    const activarMensajes = async () => {
-      const token = await getToken(messaging, {
-        vapidKey:
-          "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
-      }).catch((error) => console.log("Error al generar el token", error));
-      if (token) {
-        console.log("tu token: ", token);
-        userData.FCMtoken = token;
-        const id = userData.id;
-        dispatch(updateUser(id, userData));
+  const requestPermission = () => {
+    console.log("Requesting User Permission......");
+    Notification.requestPermission().then((permission) => {
+      if (permission === "granted") {
+        console.log("Notification User Permission Granted.");
+        return getToken(messaging, {
+          vapidKey:
+            "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
+        })
+          .then((currentToken) => {
+            if (currentToken) {
+              console.log("Client Token: ", currentToken);
+            } else {
+              console.log("Failed to generate the app registration token.");
+            }
+          })
+          .catch((err) => {
+            console.log(
+              "An error occurred when requesting to receive the token.",
+              err
+            );
+          });
+      } else {
+        console.log("User Permission Denied.");
       }
-      if (!token) console.log("no hay token");
-    };
-    loginNotifications();
-    activarMensajes();
+    });
+  };
+
+  useEffect(() => {
+    requestPermission();
   }, []);
 
   useEffect(() => {

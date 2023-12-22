@@ -24,10 +24,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   </Auth0Provider>
 );
 
-/* const updateSW = registerSW({
+const updateSW = registerSW({
   onNeedRefresh() {
     if (confirm("Hay una actualización. ¿Deseas actualizar?")) {
       updateSW();
     }
   },
-}); */
+});
