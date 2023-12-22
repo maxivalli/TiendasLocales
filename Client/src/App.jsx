@@ -41,6 +41,20 @@ import AddProduct from "./views/AddProduct/AddProduct";
 let socket;
 
 function App() {
+ 
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker
+        .register("/firebase-messaging-sw.js") 
+        .then((registration) => {
+          console.log("Service Worker registrado con éxito.", registration);
+        })
+        .catch((error) => {
+          console.error("Error al registrar el Service Worker:", error);
+        });
+    });
+  }
+
   const dispatch = useDispatch();
   //axios.defaults.baseURL = "http://localhost:3001/";
   axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/";
@@ -275,13 +289,13 @@ function App() {
 
   useEffect(() => {
     onMessage(messaging, (message) => {
-      toast(message.data.text)
+      toast(message.data.text);
     });
   }, []);
 
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       {isAuthenticated || isAuthenticatedAuth0 ? (
         <Navbar
           isAuthenticated={isAuthenticated}
