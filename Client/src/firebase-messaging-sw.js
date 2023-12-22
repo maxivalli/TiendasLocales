@@ -4,13 +4,12 @@ importScripts(
 importScripts(
   "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"
 );
-
-import { precacheAndRoute } from "workbox-precaching";
-precacheAndRoute(self.__WB_MANIFEST);
 import { registerRoute } from "workbox-routing";
 import { NetworkFirst } from "workbox-strategies";
 import { clientsClaim } from "workbox-core";
+import { precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
 
+precacheAndRoute(self.__WB_MANIFEST);
 self.skipWaiting();
 clientsClaim();
 cleanupOutdatedCaches();
