@@ -33,10 +33,9 @@ router.get("/:id/:othId", async (req, res) => {
 });
 
 router.get("/getAverageRating/", async (req, res) => {
-  console.log("CHAU", req)
-    const {usuarioId} = req.body
-    console.log("HOLA", usuarioId)
   try {
+    const usuarioId = req.query.usuarioId; // Obtener usuarioId de la consulta
+    console.log("Hola", usuarioId)
     const response = await reviewController.getAverageRatingByUser(usuarioId);
 
     return res.status(200).json(response);

@@ -64,8 +64,11 @@ const Store = ({ userData }) => {
         setAlredyReview(true);
         let usuarioId = newRating.data.reviewedUserId
         
-        console.log(usuarioId)
-        const response = await axios.get("/reviews/getAverageRating", usuarioId);
+        const response = await axios.get("/reviews/getAverageRating", {
+          params: {
+            usuarioId: usuarioId
+          }
+        });
 
         if (response) {
           selectedStore.averageRating = response.data;
