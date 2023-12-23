@@ -258,3 +258,22 @@ exports.getUserStore = async (userId) => {
     console.log("El usuario no tiene tienda aun");
   }
 };
+
+
+exports.getStoresByCategory = async (category) => {
+  try {
+    if (category === "Mostrar todas") {
+      const stores = await Tienda.findAll()
+      return stores
+    }
+    const stores = await Tienda.findAll({
+      where: {
+        categoria: category,
+      },
+    });
+
+    return stores;
+  } catch (error) {
+    throw error;
+  }
+};

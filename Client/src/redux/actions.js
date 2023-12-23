@@ -27,7 +27,6 @@ import {
   DELETE_POST,
   SELECTED_POST,
   RESTORE_POST,
-  RESET_FILTERS,
   CLEAR_DETAIL,
   USER_DATA,
   UPDATE_USER_DATA,
@@ -39,7 +38,12 @@ import {
   MARK_NOTI_AS_READ,
   GET_USER_STORE,
   DELETE_STORE,
-  SET_FCMTOKEN_USERDATA
+  // FILTERS
+  SELECTED_CATEGORY,
+  SELECTED_ALPHABET,
+  SELECTED_PRICE,
+  GET_STORES_BY_CATEGORY,
+  RESET_FILTERS,
 } from "./actionTypes";
 
 export function getAllUsers() {
@@ -504,6 +508,40 @@ export function createPost(post) {
     dispatch({
       type: CREATE_POST,
       payload: result.data,
+    });
+  };
+}
+
+// ___________________________________________________________________FILTERS______________________________________________________________________
+
+export function selectCategory(category) {
+  return {
+    type: SELECTED_CATEGORY,
+    payload: category,
+  };
+}
+
+export function selectAlphabetOrder(order) {
+  return {
+    type: SELECTED_ALPHABET,
+    payload: order,
+  };
+}
+
+export function selectPrice(price) {
+  return {
+    type: SELECTED_PRICE,
+    payload: price,
+  };
+}
+
+export function getStoresByCategory(category) {
+  return async function (dispatch) {
+    const response = await axios(`/tiendas/categories/${category}`);
+    console.log(response.data);
+    return dispatch({
+      type: GET_STORES_BY_CATEGORY,
+      payload: response.data,
     });
   };
 }
