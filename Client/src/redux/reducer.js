@@ -37,6 +37,7 @@ import {
   SELECTED_CATEGORY,
   SELECTED_PRICE,
   GET_STORES_BY_CATEGORY,
+  SELECTED_STORE,
 } from "./actionTypes";
 
 const initialState = {
@@ -54,6 +55,7 @@ const initialState = {
   allStores: [],
   allStoresCopy: [],
   userStore: {},
+  selectedStore: {},
   // POSTS
   storePosts: [],
   allPosts: [],
@@ -241,6 +243,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         userStore: action.payload,
       };
+
+    case SELECTED_STORE:
+      return {
+        ...state,
+        selectedStore: action.payload
+      }
     // ________________________________________________________FAVORITES___________________________________________________________
     case GET_FAVORITES:
       return {
@@ -415,7 +423,7 @@ function rootReducer(state = initialState, action) {
     selectedPrice: action.payload,
     allPosts: filteredPostsByPrice,
     // Actualiza storePosts solo si no se seleccionó una categoría
-    storePosts: state.selectedCategory ? state.storePosts : filteredPostsByPrice,
+    storePosts: filteredPostsByPrice.filter((post) => post.storeId === state.selectedStore.id)
   };
 
     case SELECTED_ALPHABET:
@@ -452,7 +460,7 @@ function rootReducer(state = initialState, action) {
         selectedAlphabetOrder: action.payload,
         allPosts: filteredPostss,
         allStores: filteredStoress,
-        storePosts: filteredPostss,
+        storePosts: sortedPostsByAlphabet.filter((post) => post.storeId === state.selectedStore.id)
       };
 
     case SELECTED_CATEGORY:

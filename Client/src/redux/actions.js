@@ -44,7 +44,10 @@ import {
   SELECTED_PRICE,
   GET_STORES_BY_CATEGORY,
   RESET_FILTERS,
+  SELECTED_STORE,
 } from "./actionTypes";
+
+// _____________________________________________________________USERS_________________________________________________________________
 
 export function getAllUsers() {
   return async function (dispatch) {
@@ -163,7 +166,7 @@ export function updateUserData(userData){
     payload:userData
   }
 }
-
+// _____________________________________________________________STORES__________________________________________________________________
 export function getAllStores() {
   return async function (dispatch) {
     try {
@@ -189,6 +192,13 @@ export function getUserStore(userId) {
   };
 }
 
+export const setSelectedStore = (store) => {
+  return {
+    type: SELECTED_STORE,
+    payload: store
+  };
+};
+// _________________________________________________________________FAVORITES_______________________________________________________________
 export function addFavorite(userId, storeId) {
   return async function (dispatch) {
     try {
@@ -243,7 +253,7 @@ export function removeFavoritePost(userId, storeId, postId) {
     }
   };
 }
-
+// __________________________________________________________NOTIFICATIONS_______________________________________________________________
 export function getUserNotif(userId) {
   return async function (dispatch) {
     try {
@@ -276,7 +286,7 @@ export function markNotiAsRead(notiId) {
     }
   };
 }
-
+// ________________________________________________________________POSTS_____________________________________________________________________
 export function getStorePosts(storeId) {
   return async function (dispatch) {
     const response = await axios(`/posts/getStorePosts/${storeId}`);
