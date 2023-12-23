@@ -187,4 +187,15 @@ router.get("/redirectUrl", async (req, res) => {
   }
 });
 
+router.get("/categories/:category", async (req, res) => {
+  const { category } = req.params;
+
+  try {
+    const response = await tiendasController.getStoresByCategory(category);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(404).json({ error: error.message });
+  }
+});
+
 module.exports = router;

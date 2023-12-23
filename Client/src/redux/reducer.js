@@ -32,46 +32,55 @@ import {
   GET_USER_NOTIFICATIONS,
   DELETE_USER_NOTIFICATIONS,
   GET_USER_STORE,
-  DELETE_STORE
+  DELETE_STORE,
+  SELECTED_ALPHABET,
+  SELECTED_CATEGORY,
+  SELECTED_PRICE,
+  GET_STORES_BY_CATEGORY,
 } from "./actionTypes";
 
 const initialState = {
+  // USERS
+  userData: {},
+  userNotif: [],
   allUsers: [],
-  allStores: [],
   allExistingUsers: [],
   allExistingUsersCopy: [],
   allDisabledUsers: [],
+  selectedUser: "",
   otherUserName: "",
   otherUserImage: "",
-  selectedUser: "",
-  favorites: [],
+  // STORES
+  allStores: [],
+  allStoresCopy: [],
+  userStore: {},
+  // POSTS
   storePosts: [],
   allPosts: [],
   allPostsCopy: [],
+  favorites: [],
   allDisabledPosts: [],
   allExistingPosts: [],
   allExistingPostsCopy: [],
-  selectedPost: "",
-  selectedProvince: "",
-  selectedLocality: "",
-  selectedCategory: "",
+  postDetail: [],
   selectedPostToInteract: "",
   selectedPostImage: "",
-  matches: [],
-  allLikes: [],
-  likedPosts: [],
-  messageHistory: [],
-  chats: [],
-  interacciones: {},
-  matchedPairs: [],
-  postDetail: [],
-  userData: {},
-  userStore: {},
-  userNotif: [],
+  // FILTERS
+  selectedPost: "",
+  selectedPrice: "",
+  selectedAlphabetOrder: "",
+  selectedCategory: "",
 };
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
+    // _________________________________________________USERS________________________________________________________
+    case USER_DATA:
+      return {
+        ...state,
+        userData: action.payload,
+      };
+
     case GET_ALL_USERS:
       return {
         ...state,
@@ -79,10 +88,11 @@ function rootReducer(state = initialState, action) {
         allUsersCopy: action.payload,
       };
 
-    case USER_DATA:
+    case OTHER_USER_DATA:
       return {
         ...state,
-        userData: action.payload,
+        otherUserName: action.payload.otherUserName,
+        otherUserImage: action.payload.otherUserImage,
       };
 
     case UPDATE_USER_DATA:
@@ -106,6 +116,48 @@ function rootReducer(state = initialState, action) {
         allExistingUsers: action.payload,
         allExistingUsersCopy: action.payload,
       };
+
+    case CREATE_USER:
+      return {
+        ...state,
+        allUsers: [...state.allUsers, action.payload],
+      };
+
+    case UPDATE_USER:
+      return {
+        ...state,
+        userData: action.payload,
+      };
+
+    case DELETE_USER:
+      return {
+        ...state,
+        allUsers: state.allUsers.filter(
+          (user) => user.id !== action.payload.id
+        ),
+      };
+
+    case RESTORE_USER: {
+      const { id } = action.payload;
+      const allUsers = [...state.allUsers];
+
+      const insertIndex = allUsers.findIndex((user) => user.id > id);
+
+      if (insertIndex === -1) {
+        allUsers.push(action.payload);
+      } else {
+        if (insertIndex === 0) {
+          allUsers.unshift(action.payload);
+        } else {
+          allUsers.splice(insertIndex, 0, action.payload);
+        }
+      }
+
+      return {
+        ...state,
+        allUsers,
+      };
+    }
 
     case GET_USER_BY_ID:
       return {
@@ -164,72 +216,38 @@ function rootReducer(state = initialState, action) {
       };
     }
 
-    case CREATE_USER:
-      return {
-        ...state,
-        allUsers: [...state.allUsers, action.payload],
-      };
-
-    case UPDATE_USER:
-      return {
-        ...state,
-        userData: action.payload
-      };
-
-    case DELETE_USER:
-      return {
-        ...state,
-        allUsers: state.allUsers.filter(
-          (user) => user.id !== action.payload.id
-        ),
-      };
-
-    case RESTORE_USER: {
-      const { id } = action.payload;
-      const allUsers = [...state.allUsers];
-
-      const insertIndex = allUsers.findIndex((user) => user.id > id);
-
-      if (insertIndex === -1) {
-        allUsers.push(action.payload);
-      } else {
-        if (insertIndex === 0) {
-          allUsers.unshift(action.payload);
-        } else {
-          allUsers.splice(insertIndex, 0, action.payload);
-        }
-      }
-
-      return {
-        ...state,
-        allUsers,
-      };
-    }
-
     case RESET_USERS_FILTER:
       return {
         ...state,
         allExistingUsers: state.allExistingUsersCopy,
       };
 
+    case DELETE_USER_NOTIFICATIONS:
+      return {
+        ...state,
+        userNotif: [],
+      };
+
+    // _______________________________________________________STORES__________________________________________________________
     case GET_STORES:
       return {
         ...state,
         allStores: action.payload,
+        allStoresCopy: action.payload,
       };
 
-      case GET_USER_STORE:
-        return {
-          ...state,
-          userStore: action.payload,
-        };
-
+    case GET_USER_STORE:
+      return {
+        ...state,
+        userStore: action.payload,
+      };
+    // ________________________________________________________FAVORITES___________________________________________________________
     case GET_FAVORITES:
       return {
         ...state,
         favorites: action.payload,
       };
-
+    // __________________________________________________________POSTS______________________________________________________________
     case GET_STORE_POSTS:
       return {
         ...state,
@@ -240,19 +258,13 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allPosts: action.payload,
+        allPostsCopy: action.payload,
       };
 
     case GET_ALL_DISABLED_POSTS:
       return {
         ...state,
         allDisabledPosts: action.payload,
-      };
-
-    case OTHER_USER_DATA:
-      return {
-        ...state,
-        otherUserName: action.payload.otherUserName,
-        otherUserImage: action.payload.otherUserImage,
       };
 
     case GET_ALL_EXISTING_POSTS:
@@ -270,18 +282,13 @@ function rootReducer(state = initialState, action) {
 
     case UPDATE_STOCK:
       const { quantity, postId } = action.payload;
-
-      // Actualiza la propiedad stock de selectedPost
       const updatedSelectedPost = {
         ...state.selectedPost,
         stock: state.selectedPost.stock - quantity,
       };
-
-      // Actualiza la propiedad stock del post correspondiente en allPosts
       const updatedAllPosts = state.allPosts.map((post) =>
         post.id === postId ? { ...post, stock: post.stock - quantity } : post
       );
-
       return {
         ...state,
         selectedPost: updatedSelectedPost,
@@ -296,13 +303,11 @@ function rootReducer(state = initialState, action) {
 
     case SORT_POSTS_BY_ID: {
       let ordered;
-
       if (action.payload === "Ascendente") {
         ordered = state.allExistingPosts.sort((a, b) => (a.id > b.id ? 1 : -1));
       } else {
         ordered = state.allExistingPosts.sort((a, b) => (b.id > a.id ? 1 : -1));
       }
-
       return {
         ...state,
         allExistingPost: [...ordered],
@@ -311,7 +316,6 @@ function rootReducer(state = initialState, action) {
 
     case SORT_POSTS_BY_STATUS: {
       let posts = state.allExistingPostsCopy;
-
       if (action.payload === "Activas") {
         posts = state.allExistingPostsCopy.filter(
           (post) => !post.Deshabilitado
@@ -321,7 +325,6 @@ function rootReducer(state = initialState, action) {
       } else {
         posts = state.allExistingPostsCopy;
       }
-
       return {
         ...state,
         allExistingPosts: [...posts],
@@ -345,24 +348,16 @@ function rootReducer(state = initialState, action) {
     case DELETE_POST:
       return {
         ...state,
-        allPosts: state.allPosts.filter(
-          (post) => post.id !== action.payload
-        ),
+        allPosts: state.allPosts.filter((post) => post.id !== action.payload),
       };
 
-      case DELETE_STORE:
-        return {
-          ...state,
-          allStores: state.allStores.filter(
-            (store) => store.id !== action.payload
-          ),
-        };
-
-      case DELETE_USER_NOTIFICATIONS:
-        return {
-          ...state,
-          userNotif: [],
-        };
+    case DELETE_STORE:
+      return {
+        ...state,
+        allStores: state.allStores.filter(
+          (store) => store.id !== action.payload
+        ),
+      };
 
     case RESTORE_POST: {
       const { id } = action.payload;
@@ -379,7 +374,6 @@ function rootReducer(state = initialState, action) {
           allPosts.splice(insertIndex, 0, action.payload);
         }
       }
-
       return {
         ...state,
         allPosts,
@@ -390,6 +384,94 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         postDetail: [],
+      };
+
+    // ____________________________________________FILTERS________________________________________________________
+
+    case SELECTED_PRICE:
+  let sortedPostsByPrice = state.allPostsCopy.slice();
+
+  if (action.payload === "asc") {
+    sortedPostsByPrice.sort((a, b) => a.price - b.price);
+  } else if (action.payload === "desc") {
+    sortedPostsByPrice.sort((a, b) => b.price - a.price);
+  }
+
+  let filteredPostsByPrice = sortedPostsByPrice;
+
+  // Aplica el filtro de categoría si no se seleccionó "Mostrar Todo"
+  if (state.selectedCategory && state.selectedCategory !== "Mostrar todas") {
+    const filteredStores = state.allStoresCopy.filter(
+      (store) => store.categoria === state.selectedCategory
+    );
+
+    filteredPostsByPrice = sortedPostsByPrice.filter((post) =>
+      filteredStores.some((store) => store.id === post.storeId)
+    );
+  }
+
+  return {
+    ...state,
+    selectedPrice: action.payload,
+    allPosts: filteredPostsByPrice,
+    // Actualiza storePosts solo si no se seleccionó una categoría
+    storePosts: state.selectedCategory ? state.storePosts : filteredPostsByPrice,
+  };
+
+    case SELECTED_ALPHABET:
+      let sortedPostsByAlphabet = state.allPostsCopy.slice();
+      let sortedStoresByAlphabet = state.allStoresCopy.slice();
+
+      if (action.payload === "asc") {
+        sortedPostsByAlphabet.sort((a, b) => a.title.localeCompare(b.title));
+        sortedStoresByAlphabet.sort((a, b) => a.nombre.localeCompare(b.nombre));
+      } else if (action.payload === "desc") {
+        sortedPostsByAlphabet.sort((a, b) => b.title.localeCompare(a.title));
+        sortedStoresByAlphabet.sort((a, b) => b.nombre.localeCompare(a.nombre));
+      }
+
+      let filteredStoress = sortedStoresByAlphabet;
+      let filteredPostss = sortedPostsByAlphabet;
+
+      // Aplica el filtro de categoría si no se seleccionó "Mostrar Todo"
+      if (
+        state.selectedCategory &&
+        state.selectedCategory !== "Mostrar todas"
+      ) {
+        filteredStoress = sortedStoresByAlphabet.filter(
+          (store) => store.categoria === state.selectedCategory
+        );
+
+        filteredPostss = sortedPostsByAlphabet.filter((post) =>
+          filteredStoress.some((store) => store.id === post.storeId)
+        );
+      }
+
+      return {
+        ...state,
+        selectedAlphabetOrder: action.payload,
+        allPosts: filteredPostss,
+        allStores: filteredStoress,
+        storePosts: filteredPostss,
+      };
+
+    case SELECTED_CATEGORY:
+      return {
+        ...state,
+        selectedCategory: action.payload,
+      };
+
+    case GET_STORES_BY_CATEGORY:
+      let filteredStores = action.payload;
+
+      const filteredPosts = state.allPostsCopy.filter((post) =>
+        filteredStores.some((store) => store.id === post.storeId)
+      );
+
+      return {
+        ...state,
+        allStores: filteredStores,
+        allPosts: filteredPosts,
       };
 
     default:
