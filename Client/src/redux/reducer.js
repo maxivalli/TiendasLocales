@@ -38,6 +38,8 @@ import {
   SELECTED_PRICE,
   GET_STORES_BY_CATEGORY,
   SELECTED_STORE,
+  GET_STORE_BY_NAME,
+  FILTER_BY_NAME
 } from "./actionTypes";
 
 const initialState = {
@@ -72,6 +74,9 @@ const initialState = {
   selectedPrice: "",
   selectedAlphabetOrder: "",
   selectedCategory: "",
+  // SEARCHBAR
+  filteredStoresByName: [],
+
 };
 
 function rootReducer(state = initialState, action) {
@@ -481,6 +486,28 @@ function rootReducer(state = initialState, action) {
         allStores: filteredStores,
         allPosts: filteredPosts,
       };
+
+
+    // ______________________________________________________________SEARCHBAR____________________________________________________________
+    case GET_STORE_BY_NAME:
+      return {
+        ...state,
+        allStores: action.payload,
+      };
+
+      case FILTER_BY_NAME:
+        let filteredStoresByName = state.allStoresCopy;
+  
+        if (action.payload) {
+          filteredStoresByName = filteredStoresByName.filter((store) =>
+            store.nombre.toLowerCase().includes(action.payload.toLowerCase())
+          );
+        }
+  
+        return {
+          ...state,
+          filteredStoresByName,
+        };
 
     default:
       return state;
