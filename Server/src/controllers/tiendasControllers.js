@@ -1,5 +1,6 @@
 const { Tienda, User } = require("../DB_config");
 const axios = require("axios");
+const { Op } = require("sequelize");
 
 async function getImageBlobFromURL(imageUrl) {
   try {
@@ -31,7 +32,6 @@ exports.createStore = async (storeData) => {
     throw new Error("Ya tienes una tienda creada o en espera de aprobación.");
   }
   try {
-
     const newStore = await Tienda.create({
       nombre: storeData.nombre,
       email: storeData.email,
@@ -92,35 +92,35 @@ exports.updateStore = async (storeId, storeData) => {
     if (!tienda) {
       throw new Error("Store not found");
     }
-if(storeData?.direccion) {
-    if (storeData?.direccion?.calle != "") {
-      tienda.direccion = {
-        ...tienda.direccion,
-        calle: storeData?.direccion?.calle,
-      };
-    }
+    if (storeData?.direccion) {
+      if (storeData?.direccion?.calle != "") {
+        tienda.direccion = {
+          ...tienda.direccion,
+          calle: storeData?.direccion?.calle,
+        };
+      }
 
-    if (storeData?.direccion?.numero != "") {
-      tienda.direccion = {
-        ...tienda.direccion,
-        numero: storeData?.direccion?.numero,
-      };
-    }
+      if (storeData?.direccion?.numero != "") {
+        tienda.direccion = {
+          ...tienda.direccion,
+          numero: storeData?.direccion?.numero,
+        };
+      }
 
-    if (storeData?.direccion?.piso != "") {
-      tienda.direccion = {
-        ...tienda.direccion,
-        piso: storeData?.direccion?.piso,
-      };
-    }
+      if (storeData?.direccion?.piso != "") {
+        tienda.direccion = {
+          ...tienda.direccion,
+          piso: storeData?.direccion?.piso,
+        };
+      }
 
-    if (storeData?.direccion?.depto != "") {
-      tienda.direccion = {
-        ...tienda.direccion,
-        depto: storeData?.direccion?.depto,
-      };
+      if (storeData?.direccion?.depto != "") {
+        tienda.direccion = {
+          ...tienda.direccion,
+          depto: storeData?.direccion?.depto,
+        };
+      }
     }
-  }
     if (storeData.nombre) {
       tienda.nombre = storeData.nombre;
     }
@@ -134,31 +134,31 @@ if(storeData?.direccion) {
       tienda.categoria = storeData.categoria;
     }
     if (storeData?.horarios) {
-    if (storeData?.horarios?.horario_de_apertura != "") {
-      tienda.horarios = {
-        ...tienda.horarios,
-        horario_de_apertura: storeData?.horarios?.horario_de_apertura,
-      };
+      if (storeData?.horarios?.horario_de_apertura != "") {
+        tienda.horarios = {
+          ...tienda.horarios,
+          horario_de_apertura: storeData?.horarios?.horario_de_apertura,
+        };
+      }
+      if (storeData?.horarios?.horario_de_cierre != "") {
+        tienda.horarios = {
+          ...tienda.horarios,
+          horario_de_cierre: storeData?.horarios?.horario_de_cierre,
+        };
+      }
+      if (storeData?.horarios?.horario_de_apertura2 != "") {
+        tienda.horarios = {
+          ...tienda.horarios,
+          horario_de_apertura2: storeData?.horarios?.horario_de_apertura2,
+        };
+      }
+      if (storeData?.horarios?.horario_de_cierre2 != "") {
+        tienda.horarios = {
+          ...tienda.horarios,
+          horario_de_cierre2: storeData?.horarios?.horario_de_cierre2,
+        };
+      }
     }
-    if (storeData?.horarios?.horario_de_cierre != "") {
-      tienda.horarios = {
-        ...tienda.horarios,
-        horario_de_cierre: storeData?.horarios?.horario_de_cierre,
-      };
-    }
-    if (storeData?.horarios?.horario_de_apertura2 != "") {
-      tienda.horarios = {
-        ...tienda.horarios,
-        horario_de_apertura2: storeData?.horarios?.horario_de_apertura2,
-      };
-    }
-    if (storeData?.horarios?.horario_de_cierre2 != "") {
-      tienda.horarios = {
-        ...tienda.horarios,
-        horario_de_cierre2: storeData?.horarios?.horario_de_cierre2,
-      };
-    }
-  }
     console.log(tienda.dias, storeData.dias);
     if (storeData.dias) {
       tienda.dias = storeData.dias;
@@ -223,13 +223,13 @@ exports.habStore = async (id) => {
           id: store.userId,
         },
       });
-        store.habilitado = "habilitado";
-        await store.save();
+      store.habilitado = "habilitado";
+      await store.save();
 
-        user.vendedor = "vendedor";
-        await user.save();
+      user.vendedor = "vendedor";
+      await user.save();
 
-        return store;
+      return store;
     }
   } catch (error) {
     throw error;
@@ -259,12 +259,11 @@ exports.getUserStore = async (userId) => {
   }
 };
 
-
 exports.getStoresByCategory = async (category) => {
   try {
     if (category === "Mostrar todas") {
-      const stores = await Tienda.findAll()
-      return stores
+      const stores = await Tienda.findAll();
+      return stores;
     }
     const stores = await Tienda.findAll({
       where: {
@@ -273,6 +272,23 @@ exports.getStoresByCategory = async (category) => {
     });
 
     return stores;
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.getStoreByName = async (name) => {
+  try {
+    const stores = await Tienda.findAll({
+      where: {
+        nombre: {
+          [Op.iLike]: `%${name}%`,
+        },
+      },
+    });
+    console.log(stores);
+    if (stores.length >= 1) 
+      return stores;
   } catch (error) {
     throw error;
   }

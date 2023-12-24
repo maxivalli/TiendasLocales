@@ -45,6 +45,9 @@ import {
   GET_STORES_BY_CATEGORY,
   RESET_FILTERS,
   SELECTED_STORE,
+  // SEARCHBAR
+  GET_STORE_BY_NAME,
+  FILTER_BY_NAME
 } from "./actionTypes";
 
 // _____________________________________________________________USERS_________________________________________________________________
@@ -554,4 +557,23 @@ export function getStoresByCategory(category) {
       payload: response.data,
     });
   };
+}
+
+// ______________________________________________________________SEARCHBAR________________________________________________________________
+
+export function getStoreByName(name) {
+  return async function(dispatch) {
+    const response = await axios(`/tiendas/getStoreByName/name?name=${name}`);
+    return dispatch({
+          type: GET_STORE_BY_NAME,
+          payload: response.data
+      })
+  }
+}
+
+export function filterByName(string) {
+  return{
+    type: FILTER_BY_NAME,
+    payload: string
+  }
 }
