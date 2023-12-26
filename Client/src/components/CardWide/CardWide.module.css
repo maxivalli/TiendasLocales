@@ -4,8 +4,7 @@
   width: 350px;
   height: 100px;
   border-radius: 10px;
-  background-color: rgba(128, 128, 128, 0.1);
-  border: 2px solid rgb(175, 175, 175);
+  box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.3);
 }
 
 .cardWide img {
