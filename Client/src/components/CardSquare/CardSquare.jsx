@@ -76,7 +76,8 @@ const CardSquare = ({
     setShowModal(true);
   };
 
-  const esVistaEspecifica = location.pathname.includes('/micuenta');
+  const esVistaMiCuenta = location.pathname.includes('/micuenta');
+  const esVistaMiTienda = location.pathname.includes('/mitienda');
 
   return (
     <>
@@ -97,10 +98,10 @@ const CardSquare = ({
           <h2>{title}</h2>
           <h3>{marca ? marca : <p></p>}</h3>
           <h3>${price}</h3>
-          <h4>{esVistaEspecifica ? 'Cantidad' : 'Stock'}: {stock}</h4>
+          <h4>{esVistaMiCuenta ? 'Cantidad' : 'Stock'}: {stock}</h4>
           <h4>{delivery ? "Envío disponible 🛵" : "Retirar en tienda 🙋🏻‍♂️"}</h4>
         </Link>
-        {location.hash.includes(`/mitienda/`) && (
+        {esVistaMiTienda && (
           <div className={style.prodBut}>
             <button className={style.edit} onClick={openModal}>
               <img
