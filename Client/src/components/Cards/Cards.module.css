@@ -15,16 +15,14 @@
 }
 
 @media (max-width: 1280px) {
-
   .cards {
-    width: 820px;
+    width: 840px;
   }
 }
 
 @media (max-width: 768px) {
-
   .cards {
-    width: 340px;
+    width: 360px;
     margin: 0;
   }
 }

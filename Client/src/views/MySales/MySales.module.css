@@ -1,0 +1,54 @@
+.misventas {
+  display: grid;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100vw;
+}
+
+.misventas h3 {
+  justify-self: center;
+  font-style: italic;
+}
+
+.title {
+  margin-top: 30px;
+  height: 50px;
+  justify-self: center;
+  font-style: italic;
+  color: initial;
+}
+
+.pendientes {
+  display: grid;
+  justify-self: center;
+  gap: 15px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.entregadas {
+  display: grid;
+  justify-self: center;
+  gap: 15px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  margin-bottom: 100px;
+}
+
+@media (max-width: 1280px) {
+  .stores {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .products {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .stores {
+    grid-template-columns: 1fr;
+  }
+  .products {
+    grid-template-columns: 1fr;
+  }
+}

@@ -18,13 +18,25 @@
   display: grid;
   justify-content: center;
 }
+
+.avatar p {
+  font-size: 12px;
+  align-self: flex-start;
+  margin: 0;
+}
+
+.buttonMP {
+  display: grid;
+}
+
 .MP {
   display: grid;
-  justify-self: left;
+  justify-self: center;
 }
 
 .MP button {
   padding: 0;
+  justify-content: center;
 }
 
 .modal {
@@ -33,7 +45,9 @@
   justify-self: center;
   color: initial;
   font-size: 12px;
+  text-align: center;
 }
+
 .avatar img {
   width: 150px;
   height: 150px;
@@ -41,8 +55,7 @@
   align-self: center;
   border-radius: 50%;
   border: 3px solid red;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 5px;
 }
 
 .info {

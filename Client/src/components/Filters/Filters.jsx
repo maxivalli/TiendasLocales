@@ -1,16 +1,26 @@
-import React from 'react'
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectCategory, getStoresByCategory,resetFilters, selectAlphabetOrder, selectPrice, getAllPosts } from "../../redux/actions";
+import {
+  selectCategory,
+  getStoresByCategory,
+  resetFilters,
+  selectAlphabetOrder,
+  selectPrice,
+  getAllPosts,
+} from "../../redux/actions";
 
-import style from './Filters.module.css'
+import style from "./Filters.module.css";
 
 const Filters = () => {
   const dispatch = useDispatch();
   const selectedPrice = useSelector((state) => state.selectedPrice);
-  const selectedAlphabetOrder = useSelector((state) => state.selectedAlphabetOrder);
+  const selectedAlphabetOrder = useSelector(
+    (state) => state.selectedAlphabetOrder
+  );
   const selectedCategory = useSelector((state) => state.selectedCategory);
   const allStores = useSelector((state) => state.allStoresCopy);
   const allPosts = useSelector((state) => state.allPostsCopy);
+  const [botonFiltros, setBotonFiltros] = useState(false);
 
   const handlePriceChange = (event) => {
     const price = event.target.value;
@@ -30,41 +40,65 @@ const Filters = () => {
 
   const uniqueCategories = () => {
     const filteredPosts = allStores;
-    const categories = [...new Set(filteredPosts.map((post) => post.categoria))];
-    categories.unshift('Mostrar todas');
+    const categories = [
+      ...new Set(filteredPosts.map((post) => post.categoria)),
+    ];
+    categories.unshift("🔍 Mostrar todas");
     return categories;
   };
-
 
   const handleResetFilters = () => {
     dispatch(resetFilters());
     dispatch(getAllPosts());
   };
 
-  return (
-    <div className={style.filters}>
-        <select value={selectedCategory} onChange={handleCategoryChange}>
-        <option value="" disabled>
-          Categoría
-        </option>
-        {uniqueCategories().map((category, index) => (
-          <option key={index} value={category}>
-            {category}
-          </option>
-        ))}
-      </select>
-        <select value={selectedPrice} onChange={handlePriceChange}>
-        <option value="">Precio</option>
-        <option value="asc">Menor a Mayor Precio</option>
-        <option value="desc">Mayor a Menor Precio</option>
-      </select>
-      <select value={selectedAlphabetOrder} onChange={handleAlphabetChange}>
-        <option value="">Nombre</option>
-        <option value="asc">A-Z</option>
-        <option value="desc">Z-A</option>
-      </select>
-    </div>
-  )
-}
+  const toggleFilters = () => {
+    setBotonFiltros(!botonFiltros);
+  };
 
-export default Filters
+  return (
+    <>
+      <div className={style.filters}>
+        <button onClick={toggleFilters}>
+          Filtrar
+        </button>
+        {botonFiltros && (
+          <div className={style.filtros}>
+            <h3>Filtros</h3>
+            <select value={selectedCategory} onChange={handleCategoryChange}>
+              <option value="" disabled>
+                Categoría
+              </option>
+              {uniqueCategories().map((category, index) => (
+                <option key={index} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            <select value={selectedPrice} onChange={handlePriceChange}>
+              <option value="" disabled>
+                Precio
+              </option>
+              <option value="asc">Menor a Mayor Precio</option>
+              <option value="desc">Mayor a Menor Precio</option>
+            </select>
+            <select
+              value={selectedAlphabetOrder}
+              onChange={handleAlphabetChange}
+            >
+              <option value="" disabled>
+                Nombre
+              </option>
+              <option value="asc">A-Z</option>
+              <option value="desc">Z-A</option>
+            </select>
+            <button onClick={toggleFilters}>Hecho</button>
+            <button onClick={handleResetFilters} className={style.limpiar}>Limpiar filtros</button>
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default Filters;

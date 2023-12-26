@@ -91,7 +91,7 @@ const MyStore = () => {
                     )
                   )}
                 </div>
-              ) : (<p>Todavia nadie a calificado tu tienda</p>)}
+              ) : (<p>Aún no tienes calificaciones</p>)}
             </div>
           </div>
 
@@ -137,7 +137,7 @@ const MyStore = () => {
           </div>
         </div>
         {!userData.accT && 
-          <div className={style.store}>
+          <div className={style.buttonMP}>
             <div className={style.MP}>
                 <div className={style.modal}>
                   <p>
@@ -161,7 +161,7 @@ const MyStore = () => {
               </div> 
           </div>
         }
-        <Link to="/addproduct">
+        <Link to="/agregarproducto">
           <div className={style.agregar}>
             <button>Agregar</button>
           </div>

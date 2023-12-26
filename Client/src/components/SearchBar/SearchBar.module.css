@@ -1,9 +1,13 @@
 .searchBar {
   position: fixed;
   left: 50%;
-  transform: translateX(-50%);
-  top: 10px;
+  transform: translateX(-45%);
   z-index: 10;
+  top: 10px;
+}
+
+.searchBar form {
+  display: flex;
 }
 
 .searchBar input {
@@ -19,9 +23,10 @@
 .searchBar button {
   background-color: transparent;
   border: none;
-}
-
-.searchBar img {
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  margin-left: 5px;
   align-self: center;
 }
 
@@ -29,9 +34,5 @@
   .searchBar input {
     width: 180px;
     font-size: 12px;
-  }
-
-  .searchBar button {
-    display: none;
   }
 }

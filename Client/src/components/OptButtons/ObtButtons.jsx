@@ -50,8 +50,8 @@ const OptButtons = ({ storeId }) => {
         <div className={style.botonesExtras}>
           <button className={style.edit} onClick={openModal}>
             <img
-              width="30"
-              height="30"
+              width="24"
+              height="24"
               src="https://img.icons8.com/glyph-neue/64/FFFFFF/edit--v1.png"
               alt="edit--v1"
             />

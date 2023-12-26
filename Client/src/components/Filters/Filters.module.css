@@ -6,15 +6,55 @@
   z-index: 11;
   align-content: center;
   justify-self: center;
-  gap: 30px;
+  gap: 15px;
 }
 
-.filters select {
+.filters button {
+  background-color: white;
+  color: black;
+  height: 40px;
+  width: 90px;
+  border: none;
+  border-radius: 5px;
+}
+
+.filtros {
+  border-radius: 10px;
+  width: 300px;
+  height: 400px;
+  background-color: rgba(128, 128, 128, 0.9);
+  display: grid;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.filtros h3 {
+  font-style: italic;
+  justify-self: center;
+}
+
+.filtros select {
+  width: 200px;
   height: 30px;
   border: none;
   border-radius: 5px;
   padding: 5px;
   font-size: 14px;
+  justify-self: center;
+  align-self: center;
+}
+
+.filtros button {
+  justify-self: center;
+  align-self: flex-end;
+  background-color: cornflowerblue;
+}
+
+.filtros .limpiar {
+  width: 120px;
+  background-color: transparent;
 }
 
 @media (max-width: 768px) {

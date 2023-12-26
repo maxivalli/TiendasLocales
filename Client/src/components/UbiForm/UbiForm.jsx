@@ -71,6 +71,7 @@ const UbiForm = ({ userData, onAddressAdded }) => {
       console.error(error);
     }
   };
+  
   return (
     <>
       <motion.div

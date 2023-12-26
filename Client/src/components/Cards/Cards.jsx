@@ -24,6 +24,8 @@ const Cards = () => {
     speed: 500,
     slidesToShow: Math.min(3, posts.length),
     slidesToScroll: 3,
+    className: "slider variable-width",
+    variableWidth: true,
     responsive: [
       {
         breakpoint: 1280,

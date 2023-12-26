@@ -13,7 +13,7 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
   const [showAccounts, setShowAccounts] = useState();
 
   const selectAccount = () => {
-    setShowAccounts(false); 
+    setShowAccounts(false);
   };
 
   const {
@@ -54,8 +54,8 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
               <img
                 width="28"
                 height="28"
-                src="https://img.icons8.com/puffy/32/FFFFFF/experimental-home-puffy.png"
-                alt="experimental-home-puffy"
+                src="https://img.icons8.com/fluency-systems-regular/48/FFFFFF/home--v1.png"
+                alt="home--v1"
               />
             </button>
           </Link>
@@ -96,7 +96,10 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
               <div className={style.accounts}>
                 <Link to="/mensajes/usuario">
                   <button
-                    onClick={() => { handleClick(); selectAccount(); }}
+                    onClick={() => {
+                      handleClick();
+                      selectAccount();
+                    }}
                     className={style.profilePicture}
                   >
                     <img
@@ -111,7 +114,10 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
 
                 <Link to="/mensajes/tienda">
                   <button
-                    onClick={() => { handleClick(); selectAccount(); }}
+                    onClick={() => {
+                      handleClick();
+                      selectAccount();
+                    }}
                     className={style.profilePicture}
                   >
                     <img

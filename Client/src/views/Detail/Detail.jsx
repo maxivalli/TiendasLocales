@@ -116,7 +116,7 @@ const Detail = ({ userData }) => {
       <Head />
       <div className={style.detail}>
         <div className={style.sidebar}>
-          <Link to={`/store/${linkName}`}>
+          <Link to={`/tienda/${linkName}`}>
             <div className={style.avatar}>
               <img src={selectedStore?.image} alt="image" />
 
@@ -193,7 +193,7 @@ const Detail = ({ userData }) => {
             <h5>
               {selectedPost.delivery
                 ? "Envío disponible 🛵"
-                : "Retiro en tienda 🙋🏻‍♂️"}
+                : "Retirar en tienda 🙋🏻‍♂️"}
             </h5>
           </div>
           {buyButton ? 

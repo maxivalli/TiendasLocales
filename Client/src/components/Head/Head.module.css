@@ -87,7 +87,7 @@
   color: gray;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1280px) {
   .background {
     display: inline-flex;
     justify-content: space-between;
