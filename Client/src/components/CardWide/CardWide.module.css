@@ -1,32 +1,32 @@
 .cardWide {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 350px;
-    height: 100px;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgb(128, 128, 128, 0.2);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 350px;
+  height: 100px;
+  border-radius: 10px;
+  background-color: rgba(128, 128, 128, 0.1);
+  border: 2px solid rgb(175, 175, 175);
 }
 
 .cardWide img {
-    justify-self: center;
-    align-self: center;
+  justify-self: center;
+  align-self: center;
 }
 
 .cardWide button {
-    margin-right: 15px;
-    margin-bottom: 15px;
-    width: 110px;
-    height: 40px;
-    border: none;
-    border-radius: 5px;
-    background-color: red;
-    color: whitesmoke;
-    padding: 10px;
-    font-weight: 800;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  width: 110px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  background-color: red;
+  color: whitesmoke;
+  padding: 10px;
+  font-weight: 800;
 }
 
 .cardWide a {
-    align-self: flex-end;
-    justify-self: right;
+  align-self: flex-end;
+  justify-self: right;
 }

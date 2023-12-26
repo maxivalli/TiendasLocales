@@ -95,8 +95,11 @@ const Store = ({ userData }) => {
       <Filters />
       <Head />
       <div className={style.viewStore}>
+
         <div className={style.store}>
+
           <div className={style.avatar}>
+
             <img src={selectedStore.image} alt="avatar" />
             <div className={style.info2}>
               {selectedStore.averageRating && (
@@ -114,7 +117,8 @@ const Store = ({ userData }) => {
                      : 
                    (<>
                       <div>
-                        <div className={style.ratingg}>
+                        <div className={style.rating}>
+                          <p>Calificá esta tienda:</p>
                           {[1, 2, 3, 4, 5].map((value) => (
                             <label key={value}>
                               <input

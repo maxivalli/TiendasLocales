@@ -26,8 +26,21 @@
   align-self: center;
   border-radius: 50%;
   border: 3px solid red;
+  margin: 5px;
+}
+
+.info2 {
+  position: absolute;
+  display: inline-flex;
+  background-color: rgba(128, 128, 128, 0.5);
+  width: 100vw;
+  justify-content: center;
+  top: 260px;
+}
+
+.info2 p {
+  margin: 0;
   margin-left: 10px;
-  margin-right: 10px;
 }
 
 .info {
@@ -47,20 +60,22 @@
   color: cornflowerblue;
 }
 
-.ratingg{
-  position: absolute;
-}
-.info2 {
-  display: grid;
-  text-align: center;
-  align-self: center;
+.rating {
+  display: flex;
 }
 
-.info2 h3 {
+.rating p {
   margin: 0;
-  align-self: center;
-  justify-self: center;
-  padding-right: 5px;
+}
+
+.rating input {
+  margin: 0;
+  margin-right: 5px;
+}
+
+.rating label {
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .redes {
@@ -192,6 +207,7 @@
   }
 
   .info2 {
+    top: 180px;
     padding-right: 0;
   }
 

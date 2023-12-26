@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   addFavoritePost,
   deletePost,
@@ -8,7 +8,6 @@ import {
   removeFavoritePost,
 } from "../../redux/actions";
 import { socket } from "../../App";
-
 import style from "./CardSquare.module.css";
 import ProductUpdate from "../ProductUpdate/ProductUpdate";
 
@@ -26,6 +25,7 @@ const CardSquare = ({
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userData);
   const favorites = useSelector((state) => state.favorites);
+  const location = useLocation();
 
   const userId = userData?.id;
   const postId = id;
@@ -76,6 +76,8 @@ const CardSquare = ({
     setShowModal(true);
   };
 
+  const esVistaEspecifica = location.pathname.includes('/micuenta');
+
   return (
     <>
       <div className={style.cardSquare}>
@@ -95,10 +97,10 @@ const CardSquare = ({
           <h2>{title}</h2>
           <h3>{marca ? marca : <p></p>}</h3>
           <h3>${price}</h3>
-          <h4>Stock: {stock}</h4>
-          <h4>{delivery ? "Envío disponible 🛵" : "Retiro en tienda 🙋🏻‍♂️"}</h4>
+          <h4>{esVistaEspecifica ? 'Cantidad' : 'Stock'}: {stock}</h4>
+          <h4>{delivery ? "Envío disponible 🛵" : "Retirar en tienda 🙋🏻‍♂️"}</h4>
         </Link>
-        {location.hash.includes(`/mystore/`) && (
+        {location.hash.includes(`/mitienda/`) && (
           <div className={style.prodBut}>
             <button className={style.edit} onClick={openModal}>
               <img

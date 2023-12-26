@@ -13,7 +13,7 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
   const [showAccounts, setShowAccounts] = useState();
 
   const selectAccount = () => {
-    setShowAccounts(false); 
+    setShowAccounts(false);
   };
 
   const {
@@ -42,24 +42,24 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
   return (
     <>
       <div className={style.navbar}>
-        <Link to="/home" className={style.toHome}>
+        <Link to="/inicio" className={style.toHome}>
           <div className={style.logo}>
             <img src={Logo} alt="logo" />
           </div>
         </Link>
         <div className={style.search}></div>
         <div className={style.directAccess}>
-          <Link to="/home">
+          <Link to="/inicio">
             <button>
               <img
                 width="28"
                 height="28"
-                src="https://img.icons8.com/puffy/32/FFFFFF/experimental-home-puffy.png"
-                alt="experimental-home-puffy"
+                src="https://img.icons8.com/fluency-systems-regular/48/FFFFFF/home--v1.png"
+                alt="home--v1"
               />
             </button>
           </Link>
-          <Link to="/favorites">
+          <Link to="/favoritos">
             <button>
               <img
                 width="28"
@@ -79,7 +79,7 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
               />
             </button>
           ) : (
-            <Link to="/messages/user">
+            <Link to="/mensajes/usuario">
               <button>
                 <img
                   width="32"
@@ -94,9 +94,12 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
             <div className={style.modal}>
               <h3>Selecciona una una cuenta para chatear</h3>
               <div className={style.accounts}>
-                <Link to="/messages/user">
+                <Link to="/mensajes/usuario">
                   <button
-                    onClick={() => { handleClick(); selectAccount(); }}
+                    onClick={() => {
+                      handleClick();
+                      selectAccount();
+                    }}
                     className={style.profilePicture}
                   >
                     <img
@@ -109,9 +112,12 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
                   </button>
                 </Link>
 
-                <Link to="/messages/store">
+                <Link to="/mensajes/tienda">
                   <button
-                    onClick={() => { handleClick(); selectAccount(); }}
+                    onClick={() => {
+                      handleClick();
+                      selectAccount();
+                    }}
                     className={style.profilePicture}
                   >
                     <img
@@ -125,7 +131,7 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
             </div>
           )}
 
-          <Link to="/account">
+          <Link to="/micuenta">
             {isAuthenticated || isAuthenticatedAuth0 ? (
               <button className={style.profilePicture}>
                 <img
@@ -144,7 +150,7 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
               </button>
             )}
           </Link>
-          <Link to="/more">
+          <Link to="/mas">
             <button>
               <img
                 width="32"

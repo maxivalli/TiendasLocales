@@ -214,7 +214,7 @@ const CreateStore = () => {
       const response = await axios.post("/tiendas/createStore", storeData);
 
       if (response) {
-        navigate("/more");
+        navigate("/mas");
         const data = {storeData, userData}
         socket?.emit("waitingStore", data);
         Swal.fire({

@@ -3,18 +3,16 @@ import Head from "../../components/Head/Head";
 import { useAuth0 } from "@auth0/auth0-react";
 import UbiForm from "../../components/UbiForm/UbiForm";
 import CardSquare from "../../components/CardSquare/CardSquare";
-import Filters from '../../components/Filters/Filters'
-import pizza from "../../assets/pizza.jpg";
+import Filters from "../../components/Filters/Filters";
 import style from "./Account.module.css";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
 const Account = ({ setAuth, setUserData }) => {
-  const userData = useSelector((state) => state.userData)
-  console.log(userData);
+  const userData = useSelector((state) => state.userData);
   const { user, logout } = useAuth0(); // Fix here: destructure 'logout' correctly
   const [showModal, setShowModal] = useState(false);
-  const [comprasData, setCompras ] = useState([])
+  const [comprasData, setCompras] = useState([]);
 
   const openModal = () => {
     setShowModal(true);
@@ -37,27 +35,25 @@ const Account = ({ setAuth, setUserData }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/tiendas/comprasRecibidas/${userData.id}`);
+        const response = await axios.get(
+          `/tiendas/comprasRecibidas/${userData.id}`
+        );
         if (response) {
           setCompras(response.data);
-          console.log(response.data);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-  
+
     fetchData();
-  }, []);
+  }, [userData.id]);
 
-
-  // EN comprasData esta toda la info de las compras hechas/
   return (
     <>
-      <Filters/>
+      <Filters />
       <Head />
       <div className={style.viewAccount}>
-        
         <div className={style.account}>
           <div className={style.avatar}>
             <img src={userData && userData.image} alt="avatar" />
@@ -67,10 +63,12 @@ const Account = ({ setAuth, setUserData }) => {
             <h2>{userData && userData.username}</h2>
             <p>{userData && userData.email}</p>
             <p>
-            {userData && userData.direccion && userData.direccion.direccion.trim() !== ""
-              ? userData.direccion.direccion
-              : "Sin dirección"}
-          </p>
+              {userData &&
+              userData.direccion &&
+              userData.direccion.direccion.trim() !== ""
+                ? userData.direccion.direccion
+                : "Sin dirección"}
+            </p>
             <p>
               {userData && userData.averageRating !== 0
                 ? userData.averageRating
@@ -104,21 +102,22 @@ const Account = ({ setAuth, setUserData }) => {
         </div>
 
         <div className={style.misCompras}>
-          <CardSquare
-            image={pizza}
-            title={"Pizza Napolitana"}
-            price={"5000"}
-            store={"Pizza Land"}
-          />
-          <CardSquare
-            image={pizza}
-            title={"Pizza Napolitana"}
-            price={"5000"}
-            store={"Pizza Land"}
-          />
+          {comprasData.map((item, index) => {
+            return (
+              <CardSquare
+                key={index}
+                id={item?.postId}
+                image={item?.productImage}
+                title={item?.title}
+                price={item?.unit_price}
+                stock={item?.quantity}
+                delivery={true}
+              />
+            );
+          })}
         </div>
 
-          {showModal && (
+        {showModal && (
           <div className={style.modal}>
             <div className={style.modalContent}>
               <button
@@ -127,7 +126,10 @@ const Account = ({ setAuth, setUserData }) => {
               >
                 X
               </button>
-              <UbiForm userData={userData} onAddressAdded={handleAddressAdded} />
+              <UbiForm
+                userData={userData}
+                onAddressAdded={handleAddressAdded}
+              />
             </div>
           </div>
         )}

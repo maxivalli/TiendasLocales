@@ -1,14 +1,15 @@
+import axios from "axios";
+import Swal from "sweetalert2";
 import { io } from "socket.io-client";
 import { useAuth0 } from "@auth0/auth0-react";
-import { messaging } from "./components/Firebase/config";
-import { onMessage } from "firebase/messaging";
-
 import React, { useState, useEffect } from "react";
-import { Routes, Route} from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
-import UbiForm from "./components/UbiForm/UbiForm";
+
+import Navbar from "./components/Navbar/Navbar";
+
 import Home from "./views/Home/Home";
 import Detail from "./views/Detail/Detail";
 import Favorites from "./views/Favorites/Favorites";
@@ -17,19 +18,12 @@ import Account from "./views/Account/Account";
 import More from "./views/More/More";
 import CreateStore from "./views/CreateStore/CreateStore";
 import MyStore from "./views/MyStore/MyStore";
-import MySales from "./views/MySales/MySales";
 import Store from "./views/Store/Store";
 import Queries from "./views/Queries/Queries";
 import Faq from "./views/FAQ/Faq";
 import Dashboard from "./views/Dashboard/Dashboard";
-import AddProduct from "./views/AddProduct/AddProduct";
-
-import axios from "axios";
-import Swal from "sweetalert2";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Navbar from "./components/Navbar/Navbar";
-
+import "./App.css";
+import UbiForm from "./components/UbiForm/UbiForm";
 import {
   getAllPosts,
   getAllStores,
@@ -37,16 +31,14 @@ import {
   saveUserData,
 } from "./redux/actions";
 import { useDispatch } from "react-redux";
-
-import "./App.css";
+import AddProduct from "./views/AddProduct/AddProduct";
 
 let socket;
-let SWregistration;
 
 function App() {
   const dispatch = useDispatch();
-  axios.defaults.baseURL = "http://localhost:3001/";
-  //axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/";
+  //axios.defaults.baseURL = "http://localhost:3001/";
+  axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/";
   const {
     user,
     isAuthenticated: isAuthenticatedAuth0,
@@ -164,7 +156,6 @@ function App() {
                   tiendas: userDataResponse.data.tiendas,
                   vendedor: userDataResponse.data.vendedor,
                   accT: userDataResponse.data.accT,
-                  FCMtoken: userDataResponse.data.FCMtoken,
                 });
                 dispatch(
                   saveUserData({
@@ -178,7 +169,6 @@ function App() {
                     tiendas: userDataResponse.data.tiendas,
                     vendedor: userDataResponse.data.vendedor,
                     accT: userDataResponse.data.accT,
-                    FCMtoken: userDataResponse.data.FCMtoken,
                   })
                 );
                 dispatch(getUserStore(userDataResponse?.data.id));
@@ -213,8 +203,8 @@ function App() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      //socket = io("https://tiendaslocales-production.up.railway.app/");
-      socket = io("http://localhost:3001/");
+      socket = io("https://tiendaslocales-production.up.railway.app/");
+      //socket = io("http://localhost:3001/");
       setShouldConnectSocket(true);
     }
   }, [isAuthenticated]);
@@ -229,16 +219,14 @@ function App() {
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker
-          .register("/firebase-messaging-sw.js")
+          .register("/sw.js")
           .then((registration) => {
             console.log("Service Worker registrado con éxito: ", registration);
-            SWregistration = registration;
           })
           .catch((err) => {
             console.error("Error al registrar el Service Worker: ", err);
           });
       });
-    }
 
       window.addEventListener("offline", () => {
         const Toast = Swal.mixin({
@@ -275,18 +263,11 @@ function App() {
           title: "¡Estás en línea nuevamente!",
         });
       });
-    
-  }, []);
-
-  useEffect(() => {
-    onMessage(messaging, (message) => {
-      toast(message.data.text)
-    });
+    }
   }, []);
 
   return (
     <>
-    <ToastContainer/>
       {isAuthenticated || isAuthenticatedAuth0 ? (
         <Navbar
           isAuthenticated={isAuthenticated}
@@ -335,7 +316,7 @@ function App() {
           }
         />
         <Route
-          path="/inicio"
+          path="/home"
           element={
             isAuthenticated ? (
               userData ? (
@@ -391,7 +372,7 @@ function App() {
           }
         />
         <Route
-          path="favoritos"
+          path="favorites"
           element={
             isAuthenticated ? (
               userData ? (
@@ -447,7 +428,7 @@ function App() {
           }
         />
         <Route
-          path="/mensajes/*"
+          path="/messages/*"
           element={
             isAuthenticated || isAuthenticatedAuth0 ? (
               user || userData ? (
@@ -465,7 +446,7 @@ function App() {
           }
         />
         <Route
-          path="/micuenta"
+          path="/account"
           element={
             isAuthenticated ? (
               userData ? (
@@ -501,7 +482,7 @@ function App() {
           }
         />
         <Route
-          path="/mas"
+          path="/more"
           element={
             isAuthenticated ? (
               userData ? (
@@ -557,7 +538,7 @@ function App() {
           }
         />
         <Route
-          path="/mitienda/:storeId"
+          path="/mystore/:storeId"
           element={
             isAuthenticated ? (
               userData ? (
@@ -571,7 +552,7 @@ function App() {
               )
             ) : isAuthenticatedAuth0 ? (
               user ? (
-                <MyStore userData={userData} setAuth={setAuth} />
+                <MyStore userData={user.name} setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -585,35 +566,7 @@ function App() {
           }
         />
         <Route
-          path="/misventas"
-          element={
-            isAuthenticated ? (
-              userData ? (
-                <MySales userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <MySales userData={user.name} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : (
-              <Login setAuth={setAuth} />
-            )
-          }
-        />
-        <Route
-          path="/tienda/:linkName"
+          path="/store/:linkName"
           element={
             isAuthenticated ? (
               userData ? (
@@ -641,7 +594,7 @@ function App() {
           }
         />
         <Route
-          path="/consultas"
+          path="/queries"
           element={
             isAuthenticated ? (
               userData ? (
@@ -725,7 +678,7 @@ function App() {
           }
         />
         <Route
-          path="/agregarproducto"
+          path="/addproduct"
           element={
             isAuthenticated ? (
               userData ? (
@@ -757,6 +710,6 @@ function App() {
   );
 }
 
-export { App, socket, SWregistration };
+export { App, socket };
 
 //

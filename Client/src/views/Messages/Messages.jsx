@@ -3,17 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { ChatEngine } from "react-chat-engine";
 import "./Messages.css";
 import { useNavigate } from "react-router";
-import { getAuth, signInAnonymously } from "firebase/auth";
 import { getToken } from "firebase/messaging";
-
+import { getAuth, signInAnonymously } from "firebase/auth";
 import { messaging } from "../../components/Firebase/config";
 
-import { socket } from "../../App"
+import { socket, SWregistration } from "../../App";
 import { updateUser, updateUserData } from "../../redux/actions";
 
 const Messages = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [savedStoreData, setSavedStoreData] = useState(() => {
     const storedData = localStorage.getItem("userStore");
     return storedData ? JSON.parse(storedData) : null;
@@ -35,66 +34,44 @@ const Messages = () => {
 
   const url = new URL(window.location.href);
   const lastPathSegment = url.href.split("/").pop();
-  const isUserAccount = lastPathSegment == "user";
-  const chatUserName = isUserAccount ? userName : storeName ? storeName : savedStoreData.nombre;
+  const isUserAccount = lastPathSegment == "usuario";
+  const chatUserName = isUserAccount
+    ? userName
+    : storeName
+    ? storeName
+    : savedStoreData.nombre;
   const userSecret = isUserAccount
     ? userEmail
     : storeEmail
     ? storeEmail
     : savedStoreData.email;
 
-
   useEffect(() => {
-  const loginNotifications = () => {
-    signInAnonymously(getAuth()).then((usuario) => console.log(usuario));
-  };
-  const activarMensajes = async () => {
-    const token = await getToken(messaging, {
-      vapidKey:
-        "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
-    }).catch((error) => console.log("Error al generar el token", error));
-    if (token) { 
-      console.log("tu token: ", token);
-      userData.FCMtoken = token
-      const id = userData.id
-      dispatch(updateUser(id, userData))
-    }
-    if (!token) console.log("no hay token");
-  };
-  loginNotifications()
-  activarMensajes()
-}, []);
-
-
-
-  useEffect(() => {
-    
-    if ("Notification" in window) {
-      if (
-        Notification.permission !== "granted" &&
-        Notification.permission !== "denied"
-      ) {
-        Notification.requestPermission().then((permission) => {
-          if (permission === "granted") {
-/*             const loginNotifications = () => {
-              signInAnonymously(getAuth()).then((usuario) => console.log(usuario));
-            };
-            const activarMensajes = async () => {
-              const token = await getToken(messaging, {
-                vapidKey:
-                  "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
-              }).catch((error) => console.log("Error al generar el token", error));
-              if (token) console.log("tu token: ", token);
-              if (!token) console.log("no hay token");
-            };
-            loginNotifications()
-            activarMensajes() */
-            console.log("Permiso para notificaciones concedido.");
-          }
-        });
+    const loginNotifications = () => {
+      signInAnonymously(getAuth()).then((usuario) => console.log(usuario));
+    };
+    const activarMensajes = async () => {
+      const token = await getToken(messaging, {
+        vapidKey:
+          "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
+        serviceWorkerRegistration: SWregistration,
+      }).catch((error) => {
+        window.location.reload();
+        console.log("Error al generar el token", error);
+      });
+      if (token) {
+        console.log("tu token: ", token);
+        userData.FCMtoken = token;
+        const id = userData.id;
+        dispatch(updateUser(id, userData));
       }
-    }
+      if (!token) console.log("no hay token");
+    };
+    loginNotifications();
+    activarMensajes();
+  }, []);
 
+  useEffect(() => {
     const updateDOMElements = () => {
       let people = document.querySelector(
         "#root > div.chat > div > div.ce-wrapper > div.ce-settings-column > div > div > div:nth-child(2) > div > div.ce-section-title-container.ce-person-title-container > div"
@@ -126,31 +103,26 @@ const Messages = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-
-  const [chats, setChats] = useState() 
+  const [chats, setChats] = useState();
 
   return (
     <>
       <div className="chat">
         <ChatEngine
-
-          publicKey="59fa8828-96fe-4a26-a226-18d513d30b1e"
+          publicKey="8592741f-0f29-4f09-bcfc-6669ac97b3a5"
           userName={chatUserName}
           userSecret={userSecret}
-          
-          onGetChats={(chats)=> {
-            setChats(chats)
+          onGetChats={(chats) => {
+            setChats(chats);
           }}
-
           onNewMessage={(chatId, message) => {
-            const chat = chats?.find((chat) => chat?.id === chatId)
-            const people = chat.people
-            const lastMessage = message.text.replace(/<\/?p>/g, '');
-            const sender = message.sender_username
-            const messageData = { people, lastMessage, sender, userData }
+            const chat = chats?.find((chat) => chat?.id === chatId);
+            const people = chat.people;
+            const lastMessage = message.text.replace(/<\/?p>/g, "");
+            const sender = message.sender_username;
+            const messageData = { people, lastMessage, sender, userData };
             socket?.emit("newMessage", messageData);
           }}
-
           height="calc(100vh - 60px)"
           offset={-3}
         />

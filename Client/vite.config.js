@@ -3,25 +3,10 @@ import react from "@vitejs/plugin-react-swc";
 import { VitePWA } from "vite-plugin-pwa";
 
 const manifestForPlugIn = {
-  registerType: "prompt",
-  workbox: {
-    runtimeCaching: [
-      {
-        urlPattern: /.*/,
-        handler: "NetworkFirst",
-        options: {
-          cacheName: "all-cache",
-          expiration: {
-            maxEntries: 40,
-            maxAgeSeconds: 60 * 60 * 24 * 1,
-          },
-          cacheableResponse: {
-            statuses: [0, 200],
-          },
-        },
-      },
-    ],
-  },
+  strategies: "injectManifest",
+  srcDir: "src",
+  filename: "firebase-messaging-sw.js",
+  registerType: 'autoUpdate',
   includeAssets: [
     "favicon.ico",
     "apple-touc-icon.png",
@@ -64,7 +49,7 @@ const manifestForPlugIn = {
       {
         name: "Agregar",
         description: "Agregar un producto",
-        url: "https://tiendaslocales.com.ar/#/addproduct",
+        url: "https://tiendaslocales.com.ar/#/agregarproducto",
         icons: [
           {
             src: "add.png",
@@ -75,7 +60,7 @@ const manifestForPlugIn = {
       {
         name: "Mensajes",
         description: "Mis mensajes",
-        url: "https://tiendaslocales.com.ar/#/messages",
+        url: "https://tiendaslocales.com.ar/#/mensajes",
         icons: [
           {
             src: "user.png",

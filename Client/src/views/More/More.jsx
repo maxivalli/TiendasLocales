@@ -58,7 +58,7 @@ const More = () => {
                 alt="online-order"
               />
             }
-            link={`/mystore/${storeData.id}`}
+            link={`/mitienda/${storeData.id}`}
           />
         ) : (
           storeData &&
@@ -67,9 +67,9 @@ const More = () => {
             <>
             <div className={style.cenC}>
               <p>
-                Para que la tienda sea habilitada deberas pagar<br></br> la
-                cuota al centro comercial,<br></br> alli un empleado aprobara tu
-                cuenta!
+                Para que la tienda sea habilitada deberás pagar<br></br>
+                la suscripción en el centro Centro Comercial,<br></br>
+                allí el personal aprobará tu cuenta.
               </p>
               </div>
               <CardWide
@@ -96,7 +96,7 @@ const More = () => {
               alt="mail"
             />
           }
-          link={"/queries"}
+          link={"/consultas"}
         />
         <CardWide
           textButton={"FAQ"}
