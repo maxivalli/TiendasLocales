@@ -3,6 +3,8 @@ const fs = require('fs');
 const registerTemplate = fs.readFileSync(__dirname + '/register.html', 'utf8');
 const forgotTemplate = fs.readFileSync(__dirname + '/forgot.html', 'utf8');
 const postTemplate = fs.readFileSync(__dirname + '/newPost.html', 'utf8');
+const habStoreTemplate = fs.readFileSync(__dirname + '/habStore.html', 'utf8'); 
+const compraTemplate = fs.readFileSync(__dirname + '/compra.html', 'utf8'); 
 
 const registerMail = (user) => {
   return {
@@ -10,6 +12,24 @@ const registerMail = (user) => {
     from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
     subject: "Registro completado",
     html: registerTemplate,
+  };
+};
+
+const habStoreMail = (user) => {
+  return {
+    to: user.email,
+    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
+    subject: "Tienda habilitada",
+    html: habStoreTemplate,
+  };
+};
+
+const compraMail = (user) => {
+  return {
+    to: user.email,
+    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
+    subject: "Compra Realizada",
+    html: compraTemplate,
   };
 };
 
@@ -47,4 +67,4 @@ const passwordForgot = (email, id) => {
   }
 }
 
-module.exports = { registerMail, postCreated, passwordForgot };
+module.exports = { registerMail, postCreated, passwordForgot, habStoreMail, compraMail };
