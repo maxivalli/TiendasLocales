@@ -56,11 +56,6 @@ const MyStore = () => {
 
     
     window.location.href = `/#/mystore/${storeId}`;
-    Swal.fire({
-      icon: "success",
-      title: "¡Ya tenés tu tienda conectada a MP!",
-      text: "Ahora actualiza la página",
-    });
   };
   
   if (loading) {

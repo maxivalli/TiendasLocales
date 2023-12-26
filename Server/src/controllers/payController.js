@@ -4,6 +4,8 @@ const { ACCESS_TOKEN, CLIENT_ID, CLIENT_SECRET, CRYPTO_KEY } = process.env;
 const mercadopago = require("mercadopago");
 const axios = require("axios");
 const CryptoJS = require('crypto-js');
+const { compraMail } = require("../utils/mailObjects");
+const { transporter } = require("../config/mailer");
 
 exports.createOrder = async (paymentData) => {
     try{
@@ -15,6 +17,8 @@ exports.createOrder = async (paymentData) => {
 
         let preference = {
             items: [{
+                userDireccion: paymentData.userDireccion,
+                delivery: paymentData.delivery,
                 postId: paymentData.postId,
                 userId: paymentData.userId,
                 title: paymentData.title,
@@ -57,6 +61,8 @@ exports.webhook = async (allData) => {
           await post.save();
     
             const newCompra = await Compra.create({
+              userDireccion: allData.payUserData.userDireccion,
+              delivery: allData.payUserData.delivery,
               userId: allData.payUserData.userId,
               postId: allData.payUserData.postId,
               storeId: post.storeId,
@@ -68,6 +74,15 @@ exports.webhook = async (allData) => {
               productImage: post.image
             });
             await newCompra.save();
+          }
+          const user = await User.findOne({
+            where: {
+              id: allData.payUserData.userId,
+            },
+          });
+          
+          if(user){
+            await transporter.sendMail(compraMail(user));
           }
           return true
         }

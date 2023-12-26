@@ -42,6 +42,12 @@ module.exports = (sequelize) => {
         productImage: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        delivery: {
+            type: DataTypes.BOOLEAN,
+        }, 
+        userDireccion: {
+            type: DataTypes.STRING,
         }, 
     });
 };

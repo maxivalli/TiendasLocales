@@ -1,6 +1,8 @@
 const { Tienda, User } = require("../DB_config");
 const axios = require("axios");
 const { Op } = require("sequelize");
+const { habStoreMail } = require("../utils/mailObjects");
+const { transporter } = require("../config/mailer");
 
 async function getImageBlobFromURL(imageUrl) {
   try {
@@ -229,6 +231,7 @@ exports.habStore = async (id) => {
       user.vendedor = "vendedor";
       await user.save();
 
+      await transporter.sendMail(habStoreMail(user));
       return store;
     }
   } catch (error) {
