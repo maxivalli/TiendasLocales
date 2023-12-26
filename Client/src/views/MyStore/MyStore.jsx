@@ -55,7 +55,7 @@ const MyStore = () => {
     );
 
     
-    window.location.href = `/#/mystore/${storeId}`;
+    window.location.href = `/#/mitienda/${storeId}`;
   };
   
   if (loading) {

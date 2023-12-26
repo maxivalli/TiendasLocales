@@ -1,10 +1,18 @@
+.dash {
+  display: grid;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100vw;
+}
+
 .head {
   display: grid;
-  margin-top: 60px;
 }
 
 .head h2 {
   justify-self: center;
+  font-style: italic;
 }
 
 .head p {
@@ -18,9 +26,11 @@
 }
 
 .storeCard {
+  width: 350px;
   display: grid;
   border: 2px solid gray;
   border-radius: 10px;
+  justify-self: center;
 }
 
 .title {
@@ -81,4 +91,3 @@
     grid-template-columns: 1fr;
   }
 }
-

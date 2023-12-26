@@ -5,6 +5,7 @@ import { getAllStores } from "../../redux/actions";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { socket } from "../../App";
+import Head from '../../components/Head/Head'
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -48,7 +49,8 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className={style.home}>
+    <Head/>
+      <div className={style.dash}>
         <div className={style.head}>
           <h2>Panel de control</h2>
           <p>Tiendas en espera de aprobacion</p>
