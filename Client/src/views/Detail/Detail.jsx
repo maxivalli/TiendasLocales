@@ -17,7 +17,7 @@ const Detail = ({ userData }) => {
   const [totalPrice, setTotalPrice] = useState(selectedPost.price);
   const [ buyButton, setBuyButton ] = useState(false)
   const [isLoading, setIsLoading] = useState(true);
-
+  const [ buyDirButton, setBuyDirButton ] = useState(false);
   const selectedStore = stores?.find(
     (store) => store.id == selectedPost?.storeId
   );
@@ -31,11 +31,15 @@ const Detail = ({ userData }) => {
 
         if(result.data.accT){
           setBuyButton(true)
+        } 
+        
+        if (result.data.direccion){
+          setBuyDirButton(true)
         }
       }
     }
     fetchDataAcct()
-  },[selectedStore])
+  },[selectedStore, selectedPost])
 
 
   const linkName = selectedStore?.nombre.replace(/\s/g, "-");
@@ -110,7 +114,7 @@ const Detail = ({ userData }) => {
       </div>
     );
   }
-
+console.log("1", buyDirButton)
   return (
     <>
       <Head />
@@ -197,12 +201,16 @@ const Detail = ({ userData }) => {
             </h5>
           </div>
           {buyButton ? 
-            (
-              <div className={style.comprar}>
+            (buyDirButton ?
+              (<div className={style.comprar}>
                 <button onClick={handleBuy} disabled={isBuyButtonDisabled}>
                   Comprar
                 </button>
-              </div>
+              </div>) : (<div className={style.comprar}>
+                <p >
+                  Necesitas una direccion para comprar productos con envio
+                </p>
+              </div>)
             ) : 
             (<div>
               <div className={style.comprar}>
