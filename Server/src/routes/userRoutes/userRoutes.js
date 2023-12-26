@@ -145,4 +145,30 @@ router.put('/restoreUser/:id', async (req, res) => {
   }
 });
 
+router.post('/forgot-password', async (req, res) => {
+  const { email } = req.body;
+  try {
+    const result = await userController.forgotPassword(email);
+    return res.status(200).json(result);
+  } catch (error) {
+    return res.status(404).json({ error: error.message });
+  }
+});
+
+router.post('/reset-password/:id', async (req, res) => {
+  const { id } = req.params;
+  const { password } = req.body;
+  const result = await userController.resetPassword(id, password);
+
+  try{
+    if (result) {
+      return res.status(200).json(result);
+    }
+  }catch (error){
+    return res.status(400).json(error.message);
+  };
+});
+
+
+
 module.exports = router;

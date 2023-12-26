@@ -441,3 +441,40 @@ exports.getAnotherUser = async (id) => {
     throw new Error("Error al iniciar sesión");
   }
 };
+
+exports.forgotPassword = async (email) => {
+  try{
+    const usuario = await User.findOne({where: {email}})
+
+    if(!usuario){
+        throw new Error("El usuario no existe")
+    }
+    const response = await transporter.sendMail(passwordForgot(email, usuario.id))
+    console.log(response);
+    return "El mail fue enviado correctamente";
+
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+exports.resetPassword = async (id, newPassword) => {
+  try {
+    const user = await User.findOne({ where: { id } });
+
+    if (!user) {
+      throw new Error('User not found', error);
+    } 
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
+    const bcryptPassword = await bcrypt.hash(newPassword, salt);
+
+    await user.update({ password: bcryptPassword });
+
+    return "Contraseña actualizada correctamente";
+  } catch (error) {
+    console.error(error);
+  throw new Error("No se pudo actualizar la contraseña", error);
+  }
+};
