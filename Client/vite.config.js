@@ -3,10 +3,10 @@ import react from "@vitejs/plugin-react-swc";
 import { VitePWA } from "vite-plugin-pwa";
 
 const manifestForPlugIn = {
-  registerType: "prompt",
   strategies: "injectManifest",
   srcDir: "src",
   filename: "firebase-messaging-sw.js",
+  registerType: 'autoUpdate',
   includeAssets: [
     "favicon.ico",
     "apple-touc-icon.png",

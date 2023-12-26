@@ -7,7 +7,7 @@ import NavButtons from "../../components/NavButtons/NavButtons";
 import style from "./Store.module.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getStorePosts } from "../../redux/actions";
+import { getStorePosts, setSelectedStore } from "../../redux/actions";
 import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 
 const Store = ({ userData }) => {
@@ -40,6 +40,7 @@ const Store = ({ userData }) => {
 
 
   useEffect(() => {
+    dispatch(setSelectedStore(selectedStore))
     dispatch(getStorePosts(storeId))
       .then(() => {
         setLoading(false);

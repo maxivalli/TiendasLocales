@@ -27,7 +27,6 @@ import {
   DELETE_POST,
   SELECTED_POST,
   RESTORE_POST,
-  RESET_FILTERS,
   CLEAR_DETAIL,
   USER_DATA,
   UPDATE_USER_DATA,
@@ -39,8 +38,19 @@ import {
   MARK_NOTI_AS_READ,
   GET_USER_STORE,
   DELETE_STORE,
-  SET_FCMTOKEN_USERDATA
+  // FILTERS
+  SELECTED_CATEGORY,
+  SELECTED_ALPHABET,
+  SELECTED_PRICE,
+  GET_STORES_BY_CATEGORY,
+  RESET_FILTERS,
+  SELECTED_STORE,
+  // SEARCHBAR
+  GET_STORE_BY_NAME,
+  FILTER_BY_NAME
 } from "./actionTypes";
+
+// _____________________________________________________________USERS_________________________________________________________________
 
 export function getAllUsers() {
   return async function (dispatch) {
@@ -159,7 +169,7 @@ export function updateUserData(userData){
     payload:userData
   }
 }
-
+// _____________________________________________________________STORES__________________________________________________________________
 export function getAllStores() {
   return async function (dispatch) {
     try {
@@ -185,6 +195,13 @@ export function getUserStore(userId) {
   };
 }
 
+export const setSelectedStore = (store) => {
+  return {
+    type: SELECTED_STORE,
+    payload: store
+  };
+};
+// _________________________________________________________________FAVORITES_______________________________________________________________
 export function addFavorite(userId, storeId) {
   return async function (dispatch) {
     try {
@@ -239,7 +256,7 @@ export function removeFavoritePost(userId, storeId, postId) {
     }
   };
 }
-
+// __________________________________________________________NOTIFICATIONS_______________________________________________________________
 export function getUserNotif(userId) {
   return async function (dispatch) {
     try {
@@ -272,7 +289,7 @@ export function markNotiAsRead(notiId) {
     }
   };
 }
-
+// ________________________________________________________________POSTS_____________________________________________________________________
 export function getStorePosts(storeId) {
   return async function (dispatch) {
     const response = await axios(`/posts/getStorePosts/${storeId}`);
@@ -506,4 +523,57 @@ export function createPost(post) {
       payload: result.data,
     });
   };
+}
+
+// ___________________________________________________________________FILTERS______________________________________________________________________
+
+export function selectCategory(category) {
+  return {
+    type: SELECTED_CATEGORY,
+    payload: category,
+  };
+}
+
+export function selectAlphabetOrder(order) {
+  return {
+    type: SELECTED_ALPHABET,
+    payload: order,
+  };
+}
+
+export function selectPrice(price) {
+  return {
+    type: SELECTED_PRICE,
+    payload: price,
+  };
+}
+
+export function getStoresByCategory(category) {
+  return async function (dispatch) {
+    const response = await axios(`/tiendas/categories/${category}`);
+    console.log(response.data);
+    return dispatch({
+      type: GET_STORES_BY_CATEGORY,
+      payload: response.data,
+    });
+  };
+}
+
+// ______________________________________________________________SEARCHBAR________________________________________________________________
+
+export function getStoreByName(name) {
+  return async function(dispatch) {
+    const response = await axios(`/tiendas/getStoreByName/name?name=${name}`);
+    return dispatch({
+          type: GET_STORE_BY_NAME,
+          payload: response.data
+      })
+  }
+}
+
+export function filterByName(string) {
+  return{
+    type: FILTER_BY_NAME,
+    payload: string
+  }
 }

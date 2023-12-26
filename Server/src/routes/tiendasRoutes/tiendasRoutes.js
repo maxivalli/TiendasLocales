@@ -187,4 +187,25 @@ router.get("/redirectUrl", async (req, res) => {
   }
 });
 
+router.get("/categories/:category", async (req, res) => {
+  const { category } = req.params;
+
+  try {
+    const response = await tiendasController.getStoresByCategory(category);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(404).json({ error: error.message });
+  }
+});
+
+router.get("/getStoreByName/name", async (req, res) => {
+  const { name } = req.query;
+  try {
+    const stores = await tiendasController.getStoreByName(name)
+    return res.status(200).json(stores);
+  } catch (error) {
+    res.status(500).json({error: "There was an error obtaining the store information", details: error.message});
+  }
+})
+
 module.exports = router;

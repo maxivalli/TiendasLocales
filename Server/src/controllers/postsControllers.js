@@ -135,22 +135,7 @@ exports.deletePost = async (id) => {
   }
 };
 
-/* exports.getPostsByProvince = async(provincia) => {
-    const posts = await Post.findAll();
-    const provinceFilter = posts.filter((post) => {
-      return post.ubication.startsWith(`${provincia}`);
-    });
-    return provinceFilter;
-} */
 
-
-/* exports.getPostsByLocality = async (localidad) => {
-  const posts = await Post.findAll();
-  const localityFilter = posts.filter((post) => {
-    return post.ubication.endsWith(`${localidad}`);
-  });
-  return localityFilter;
-} */
 
 /* exports.restorePost = async (id) => {
   try {
