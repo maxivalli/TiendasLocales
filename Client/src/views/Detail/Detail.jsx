@@ -82,7 +82,7 @@ const Detail = ({ userData }) => {
       );
         
       const paymentData = {
-        userDireccion: userData?.direccion,
+        userDireccion: userData.direccion ? userData.direccion : null,
         delivery: selectedPost.delivery,
         accT: result.data.accT,
         postId: selectedPost.id,
