@@ -21,6 +21,8 @@ import MySales from "./views/MySales/MySales";
 import Store from "./views/Store/Store";
 import Queries from "./views/Queries/Queries";
 import Faq from "./views/FAQ/Faq";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
+import ResetPassword from "./components/ResetPassword/ResetPassword";
 import Dashboard from "./views/Dashboard/Dashboard";
 import AddProduct from "./views/AddProduct/AddProduct";
 
@@ -280,13 +282,13 @@ function App() {
 
   useEffect(() => {
     onMessage(messaging, (message) => {
-      toast(message.data.text)
+      toast(message.data.text);
     });
   }, []);
 
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       {isAuthenticated || isAuthenticatedAuth0 ? (
         <Navbar
           isAuthenticated={isAuthenticated}
@@ -752,6 +754,9 @@ function App() {
             )
           }
         />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+
+        <Route path="/resetpassword/:id" element={<ResetPassword />} />
       </Routes>
     </>
   );
