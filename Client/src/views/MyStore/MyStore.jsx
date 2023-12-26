@@ -21,7 +21,7 @@ const MyStore = () => {
   const storePosts = useSelector((state) => state.storePosts);
   const allPosts = useSelector((state) => state.allPosts);
   const selectedStore = stores.find((store) => store.id == storeId);
-  const [comprasData, setCompras ] = useState([])
+  const [comprasData, setCompras] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -33,31 +33,36 @@ const MyStore = () => {
         console.error("Error fetching store posts:", error);
         setLoading(false);
       });
-      
+
     const fetchData = async () => {
       try {
         const response = await axios.get(`/tiendas/pedidosCompras/${storeId}`);
         if (response) {
           setCompras(response.data);
-          console.log(comprasData)
+          console.log(comprasData);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-  
+
     fetchData();
   }, [dispatch, storeId, allPosts]);
-  
+
   const handleConnectMP = () => {
     window.open(
       `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://tiendaslocales-production.up.railway.app/tiendas/redirectUrl`
     );
 
-    
     window.location.href = `/#/mitienda/${storeId}`;
+
+    Swal.fire({
+      icon: "success",
+      title: "¡Tienda conectada a Mercado Pago!",
+      text: "Ahora debes recargar la página",
+    });
   };
-  
+
   if (loading) {
     return (
       <div className={style.spinner}>
@@ -77,7 +82,7 @@ const MyStore = () => {
           <div className={style.avatar}>
             <img src={selectedStore.image} alt="avatar" />
             <div className={style.info2}>
-            {selectedStore.averageRating ? (
+              {selectedStore.averageRating ? (
                 <div>
                   {Array.from(
                     { length: selectedStore.averageRating },
@@ -86,7 +91,9 @@ const MyStore = () => {
                     )
                   )}
                 </div>
-              ) : (<p>Aún no tienes calificaciones</p>)}
+              ) : (
+                <p>Aún no tienes calificaciones</p>
+              )}
             </div>
           </div>
 
@@ -131,31 +138,32 @@ const MyStore = () => {
             <p>{selectedStore.categoria}</p>
           </div>
         </div>
-        {!userData.accT && 
+        {!userData.accT && (
           <div className={style.buttonMP}>
             <div className={style.MP}>
-                <div className={style.modal}>
-                  <p>
-                    Para publicar productos con la opcion de compra primero necesitas conectar tu
-                    cuenta de Mercado Pago para poder recibir el dinero.
-                  </p>
-                </div> 
+              <div className={style.modal}>
+                <p>
+                  Para publicar productos con la opcion de compra primero
+                  necesitas conectar tu cuenta de Mercado Pago para poder
+                  recibir el dinero.
+                </p>
+              </div>
 
-                <CardWide
-                  Fn={handleConnectMP}
-                  textButton={"Conectar MP"}
-                  logo={
-                    <img
-                      width="60"
-                      height="60"
-                      src="https://img.icons8.com/color/96/mercado-pago.png"
-                      alt="mercado-pago"
-                    />
-                  }
-                />
-              </div> 
+              <CardWide
+                Fn={handleConnectMP}
+                textButton={"Conectar MP"}
+                logo={
+                  <img
+                    width="60"
+                    height="60"
+                    src="https://img.icons8.com/color/96/mercado-pago.png"
+                    alt="mercado-pago"
+                  />
+                }
+              />
+            </div>
           </div>
-        }
+        )}
         <Link to="/agregarproducto">
           <div className={style.agregar}>
             <button>Agregar</button>

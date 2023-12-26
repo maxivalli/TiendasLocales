@@ -145,6 +145,7 @@ exports.comprasRecibidas = async (id) => {
 const secretKey = CRYPTO_KEY;
 
 exports.accT = async (code, state) => {
+  
   try {
     const response = await fetch('https://api.mercadopago.com/oauth/token', {
       method: 'POST',
