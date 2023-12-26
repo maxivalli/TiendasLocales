@@ -32,10 +32,10 @@ const Detail = ({ userData }) => {
         if(result.data.accT){
           setBuyButton(true)
         } 
-        
-        if (result.data.direccion){
+
+        if (userData.direccion){
           setBuyDirButton(true)
-        }
+        } 
       }
     }
     fetchDataAcct()
@@ -114,7 +114,7 @@ const Detail = ({ userData }) => {
       </div>
     );
   }
-console.log("1", buyDirButton)
+
   return (
     <>
       <Head />
@@ -201,7 +201,7 @@ console.log("1", buyDirButton)
             </h5>
           </div>
           {buyButton ? 
-            (buyDirButton ?
+            (selectedPost.delivery ? (buyDirButton ?
               (<div className={style.comprar}>
                 <button onClick={handleBuy} disabled={isBuyButtonDisabled}>
                   Comprar
@@ -211,7 +211,11 @@ console.log("1", buyDirButton)
                   Necesitas una direccion para comprar productos con envio
                 </p>
               </div>)
-            ) : 
+            ) : (<div className={style.comprar}>
+              <button onClick={handleBuy} disabled={isBuyButtonDisabled}>
+                Comprar
+              </button>
+            </div>)) : 
             (<div>
               <div className={style.comprar}>
                 <button disabled={isBuyButtonDisabled}>
