@@ -13,6 +13,8 @@
   text-align: center;
   align-self: center;
   color: gray;
+  font-style: italic;
+  font-size: 16px;
 }
 
 .create select {
@@ -21,6 +23,7 @@
   font-size: 12px;
   margin-bottom: 20px;
   outline: none;
+  box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.2);
 }
 
 .create label {
@@ -42,6 +45,7 @@
   align-self: center;
   padding-left: 10px;
   outline: none;
+  box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.2);
 }
 
 .cortado {
