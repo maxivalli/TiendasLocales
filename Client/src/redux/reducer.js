@@ -365,6 +365,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allPosts: state.allPosts.filter((post) => post.id !== action.payload),
+        allPostsCopy: state.allPostsCopy.filter((post) => post.id !== action.payload),
       };
 
     case DELETE_STORE:

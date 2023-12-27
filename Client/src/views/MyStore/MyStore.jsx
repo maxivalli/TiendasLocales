@@ -20,6 +20,7 @@ const MyStore = () => {
   const stores = useSelector((state) => state.allStores);
   const storePosts = useSelector((state) => state.storePosts);
   const allPosts = useSelector((state) => state.allPosts);
+  const allPostsCopy = useSelector((state) => state.allPostsCopy);
   const selectedStore = stores.find((store) => store.id == storeId);
   const [comprasData, setCompras] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,7 +35,7 @@ const MyStore = () => {
         console.error("Error fetching store posts:", error);
         setLoading(false);
       });
-  }, [dispatch, storeId]);
+  }, [dispatch, storeId, allPostsCopy]);
 
   useEffect(() => {
     const fetchData = async () => {
