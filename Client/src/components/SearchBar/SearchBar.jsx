@@ -1,10 +1,12 @@
 import { React, useState } from "react";
 import style from "./SearchBar.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { filterByName, getStoreByName } from "../../redux/actions";
+import { filterByName, getPostByName, getStoreByName } from "../../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const allStores = useSelector((state) => state.allStores);
   const allPosts = useSelector((state) => state.allPosts);
@@ -17,12 +19,12 @@ const SearchBar = () => {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    navigate("/result")
     try {
-      const response = await dispatch(getStoreByName(searchString));
+      await dispatch(getStoreByName(searchString));
+      await dispatch(getPostByName(searchString));
       setSearchString("");
-      dispatch(filterByName(searchString));
     } catch (error) {
-      throw error;
       alert("No se encontraron resultados para la búsqueda.");
     }
   }

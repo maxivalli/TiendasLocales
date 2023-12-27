@@ -96,4 +96,15 @@ router.put('/restorePost/:id', async (req, res) => {
 });
 
 
+router.get("/getPostByName/name", async (req, res) => {
+  const { name } = req.query;
+  try {
+    const posts = await postsController.getPostByName(name)
+    return res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({error: "There was an error obtaining the post information", details: error.message});
+  }
+})
+
+
 module.exports = router;

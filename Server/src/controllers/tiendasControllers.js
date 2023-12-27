@@ -289,7 +289,6 @@ exports.getStoreByName = async (name) => {
         },
       },
     });
-    console.log(stores);
     if (stores.length >= 1) 
       return stores;
   } catch (error) {

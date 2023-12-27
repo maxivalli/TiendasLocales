@@ -202,8 +202,8 @@ const CreateStore = () => {
       dias: generarHorario(),
     };
     if (formData.pisoDeptoChecked) {
-      storeData.piso = formData.piso;
-      storeData.depto = formData.depto;
+      storeData.direccion.piso = formData.piso;
+      storeData.direccion.depto = formData.depto;
     }
     if (formData.horarioCortado) {
       storeData.horarios.horario_de_apertura2 = formData.horario_de_apertura2;
