@@ -47,7 +47,8 @@ import {
   SELECTED_STORE,
   // SEARCHBAR
   GET_STORE_BY_NAME,
-  FILTER_BY_NAME
+  FILTER_BY_NAME,
+  GET_POST_BY_NAME
 } from "./actionTypes";
 
 // _____________________________________________________________USERS_________________________________________________________________
@@ -439,11 +440,6 @@ export function resetPostsFilter() {
   };
 }
 
-export function resetFilters() {
-  return {
-    type: RESET_FILTERS,
-  };
-}
 
 export function messagesHistory(chatId) {
   return async (dispatch) => {
@@ -559,6 +555,12 @@ export function getStoresByCategory(category) {
   };
 }
 
+export function resetFilters() {
+  return {
+    type: RESET_FILTERS,
+  };
+}
+
 // ______________________________________________________________SEARCHBAR________________________________________________________________
 
 export function getStoreByName(name) {
@@ -566,6 +568,16 @@ export function getStoreByName(name) {
     const response = await axios(`/tiendas/getStoreByName/name?name=${name}`);
     return dispatch({
           type: GET_STORE_BY_NAME,
+          payload: response.data
+      })
+  }
+}
+
+export function getPostByName(name) {
+  return async function(dispatch) {
+    const response = await axios(`/posts/getPostByName/name?name=${name}`);
+    return dispatch({
+          type: GET_POST_BY_NAME,
           payload: response.data
       })
   }

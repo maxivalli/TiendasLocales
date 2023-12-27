@@ -39,7 +39,8 @@ import {
   GET_STORES_BY_CATEGORY,
   SELECTED_STORE,
   GET_STORE_BY_NAME,
-  FILTER_BY_NAME
+  GET_POST_BY_NAME,
+  RESET_FILTERS,
 } from "./actionTypes";
 
 const initialState = {
@@ -76,6 +77,7 @@ const initialState = {
   selectedCategory: "",
   // SEARCHBAR
   filteredStoresByName: [],
+  filteredPostsByName: [],
 
 };
 
@@ -488,6 +490,16 @@ function rootReducer(state = initialState, action) {
       };
 
 
+      case RESET_FILTERS:
+        return {
+          ...state,
+          selectedCategory: "",
+          selectedAlphabetOrder: "",
+          selectedPrice: "",
+          allPosts: state.allPostsCopy,
+          storePosts: state.allPostsCopy.filter((post) => post.storeId === state.selectedStore.id),
+        };
+
     // ______________________________________________________________SEARCHBAR____________________________________________________________
     case GET_STORE_BY_NAME:
       return {
@@ -495,19 +507,13 @@ function rootReducer(state = initialState, action) {
         allStores: action.payload,
       };
 
-      case FILTER_BY_NAME:
-        let filteredStoresByName = state.allStoresCopy;
-  
-        if (action.payload) {
-          filteredStoresByName = filteredStoresByName.filter((store) =>
-            store.nombre.toLowerCase().includes(action.payload.toLowerCase())
-          );
-        }
-  
+      case GET_POST_BY_NAME:
         return {
           ...state,
-          filteredStoresByName,
+          allPosts: action.payload,
         };
+
+        
 
     default:
       return state;

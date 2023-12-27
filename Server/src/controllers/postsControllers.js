@@ -1,4 +1,6 @@
 const { Post, User } = require("../DB_config");
+const { Op } = require("sequelize");
+
 
 
 /* exports.getAllDisabled = async () => {
@@ -130,6 +132,22 @@ exports.deletePost = async (id) => {
 
 
     return true;
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.getPostByName = async (name) => {
+  try {
+    const posts = await Post.findAll({
+      where: {
+        title: {
+          [Op.iLike]: `%${name}%`,
+        },
+      },
+    });
+    if (posts.length >= 1) 
+      return posts;
   } catch (error) {
     throw error;
   }

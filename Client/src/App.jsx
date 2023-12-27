@@ -4,7 +4,7 @@ import { messaging } from "./components/Firebase/config";
 import { onMessage } from "firebase/messaging";
 
 import React, { useState, useEffect } from "react";
-import { Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
@@ -41,6 +41,7 @@ import {
 import { useDispatch } from "react-redux";
 
 import "./App.css";
+import SearchResult from "./views/SearchResult/SearchResult";
 
 let socket;
 let SWregistration;
@@ -242,42 +243,41 @@ function App() {
       });
     }
 
-      window.addEventListener("offline", () => {
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 200000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          },
-        });
-
-        Toast.fire({
-          icon: "warning",
-          title: "Estás fuera de línea, revisa tu conexión.",
-        });
+    window.addEventListener("offline", () => {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 200000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
       });
 
-      window.addEventListener("online", () => {
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          },
-        });
-
-        Toast.fire({
-          icon: "success",
-          title: "¡Estás en línea nuevamente!",
-        });
+      Toast.fire({
+        icon: "warning",
+        title: "Estás fuera de línea, revisa tu conexión.",
       });
-    
+    });
+
+    window.addEventListener("online", () => {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
+      Toast.fire({
+        icon: "success",
+        title: "¡Estás en línea nuevamente!",
+      });
+    });
   }, []);
 
   useEffect(() => {
@@ -313,6 +313,35 @@ function App() {
             ) : isAuthenticatedAuth0 ? (
               user ? (
                 <Home userData={userData} setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : (
+              <Login setAuth={setAuth} />
+            )
+          }
+        />
+
+        <Route
+          path="/result"
+          element={
+            isAuthenticated ? (
+              userData ? (
+                <SearchResult setAuth={setAuth} />
+              ) : (
+                <div className="spinner">
+                  <div className="bounce1"></div>
+                  <div className="bounce2"></div>
+                  <div className="bounce3"></div>
+                </div>
+              )
+            ) : isAuthenticatedAuth0 ? (
+              user ? (
+                <SearchResult setAuth={setAuth} />
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
