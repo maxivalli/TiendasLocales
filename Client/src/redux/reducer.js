@@ -412,10 +412,10 @@ function rootReducer(state = initialState, action) {
 
       if (action.payload === "asc") {
         sortedPostsByPrice.sort((a, b) => a.price - b.price);
-        sortedPostByPriceAndName?.sort((a, b) => a.price - b.price);
+        sortedPostByPriceAndName && sortedPostByPriceAndName.sort((a, b) => a.price - b.price);
       } else if (action.payload === "desc") {
         sortedPostsByPrice.sort((a, b) => b.price - a.price);
-        sortedPostByPriceAndName?.sort((a, b) => b.price - a.price);
+        sortedPostByPriceAndName && sortedPostByPriceAndName?.sort((a, b) => b.price - a.price);
       }
 
       let filteredPostsByPrice = sortedPostsByPrice;
@@ -433,7 +433,7 @@ function rootReducer(state = initialState, action) {
         filteredPostsByPrice = sortedPostsByPrice.filter((post) =>
           filteredStores.some((store) => store.id === post.storeId)
         );
-        filteredPostByPriceAndName = sortedPostByPriceAndName?.filter((post) =>
+       filteredPostByPriceAndName = sortedPostByPriceAndName && sortedPostByPriceAndName.filter((post) =>
         filteredStores.some((store) => store.id === post.storeId)
       );
       }
@@ -484,11 +484,11 @@ function rootReducer(state = initialState, action) {
           filteredStoress.some((store) => store.id === post.storeId)
         );
 
-        filteredStoressByName = sortedStoresByAlphabetAndName.filter(
+        filteredStoressByName = sortedStoresByAlphabetAndName && sortedStoresByAlphabetAndName.filter(
           (store) => store.categoria === state.selectedCategory
         );
 
-        filteredPostssByName = sortedPostsByAlphabetAndName.filter((post) =>
+        filteredPostssByName = sortedPostsByAlphabetAndName && sortedPostsByAlphabetAndName.filter((post) =>
           filteredStoress.some((store) => store.id === post.storeId)
         );
       }
@@ -518,7 +518,7 @@ function rootReducer(state = initialState, action) {
       const filteredPosts = state.allPostsCopy.filter((post) =>
         filteredStores.some((store) => store.id === post.storeId)
       );
-      const filterPostsByName = state.filteredPostsByNameCopy.filter((post) =>
+      const filterPostsByName = state.filteredPostsByNameCopy && state.filteredPostsByNameCopy.filter((post) =>
         filterStoresByName.some((store) => store.id === post.storeId)
       );
     
