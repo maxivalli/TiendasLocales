@@ -41,6 +41,8 @@ import {
   GET_STORE_BY_NAME,
   GET_POST_BY_NAME,
   RESET_FILTERS,
+  SAVE_FILTERED_STORES,
+  SAVE_FILTERED_POSTS,
 } from "./actionTypes";
 
 const initialState = {
@@ -78,7 +80,6 @@ const initialState = {
   // SEARCHBAR
   filteredStoresByName: [],
   filteredPostsByName: [],
-
 };
 
 function rootReducer(state = initialState, action) {
@@ -254,8 +255,8 @@ function rootReducer(state = initialState, action) {
     case SELECTED_STORE:
       return {
         ...state,
-        selectedStore: action.payload
-      }
+        selectedStore: action.payload,
+      };
     // ________________________________________________________FAVORITES___________________________________________________________
     case GET_FAVORITES:
       return {
@@ -404,34 +405,40 @@ function rootReducer(state = initialState, action) {
     // ____________________________________________FILTERS________________________________________________________
 
     case SELECTED_PRICE:
-  let sortedPostsByPrice = state.allPostsCopy.slice();
+      let sortedPostsByPrice = state.allPostsCopy.slice();
 
-  if (action.payload === "asc") {
-    sortedPostsByPrice.sort((a, b) => a.price - b.price);
-  } else if (action.payload === "desc") {
-    sortedPostsByPrice.sort((a, b) => b.price - a.price);
-  }
+      if (action.payload === "asc") {
+        sortedPostsByPrice.sort((a, b) => a.price - b.price);
+      } else if (action.payload === "desc") {
+        sortedPostsByPrice.sort((a, b) => b.price - a.price);
+      }
 
-  let filteredPostsByPrice = sortedPostsByPrice;
+      let filteredPostsByPrice = sortedPostsByPrice;
 
-  // Aplica el filtro de categoría si no se seleccionó "Mostrar Todo"
-  if (state.selectedCategory && state.selectedCategory !== "Mostrar todas") {
-    const filteredStores = state.allStoresCopy.filter(
-      (store) => store.categoria === state.selectedCategory
-    );
+      // Aplica el filtro de categoría si no se seleccionó "Mostrar Todo"
+      if (
+        state.selectedCategory &&
+        state.selectedCategory !== "🔍 Mostrar todas"
+      ) {
+        const filteredStores = state.allStoresCopy.filter(
+          (store) => store.categoria === state.selectedCategory
+        );
 
-    filteredPostsByPrice = sortedPostsByPrice.filter((post) =>
-      filteredStores.some((store) => store.id === post.storeId)
-    );
-  }
+        filteredPostsByPrice = sortedPostsByPrice.filter((post) =>
+          filteredStores.some((store) => store.id === post.storeId)
+        );
+      }
 
-  return {
-    ...state,
-    selectedPrice: action.payload,
-    allPosts: filteredPostsByPrice,
-    // Actualiza storePosts solo si no se seleccionó una categoría
-    storePosts: filteredPostsByPrice.filter((post) => post.storeId === state.selectedStore.id)
-  };
+      return {
+        ...state,
+        selectedPrice: action.payload,
+        allPosts: filteredPostsByPrice,
+        // Actualiza storePosts solo si no se seleccionó una categoría
+        storePosts: filteredPostsByPrice.filter(
+          (post) => post.storeId === state.selectedStore.id
+        ),
+        filteredPostsByName: filteredPostsByPrice,
+      };
 
     case SELECTED_ALPHABET:
       let sortedPostsByAlphabet = state.allPostsCopy.slice();
@@ -448,10 +455,9 @@ function rootReducer(state = initialState, action) {
       let filteredStoress = sortedStoresByAlphabet;
       let filteredPostss = sortedPostsByAlphabet;
 
-      // Aplica el filtro de categoría si no se seleccionó "Mostrar Todo"
       if (
         state.selectedCategory &&
-        state.selectedCategory !== "Mostrar todas"
+        state.selectedCategory !== "🔍 Mostrar todas"
       ) {
         filteredStoress = sortedStoresByAlphabet.filter(
           (store) => store.categoria === state.selectedCategory
@@ -467,7 +473,11 @@ function rootReducer(state = initialState, action) {
         selectedAlphabetOrder: action.payload,
         allPosts: filteredPostss,
         allStores: filteredStoress,
-        storePosts: sortedPostsByAlphabet.filter((post) => post.storeId === state.selectedStore.id)
+        storePosts: sortedPostsByAlphabet.filter(
+          (post) => post.storeId === state.selectedStore.id
+        ),
+        filteredPostsByName: filteredPostss,
+        filteredStoresByName: filteredStoress,
       };
 
     case SELECTED_CATEGORY:
@@ -478,42 +488,61 @@ function rootReducer(state = initialState, action) {
 
     case GET_STORES_BY_CATEGORY:
       let filteredStores = action.payload;
+      let filterStoresByName = action.payload;
 
       const filteredPosts = state.allPostsCopy.filter((post) =>
         filteredStores.some((store) => store.id === post.storeId)
+      );
+      const filterPostsByName = state.filteredPostsByName.filter((post) =>
+        filterStoresByName.some((store) => store.id === post.storeId)
       );
 
       return {
         ...state,
         allStores: filteredStores,
         allPosts: filteredPosts,
+        filteredStoresByName: filterStoresByName,
+        filteredPostsByName: filterPostsByName,
       };
 
+    case RESET_FILTERS:
+      return {
+        ...state,
+        selectedCategory: "",
+        selectedAlphabetOrder: "",
+        selectedPrice: "",
+        allPosts: state.allPostsCopy,
+        storePosts: state.allPostsCopy.filter(
+          (post) => post.storeId === state.selectedStore.id
+        ),
+      };
 
-      case RESET_FILTERS:
-        return {
-          ...state,
-          selectedCategory: "",
-          selectedAlphabetOrder: "",
-          selectedPrice: "",
-          allPosts: state.allPostsCopy,
-          storePosts: state.allPostsCopy.filter((post) => post.storeId === state.selectedStore.id),
-        };
+    case SAVE_FILTERED_STORES:
+      return {
+        ...state,
+        filteredStoresByName: action.payload,
+      };
+
+    case SAVE_FILTERED_POSTS:
+      return {
+        ...state,
+        filteredPostsByName: action.payload,
+      };
 
     // ______________________________________________________________SEARCHBAR____________________________________________________________
     case GET_STORE_BY_NAME:
       return {
         ...state,
         allStores: action.payload,
+        filteredStoresByName: action.payload,
       };
 
-      case GET_POST_BY_NAME:
-        return {
-          ...state,
-          allPosts: action.payload,
-        };
-
-        
+    case GET_POST_BY_NAME:
+      return {
+        ...state,
+        allPosts: action.payload,
+        filteredPostsByName: action.payload,
+      };
 
     default:
       return state;

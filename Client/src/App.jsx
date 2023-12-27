@@ -327,7 +327,7 @@ function App() {
         />
 
         <Route
-          path="/result"
+          path="/resultados"
           element={
             isAuthenticated ? (
               userData ? (
