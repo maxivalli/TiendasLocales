@@ -25,13 +25,13 @@ const Favorites = () => {
     dispatch(getFavorites(userId));
   }, [dispatch]);
 
-  const favoriteStores = stores.filter((store) =>
+  const favoriteStores = stores && stores.filter((store) =>
     favorites.some(
       (favorite) => favorite.storeId === store.id && favorite.postId === null
     )
   );
 
-  const favoritePosts = posts.filter((post) =>
+  const favoritePosts = posts && posts.filter((post) =>
     favorites.some((favorite) => favorite.postId === post.id)
   );
 
