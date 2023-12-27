@@ -65,6 +65,8 @@ const UbiForm = ({ userData, onAddressAdded }) => {
           icon: "success",
           title: `Direccion agregada!`,
           text: "¡Ya puedes realizar tus pedidos con envio!",
+        }).then(() => {
+          window.location.reload();
         });
       }
     } catch (error) {
