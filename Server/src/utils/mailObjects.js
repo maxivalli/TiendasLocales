@@ -55,7 +55,7 @@ const postCreated = (email, postData) => {
 }
 
 const passwordForgot = (email, id) => {
-  const urlPersonalizada = `https://www.TiendasLocales.com.ar/#/resetpassword/${id}`;
+  const urlPersonalizada = `https://tiendasLocales.com.ar/#/resetpassword/${id}`;
   //const urlPersonalizada = `http://localhost:5173/#/resetpassword/${id}`;
   const forgotTemplateWithLink = forgotTemplate.replace("{{reset_password_link}}", urlPersonalizada);
   
