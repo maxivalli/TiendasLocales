@@ -1,7 +1,7 @@
 .searchBar {
   position: fixed;
   left: 50%;
-  transform: translateX(-45%);
+  transform: translateX(-40%);
   z-index: 10;
   top: 10px;
 }
@@ -20,14 +20,25 @@
   font-size: 16px;
 }
 
-.searchBar button {
+.searchBar .search {
   background-color: transparent;
   border: none;
   width: 35px;
   height: 35px;
   padding: 0;
-  margin-left: 5px;
+  margin-left: -35px;
   align-self: center;
+  opacity: 50%;
+}
+
+.searchBar .all {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin-left: 5px;
+  color: white;
+  text-wrap: nowrap;
+  font-weight: bold;
 }
 
 @media (max-width: 900px) {

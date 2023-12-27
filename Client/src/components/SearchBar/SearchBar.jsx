@@ -1,7 +1,11 @@
 import { React, useState } from "react";
 import style from "./SearchBar.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { filterByName, getPostByName, getStoreByName } from "../../redux/actions";
+import {
+  filterByName,
+  getPostByName,
+  getStoreByName,
+} from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
@@ -19,7 +23,7 @@ const SearchBar = () => {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    navigate("/result")
+    navigate("/resultados");
     try {
       await dispatch(getStoreByName(searchString));
       await dispatch(getPostByName(searchString));
@@ -35,17 +39,12 @@ const SearchBar = () => {
         <form onSubmit={handleSubmit}>
           <input
             type="search"
-            placeholder="Busca una tienda o producto"
             value={searchString}
             onChange={handleChange}
+            placeholder="Busca una tienda o producto"
           />
-          <button type="submit">
-            <img
-              width="35"
-              height="35"
-              src="https://img.icons8.com/sf-regular/48/FFFFFF/search.png"
-              alt="search"
-            />
+          <button type="submit" className={style.all}>
+            Ver todo
           </button>
         </form>
       </div>
