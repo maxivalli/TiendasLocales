@@ -25,7 +25,7 @@ const MyStore = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(setSelectedStore(selectedStore))
+    dispatch(setSelectedStore(selectedStore));
     dispatch(getStorePosts(storeId))
       .then(() => {
         setLoading(false);
@@ -34,7 +34,9 @@ const MyStore = () => {
         console.error("Error fetching store posts:", error);
         setLoading(false);
       });
+  }, [dispatch, storeId]);
 
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`/tiendas/pedidosCompras/${storeId}`);
@@ -83,7 +85,7 @@ const MyStore = () => {
           <div className={style.avatar}>
             <img src={selectedStore?.image} alt="avatar" />
             <div className={style.info2}>
-            {selectedStore?.averageRating ? (
+              {selectedStore?.averageRating ? (
                 <div>
                   {Array.from(
                     { length: selectedStore?.averageRating },

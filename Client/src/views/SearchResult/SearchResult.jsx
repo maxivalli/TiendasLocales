@@ -9,13 +9,59 @@ import b2 from "../../assets/Banner2.jpg";
 import b3 from "../../assets/Banner3.jpg";
 import style from "./SearchResult.module.css";
 import CardSquare from "../../components/CardSquare/CardSquare";
+import { setFilteredPostsByName, setFilteredStoresByName } from "../../redux/actions";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 const SearchResult = () => {
   const dispatch = useDispatch();
-  const stores = useSelector((state) => state.allStores);
-  const posts = useSelector((state) => state.allPosts);
+  const stores = useSelector((state) => state.filteredStoresByName);
+  const posts = useSelector((state) => state.filteredPostsByName);
+
+  if (!posts && !stores){
+    return (
+      <>
+        <SearchBar />
+        <Head />
+        <div className={style.home}>
+          <div>
+            <Banner b1={b1} b2={b2} b3={b3} />
+          </div>
+
+          <div className={style.title}>
+            <h2>No hay coincidencias en la busqueda</h2>
+          </div>
+        </div>
+      </>
+    );
+  }
+
 
   const [filterStores, setStores] = useState([]);
+
+  useEffect(() => {
+    const storedStores = JSON.parse(localStorage.getItem("stores")) || [];
+    const storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+
+    if (storedStores.length > 0) {
+      dispatch(setFilteredStoresByName(storedStores));
+    }
+    if (storedPosts.length > 0) {
+      dispatch(setFilteredPostsByName(storedPosts));
+    }
+
+
+    if (stores) {
+      localStorage.setItem("stores", JSON.stringify(stores));
+    }
+    if (posts) {
+      localStorage.setItem("posts", JSON.stringify(posts));
+    }
+
+    return () => {
+      localStorage.removeItem("stores");
+      localStorage.removeItem("posts");
+    };
+  }, [dispatch, stores, posts]);
 
   useEffect(() => {
     const filtered =

@@ -13,7 +13,7 @@ import { getAllStores } from "../../redux/actions";
 
 const Home = () => {
   const dispatch = useDispatch()
-  const stores = useSelector((state) => state.allStores);
+  const stores = useSelector((state) => state.allStoresCopy);
 
   const [filterStores, setStores] = useState([]);
 

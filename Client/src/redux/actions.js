@@ -45,6 +45,8 @@ import {
   GET_STORES_BY_CATEGORY,
   RESET_FILTERS,
   SELECTED_STORE,
+  SAVE_FILTERED_POSTS,
+  SAVE_FILTERED_STORES,
   // SEARCHBAR
   GET_STORE_BY_NAME,
   FILTER_BY_NAME,
@@ -547,7 +549,6 @@ export function selectPrice(price) {
 export function getStoresByCategory(category) {
   return async function (dispatch) {
     const response = await axios(`/tiendas/categories/${category}`);
-    console.log(response.data);
     return dispatch({
       type: GET_STORES_BY_CATEGORY,
       payload: response.data,
@@ -559,6 +560,20 @@ export function resetFilters() {
   return {
     type: RESET_FILTERS,
   };
+}
+
+export function setFilteredStoresByName(storedStores){
+  return {
+    type: SAVE_FILTERED_STORES,
+    payload: storedStores
+  }
+}
+
+export function setFilteredPostsByName(storedPosts){
+  return {
+    type: SAVE_FILTERED_POSTS,
+    payload: storedPosts
+  }
 }
 
 // ______________________________________________________________SEARCHBAR________________________________________________________________
