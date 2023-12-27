@@ -56,12 +56,16 @@
   border-radius: 50%;
   border: 3px solid red;
   margin: 5px;
+  object-fit: cover;
 }
 
 .info {
   text-align: left;
   align-self: center;
   padding-left: 30px;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .info h2 {
@@ -238,7 +242,7 @@
   }
 
   .info h2 {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .info p {

@@ -27,6 +27,7 @@
   border-radius: 50%;
   border: 3px solid red;
   margin: 5px;
+  object-fit: cover;
 }
 
 .info2 {
@@ -53,6 +54,7 @@
   margin: 0;
   font-weight: 800;
   font-style: italic;
+  font-size: 18px;
 }
 
 .info p {
@@ -199,7 +201,7 @@
   }
 
   .info h2 {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .info p {
