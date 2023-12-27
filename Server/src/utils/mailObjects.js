@@ -35,7 +35,7 @@ const compraMail = (user) => {
 
 const postCreated = (email, PostData) => {
   const { title, description, category, ubication, image } = PostData;
-  const urlPersonalizada = `http://localhost:5173/#/login`; // cambiar por la de produccion
+  const urlPersonalizada = `http://tiendaslocales.com.ar/#/micuenta`; 
 
   const notificationEmail = postTemplate
     .replace('{{title}}', title)
@@ -54,8 +54,8 @@ const postCreated = (email, PostData) => {
 }
 
 const passwordForgot = (email, id) => {
-  // const urlPersonalizada = `https://www.TiendasLocales.com.ar/#/resetpassword/${id}`;
-  const urlPersonalizada = `http://localhost:5173/#/resetpassword/${id}`;
+  const urlPersonalizada = `https://www.TiendasLocales.com.ar/#/resetpassword/${id}`;
+  //const urlPersonalizada = `http://localhost:5173/#/resetpassword/${id}`;
   const forgotTemplateWithLink = forgotTemplate.replace("{{reset_password_link}}", urlPersonalizada);
   
   return {

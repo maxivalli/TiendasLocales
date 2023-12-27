@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Banner from "../../components/Banners/Banners";
 import Cards from "../../components/Cards/Cards";
 import CardsStore from "../../components/CardsStore/CardsStore";
-import SearchBar from "../../components/SearchBar/SearchBar";
+import Filters from "../../components/Filters/Filters";
 import Head from "../../components/Head/Head";
 import b1 from "../../assets/Banner1.jpg";
 import b2 from "../../assets/Banner2.jpg";
@@ -28,7 +28,7 @@ const SearchResult = () => {
 
       return (
         <>
-          <SearchBar />
+          <Filters />
           <Head />
           <div className={style.home}>
             <div>
