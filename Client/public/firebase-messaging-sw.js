@@ -4,13 +4,15 @@ importScripts(
 importScripts(
   "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"
 );
-import { registerRoute } from "workbox-routing";
+/* import { registerRoute } from "workbox-routing";
 import { NetworkFirst } from "workbox-strategies";
 import { clientsClaim } from "workbox-core";
 import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
 
 precacheAndRoute(self.__WB_MANIFEST);
+self.skipWaiting();
+clientsClaim();
 cleanupOutdatedCaches();
 
 self.addEventListener("message", (event) => {
@@ -32,7 +34,7 @@ registerRoute(
       },
     ],
   })
-);
+); */
 
 const firebaseConfig = {
   apiKey: "AIzaSyAiXwnw-mIc8s-DkV2y8JaSwjKa__KF6i8",
