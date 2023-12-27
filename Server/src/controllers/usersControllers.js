@@ -24,16 +24,8 @@ async function getImageBlobFromURL(imageUrl) {
 exports.getAllUser = async () => {
   try {
     const users = await User.findAll();
-    const simplifiedUsers = users.map((user) => ({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      image: user.image,
-      ubication: user.ubication,
-      rol: user.rol,
-    }));
 
-    return simplifiedUsers;
+    return users;
   } catch (error) {
     throw error;
   }

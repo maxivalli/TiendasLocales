@@ -7,6 +7,12 @@ const CryptoJS = require('crypto-js');
 const { compraMail } = require("../utils/mailObjects");
 const { transporter } = require("../config/mailer");
 
+let io;
+
+exports.setSocketIO = (socketIOInstance) => {
+  io = socketIOInstance;
+};
+
 exports.createOrder = async (paymentData) => {
     try{
       const decryptedData = CryptoJS.AES.decrypt(paymentData.accT, secretKey).toString(CryptoJS.enc.Utf8);
@@ -77,15 +83,35 @@ exports.webhook = async (allData) => {
             await newCompra.save();
             console.log("2", newCompra)
           }
-          const user = await User.findOne({
+          const comprador = await User.findOne({
             where: {
               id: allData.payUserData.userId,
             },
           });
+
+          const post = await Post.findOne({
+            where: {
+              // Estoy buscando el post adecuado?
+                id: allData.payUserData.postId,
+            },
+          });
+
+          const vendedor = await User.findOne({
+            where: {
+              // el post que uso de referencia es el producto comprado?
+              id: post.userId
+            }
+          })
           
-          if(user){
-            await transporter.sendMail(compraMail(user));
+          if(vendedor){
+            io.to(vendedor.socketId).emit('ventaRealizada', allData)
           }
+          
+          if(comprador){
+            io.to(comprador.socketId).emit('compraRealizada', allData)
+            await transporter.sendMail(compraMail(comprador));
+          }
+        
           return true
         }
       } catch (error) {
