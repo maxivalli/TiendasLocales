@@ -15,8 +15,10 @@ const Head = () => {
   const [hasUnreadNotification, setHasUnreadNotification] = useState(false);
   const [hoveredNotificationIndex, setHoveredNotificationIndex] = useState(null);
   const [clearNotifications, setClearNotifications] = useState(false);
-  const stores = useSelector((state) => state.allStores);
-  const posts = useSelector((state) => state.allPosts);
+  const stores = useSelector((state) => state.allStoresCopy);
+  const users = useSelector((state) => state.allUsers);
+  console.log(users);
+  const posts = useSelector((state) => state.allPostsCopy);
   const userData = useSelector((state) => state.userData);
   const savedNotif = useSelector((state) => state.userNotif);
 
@@ -100,6 +102,61 @@ const Head = () => {
       socket?.off("newMessage", handleNewMessage);
     };
   }, [stores]);
+
+  useEffect(() => {
+    const handleNuevaCompra = (allData) => {
+      const cantidad = allData.payUserData.quantity
+      const postId = allData.payUserData.postId
+      const post = posts.filter((post) => post.id === postId)
+      const store = stores.filter((store) => store.id === post.storeId)
+      const title = allData.payUserData.title
+
+      setLiveNotifications((prevNotifications) => [
+        {
+          content: `¡Tu compra de ${cantidad} ${title} ha sido notificada a ${store.nombre}!`,
+          image: post.image,
+          read: false,
+        },
+        ...prevNotifications,
+      ]);
+
+      setHasUnreadNotification(true);
+    };
+
+    socket?.on("compraRealizada", handleNuevaCompra);
+
+    return () => {
+      socket?.off("compraRealizada", handleNuevaCompra);
+    };
+  }, [stores]);
+
+  useEffect(() => {
+    const handleNuevaVenta = (allData) => {
+      const cantidad = allData.payUserData.quantity
+      const postId = allData.payUserData.postId
+      const post = posts.filter((post) => post.id === postId)
+      const comprador = users && users.filter((user) => user.id === allData.payUserData.userId)
+      const title = allData.payUserData.title
+
+      setLiveNotifications((prevNotifications) => [
+        {
+          content: `¡${comprador} te ha comprado ${cantidad} ${title}!`,
+          image: post.image,
+          read: false,
+        },
+        ...prevNotifications,
+      ]);
+
+      setHasUnreadNotification(true);
+    };
+
+    socket?.on("ventaRealizada", handleNuevaVenta);
+
+    return () => {
+      socket?.off("ventaRealizada", handleNuevaVenta);
+    };
+  }, [stores]);
+
 
   useEffect(() => {
     const handleAddFavorite = (storeId) => {

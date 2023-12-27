@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import style from "./ResetPassword.module.css";
@@ -9,6 +10,8 @@ import Logo from "../../assets/logo.png";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
+  const userData = useSelector((state) => state.userData)
+  const userId = userData?.id
   const { id } = useParams();
   const [input, setInput] = useState({
     password: "",
@@ -62,6 +65,12 @@ const ResetPassword = () => {
   function isSubmitDisabled() {
     return Object.values(error).some((error) => error !== null);
   }
+
+  useEffect(() => {
+    if (id != userId) {
+      navigate("/");
+    }
+  }, [id, userId, navigate]);
 
   return (
     <div className={style.view}>

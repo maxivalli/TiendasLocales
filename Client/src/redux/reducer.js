@@ -79,6 +79,7 @@ const initialState = {
   selectedCategory: "",
   // SEARCHBAR
   filteredStoresByName: [],
+  filteredStoresByNameCopy: [],
   filteredPostsByName: [],
   filteredPostsByNameCopy: [],
 };
@@ -96,7 +97,6 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allUsers: action.payload,
-        allUsersCopy: action.payload,
       };
 
     case OTHER_USER_DATA:
@@ -526,6 +526,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         allStores: filteredStores,
         allPosts: filteredPosts,
+        filteredStoresByName: filterStoresByName,
         filteredPostsByName: filterPostsByName,
       };
 
@@ -539,6 +540,8 @@ function rootReducer(state = initialState, action) {
         storePosts: state.allPostsCopy.filter(
           (post) => post.storeId === state.selectedStore.id
         ),
+        filteredPostsByName: state.filteredPostsByNameCopy,
+        filteredStoresByName: state.filteredStoresByNameCopy
       };
 
     case SAVE_FILTERED_STORES:
@@ -559,6 +562,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         allStores: action.payload,
         filteredStoresByName: action.payload,
+        filteredStoresByNameCopy: action.payload,
       };
 
     case GET_POST_BY_NAME:
