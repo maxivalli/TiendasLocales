@@ -17,7 +17,7 @@ const MyStore = () => {
   const dispatch = useDispatch();
   const { storeId } = useParams();
   const userData = useSelector((state) => state.userData);
-  const stores = useSelector((state) => state.allStoresCopyA);
+  const stores = useSelector((state) => state.allStoresCopy);
   const storePosts = useSelector((state) => state.storePosts);
   const allPosts = useSelector((state) => state.allPosts);
   const allPostsCopy = useSelector((state) => state.allPostsCopy);
