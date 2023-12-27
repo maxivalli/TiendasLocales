@@ -526,6 +526,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         allStores: filteredStores,
         allPosts: filteredPosts,
+        filteredStoresByName: filterStoresByName,
         filteredPostsByName: filterPostsByName,
       };
 
