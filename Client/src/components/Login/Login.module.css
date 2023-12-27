@@ -1,7 +1,7 @@
 .login {
   display: grid;
   width: 100vw;
-  height: 100vh;
+  height: auto;
   background-color: red;
 }
 
@@ -80,8 +80,6 @@
   align-content: center;
   border-radius: 5px;
   margin-top: 10px;
-  background-color: goldenrod;
-  box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.2);
 }
 
 .error {
