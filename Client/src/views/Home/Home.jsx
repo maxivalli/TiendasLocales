@@ -13,7 +13,7 @@ import { getAllStores } from "../../redux/actions";
 
 const Home = () => {
   const dispatch = useDispatch()
-  const stores = useSelector((state) => state.allStores);
+  const stores = useSelector((state) => state.allStoresCopy);
 
   const [filterStores, setStores] = useState([]);
 
@@ -26,7 +26,7 @@ const Home = () => {
     setStores(filtered);
   }, [dispatch, stores]);
 
-  const sortedStores = filterStores.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 10);
+  const sortedStores = filterStores.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 12);
 
   return (
     <>

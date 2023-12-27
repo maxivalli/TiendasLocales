@@ -41,6 +41,8 @@ import {
   GET_STORE_BY_NAME,
   GET_POST_BY_NAME,
   RESET_FILTERS,
+  SAVE_FILTERED_STORES,
+  SAVE_FILTERED_POSTS,
 } from "./actionTypes";
 
 const initialState = {
@@ -78,7 +80,7 @@ const initialState = {
   // SEARCHBAR
   filteredStoresByName: [],
   filteredPostsByName: [],
-
+  filteredPostsByNameCopy: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -254,8 +256,8 @@ function rootReducer(state = initialState, action) {
     case SELECTED_STORE:
       return {
         ...state,
-        selectedStore: action.payload
-      }
+        selectedStore: action.payload,
+      };
     // ________________________________________________________FAVORITES___________________________________________________________
     case GET_FAVORITES:
       return {
@@ -364,6 +366,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allPosts: state.allPosts.filter((post) => post.id !== action.payload),
+        allPostsCopy: state.allPostsCopy.filter((post) => post.id !== action.payload),
       };
 
     case DELETE_STORE:
@@ -404,60 +407,88 @@ function rootReducer(state = initialState, action) {
     // ____________________________________________FILTERS________________________________________________________
 
     case SELECTED_PRICE:
-  let sortedPostsByPrice = state.allPostsCopy.slice();
-
-  if (action.payload === "asc") {
-    sortedPostsByPrice.sort((a, b) => a.price - b.price);
-  } else if (action.payload === "desc") {
-    sortedPostsByPrice.sort((a, b) => b.price - a.price);
-  }
-
-  let filteredPostsByPrice = sortedPostsByPrice;
-
-  // Aplica el filtro de categoría si no se seleccionó "Mostrar Todo"
-  if (state.selectedCategory && state.selectedCategory !== "Mostrar todas") {
-    const filteredStores = state.allStoresCopy.filter(
-      (store) => store.categoria === state.selectedCategory
-    );
-
-    filteredPostsByPrice = sortedPostsByPrice.filter((post) =>
-      filteredStores.some((store) => store.id === post.storeId)
-    );
-  }
-
-  return {
-    ...state,
-    selectedPrice: action.payload,
-    allPosts: filteredPostsByPrice,
-    // Actualiza storePosts solo si no se seleccionó una categoría
-    storePosts: filteredPostsByPrice.filter((post) => post.storeId === state.selectedStore.id)
-  };
-
-    case SELECTED_ALPHABET:
-      let sortedPostsByAlphabet = state.allPostsCopy.slice();
-      let sortedStoresByAlphabet = state.allStoresCopy.slice();
+      let sortedPostsByPrice = state.allPostsCopy.slice();
+      let sortedPostByPriceAndName = state.filteredPostsByName?.slice();
 
       if (action.payload === "asc") {
-        sortedPostsByAlphabet.sort((a, b) => a.title.localeCompare(b.title));
-        sortedStoresByAlphabet.sort((a, b) => a.nombre.localeCompare(b.nombre));
+        sortedPostsByPrice.sort((a, b) => a.price - b.price);
+        sortedPostByPriceAndName && sortedPostByPriceAndName.sort((a, b) => a.price - b.price);
       } else if (action.payload === "desc") {
-        sortedPostsByAlphabet.sort((a, b) => b.title.localeCompare(a.title));
-        sortedStoresByAlphabet.sort((a, b) => b.nombre.localeCompare(a.nombre));
+        sortedPostsByPrice.sort((a, b) => b.price - a.price);
+        sortedPostByPriceAndName && sortedPostByPriceAndName?.sort((a, b) => b.price - a.price);
       }
 
-      let filteredStoress = sortedStoresByAlphabet;
-      let filteredPostss = sortedPostsByAlphabet;
+      let filteredPostsByPrice = sortedPostsByPrice;
+      let filteredPostByPriceAndName = sortedPostByPriceAndName
 
       // Aplica el filtro de categoría si no se seleccionó "Mostrar Todo"
       if (
         state.selectedCategory &&
-        state.selectedCategory !== "Mostrar todas"
+        state.selectedCategory !== "🔍 Mostrar todas"
+      ) {
+        const filteredStores = state.allStoresCopy.filter(
+          (store) => store.categoria === state.selectedCategory
+        );
+
+        filteredPostsByPrice = sortedPostsByPrice.filter((post) =>
+          filteredStores.some((store) => store.id === post.storeId)
+        );
+       filteredPostByPriceAndName = sortedPostByPriceAndName && sortedPostByPriceAndName.filter((post) =>
+        filteredStores.some((store) => store.id === post.storeId)
+      );
+      }
+
+      return {
+        ...state,
+        selectedPrice: action.payload,
+        allPosts: filteredPostsByPrice,
+        // Actualiza storePosts solo si no se seleccionó una categoría
+        storePosts: filteredPostsByPrice.filter(
+          (post) => post.storeId === state.selectedStore.id
+        ),
+        filteredPostsByName: filteredPostByPriceAndName,
+      };
+
+    case SELECTED_ALPHABET:
+      let sortedPostsByAlphabet = state.allPostsCopy.slice();
+      let sortedStoresByAlphabet = state.allStoresCopy.slice();
+      let sortedPostsByAlphabetAndName = state.filteredPostsByName.slice();
+      let sortedStoresByAlphabetAndName = state.filteredStoresByName.slice();
+
+      if (action.payload === "asc") {
+        sortedPostsByAlphabet.sort((a, b) => a.title.localeCompare(b.title));
+        sortedStoresByAlphabet.sort((a, b) => a.nombre.localeCompare(b.nombre));
+        sortedPostsByAlphabetAndName && sortedPostsByAlphabetAndName.sort((a, b) => a.title.localeCompare(b.title));
+        sortedStoresByAlphabetAndName && sortedStoresByAlphabetAndName.sort((a, b) => a.nombre.localeCompare(b.nombre));
+      } else if (action.payload === "desc") {
+        sortedPostsByAlphabet.sort((a, b) => b.title.localeCompare(a.title));
+        sortedStoresByAlphabet.sort((a, b) => b.nombre.localeCompare(a.nombre));
+        sortedPostsByAlphabetAndName && sortedPostsByAlphabetAndName.sort((a, b) => b.title.localeCompare(a.title));
+        sortedStoresByAlphabetAndName && sortedStoresByAlphabetAndName.sort((a, b) => b.nombre.localeCompare(a.nombre));
+      }
+
+      let filteredPostss = sortedPostsByAlphabet;
+      let filteredStoress = sortedStoresByAlphabet;
+      let filteredPostssByName = sortedPostsByAlphabetAndName;
+      let filteredStoressByName = sortedStoresByAlphabetAndName;
+
+      if (
+        state.selectedCategory &&
+        state.selectedCategory !== "🔍 Mostrar todas"
       ) {
         filteredStoress = sortedStoresByAlphabet.filter(
           (store) => store.categoria === state.selectedCategory
         );
 
         filteredPostss = sortedPostsByAlphabet.filter((post) =>
+          filteredStoress.some((store) => store.id === post.storeId)
+        );
+
+        filteredStoressByName = sortedStoresByAlphabetAndName && sortedStoresByAlphabetAndName.filter(
+          (store) => store.categoria === state.selectedCategory
+        );
+
+        filteredPostssByName = sortedPostsByAlphabetAndName && sortedPostsByAlphabetAndName.filter((post) =>
           filteredStoress.some((store) => store.id === post.storeId)
         );
       }
@@ -467,7 +498,11 @@ function rootReducer(state = initialState, action) {
         selectedAlphabetOrder: action.payload,
         allPosts: filteredPostss,
         allStores: filteredStoress,
-        storePosts: sortedPostsByAlphabet.filter((post) => post.storeId === state.selectedStore.id)
+        storePosts: sortedPostsByAlphabet.filter(
+          (post) => post.storeId === state.selectedStore.id
+        ),
+        filteredPostsByName: filteredPostssByName,
+        filteredStoresByName: filteredStoressByName,
       };
 
     case SELECTED_CATEGORY:
@@ -478,42 +513,61 @@ function rootReducer(state = initialState, action) {
 
     case GET_STORES_BY_CATEGORY:
       let filteredStores = action.payload;
+      let filterStoresByName = action.payload;
 
       const filteredPosts = state.allPostsCopy.filter((post) =>
         filteredStores.some((store) => store.id === post.storeId)
       );
-
+      const filterPostsByName = state.filteredPostsByNameCopy && state.filteredPostsByNameCopy.filter((post) =>
+        filterStoresByName.some((store) => store.id === post.storeId)
+      );
+    
       return {
         ...state,
         allStores: filteredStores,
         allPosts: filteredPosts,
+        filteredPostsByName: filterPostsByName,
       };
 
+    case RESET_FILTERS:
+      return {
+        ...state,
+        selectedCategory: "",
+        selectedAlphabetOrder: "",
+        selectedPrice: "",
+        allPosts: state.allPostsCopy,
+        storePosts: state.allPostsCopy.filter(
+          (post) => post.storeId === state.selectedStore.id
+        ),
+      };
 
-      case RESET_FILTERS:
-        return {
-          ...state,
-          selectedCategory: "",
-          selectedAlphabetOrder: "",
-          selectedPrice: "",
-          allPosts: state.allPostsCopy,
-          storePosts: state.allPostsCopy.filter((post) => post.storeId === state.selectedStore.id),
-        };
+    case SAVE_FILTERED_STORES:
+      return {
+        ...state,
+        filteredStoresByName: action.payload,
+      };
+
+    case SAVE_FILTERED_POSTS:
+      return {
+        ...state,
+        filteredPostsByName: action.payload,
+      };
 
     // ______________________________________________________________SEARCHBAR____________________________________________________________
     case GET_STORE_BY_NAME:
       return {
         ...state,
         allStores: action.payload,
+        filteredStoresByName: action.payload,
       };
 
-      case GET_POST_BY_NAME:
-        return {
-          ...state,
-          allPosts: action.payload,
-        };
-
-        
+    case GET_POST_BY_NAME:
+      return {
+        ...state,
+        allPosts: action.payload,
+        filteredPostsByName: action.payload,
+        filteredPostsByNameCopy: action.payload
+      };
 
     default:
       return state;

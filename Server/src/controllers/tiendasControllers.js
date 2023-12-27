@@ -264,7 +264,7 @@ exports.getUserStore = async (userId) => {
 
 exports.getStoresByCategory = async (category) => {
   try {
-    if (category === "Mostrar todas") {
+    if (category === "🔍 Mostrar todas") {
       const stores = await Tienda.findAll();
       return stores;
     }

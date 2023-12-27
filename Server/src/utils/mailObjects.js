@@ -33,21 +33,22 @@ const compraMail = (user) => {
   };
 };
 
-const postCreated = (email, PostData) => {
-  const { title, description, category, ubication, image } = PostData;
+const postCreated = (email, postData) => {
+  const { title, description, price, stock, image } = postData;
   const urlPersonalizada = `http://tiendaslocales.com.ar/#/micuenta`; 
 
   const notificationEmail = postTemplate
     .replace('{{title}}', title)
     .replace('{{description}}', description)
-    .replace('{{category}}', category)
-    .replace('{{ubication}}', ubication)
-    .replace('{{image}}', image[0])
+    .replace('{{price}}', price)
+    .replace('{{stock}}', stock)
+    .replace('{{image}}', image)
     .replace('{{link}}', urlPersonalizada);
 
 
   return {
     to: email,
+    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
     subject: "Publicación Creada",
     html: notificationEmail,
   }

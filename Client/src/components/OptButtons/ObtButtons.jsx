@@ -12,8 +12,6 @@ const OptButtons = ({ storeId }) => {
   const [mostrarBotonesExtras, setMostrarBotonesExtras] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const store = stores.find((store) => store.id == storeId);
-
   const handleNavButtonClick = () => {
     setMostrarBotonesExtras(!mostrarBotonesExtras);
   };

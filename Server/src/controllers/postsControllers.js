@@ -1,5 +1,7 @@
 const { Post, User } = require("../DB_config");
 const { Op } = require("sequelize");
+const { transporter } = require("../config/mailer");
+const { postCreated } = require("../utils/mailObjects");
 
 
 
@@ -79,6 +81,11 @@ exports.createPost = async (postData) => {
         image: postData.image,
         userId: postData.userId,
   });
+  const user = await User.findByPk(newPost.userId)
+  const userEmail = user.email
+  console.log(userEmail);
+  console.log(newPost);
+  await transporter.sendMail(postCreated(userEmail, newPost));
       return newPost;
   } catch (error) {
     console.log("error al crear producto en controller", error);

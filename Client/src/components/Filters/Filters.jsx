@@ -65,7 +65,8 @@ const Filters = () => {
           <div className={style.filtros}>
             <h3>Filtros</h3>
             {!location.hash.includes("/mitienda/") &&
-              !location.hash.includes("/tienda/") && (
+              !location.hash.includes("/tienda/") && 
+              !location.hash.includes("/misventas") && (
                 <select
                   value={selectedCategory}
                   onChange={handleCategoryChange}
