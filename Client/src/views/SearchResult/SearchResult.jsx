@@ -16,25 +16,7 @@ const SearchResult = () => {
   const dispatch = useDispatch();
   const stores = useSelector((state) => state.filteredStoresByName);
   const posts = useSelector((state) => state.filteredPostsByName);
-
-  if (!posts && !stores){
-    return (
-      <>
-        <SearchBar />
-        <Head />
-        <div className={style.home}>
-          <div>
-            <Banner b1={b1} b2={b2} b3={b3} />
-          </div>
-
-          <div className={style.title}>
-            <h2>No hay coincidencias en la busqueda</h2>
-          </div>
-        </div>
-      </>
-    );
-  }
-
+ 
 
   const [filterStores, setStores] = useState([]);
 
