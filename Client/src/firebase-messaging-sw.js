@@ -11,8 +11,6 @@ import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
 
 precacheAndRoute(self.__WB_MANIFEST);
-self.skipWaiting();
-clientsClaim();
 cleanupOutdatedCaches();
 
 self.addEventListener("message", (event) => {

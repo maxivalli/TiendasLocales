@@ -29,6 +29,8 @@ const MySales = () => {
     fetchData();
   }, [userData.id]);
 
+  console.log(comprasData);
+
   return (
     <>
       <Filters />

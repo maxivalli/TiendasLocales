@@ -94,8 +94,6 @@ const Detail = ({ userData }) => {
         description: selectedPost.description,
       };
 
-      console.log("1", paymentData);
-
       const response = await axios.post("/tiendas/create-order", paymentData);
 
       if (response) {

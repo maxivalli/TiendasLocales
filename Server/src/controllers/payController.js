@@ -39,7 +39,7 @@ exports.createOrder = async (paymentData) => {
 
         let allData = preference.items[0]
         const respuesta = {response, allData};
-    
+        console.log("r", respuesta);
         
         return respuesta
     } catch (error){
@@ -47,6 +47,7 @@ exports.createOrder = async (paymentData) => {
     }
 } 
 exports.webhook = async (allData) => {
+  console.log("a",allData);
       try {
         if (allData.data.type === "payment") {
 
@@ -59,7 +60,7 @@ exports.webhook = async (allData) => {
   
           post.stock = post.stock - allData.payUserData.quantity;
           await post.save();
-    
+            console.log("1")
             const newCompra = await Compra.create({
               userDireccion: allData.payUserData.userDireccion,
               delivery: allData.payUserData.delivery,
@@ -74,6 +75,7 @@ exports.webhook = async (allData) => {
               productImage: post.image
             });
             await newCompra.save();
+            console.log("2", newCompra)
           }
           const user = await User.findOne({
             where: {
@@ -145,7 +147,7 @@ exports.comprasRecibidas = async (id) => {
 const secretKey = CRYPTO_KEY;
 
 exports.accT = async (code, state) => {
-  
+
   try {
     const response = await fetch('https://api.mercadopago.com/oauth/token', {
       method: 'POST',
