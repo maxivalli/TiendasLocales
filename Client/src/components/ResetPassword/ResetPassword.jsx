@@ -65,57 +65,66 @@ const ResetPassword = () => {
 
   return (
     <div className={style.view}>
-        <div className={style.container}>
+      <div className={style.container}>
         <img src={Logo} className={style.logo} />
         <div className={style.title}>
           <h2>Cambiar contraseña</h2>
         </div>
 
         <div className={style.form}>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label className={style.label}>Nueva contraseña:</label>
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            placeholder="Contraseña"
-            value={input.password}
-            onChange={handleChange}
-            className={style.input}
-          />
-          {error.password && (
-            <span className={style.error}>{error.password}</span>
-          )}
-          <input
-            type={showPassword ? "text" : "password"}
-            name="passwordRepeat"
-            placeholder="Repetir contraseña"
-            onChange={handleChange}
-            value={input.passwordRepeat}
-            className={style.segundoInput}
-          />
-          {error.passwordRepeat && (
-            <span className={style.error}>{error.passwordRepeat}</span>
-          )}
-          <label className={style.showP}>Ver contraseñas</label>
-          <input
-            type="checkbox"
-            id="showPassword"
-            onChange={handleShowPassword}
-            checked={showPassword}
-          />
-        </div>
-        <div>
-              <button className={isSubmitDisabled() ? `${style.register} ${style.buttonDisabled}` : style.register} disabled={isSubmitDisabled()} type="submit">
-            Enviar
-          </button>
+          <form onSubmit={handleSubmit}>
+            <div className={style.sI}>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Contraseña"
+                value={input.password}
+                onChange={handleChange}
+                className={style.input}
+              />
+              {error.password && (
+                <span className={style.error}>{error.password}</span>
+              )}
+              <input
+                type={showPassword ? "text" : "password"}
+                name="passwordRepeat"
+                placeholder="Repetir contraseña"
+                onChange={handleChange}
+                value={input.passwordRepeat}
+                className={style.segundoInput}
+              />
+              {error.passwordRepeat && (
+                <span className={style.error}>{error.passwordRepeat}</span>
+              )}
+              <div className={style.showP}>
+                <label>Ver contraseñas</label>
+                <input
+                  type="checkbox"
+                  id="showPassword"
+                  onChange={handleShowPassword}
+                  checked={showPassword}
+                />
+              </div>
+            </div>
+            <div>
+              <button
+                className={
+                  isSubmitDisabled()
+                    ? `${style.register} ${style.buttonDisabled}`
+                    : style.register
+                }
+                disabled={isSubmitDisabled()}
+                type="submit"
+              >
+                Enviar
+              </button>
               <div className={style.registerLink}>¿No tiene una cuenta?</div>
               <Link to="/register" className={style.textYellow}>
-                <button className={style.btnAqui}>Regístrate </button>
+                <button className={style.btnAqui}>Regístrate</button>
               </Link>
             </div>
-      </form>
-      </div>
+          </form>
+        </div>
       </div>
     </div>
   );

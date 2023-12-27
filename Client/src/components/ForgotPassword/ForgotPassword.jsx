@@ -76,6 +76,7 @@ const ForgotPassword = () => {
                 name="email"
                 value={input.email}
                 onChange={handleChange}
+                placeholder="email"
               />
               {error.email && (
                 <span className={style.error}>{error.email}</span>
