@@ -126,12 +126,12 @@ const Head = () => {
 
   useEffect(() => {
     const handleAddPostFavorite = (postId) => {
-      const post = posts.find((post) => post.id == postId);
+      const post = posts?.find((post) => post.id == postId);
 
       setLiveNotifications((prevNotifications) => [
         {
-          content: `¡Se ha agregado "${post.title}" a favoritos!`,
-          image: post.image,
+          content: `¡Se ha agregado "${post?.title}" a favoritos!`,
+          image: post?.image,
           read: false,
         },
         ...prevNotifications,

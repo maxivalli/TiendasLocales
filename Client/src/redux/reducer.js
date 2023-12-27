@@ -80,6 +80,7 @@ const initialState = {
   // SEARCHBAR
   filteredStoresByName: [],
   filteredPostsByName: [],
+  filteredPostsByNameCopy: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -365,6 +366,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allPosts: state.allPosts.filter((post) => post.id !== action.payload),
+        allPostsCopy: state.allPostsCopy.filter((post) => post.id !== action.payload),
       };
 
     case DELETE_STORE:
@@ -406,14 +408,18 @@ function rootReducer(state = initialState, action) {
 
     case SELECTED_PRICE:
       let sortedPostsByPrice = state.allPostsCopy.slice();
+      let sortedPostByPriceAndName = state.filteredPostsByName?.slice();
 
       if (action.payload === "asc") {
         sortedPostsByPrice.sort((a, b) => a.price - b.price);
+        sortedPostByPriceAndName && sortedPostByPriceAndName.sort((a, b) => a.price - b.price);
       } else if (action.payload === "desc") {
         sortedPostsByPrice.sort((a, b) => b.price - a.price);
+        sortedPostByPriceAndName && sortedPostByPriceAndName?.sort((a, b) => b.price - a.price);
       }
 
       let filteredPostsByPrice = sortedPostsByPrice;
+      let filteredPostByPriceAndName = sortedPostByPriceAndName
 
       // Aplica el filtro de categoría si no se seleccionó "Mostrar Todo"
       if (
@@ -427,6 +433,9 @@ function rootReducer(state = initialState, action) {
         filteredPostsByPrice = sortedPostsByPrice.filter((post) =>
           filteredStores.some((store) => store.id === post.storeId)
         );
+       filteredPostByPriceAndName = sortedPostByPriceAndName && sortedPostByPriceAndName.filter((post) =>
+        filteredStores.some((store) => store.id === post.storeId)
+      );
       }
 
       return {
@@ -437,23 +446,31 @@ function rootReducer(state = initialState, action) {
         storePosts: filteredPostsByPrice.filter(
           (post) => post.storeId === state.selectedStore.id
         ),
-        filteredPostsByName: filteredPostsByPrice,
+        filteredPostsByName: filteredPostByPriceAndName,
       };
 
     case SELECTED_ALPHABET:
       let sortedPostsByAlphabet = state.allPostsCopy.slice();
       let sortedStoresByAlphabet = state.allStoresCopy.slice();
+      let sortedPostsByAlphabetAndName = state.filteredPostsByName.slice();
+      let sortedStoresByAlphabetAndName = state.filteredStoresByName.slice();
 
       if (action.payload === "asc") {
         sortedPostsByAlphabet.sort((a, b) => a.title.localeCompare(b.title));
         sortedStoresByAlphabet.sort((a, b) => a.nombre.localeCompare(b.nombre));
+        sortedPostsByAlphabetAndName && sortedPostsByAlphabetAndName.sort((a, b) => a.title.localeCompare(b.title));
+        sortedStoresByAlphabetAndName && sortedStoresByAlphabetAndName.sort((a, b) => a.nombre.localeCompare(b.nombre));
       } else if (action.payload === "desc") {
         sortedPostsByAlphabet.sort((a, b) => b.title.localeCompare(a.title));
         sortedStoresByAlphabet.sort((a, b) => b.nombre.localeCompare(a.nombre));
+        sortedPostsByAlphabetAndName && sortedPostsByAlphabetAndName.sort((a, b) => b.title.localeCompare(a.title));
+        sortedStoresByAlphabetAndName && sortedStoresByAlphabetAndName.sort((a, b) => b.nombre.localeCompare(a.nombre));
       }
 
-      let filteredStoress = sortedStoresByAlphabet;
       let filteredPostss = sortedPostsByAlphabet;
+      let filteredStoress = sortedStoresByAlphabet;
+      let filteredPostssByName = sortedPostsByAlphabetAndName;
+      let filteredStoressByName = sortedStoresByAlphabetAndName;
 
       if (
         state.selectedCategory &&
@@ -466,6 +483,14 @@ function rootReducer(state = initialState, action) {
         filteredPostss = sortedPostsByAlphabet.filter((post) =>
           filteredStoress.some((store) => store.id === post.storeId)
         );
+
+        filteredStoressByName = sortedStoresByAlphabetAndName && sortedStoresByAlphabetAndName.filter(
+          (store) => store.categoria === state.selectedCategory
+        );
+
+        filteredPostssByName = sortedPostsByAlphabetAndName && sortedPostsByAlphabetAndName.filter((post) =>
+          filteredStoress.some((store) => store.id === post.storeId)
+        );
       }
 
       return {
@@ -476,8 +501,8 @@ function rootReducer(state = initialState, action) {
         storePosts: sortedPostsByAlphabet.filter(
           (post) => post.storeId === state.selectedStore.id
         ),
-        filteredPostsByName: filteredPostss,
-        filteredStoresByName: filteredStoress,
+        filteredPostsByName: filteredPostssByName,
+        filteredStoresByName: filteredStoressByName,
       };
 
     case SELECTED_CATEGORY:
@@ -493,15 +518,14 @@ function rootReducer(state = initialState, action) {
       const filteredPosts = state.allPostsCopy.filter((post) =>
         filteredStores.some((store) => store.id === post.storeId)
       );
-      const filterPostsByName = state.filteredPostsByName.filter((post) =>
+      const filterPostsByName = state.filteredPostsByNameCopy && state.filteredPostsByNameCopy.filter((post) =>
         filterStoresByName.some((store) => store.id === post.storeId)
       );
-
+    
       return {
         ...state,
         allStores: filteredStores,
         allPosts: filteredPosts,
-        filteredStoresByName: filterStoresByName,
         filteredPostsByName: filterPostsByName,
       };
 
@@ -542,6 +566,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         allPosts: action.payload,
         filteredPostsByName: action.payload,
+        filteredPostsByNameCopy: action.payload
       };
 
     default:

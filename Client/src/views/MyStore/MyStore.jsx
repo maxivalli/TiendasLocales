@@ -17,10 +17,11 @@ const MyStore = () => {
   const dispatch = useDispatch();
   const { storeId } = useParams();
   const userData = useSelector((state) => state.userData);
-  const stores = useSelector((state) => state.allStores);
+  const stores = useSelector((state) => state.allStoresCopyA);
   const storePosts = useSelector((state) => state.storePosts);
   const allPosts = useSelector((state) => state.allPosts);
-  const selectedStore = stores.find((store) => store.id == storeId);
+  const allPostsCopy = useSelector((state) => state.allPostsCopy);
+  const selectedStore = stores && stores.find((store) => store.id == storeId);
   const [comprasData, setCompras] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -34,7 +35,7 @@ const MyStore = () => {
         console.error("Error fetching store posts:", error);
         setLoading(false);
       });
-  }, [dispatch, storeId]);
+  }, [dispatch, storeId, allPostsCopy]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,12 +59,15 @@ const MyStore = () => {
     );
 
     window.location.href = `/#/mitienda/${storeId}`;
-
-    Swal.fire({
-      icon: "success",
-      title: "¡Tienda conectada a Mercado Pago!",
-      text: "Ahora debes recargar la página",
-    });
+    if (userData?.accT) {
+      Swal.fire({
+        icon: "success",
+        title: "¡Tienda conectada a Mercado Pago!",
+        text: "Ahora debes recargar la página",
+      }).then(() => {
+        window.location.reload();
+      });
+    }
   };
 
   if (loading) {
@@ -120,21 +124,21 @@ const MyStore = () => {
               </span>
             </p>
             <p>
-              📍 {selectedStore?.direccion.calle}{" "}
-              {selectedStore?.direccion.numero} (piso:{" "}
-              {selectedStore?.direccion.piso} local:{" "}
-              {selectedStore?.direccion.depto})
+              📍 {selectedStore?.direccion?.calle}{" "}
+              {selectedStore?.direccion?.numero} (piso:{" "}
+              {selectedStore?.direccion?.piso} local:{" "}
+              {selectedStore?.direccion?.depto})
             </p>
             <p>📆 {selectedStore?.dias}</p>
             <p>
-              ⏰ {selectedStore?.horarios.horario_de_apertura}hs a{" "}
-              {selectedStore?.horarios.horario_de_cierre}hs
-              {selectedStore?.horarios.horario_de_apertura2 &&
-                selectedStore?.horarios.horario_de_cierre2 && (
+              ⏰ {selectedStore?.horarios?.horario_de_apertura}hs a{" "}
+              {selectedStore?.horarios?.horario_de_cierre}hs
+              {selectedStore?.horarios?.horario_de_apertura2 &&
+                selectedStore?.horarios?.horario_de_cierre2 && (
                   <>
                     {" y "}
-                    {selectedStore?.horarios.horario_de_apertura2}hs a{" "}
-                    {selectedStore?.horarios.horario_de_cierre2}hs
+                    {selectedStore?.horarios?.horario_de_apertura2}hs a{" "}
+                    {selectedStore?.horarios?.horario_de_cierre2}hs
                   </>
                 )}
             </p>
