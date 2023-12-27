@@ -35,6 +35,7 @@ import Navbar from "./components/Navbar/Navbar";
 import {
   getAllPosts,
   getAllStores,
+  getAllUsers,
   getUserStore,
   saveUserData,
 } from "./redux/actions";
@@ -186,6 +187,7 @@ function App() {
                 );
                 dispatch(getUserStore(userDataResponse?.data.id));
                 dispatch(getAllPosts());
+                dispatch(getAllUsers())
               })
               .catch((userDataError) => {
                 console.error(

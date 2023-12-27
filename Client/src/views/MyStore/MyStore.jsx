@@ -54,20 +54,28 @@ const MyStore = () => {
   }, [dispatch, storeId, allPosts]);
 
   const handleConnectMP = () => {
-    window.open(
-      `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://tiendaslocales-production.up.railway.app/tiendas/redirectUrl`
-    );
-
-    window.location.href = `/#/mitienda/${storeId}`;
-    if (userData?.accT) {
-      Swal.fire({
-        icon: "success",
-        title: "¡Tienda conectada a Mercado Pago!",
-        text: "Ahora debes recargar la página",
-      }).then(() => {
-        window.location.reload();
+    window
+      .open(
+        `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://tiendaslocales-production.up.railway.app/tiendas/redirectUrl`
+      )
+      .then(() => {
+        window.location.href = `/#/mitienda/${storeId}`;
+        if (userData?.accT) {
+          Swal.fire({
+            icon: "success",
+            title: "¡Tienda conectada a Mercado Pago!",
+            text: "Ahora debes recargar la página",
+          }).then(() => {
+            window.location.reload();
+          });
+        } else {
+          Swal.fire({
+            icon: "decline",
+            title: "¡No fue posible conectar tu tienda a Mercado Pago!",
+            text: "Intentalo de nuevo mas tarde",
+          });
+        }
       });
-    }
   };
 
   if (loading) {

@@ -97,7 +97,6 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allUsers: action.payload,
-        allUsersCopy: action.payload,
       };
 
     case OTHER_USER_DATA:

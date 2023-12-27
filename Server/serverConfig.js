@@ -5,6 +5,7 @@ const { Server } = require("socket.io");
 const { User, Notifications, Tienda } = require("./src/DB_config");
 
 const router = require("./src/routes/routes");
+const matchsSockets = require("./src/controllers/payController");
 const { Message } = require("./src/DB_config");
 
 
@@ -27,6 +28,8 @@ const io = new Server(httpServer, {
     origin: "*",
   },
 });
+
+matchsSockets.setSocketIO(io);
 
 io.on("connection", (socket) => {
   console.log("Un cliente se ha conectado");
