@@ -70,8 +70,6 @@ const Login = ({ setAuth, userData }) => {
     } catch (error) {
       if (error.response) {
         console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
         setErrors(`Error: ${error.response.data.message}`);
       } else if (error.request) {
         console.log(error.request);
@@ -139,12 +137,12 @@ const Login = ({ setAuth, userData }) => {
             <LoginButton />
           </span>
         </div>
-        {/* <div className={style.buttons}>
+        <div className={style.buttons}>
           <span className={style.recover}>
           ¿Olvidaste la contraseña? 
           <Link to='/forgotpassword' className={style.register}>Recuperar</Link>
           </span>
-        </div> */}
+        </div>
       </div>
       </div>
     </>

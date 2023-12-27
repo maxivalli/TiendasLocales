@@ -14,7 +14,7 @@ export default function isStoreOpen(dias, horarios)  {
     const currentDay = diasSemana[now.getDay()];
     const currentTime = now.getHours() * 100 + now.getMinutes();
   
-    const matchDays = dias.match(/De (\w+) a (\w+)(?: \(excepto (\w+)\))?/i);
+    const matchDays = dias?.match(/De (\w+) a (\w+)(?: \(excepto (\w+)\))?/i);
     if (matchDays) {
       const primerDia = matchDays[1].toLowerCase();
       const ultimoDia = matchDays[2].toLowerCase();

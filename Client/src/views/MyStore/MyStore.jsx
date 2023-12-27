@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import style from "./MyStore.module.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getStorePosts } from "../../redux/actions";
+import { getStorePosts, setSelectedStore } from "../../redux/actions";
 import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -25,6 +25,7 @@ const MyStore = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    dispatch(setSelectedStore(selectedStore))
     dispatch(getStorePosts(storeId))
       .then(() => {
         setLoading(false);
@@ -80,12 +81,12 @@ const MyStore = () => {
       <div className={style.viewStore}>
         <div className={style.store}>
           <div className={style.avatar}>
-            <img src={selectedStore.image} alt="avatar" />
+            <img src={selectedStore?.image} alt="avatar" />
             <div className={style.info2}>
-              {selectedStore.averageRating ? (
+            {selectedStore?.averageRating ? (
                 <div>
                   {Array.from(
-                    { length: selectedStore.averageRating },
+                    { length: selectedStore?.averageRating },
                     (_, index) => (
                       <span key={index}>⭐️</span>
                     )
@@ -98,7 +99,7 @@ const MyStore = () => {
           </div>
 
           <div className={style.info}>
-            <h2>{selectedStore.nombre}</h2>
+            <h2>{selectedStore?.nombre}</h2>
             <p>
               {" "}
               <span
@@ -117,25 +118,25 @@ const MyStore = () => {
               </span>
             </p>
             <p>
-              📍 {selectedStore.direccion.calle}{" "}
-              {selectedStore.direccion.numero} (piso:{" "}
-              {selectedStore.direccion.piso} local:{" "}
-              {selectedStore.direccion.depto})
+              📍 {selectedStore?.direccion.calle}{" "}
+              {selectedStore?.direccion.numero} (piso:{" "}
+              {selectedStore?.direccion.piso} local:{" "}
+              {selectedStore?.direccion.depto})
             </p>
-            <p>📆 {selectedStore.dias}</p>
+            <p>📆 {selectedStore?.dias}</p>
             <p>
-              ⏰ {selectedStore.horarios.horario_de_apertura}hs a{" "}
-              {selectedStore.horarios.horario_de_cierre}hs
-              {selectedStore.horarios.horario_de_apertura2 &&
-                selectedStore.horarios.horario_de_cierre2 && (
+              ⏰ {selectedStore?.horarios.horario_de_apertura}hs a{" "}
+              {selectedStore?.horarios.horario_de_cierre}hs
+              {selectedStore?.horarios.horario_de_apertura2 &&
+                selectedStore?.horarios.horario_de_cierre2 && (
                   <>
                     {" y "}
-                    {selectedStore.horarios.horario_de_apertura2}hs a{" "}
-                    {selectedStore.horarios.horario_de_cierre2}hs
+                    {selectedStore?.horarios.horario_de_apertura2}hs a{" "}
+                    {selectedStore?.horarios.horario_de_cierre2}hs
                   </>
                 )}
             </p>
-            <p>{selectedStore.categoria}</p>
+            <p>{selectedStore?.categoria}</p>
           </div>
         </div>
         {!userData.accT && (

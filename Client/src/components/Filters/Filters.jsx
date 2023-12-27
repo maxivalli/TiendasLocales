@@ -7,6 +7,7 @@ import {
   selectAlphabetOrder,
   selectPrice,
   getAllPosts,
+  getAllStores,
 } from "../../redux/actions";
 
 import style from "./Filters.module.css";
@@ -19,7 +20,6 @@ const Filters = () => {
   );
   const selectedCategory = useSelector((state) => state.selectedCategory);
   const allStores = useSelector((state) => state.allStoresCopy);
-  const allPosts = useSelector((state) => state.allPostsCopy);
   const [botonFiltros, setBotonFiltros] = useState(false);
 
   const handlePriceChange = (event) => {
@@ -50,6 +50,7 @@ const Filters = () => {
   const handleResetFilters = () => {
     dispatch(resetFilters());
     dispatch(getAllPosts());
+    dispatch(getAllStores());
   };
 
   const toggleFilters = () => {
@@ -59,22 +60,26 @@ const Filters = () => {
   return (
     <>
       <div className={style.filters}>
-        <button onClick={toggleFilters}>
-          Filtrar
-        </button>
+        <button onClick={toggleFilters}>Filtrar</button>
         {botonFiltros && (
           <div className={style.filtros}>
             <h3>Filtros</h3>
-            <select value={selectedCategory} onChange={handleCategoryChange}>
-              <option value="" disabled>
-                Categoría
-              </option>
-              {uniqueCategories().map((category, index) => (
-                <option key={index} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
+            {!location.hash.includes("/mitienda/") &&
+              !location.hash.includes("/tienda/") && (
+                <select
+                  value={selectedCategory}
+                  onChange={handleCategoryChange}
+                >
+                  <option value="" disabled>
+                    Categoría
+                  </option>
+                  {uniqueCategories().map((category, index) => (
+                    <option key={index} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
+              )}
             <select value={selectedPrice} onChange={handlePriceChange}>
               <option value="" disabled>
                 Precio
@@ -93,7 +98,9 @@ const Filters = () => {
               <option value="desc">Z-A</option>
             </select>
             <button onClick={toggleFilters}>Hecho</button>
-            <button onClick={handleResetFilters} className={style.limpiar}>Limpiar filtros</button>
+            <button onClick={handleResetFilters} className={style.limpiar}>
+              Limpiar filtros
+            </button>
           </div>
         )}
       </div>
