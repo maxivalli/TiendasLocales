@@ -17,7 +17,7 @@ const MyStore = () => {
   const dispatch = useDispatch();
   const { storeId } = useParams();
   const userData = useSelector((state) => state.userData);
-  const stores = useSelector((state) => state.allStoresCopy);
+  const stores = useSelector((state) => state.allStoresCopyA);
   const storePosts = useSelector((state) => state.storePosts);
   const allPosts = useSelector((state) => state.allPosts);
   const allPostsCopy = useSelector((state) => state.allPostsCopy);
@@ -59,12 +59,15 @@ const MyStore = () => {
     );
 
     window.location.href = `/#/mitienda/${storeId}`;
-
-    Swal.fire({
-      icon: "success",
-      title: "¡Tienda conectada a Mercado Pago!",
-      text: "Ahora debes recargar la página",
-    });
+    if (userData?.accT) {
+      Swal.fire({
+        icon: "success",
+        title: "¡Tienda conectada a Mercado Pago!",
+        text: "Ahora debes recargar la página",
+      }).then(() => {
+        window.location.reload();
+      });
+    }
   };
 
   if (loading) {
