@@ -80,6 +80,7 @@ const initialState = {
   // SEARCHBAR
   filteredStoresByName: [],
   filteredPostsByName: [],
+  filteredPostsByNameCopy: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -451,19 +452,19 @@ function rootReducer(state = initialState, action) {
     case SELECTED_ALPHABET:
       let sortedPostsByAlphabet = state.allPostsCopy.slice();
       let sortedStoresByAlphabet = state.allStoresCopy.slice();
-      let sortedPostsByAlphabetAndName = state.filteredPostsByName?.slice();
-      let sortedStoresByAlphabetAndName = state.filteredStoresByName?.slice();
+      let sortedPostsByAlphabetAndName = state.filteredPostsByName.slice();
+      let sortedStoresByAlphabetAndName = state.filteredStoresByName.slice();
 
       if (action.payload === "asc") {
         sortedPostsByAlphabet.sort((a, b) => a.title.localeCompare(b.title));
         sortedStoresByAlphabet.sort((a, b) => a.nombre.localeCompare(b.nombre));
-        sortedPostsByAlphabetAndName?.sort((a, b) => a.title.localeCompare(b.title));
-        sortedStoresByAlphabetAndName?.sort((a, b) => a.nombre.localeCompare(b.nombre));
+        sortedPostsByAlphabetAndName && sortedPostsByAlphabetAndName.sort((a, b) => a.title.localeCompare(b.title));
+        sortedStoresByAlphabetAndName && sortedStoresByAlphabetAndName.sort((a, b) => a.nombre.localeCompare(b.nombre));
       } else if (action.payload === "desc") {
         sortedPostsByAlphabet.sort((a, b) => b.title.localeCompare(a.title));
         sortedStoresByAlphabet.sort((a, b) => b.nombre.localeCompare(a.nombre));
-        sortedPostsByAlphabetAndName?.sort((a, b) => b.title.localeCompare(a.title));
-        sortedStoresByAlphabetAndName?.sort((a, b) => b.nombre.localeCompare(a.nombre));
+        sortedPostsByAlphabetAndName && sortedPostsByAlphabetAndName.sort((a, b) => b.title.localeCompare(a.title));
+        sortedStoresByAlphabetAndName && sortedStoresByAlphabetAndName.sort((a, b) => b.nombre.localeCompare(a.nombre));
       }
 
       let filteredPostss = sortedPostsByAlphabet;
@@ -517,10 +518,10 @@ function rootReducer(state = initialState, action) {
       const filteredPosts = state.allPostsCopy.filter((post) =>
         filteredStores.some((store) => store.id === post.storeId)
       );
-      const filterPostsByName = state.filteredPostsByName.filter((post) =>
+      const filterPostsByName = state.filteredPostsByNameCopy.filter((post) =>
         filterStoresByName.some((store) => store.id === post.storeId)
       );
-
+    
       return {
         ...state,
         allStores: filteredStores,
@@ -565,6 +566,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         allPosts: action.payload,
         filteredPostsByName: action.payload,
+        filteredPostsByNameCopy: action.payload
       };
 
     default:
