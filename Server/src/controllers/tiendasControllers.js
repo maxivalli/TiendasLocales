@@ -238,21 +238,20 @@ exports.habStore = async (id) => {
         id: id,
       },
     });
-    if (store) {
-      const user = await User.findOne({
+
+    store.habilitado = "habilitado";
+    await store.save();
+
+    const user = await User.findOne({
         where: {
           id: store.userId,
         },
       });
-      store.habilitado = "habilitado";
-      await store.save();
-
       user.vendedor = "vendedor";
       await user.save();
 
       await transporter.sendMail(habStoreMail(user));
       return store;
-    }
   } catch (error) {
     throw error;
   }
