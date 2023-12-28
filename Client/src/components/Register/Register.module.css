@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   width: 100vw;
-  height: auto;
+  height: 100vh;
   display: grid;
   background-color: red;
 }
@@ -12,7 +12,7 @@
   display: grid;
   background-color: white;
   width: 250px;
-  height: 650px;
+  height: 550px;
   justify-self: center;
   border-radius: 10px;
   padding: 30px;
@@ -21,6 +21,7 @@
   margin-top: 30px;
   margin-bottom: 30px;
   text-align: center;
+  overflow: scroll;
 }
 
 .logo {
