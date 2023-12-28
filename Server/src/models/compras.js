@@ -47,7 +47,10 @@ module.exports = (sequelize) => {
             type: DataTypes.BOOLEAN,
         }, 
         userDireccion: {
-            type: DataTypes.STRING,
+            type: DataTypes.JSON,
         }, 
+        enviado: {
+            type: DataTypes.BOOLEAN
+        }
     });
 };

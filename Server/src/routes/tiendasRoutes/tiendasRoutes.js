@@ -91,11 +91,11 @@ router.get("/getUserStore/:userId", async (req, res) => {
 
 router.post("/create-order", async (req, res) => {
   const paymentData = req.body;
-  console.log("p",paymentData)
+
   try {
     const response = await payController.createOrder(paymentData);
     payUserData = response.allData;
-    console.log("v",payUserData);
+    console.log("v", payUserData);
     return res.status(200).json(response);
   } catch (error) {
     return res.status(400).json(error.message);
