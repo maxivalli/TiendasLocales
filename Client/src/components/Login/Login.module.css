@@ -1,4 +1,7 @@
 .login {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: grid;
   width: 100vw;
   height: 100vh;
@@ -15,8 +18,8 @@
   padding: 30px;
   padding-left: 50px;
   padding-right: 50px;
-  margin-top: 60px;
-  margin-bottom: 100px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   text-align: center;
 }
 
@@ -80,8 +83,6 @@
   align-content: center;
   border-radius: 5px;
   margin-top: 10px;
-  background-color: goldenrod;
-  box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.2);
 }
 
 .error {

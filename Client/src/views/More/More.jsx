@@ -5,6 +5,12 @@ import Head from "../../components/Head/Head";
 import style from "./More.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import crear from '../../assets/crear.png'
+import mitienda from '../../assets/mitienda.png'
+import contacto from '../../assets/contacto.png'
+import faq from '../../assets/faq.png'
+import espera from '../../assets/espera.png'
+import controlP from '../../assets/controlP.png'
 
 const More = () => {
   const userData = useSelector((state) => state.userData);
@@ -39,7 +45,7 @@ const More = () => {
               <img
                 width="60"
                 height="60"
-                src="https://img.icons8.com/parakeet/96/add-shop.png"
+                src={crear}
                 alt="add-shop"
               />
             }
@@ -54,7 +60,7 @@ const More = () => {
               <img
                 width="60"
                 height="60"
-                src="https://img.icons8.com/parakeet/96/online-order.png"
+                src={mitienda}
                 alt="online-order"
               />
             }
@@ -78,7 +84,7 @@ const More = () => {
                   <img
                     width="60"
                     height="60"
-                    src="https://img.icons8.com/color/96/hourglass.png"
+                    src={espera}
                     alt="hourglass"
                   />
                 }
@@ -92,7 +98,7 @@ const More = () => {
             <img
               width="60"
               height="60"
-              src="https://img.icons8.com/pulsar-color/96/mail.png"
+              src={contacto}
               alt="mail"
             />
           }
@@ -104,7 +110,7 @@ const More = () => {
             <img
               width="60"
               height="60"
-              src="https://img.icons8.com/pulsar-color/96/seo-text.png"
+              src={faq}
               alt="seo-text"
             />
           }
@@ -117,7 +123,7 @@ const More = () => {
                 <img
                   width="60"
                   height="60"
-                  src="https://img.icons8.com/parakeet/96/control-panel.png"
+                  src={controlP}
                   alt="control-panel"
                 />
               </button>

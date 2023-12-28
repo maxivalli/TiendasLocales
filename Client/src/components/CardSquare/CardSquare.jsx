@@ -10,6 +10,10 @@ import {
 import { socket } from "../../App";
 import style from "./CardSquare.module.css";
 import ProductUpdate from "../ProductUpdate/ProductUpdate";
+import likeG from '../../assets/likeG.png'
+import likeR from '../../assets/likeR.png'
+import edit from '../../assets/edit.png'
+import del from '../../assets/delete.png'
 
 const CardSquare = ({
   id,
@@ -86,8 +90,8 @@ const CardSquare = ({
           <img
             src={
               isFavorite
-                ? "https://img.icons8.com/ios-glyphs/30/FA5252/like--v1.png"
-                : "https://img.icons8.com/ios-glyphs/30/737373/like--v1.png"
+                ? likeR
+                : likeG
             }
             alt="like"
             className={style.fav}
@@ -107,7 +111,7 @@ const CardSquare = ({
               <img
                 width="30"
                 height="30"
-                src="https://img.icons8.com/glyph-neue/64/FFFFFF/edit--v1.png"
+                src={edit}
                 alt="edit--v1"
               />
             </button>
@@ -115,7 +119,7 @@ const CardSquare = ({
               <img
                 width="24"
                 height="24"
-                src="https://img.icons8.com/pulsar-line/48/FFFFFF/filled-trash.png"
+                src={del}
                 alt="filled-trash"
               />
             </button>

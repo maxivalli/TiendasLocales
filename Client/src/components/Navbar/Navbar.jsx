@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/TLlogoAlpha.png";
+import home from "../../assets/home.png";
+import heart from "../../assets/heart.png";
+import chat from "../../assets/chat.png";
+import more from "../../assets/more.png";
 import style from "./Navbar.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -54,27 +58,27 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
               <img
                 width="28"
                 height="28"
-                src="https://img.icons8.com/fluency-systems-regular/48/FFFFFF/home--v1.png"
-                alt="home--v1"
+                src={home}
+                alt="home"
               />
             </button>
           </Link>
           <Link to="/favoritos">
             <button>
               <img
-                width="28"
-                height="28"
-                src="https://img.icons8.com/windows/32/FFFFFF/like--v1.png"
-                alt="like--v1"
+                width="32"
+                height="32"
+                src={heart}
+                alt="favoritos"
               />
             </button>
           </Link>
           {userStore ? (
             <button onClick={toggleAccounts}>
               <img
-                width="32"
-                height="32"
-                src="https://img.icons8.com/sf-regular/48/FFFFFF/chat.png"
+                width="28"
+                height="28"
+                src={chat}
                 alt="chat"
               />
             </button>
@@ -82,9 +86,9 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
             <Link to="/mensajes/usuario">
               <button>
                 <img
-                  width="32"
-                  height="32"
-                  src="https://img.icons8.com/sf-regular/48/FFFFFF/chat.png"
+                  width="28"
+                  height="28"
+                  src={chat}
                   alt="chat"
                 />
               </button>
@@ -153,10 +157,10 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
           <Link to="/mas">
             <button>
               <img
-                width="32"
-                height="32"
-                src="https://img.icons8.com/pulsar-line/48/FFFFFF/connection-status-off.png"
-                alt="connection-status-off"
+                width="28"
+                height="28"
+                src={more}
+                alt="mas"
               />
             </button>
           </Link>

@@ -33,8 +33,8 @@ if (!newProduct.title.trim()) {
   if (!newProduct.description.trim()) {
     errors.description = "La descripción del producto es requerida";
   }
-  if (newProduct.description.length > 100) {
-    errors.description = "La descripción no puede superar los 100 caracteres";
+  if (newProduct.description.length > 300) {
+    errors.description = "La descripción no puede superar los 300 caracteres";
   }
 
   if (!newProduct.price.trim()) {

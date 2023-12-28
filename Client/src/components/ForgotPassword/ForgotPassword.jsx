@@ -39,7 +39,7 @@ const ForgotPassword = () => {
             title: "Solicitud de recuperacion de contraseña",
             text: "¡Hemos enviado un link a su correo!. Si no aparece, revise el correo no deseado",
           });
-          navigate("/login");
+          navigate("/");
         }
       })
       .catch((err) => {
@@ -76,6 +76,7 @@ const ForgotPassword = () => {
                 name="email"
                 value={input.email}
                 onChange={handleChange}
+                placeholder="email"
               />
               {error.email && (
                 <span className={style.error}>{error.email}</span>

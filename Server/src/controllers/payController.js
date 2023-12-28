@@ -69,8 +69,8 @@ exports.webhook = async (allData) => {
           await post.save();
             console.log("1")
             const newCompra = await Compra.create({
-              /* userDireccion: allData.payUserData.userDireccion,
-              delivery: allData.payUserData.delivery, */
+              userDireccion: allData.payUserData.userDireccion,
+              delivery: allData.payUserData.delivery,
               userId: allData.payUserData.userId,
               postId: allData.payUserData.postId,
               storeId: post.storeId,

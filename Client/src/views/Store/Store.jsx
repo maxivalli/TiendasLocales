@@ -24,23 +24,22 @@ const Store = ({ userData }) => {
 
   useEffect(() => {
     async function fetchData() {
-    try {
-      const response = await axios.get(
-        `/reviews/${userData.id}/${selectedStore.userId}`
-      );
-      if (response) {
-        setAlredyReview(true);
+      try {
+        const response = await axios.get(
+          `/reviews/${userData.id}/${selectedStore.userId}`
+        );
+        if (response) {
+          setAlredyReview(true);
+        }
+      } catch (error) {
+        throw error;
       }
-    } catch (error) {
-      throw error;
     }
-  }
-    fetchData()
-    }, [alreadyReview]);
-
+    fetchData();
+  }, [alreadyReview]);
 
   useEffect(() => {
-    dispatch(setSelectedStore(selectedStore))
+    dispatch(setSelectedStore(selectedStore));
     dispatch(getStorePosts(storeId))
       .then(() => {
         setLoading(false);
@@ -63,12 +62,12 @@ const Store = ({ userData }) => {
 
       if (newRating) {
         setAlredyReview(true);
-        let usuarioId = newRating.data.reviewedUserId
-        
+        let usuarioId = newRating.data.reviewedUserId;
+
         const response = await axios.get("/reviews/getAverageRating", {
           params: {
-            usuarioId: usuarioId
-          }
+            usuarioId: usuarioId,
+          },
         });
 
         if (response) {
@@ -95,45 +94,42 @@ const Store = ({ userData }) => {
       <Filters />
       <Head />
       <div className={style.viewStore}>
-
         <div className={style.store}>
-
           <div className={style.avatar}>
-
             <img src={selectedStore.image} alt="avatar" />
+            {selectedStore.averageRating && (
+              <div className={style.stars}>
+                {Array.from(
+                  { length: selectedStore.averageRating },
+                  (_, index) => (
+                    <span key={index}>⭐️</span>
+                  )
+                )}
+              </div>
+            )}
             <div className={style.info2}>
-              {selectedStore.averageRating && (
-                <div>
-                  {Array.from(
-                    { length: selectedStore.averageRating },
-                    (_, index) => (
-                      <span key={index}>⭐️</span>
-                    )
-                  )}
-                </div>)}
-          
-                  {alreadyReview ? 
-                    <p>¡Ya calificaste esta tienda!</p>
-                     : 
-                   (<>
-                      <div>
-                        <div className={style.rating}>
-                          <p>Calificá esta tienda:</p>
-                          {[1, 2, 3, 4, 5].map((value) => (
-                            <label key={value}>
-                              <input
-                                type="radio"
-                                name="rating"
-                                value={value}
-                                onClick={() => handleRating(value)}
-                              />
-                              {value}
-                            </label>
-                          ))}
-                        </div>
-                      </div>
-                    </>)
-                    }
+              {alreadyReview ? (
+                <p>¡Ya calificaste esta tienda!</p>
+              ) : (
+                <>
+                  <div>
+                    <div className={style.rating}>
+                      <p>Calificá esta tienda:</p>
+                      {[1, 2, 3, 4, 5].map((value) => (
+                        <label key={value}>
+                          <input
+                            type="radio"
+                            name="rating"
+                            value={value}
+                            onClick={() => handleRating(value)}
+                          />
+                          {value}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 

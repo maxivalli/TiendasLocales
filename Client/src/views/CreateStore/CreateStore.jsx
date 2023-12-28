@@ -35,7 +35,8 @@ const CreateStore = () => {
     "🍕 Rotisería y restaurantes",
     "🛍️ Regalerías",
     "👕 Ropa e indumentaría",
-    "🚗 Vehículos",
+    "🛠️ Servicios",
+    "🚗 Vehículos y accesorios",
     "🛒 Otra categoría",
   ];
 

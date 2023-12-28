@@ -18,24 +18,14 @@
   border: none;
   border-radius: 10px;
   font-size: 16px;
-}
-
-.searchBar .search {
-  background-color: transparent;
-  border: none;
-  width: 35px;
-  height: 35px;
-  padding: 0;
-  margin-left: -35px;
-  align-self: center;
-  opacity: 50%;
+  margin-left: 20px;
 }
 
 .searchBar .all {
   background-color: transparent;
   border: none;
   padding: 0;
-  margin-left: 5px;
+  margin-left: 20px;
   color: white;
   text-wrap: nowrap;
   font-weight: bold;
