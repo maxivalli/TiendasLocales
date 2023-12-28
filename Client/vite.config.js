@@ -7,6 +7,9 @@ const manifestForPlugIn = {
   srcDir: "src",
   filename: "firebase-messaging-sw.js",
   registerType: 'prompt',
+  injectManifest: {
+    globPatterns: ['**/*.{js,css,html,png,svg}'],
+  },
   includeAssets: [
     "favicon.ico",
     "apple-touc-icon.png",
