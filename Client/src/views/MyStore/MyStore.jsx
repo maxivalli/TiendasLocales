@@ -12,7 +12,7 @@ import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 import axios from "axios";
 import Swal from "sweetalert2";
 import CardWide from "../../components/CardWide/CardWide";
-import mPago from '../../assets/mPago.png'
+import mPago from "../../assets/mPago.png";
 
 const MyStore = () => {
   const dispatch = useDispatch();
@@ -55,28 +55,17 @@ const MyStore = () => {
   }, [dispatch, storeId, allPosts]);
 
   const handleConnectMP = () => {
-    window
-      .open(
-        `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://tiendaslocales-production.up.railway.app/tiendas/redirectUrl`
-      )
-      .then(() => {
-        window.location.href = `/#/mitienda/${storeId}`;
-        if (userData?.accT) {
-          Swal.fire({
-            icon: "success",
-            title: "¡Tienda conectada a Mercado Pago!",
-            text: "Ahora debes recargar la página",
-          }).then(() => {
-            window.location.reload();
-          });
-        } else {
-          Swal.fire({
-            icon: "decline",
-            title: "¡No fue posible conectar tu tienda a Mercado Pago!",
-            text: "Intentalo de nuevo mas tarde",
-          });
-        }
-      });
+    window.open(
+      `https://auth.mercadopago.com/authorization?client_id=6356168129471214&response_type=code&platform_id=mp&state=${userData.id}&redirect_uri=https://tiendaslocales-production.up.railway.app/tiendas/redirectUrl`
+    );
+
+    Swal.fire({
+      icon: "success",
+      title: "¡Tienda conectada a Mercado Pago!",
+      text: "Para dejar de ver el mensaje recargarga la página",
+    }).then(() => {
+      window.location.reload();
+    });
   };
 
   if (loading) {
@@ -169,12 +158,7 @@ const MyStore = () => {
                 Fn={handleConnectMP}
                 textButton={"Conectar MP"}
                 logo={
-                  <img
-                    width="60"
-                    height="60"
-                    src={mPago}
-                    alt="mercado-pago"
-                  />
+                  <img width="60" height="60" src={mPago} alt="mercado-pago" />
                 }
               />
             </div>

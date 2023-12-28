@@ -182,7 +182,17 @@ router.get("/redirectUrl", async (req, res) => {
   try {
     const response = await payController.accT(code, state);
     if (response) {
-      return res.status(200).json("Token generado correctamente! Puedes cerrar esta pestaña");
+      const htmlResponse = `
+        <html>
+          <head>
+            <title>Token generado correctamente</title>
+            <script>
+              alert('Token generado correctamente! Puedes cerrar esta pestaña');
+            </script>
+          </head>
+        </html>
+      `;
+      return res.status(200).send(htmlResponse);
     }
   } catch (error) {
     return res.status(400).json(error.message);
