@@ -15,9 +15,7 @@
 }
 
 .stars {
-  position: absolute;
-  left: 60px;
-  top: -22px;
+  justify-self: center;
 }
 
 .avatar {
@@ -48,6 +46,7 @@
 .info2 p {
   margin: 0;
   margin-left: 10px;
+  margin-right: 10px;
 }
 
 .info {
@@ -203,10 +202,6 @@
     width: 100vw;
     grid-template-columns: 1fr 3fr;
     height: 120px;
-  }
-
-  .stars {
-    left: 5px;
   }
 
   .avatar img {
