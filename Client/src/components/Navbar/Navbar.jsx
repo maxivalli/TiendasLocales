@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/TLlogoAlpha.png";
-import home from '../../assets/home.png'
-import heart from '../../assets/heart.png'
-import chat from '../../assets/chat.png'
-import more from '../../assets/more.png'
+import home from "../../assets/home.png";
+import heart from "../../assets/heart.png";
+import chat from "../../assets/chat.png";
+import more from "../../assets/more.png";
 import style from "./Navbar.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
