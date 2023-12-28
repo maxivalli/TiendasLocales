@@ -80,10 +80,10 @@ const Detail = ({ userData }) => {
       const result = await axios.get(
         `/users/anotherUserId/?id=${result1.data.userId}`
       );
-        
+
       const paymentData = {
-        /* userDireccion: userData.direccion ? userData.direccion : null,
-        delivery: selectedPost.delivery, */
+        userDireccion: userData.direccion ? userData.direccion : null,
+        delivery: selectedPost.delivery,
         accT: result.data.accT,
         postId: selectedPost.id,
         userId: userData.id,

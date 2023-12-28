@@ -23,8 +23,6 @@ exports.createOrder = async (paymentData) => {
 
         let preference = {
             items: [{
-                /* userDireccion: paymentData.userDireccion,
-                delivery: paymentData.delivery, */
                 postId: paymentData.postId,
                 userId: paymentData.userId,
                 title: paymentData.title,
@@ -44,8 +42,11 @@ exports.createOrder = async (paymentData) => {
         const response = await mercadopago.preferences.create(preference);
 
         let allData = preference.items[0]
+        allData.userDireccion = paymentData.userDireccion;
+        allData.delivery = paymentData.delivery;
+
         const respuesta = {response, allData};
-        console.log("r", respuesta);
+        console.log("RRRRRr", respuesta);
         
         return respuesta
     } catch (error){
@@ -53,7 +54,7 @@ exports.createOrder = async (paymentData) => {
     }
 } 
 exports.webhook = async (allData) => {
-  console.log("a",allData);
+  console.log("a", allData);
       try {
         if (allData.data.type === "payment") {
 
