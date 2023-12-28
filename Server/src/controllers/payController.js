@@ -92,24 +92,29 @@ exports.webhook = async (allData) => {
 
           const post = await Post.findOne({
             where: {
-              // Estoy buscando el post adecuado?
                 id: allData.payUserData.postId,
             },
           });
 
           const vendedor = await User.findOne({
             where: {
-              // el post que uso de referencia es el producto comprado?
               id: post.userId
             }
           })
+
+          const store = await Tienda.findOne({
+            where: {
+              userId: vendedor.id
+            }
+          })
           
+          const data = {allData, comprador, vendedor, post, store}
           if(vendedor){
-            io.to(vendedor.socketId).emit('ventaRealizada', allData)
+            io.to(vendedor.socketId).emit('ventaRealizada', data)
           }
           
           if(comprador){
-            io.to(comprador.socketId).emit('compraRealizada', allData)
+            io.to(comprador.socketId).emit('compraRealizada', data)
             await transporter.sendMail(compraMail(comprador));
           }
         

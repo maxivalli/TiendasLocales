@@ -110,11 +110,9 @@ allUsers = users
   }, [stores]);
 
   useEffect(() => {
-    const handleNuevaCompra = (allData) => {
+    const handleNuevaCompra = (data) => {
+      const {comprador, store, vendedor, post, allData} = data
       const cantidad = allData.payUserData.quantity
-      const postId = allData.payUserData.postId
-      const post = posts && posts.filter((post) => post.id === postId)
-      const store = stores && stores.filter((store) => store.id == post.storeId)
       const title = allData.payUserData.title
       const storeName = store?.nombre
       const image = post?.image
@@ -129,8 +127,8 @@ allUsers = users
       ]);
 
       setHasUnreadNotification(true);
-      const data = {cantidad, title, storeName, image, userData}
-      socket?.emit("compraRealizadaToDB", data)
+      const DBdata = {comprador, store, vendedor, post, allData, userData}
+      socket?.emit("compraRealizadaToDB", DBdata)
     };
 
     socket?.on("compraRealizada", handleNuevaCompra);
@@ -141,11 +139,9 @@ allUsers = users
   }, [stores]);
 
   useEffect(() => {
-    const handleNuevaVenta = (allData) => {
+    const handleNuevaVenta = (data) => {
+      const {comprador, store, vendedor, post, allData} = data
       const cantidad = allData.payUserData.quantity
-      const postId = allData.payUserData.postId
-      const post = posts.filter((post) => post.id === postId)
-      const comprador = allUsers && allUsers.filter((user) => user.id === allData.payUserData.userId)
       const title = allData.payUserData.title
       const image = post?.image
       const compradorName = comprador?.username
@@ -160,8 +156,8 @@ allUsers = users
       ]);
 
       setHasUnreadNotification(true);
-      const data = {cantidad, title, compradorName, image, userData, comprador, post}
-      socket?.emit("ventaRealizadaToDB", data)
+      const DBdata = {comprador, store, vendedor, post, allData, title, compradorName}
+      socket?.emit("ventaRealizadaToDB", DBdata)
     };
 
     socket?.on("ventaRealizada", handleNuevaVenta);
