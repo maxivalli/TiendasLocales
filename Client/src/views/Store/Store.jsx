@@ -103,7 +103,7 @@ const Store = ({ userData }) => {
             <img src={selectedStore.image} alt="avatar" />
             <div className={style.info2}>
               {selectedStore.averageRating && (
-                <div>
+                <div className={style.stars}>
                   {Array.from(
                     { length: selectedStore.averageRating },
                     (_, index) => (
