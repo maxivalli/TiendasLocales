@@ -23,7 +23,7 @@ registerRoute(
     cacheName: "all-cache",
     plugins: [
       new ExpirationPlugin({
-        maxEntries: 60,
+        maxSize: 400 * 1024 * 1024,
       }),
       {
         cacheableResponse: {

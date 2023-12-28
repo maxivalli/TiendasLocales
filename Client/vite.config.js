@@ -4,12 +4,12 @@ import { VitePWA } from "vite-plugin-pwa";
 
 const manifestForPlugIn = {
   strategies: "injectManifest",
+  injectManifest: {
+    globPatterns: ['**/*.{js,css,html,png}'],
+  },
   srcDir: "src",
   filename: "firebase-messaging-sw.js",
   registerType: 'prompt',
-  injectManifest: {
-    globPatterns: ['**/*.{js,css,html,png,svg}'],
-  },
   includeAssets: [
     "favicon.ico",
     "apple-touc-icon.png",
