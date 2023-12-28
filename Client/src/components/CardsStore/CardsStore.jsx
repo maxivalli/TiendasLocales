@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addFavorite, getFavorites, removeFavorite } from "../../redux/actions";
 import { socket } from "../../App";
-
+import likeG from '../../assets/likeG.png'
+import likeR from '../../assets/likeR.png'
 import style from "./CardsStore.module.css";
 import isStoreOpen from "../isStoreOpen/isStoreOpen";
 
@@ -73,8 +74,8 @@ const CardsStore = ({
         <img
           src={
             isFavorite
-              ? "https://img.icons8.com/ios-glyphs/30/FA5252/like--v1.png"
-              : "https://img.icons8.com/ios-glyphs/30/737373/like--v1.png"
+              ? likeR
+              : likeG
           }
           alt="like"
           className={style.fav}

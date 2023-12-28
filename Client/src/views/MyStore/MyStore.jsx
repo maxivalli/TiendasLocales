@@ -12,6 +12,7 @@ import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 import axios from "axios";
 import Swal from "sweetalert2";
 import CardWide from "../../components/CardWide/CardWide";
+import mPago from '../../assets/mPago.png'
 
 const MyStore = () => {
   const dispatch = useDispatch();
@@ -171,7 +172,7 @@ const MyStore = () => {
                   <img
                     width="60"
                     height="60"
-                    src="https://img.icons8.com/color/96/mercado-pago.png"
+                    src={mPago}
                     alt="mercado-pago"
                   />
                 }

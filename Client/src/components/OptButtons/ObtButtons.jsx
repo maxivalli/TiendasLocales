@@ -4,6 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import StoreUpdate from "../StoreUpdate/StoreUpdate.jsx";
 import { deleteStore } from "../../redux/actions.js";
+import more from '../../assets/more.png'
+import del from '../../assets/delete.png'
+import sales from '../../assets/sales.png'
+import edit from '../../assets/edit.png'
 
 const OptButtons = ({ storeId }) => {
   const navigate = useNavigate()
@@ -40,8 +44,8 @@ const OptButtons = ({ storeId }) => {
         <img
           width="32"
           height="32"
-          src="https://img.icons8.com/pulsar-line/48/FFFFFF/connection-status-off.png"
-          alt="connection-status-off"
+          src={more}
+          alt="mas"
         />
       </button>
       {mostrarBotonesExtras && (
@@ -50,7 +54,7 @@ const OptButtons = ({ storeId }) => {
             <img
               width="24"
               height="24"
-              src="https://img.icons8.com/glyph-neue/64/FFFFFF/edit--v1.png"
+              src={edit}
               alt="edit--v1"
             />
           </button>
@@ -60,7 +64,7 @@ const OptButtons = ({ storeId }) => {
               <img
                 width="24"
                 height="24"
-                src="https://img.icons8.com/pastel-glyph/64/FFFFFF/stocks-growth.png"
+                src={sales}
                 alt="stocks-growth"
               />
             </button>
@@ -70,7 +74,7 @@ const OptButtons = ({ storeId }) => {
             <img
               width="24"
               height="24"
-              src="https://img.icons8.com/pulsar-line/48/FFFFFF/filled-trash.png"
+              src={del}
               alt="filled-trash"
             />
           </button>

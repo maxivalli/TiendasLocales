@@ -3,6 +3,12 @@ import style from "./NavButtons.module.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import chat from '../../assets/chat.png'
+import social from '../../assets/social.png'
+import face from '../../assets/face.png'
+import whats from '../../assets/whats.png'
+import insta from '../../assets/insta.png'
+import share from '../../assets/share.png'
 
 const NavButtons = ({ storeId }) => {
   const navigate = useNavigate();
@@ -71,15 +77,15 @@ const NavButtons = ({ storeId }) => {
         <img
           width="30"
           height="30"
-          src="https://img.icons8.com/sf-regular/48/FFFFFF/chat.png"
+          src={chat}
           alt="chat"
         />
       </button>
       <button className={style.nav} onClick={handleNavButtonClick}>
         <img
-          width="24"
-          height="24"
-          src="https://img.icons8.com/ios-filled/50/FFFFFF/add-user-male.png"
+          width="30"
+          height="30"
+          src={social}
           alt="add-user-male"
         />
       </button>
@@ -90,7 +96,7 @@ const NavButtons = ({ storeId }) => {
               <img
                 width="40"
                 height="40"
-                src="https://img.icons8.com/color/48/whatsapp--v1.png"
+                src={whats}
                 alt="whatsapp--v1"
               />
             </button>
@@ -100,7 +106,7 @@ const NavButtons = ({ storeId }) => {
               <img
                 width="40"
                 height="40"
-                src="https://img.icons8.com/fluency/48/facebook-new.png"
+                src={face}
                 alt="facebook-new"
               />
             </button>
@@ -110,16 +116,16 @@ const NavButtons = ({ storeId }) => {
               <img
                 width="40"
                 height="40"
-                src="https://img.icons8.com/fluency/48/instagram-new.png"
+                src={insta}
                 alt="instagram-new"
               />
             </button>
           </Link>
           <button className={style.share} onClick={handleShareButtonClick}>
             <img
-              width="30"
-              height="30"
-              src="https://img.icons8.com/material-sharp/48/FFFFFF/share.png"
+              width="24"
+              height="24"
+              src={share}
               alt="share"
             />
           </button>

@@ -7,6 +7,8 @@ import {
   getUserNotif,
   markNotiAsRead,
 } from "../../redux/actions";
+import bell from '../../assets/bell.png'
+import bellY from '../../assets/bellY.png'
 
 const Head = () => {
   const dispatch = useDispatch();
@@ -263,8 +265,8 @@ const Head = () => {
             <img
               width="28"
               height="28"
-              src="https://img.icons8.com/ios-filled/50/FAB005/appointment-reminders--v1.png"
-              alt="appointment-reminders--v1"
+              src={bellY}
+              alt="campana amarilla"
               className={style.bellMove}
             />
           </button>
@@ -273,8 +275,8 @@ const Head = () => {
             <img
               width="28"
               height="28"
-              src="https://img.icons8.com/ios-filled/50/FFFFFF/appointment-reminders--v1.png"
-              alt="appointment-reminders--v1"
+              src={bell}
+              alt="campana"
               className={style.bell}
             />
           </button>
