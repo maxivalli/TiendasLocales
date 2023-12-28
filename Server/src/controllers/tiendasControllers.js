@@ -1,4 +1,4 @@
-const { Tienda, User } = require("../DB_config");
+const { Tienda, User, Compra } = require("../DB_config");
 const axios = require("axios");
 const { Op } = require("sequelize");
 const { habStoreMail } = require("../utils/mailObjects");
@@ -206,6 +206,25 @@ exports.deleteStore = async (storeId) => {
       await store.destroy({ force: true });
     }
 
+    return true;
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.enviado = async (compraId) => {
+  try {
+    const compra = await Compra.findOne({
+      where: {
+        id: compraId.compraId,
+      },
+    });
+
+    console.log("1", compra)
+
+    compra.enviado = true;
+    await compra.save();
+    console.log("2", compra)
     return true;
   } catch (error) {
     throw error;
