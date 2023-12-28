@@ -62,7 +62,7 @@ const MyStore = () => {
     Swal.fire({
       icon: "success",
       title: "¡Tienda conectada a Mercado Pago!",
-      text: "Para dejar de ver el mensaje recargarga la página",
+      text: "Si el mensaje se sigue mostrando recarga la página",
     }).then(() => {
       window.location.reload();
     });

@@ -188,6 +188,8 @@ router.get("/redirectUrl", async (req, res) => {
             <title>Token generado correctamente</title>
             <script>
               alert('Token generado correctamente! Puedes cerrar esta pestaña');
+              window.open('', '_self', '');
+              window.close();
             </script>
           </head>
         </html>
