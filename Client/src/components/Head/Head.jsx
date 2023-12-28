@@ -129,8 +129,8 @@ allUsers = users
       ]);
 
       setHasUnreadNotification(true);
-      const Data = {cantidad, title, storeName, image, userData}
-      socket?.emit("compraRealizadaToDB", Data)
+      const data = {cantidad, title, storeName, image, userData}
+      socket?.emit("compraRealizadaToDB", data)
     };
 
     socket?.on("compraRealizada", handleNuevaCompra);
@@ -160,8 +160,8 @@ allUsers = users
       ]);
 
       setHasUnreadNotification(true);
-      const Data = {cantidad, title, compradorName, image, userData, comprador, post}
-      socket?.emit("ventaRealizadaToDB", Data)
+      const data = {cantidad, title, compradorName, image, userData, comprador, post}
+      socket?.emit("ventaRealizadaToDB", data)
     };
 
     socket?.on("ventaRealizada", handleNuevaVenta);

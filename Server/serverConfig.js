@@ -369,6 +369,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("compraRealizadaToDB", async (data) => {
+    console.log("COMPRAREALIZADA", data);
     const { cantidad, title, storeName, image, userData } = data;
     const userId = userData?.id
 
@@ -409,7 +410,8 @@ io.on("connection", (socket) => {
   });
 
   socket.on("ventaRealizadaToDB", async (data) => {
-    const {cantidad, title, compradorName, image, userData, comprador, post} = data;
+    console.log("VENTAREALIZADA", data);
+    const {cantidad, title, compradorName, image, comprador, post} = data;
     const compradorId = comprador?.id
     const userId = post?.userId
     const usertoken = await User.findByPk(userId);
