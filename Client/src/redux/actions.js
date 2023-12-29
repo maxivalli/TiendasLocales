@@ -50,7 +50,9 @@ import {
   // SEARCHBAR
   GET_STORE_BY_NAME,
   FILTER_BY_NAME,
-  GET_POST_BY_NAME
+  GET_POST_BY_NAME,
+  // CODES
+  VERIFICAR_CODIGO
 } from "./actionTypes";
 
 // _____________________________________________________________USERS_________________________________________________________________
@@ -605,3 +607,4 @@ export function filterByName(string) {
     payload: string
   }
 }
+

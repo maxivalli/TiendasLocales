@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux"
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import style from "./ResetPassword.module.css";
@@ -10,12 +10,14 @@ import Logo from "../../assets/logo.png";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
-  const userData = useSelector((state) => state.userData)
-  const userId = userData?.id
   const { id } = useParams();
   const [input, setInput] = useState({
     password: "",
+    codigo:""
   });
+  const [codigoVerificacion, setCodigoVerificacion] = useState(false);
+
+
 
   const [error, setError] = useState({});
 
@@ -34,6 +36,32 @@ const ResetPassword = () => {
       });
     }
   };
+
+  const handleCodeSubmit = async (event) => {
+    event.preventDefault();
+
+    await axios
+      .get(`/codes/codigoForgot/${input.codigo}`)
+      .then((res) => {
+        if (res.data) {
+          Swal.fire({
+            icon: "success",
+            title: "Codigo verificado con exito",
+            text: "Aprete " + "aceptar" + " para continuar",
+          }).then(() => {
+            setCodigoVerificacion(true)
+        })
+        } else {
+          Swal.fire({
+            icon: "denied",
+            title: "Codigo incorrecto",
+            text: "Revise el codigo e intente nuevamente",
+          })
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -66,12 +94,6 @@ const ResetPassword = () => {
     return Object.values(error).some((error) => error !== null);
   }
 
-  useEffect(() => {
-    if (id != userId) {
-      navigate("/");
-    }
-  }, [id, userId, navigate]);
-
   return (
     <div className={style.view}>
       <div className={style.container}>
@@ -81,58 +103,79 @@ const ResetPassword = () => {
         </div>
 
         <div className={style.form}>
-          <form onSubmit={handleSubmit}>
-            <div className={style.sI}>
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="Contraseña"
-                value={input.password}
-                onChange={handleChange}
-                className={style.input}
-              />
-              {error.password && (
-                <span className={style.error}>{error.password}</span>
-              )}
-              <input
-                type={showPassword ? "text" : "password"}
-                name="passwordRepeat"
-                placeholder="Repetir contraseña"
-                onChange={handleChange}
-                value={input.passwordRepeat}
-                className={style.segundoInput}
-              />
-              {error.passwordRepeat && (
-                <span className={style.error}>{error.passwordRepeat}</span>
-              )}
-              <div className={style.showP}>
-                <label>Ver contraseñas</label>
+          {!codigoVerificacion && (
+            <form onSubmit={handleCodeSubmit}>
+              <div className={style.sI}>
                 <input
-                  type="checkbox"
-                  id="showPassword"
-                  onChange={handleShowPassword}
-                  checked={showPassword}
+                  type="text"
+                  name="codigo"
+                  placeholder="codigo"
+                  value={input.code}
+                  onChange={handleChange}
+                  className={style.input}
                 />
               </div>
-            </div>
-            <div>
               <button
-                className={
-                  isSubmitDisabled()
-                    ? `${style.register} ${style.buttonDisabled}`
-                    : style.register
-                }
-                disabled={isSubmitDisabled()}
-                type="submit"
-              >
-                Enviar
-              </button>
-              <div className={style.registerLink}>¿No tiene una cuenta?</div>
-              <Link to="/register" className={style.textYellow}>
-                <button className={style.btnAqui}>Regístrate</button>
-              </Link>
-            </div>
-          </form>
+                  type="submit"
+                >
+                  Verificar
+                </button>
+            </form>
+          )}
+          {codigoVerificacion && (
+            <form onSubmit={handleSubmit}>
+              <div className={style.sI}>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Contraseña"
+                  value={input.password}
+                  onChange={handleChange}
+                  className={style.input}
+                />
+                {error.password && (
+                  <span className={style.error}>{error.password}</span>
+                )}
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="passwordRepeat"
+                  placeholder="Repetir contraseña"
+                  onChange={handleChange}
+                  value={input.passwordRepeat}
+                  className={style.segundoInput}
+                />
+                {error.passwordRepeat && (
+                  <span className={style.error}>{error.passwordRepeat}</span>
+                )}
+                <div className={style.showP}>
+                  <label>Ver contraseñas</label>
+                  <input
+                    type="checkbox"
+                    id="showPassword"
+                    onChange={handleShowPassword}
+                    checked={showPassword}
+                  />
+                </div>
+              </div>
+              <div>
+                <button
+                  className={
+                    isSubmitDisabled()
+                      ? `${style.register} ${style.buttonDisabled}`
+                      : style.register
+                  }
+                  disabled={isSubmitDisabled()}
+                  type="submit"
+                >
+                  Enviar
+                </button>
+                <div className={style.registerLink}>¿No tiene una cuenta?</div>
+                <Link to="/register" className={style.textYellow}>
+                  <button className={style.btnAqui}>Regístrate</button>
+                </Link>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </div>
