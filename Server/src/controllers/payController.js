@@ -108,12 +108,15 @@ exports.webhook = async (allData) => {
             }
           })
           
-          const data = {allData, comprador, vendedor, post, store}
           if(vendedor){
+            console.log("VENDEDOR EXISTE");
+            const data = {allData, comprador, vendedor, post, store}
             io.to(vendedor.socketId).emit('ventaRealizada', data)
           }
           
           if(comprador){
+            console.log("COMPRADOR EXISTE");
+            const data = {allData, comprador, vendedor, post, store}
             io.to(comprador.socketId).emit('compraRealizada', data)
             await transporter.sendMail(compraMail(comprador));
           }
