@@ -50,7 +50,8 @@ module.exports = (sequelize) => {
             type: DataTypes.JSON,
         }, 
         enviado: {
-            type: DataTypes.BOOLEAN
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         }
     });
 };

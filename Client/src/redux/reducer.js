@@ -492,6 +492,7 @@ function rootReducer(state = initialState, action) {
           filteredStoress.some((store) => store.id === post.storeId)
         );
       }
+      console.log(filteredStoressByName);
 
       return {
         ...state,
@@ -513,7 +514,15 @@ function rootReducer(state = initialState, action) {
 
     case GET_STORES_BY_CATEGORY:
       let filteredStores = action.payload;
-      let filterStoresByName = action.payload;
+      let filterStoresByName;
+
+      if (state.selectedCategory !== "🔍 Mostrar todas") {
+        filterStoresByName = state.filteredStoresByNameCopy.filter(
+          (store) => store.categoria === state.selectedCategory
+        );
+      } else {
+        filterStoresByName = state.filteredStoresByNameCopy;
+      }
 
       const filteredPosts = state.allPostsCopy.filter((post) =>
         filteredStores.some((store) => store.id === post.storeId)

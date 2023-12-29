@@ -369,16 +369,16 @@ io.on("connection", (socket) => {
   });
 
   socket.on("compraRealizadaToDB", async (data) => {
-    const { cantidad, title, storeName, image, userData } = data;
-    const userId = userData?.id
+    console.log("COMPRAREALIZADA", data);
+    const {comprador, store, cantidad, title, vendedor, post, allData, userData} = data;
 
-    if (userData?.FCMtoken) {
+    if (comprador?.FCMtoken) {
       const message = {
         data: {
-          title: `${userData?.username}`,
-          text: `¡Tu compra de ${cantidad} ${title} ha sido notificada a ${storeName}!`,
+          title: `${comprador?.username}`,
+          text: `¡Tu compra de ${cantidad} ${title} ha sido notificada a ${store?.nombre}!`,
         },
-        token: userData?.FCMtoken,
+        token: comprador?.FCMtoken,
       };
 
       admin
@@ -392,12 +392,12 @@ io.on("connection", (socket) => {
         });
     }
 
-    const compraText = `¡Tu compra de ${cantidad} ${title} ha sido notificada a ${storeName}!`
+    const compraText = `¡Tu compra de ${cantidad} ${title} ha sido notificada a ${store?.nombre}!`
     try {
       await Notifications.create({
         content: compraText,
-        userId: userId,
-        image: image,
+        userId: comprador?.id,
+        image: post?.image,
       });
       console.log("Notificación almacenada en la base de datos");
     } catch (error) {
@@ -409,19 +409,17 @@ io.on("connection", (socket) => {
   });
 
   socket.on("ventaRealizadaToDB", async (data) => {
-    const {cantidad, title, compradorName, image, userData, comprador, post} = data;
-    const compradorId = comprador?.id
-    const userId = post?.userId
-    const usertoken = await User.findByPk(userId);
+    console.log("VENTAREALIZADA", data);
+    const {comprador, cantidad, store, vendedor, post, allData, title, compradorName} = data;
     
 
-    if (usertoken?.FCMtoken) {
+    if (vendedor?.FCMtoken) {
       const message = {
         data: {
-          title: `${usertoken?.username}`,
+          title: `${vendedor?.username}`,
           text: `¡${compradorName} te ha comprado ${cantidad} ${title}!`,
         },
-        token: usertoken?.FCMtoken,
+        token: vendedor?.FCMtoken,
       };
 
       admin
@@ -439,8 +437,8 @@ io.on("connection", (socket) => {
     try {
       await Notifications.create({
         content: compraText,
-        userId: compradorId,
-        image: image,
+        userId: vendedor?.id,
+        image: post?.id,
       });
       console.log("Notificación almacenada en la base de datos");
     } catch (error) {
