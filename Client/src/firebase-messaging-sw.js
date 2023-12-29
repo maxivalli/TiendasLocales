@@ -39,7 +39,7 @@ registerRoute(
     cacheName: "TL-data-cache", 
     plugins: [
       new ExpirationPlugin({
-        maxEntries: 50,
+        maxEntries: 100,
       }),
       {
         cacheableResponse: {
