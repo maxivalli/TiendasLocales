@@ -55,6 +55,29 @@ exports.createOrder = async (paymentData) => {
 } 
 exports.webhook = async (allData) => {
       try {
+        const comprador = await User.findOne({
+          where: {
+            id: allData.payUserData.userId,
+          },
+        });
+        const post = await Post.findOne({
+          where: {
+              id: allData.payUserData.postId,
+          },
+        });
+
+        const vendedor = await User.findOne({
+          where: {
+            id: post.userId
+          }
+        })
+
+        const store = await Tienda.findOne({
+          where: {
+            userId: vendedor.id
+          }
+        })
+
         if (allData.data.type === "payment") {
 
           if(allData.payUserData.postId){
@@ -81,34 +104,13 @@ exports.webhook = async (allData) => {
             });
             await newCompra.save();
           }
-          const comprador = await User.findOne({
-            where: {
-              id: allData.payUserData.userId,
-            },
-          });
-          const post = await Post.findOne({
-            where: {
-                id: allData.payUserData.postId,
-            },
-          });
-
-          const vendedor = await User.findOne({
-            where: {
-              id: post.userId
-            }
-          })
-
-          const store = await Tienda.findOne({
-            where: {
-              userId: vendedor.id
-            }
-          })
+         
           
           
             
-            const data = {allData, comprador, vendedor, post, store}
-            io.to(vendedor.socketId).emit('ventaRealizada', data)
-            io.to(comprador.socketId).emit('compraRealizada', data)
+            const data = {allData: allData, comprador: comprador, vendedor: vendedor, post: post, store: store}
+            io.to(vendedor?.socketId).emit('ventaRealizada', data)
+            io.to(comprador?.socketId).emit('compraRealizada', data)
             await transporter.sendMail(compraMail(comprador));
           
         

@@ -110,27 +110,12 @@ allUsers = users
   }, [stores]);
 
   useEffect(() => {
-    let cantidad
-    let title
-    let storeName
-    let image
-    let store
-    let post
-    let comprador
-    let allData
-    let vendedor
     const handleNuevaCompra = (data) => {
       const {comprador, store, vendedor, post, allData} = data
-      cantidad = allData.payUserData.quantity
-      title = allData.payUserData.title
-      storeName = store?.nombre
-      image = post?.image
-      store = store
-      post = post
-      comprador = comprador
-      vendedor = vendedor
-      allData = allData
-      console.log("SOCKET RECIBIDO COMPRA");
+      const cantidad = allData.payUserData.quantity
+      const title = allData.payUserData.title
+      const storeName = store?.nombre
+      const image = post?.image
 
       setLiveNotifications((prevNotifications) => [
         {
@@ -142,17 +127,14 @@ allUsers = users
       ]);
 
       setHasUnreadNotification(true);
+      const DBdata = {cantidad: cantidad, title: title, comprador: comprador, store: store, vendedor: vendedor, post: post, allData: allData, userData: userData}
+      socket?.emit("compraRealizadaToDB", DBdata)
     };
+
     socket?.on("compraRealizada", handleNuevaCompra);
-
-
-    const DBdata = {cantidad, title, comprador, store, vendedor, post, allData, userData}
-    socket?.emit("compraRealizadaToDB", DBdata)
-
 
     return () => {
       socket?.off("compraRealizada", handleNuevaCompra);
-      socket?.emit("compraRealizadaToDB", DBdata)
     };
   }, [stores]);
 
@@ -163,7 +145,6 @@ allUsers = users
       const title = allData.payUserData.title
       const image = post?.image
       const compradorName = comprador?.username
-      console.log("SOCKET RECIBIDO VENTA");
 
       setLiveNotifications((prevNotifications) => [
         {
@@ -175,7 +156,7 @@ allUsers = users
       ]);
 
       setHasUnreadNotification(true);
-      const DBdata = {cantidad, comprador, store, vendedor, post, allData, title, compradorName}
+      const DBdata = {cantidad: cantidad, comprador: comprador, store: store, vendedor: vendedor, post: post, allData: allData, title: title, compradorName: compradorName}
       socket?.emit("ventaRealizadaToDB", DBdata)
     };
 
