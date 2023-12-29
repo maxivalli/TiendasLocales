@@ -17,7 +17,7 @@ const MySales = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `/tiendas/comprasRecibidas/${userData.id}` //Aca hay que pasarle el ID de la tienda
+          `/tiendas/comprasRecibidas/${3}` 
         );
         if (response) {
           setCompras(response.data);
@@ -41,6 +41,8 @@ const MySales = () => {
     }
   }
 
+  console.log("compras",comprasData);
+
   return (
     <>
       <Filters />
@@ -60,13 +62,13 @@ const MySales = () => {
                 price={item?.unit_price}
                 stock={item?.quantity}
                 delivery={true}
-                // boton "Enviado" con un onClick(handleEnviado) que reciba el id de la compra.
+                fn={handleEnviado(1)}
               />
             );
           })}
-          <button onClick={() => handleEnviado(1)}>
+          {/* <button onClick={() => handleEnviado(1)}>
           HOLA
-          </button>
+          </button> */}
         </div>
 
         <h3>Enviadas o entregadas</h3>
