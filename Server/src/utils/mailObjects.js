@@ -61,8 +61,8 @@ const postCreated = (email, postData) => {
 
 
 const passwordForgot = (email, id) => {
-  //const urlPersonalizada = `https://tiendasLocales.com.ar/#/resetpassword/${id}`;
-  const urlPersonalizada = `http://localhost:5173/#/resetpassword/${id}`;
+  const urlPersonalizada = `https://tiendasLocales.com.ar/#/resetpassword/${id}`;
+  //const urlPersonalizada = `http://localhost:5173/#/resetpassword/${id}`;
 
   function generarCodigoAleatorio() {
     const longitudCodigo = 6;
