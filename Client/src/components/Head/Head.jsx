@@ -7,19 +7,19 @@ import {
   getUserNotif,
   markNotiAsRead,
 } from "../../redux/actions";
-import bell from '../../assets/bell.png'
-import bellY from '../../assets/bellY.png'
+import bell from "../../assets/bell.png";
+import bellY from "../../assets/bellY.png";
 
 const Head = () => {
   const dispatch = useDispatch();
   const [showNotifications, setShowNotifications] = useState(false);
   const [liveNotifications, setLiveNotifications] = useState([]);
   const [hasUnreadNotification, setHasUnreadNotification] = useState(false);
-  const [hoveredNotificationIndex, setHoveredNotificationIndex] = useState(null);
+  const [hoveredNotificationIndex, setHoveredNotificationIndex] =
+    useState(null);
   const [clearNotifications, setClearNotifications] = useState(false);
   const stores = useSelector((state) => state.allStoresCopy);
   const users = useSelector((state) => state.allUsers);
-  let allUsers
   const posts = useSelector((state) => state.allPostsCopy);
   const userData = useSelector((state) => state.userData);
   const savedNotif = useSelector((state) => state.userNotif);
@@ -36,7 +36,7 @@ const Head = () => {
   const userId = userData?.id;
 
   useEffect(() => {
-allUsers = users
+    allUsers = users;
   }, [users]);
 
   useEffect(() => {
@@ -111,11 +111,11 @@ allUsers = users
 
   useEffect(() => {
     const handleNuevaCompra = (data) => {
-      const {comprador, store, vendedor, post, allData} = data
-      const cantidad = allData.payUserData.quantity
-      const title = allData.payUserData.title
-      const storeName = store?.nombre
-      const image = post?.image
+      const { comprador, store, vendedor, post, allData } = data;
+      const cantidad = allData.payUserData.quantity;
+      const title = allData.payUserData.title;
+      const storeName = store?.nombre;
+      const image = post?.image;
 
       setLiveNotifications((prevNotifications) => [
         {
@@ -127,11 +127,23 @@ allUsers = users
       ]);
 
       setHasUnreadNotification(true);
-      const DBdata = {cantidad: cantidad, title: title, comprador: comprador, store: store, vendedor: vendedor, post: post, allData: allData, userData: userData}
-      socket?.emit("compraRealizadaToDB", DBdata)
+      const DBdata = {
+        cantidad: cantidad,
+        title: title,
+        comprador: comprador,
+        store: store,
+        vendedor: vendedor,
+        post: post,
+        allData: allData,
+        userData: userData,
+      };
+      socket?.emit("compraRealizadaToDB", DBdata);
     };
 
-    socket?.on("compraRealizada", handleNuevaCompra);
+    socket?.on("compraRealizada", (data) => {
+      console.log("AAAAAAAAAAAAAAAAVERGA", data);
+      handleNuevaCompra(data)
+    });
 
     return () => {
       socket?.off("compraRealizada", handleNuevaCompra);
@@ -140,11 +152,11 @@ allUsers = users
 
   useEffect(() => {
     const handleNuevaVenta = (data) => {
-      const {comprador, store, vendedor, post, allData} = data
-      const cantidad = allData.payUserData.quantity
-      const title = allData.payUserData.title
-      const image = post?.image
-      const compradorName = comprador?.username
+      const { comprador, store, vendedor, post, allData } = data;
+      const cantidad = allData.payUserData.quantity;
+      const title = allData.payUserData.title;
+      const image = post?.image;
+      const compradorName = comprador?.username;
 
       setLiveNotifications((prevNotifications) => [
         {
@@ -156,18 +168,28 @@ allUsers = users
       ]);
 
       setHasUnreadNotification(true);
-      const DBdata = {cantidad: cantidad, comprador: comprador, store: store, vendedor: vendedor, post: post, allData: allData, title: title, compradorName: compradorName}
-      socket?.emit("ventaRealizadaToDB", DBdata)
+      const DBdata = {
+        cantidad: cantidad,
+        comprador: comprador,
+        store: store,
+        vendedor: vendedor,
+        post: post,
+        allData: allData,
+        title: title,
+        compradorName: compradorName,
+      };
+      socket?.emit("ventaRealizadaToDB", DBdata);
     };
 
-    socket?.on("ventaRealizada", handleNuevaVenta);
-
+    socket?.on("ventaRealizada", (data) => {
+      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA", data);
+      handleNuevaVenta(data)
+    });
 
     return () => {
       socket?.off("ventaRealizada", handleNuevaVenta);
     };
   }, [stores]);
-
 
   useEffect(() => {
     const handleAddFavorite = (storeId) => {
