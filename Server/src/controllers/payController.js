@@ -54,7 +54,6 @@ exports.createOrder = async (paymentData) => {
     }
 } 
 exports.webhook = async (allData) => {
-  console.log("a", allData);
       try {
         if (allData.data.type === "payment") {
 
@@ -67,7 +66,6 @@ exports.webhook = async (allData) => {
   
           post.stock = post.stock - allData.payUserData.quantity;
           await post.save();
-            console.log("1")
             const newCompra = await Compra.create({
               userDireccion: allData.payUserData.userDireccion,
               delivery: allData.payUserData.delivery,
@@ -82,14 +80,12 @@ exports.webhook = async (allData) => {
               productImage: post.image
             });
             await newCompra.save();
-            console.log("2", newCompra)
           }
           const comprador = await User.findOne({
             where: {
               id: allData.payUserData.userId,
             },
           });
-          console.log("COMPRADOOOOOOOOOOOOOOOOOOOOOOOOR", comprador);
           const post = await Post.findOne({
             where: {
                 id: allData.payUserData.postId,
@@ -101,7 +97,6 @@ exports.webhook = async (allData) => {
               id: post.userId
             }
           })
-          console.log("VENDEDOOOOOOOOOOOOOOOOOOOOOOOOOOOOR", vendedor);
 
           const store = await Tienda.findOne({
             where: {
@@ -109,18 +104,13 @@ exports.webhook = async (allData) => {
             }
           })
           
-          if(vendedor){
-            console.log("VENDEDOR EXISTE");
+          
+            
             const data = {allData, comprador, vendedor, post, store}
             io.to(vendedor.socketId).emit('ventaRealizada', data)
-          }
-          
-          if(comprador){
-            console.log("COMPRADOR EXISTE");
-            const data = {allData, comprador, vendedor, post, store}
             io.to(comprador.socketId).emit('compraRealizada', data)
             await transporter.sendMail(compraMail(comprador));
-          }
+          
         
           return true
         }
