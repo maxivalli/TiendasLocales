@@ -14,16 +14,19 @@ const Head = () => {
   const dispatch = useDispatch();
   const [showNotifications, setShowNotifications] = useState(false);
   const [liveNotifications, setLiveNotifications] = useState([]);
-  const [hasUnreadNotification, setHasUnreadNotification] = useState(false);
+  const [hasUnreadNotification, setHasUnreadNotification] = useState();
+  useEffect(() => {
+  console.log(hasUnreadNotification);
+}, [hasUnreadNotification])
   const [hoveredNotificationIndex, setHoveredNotificationIndex] =
     useState(null);
   const [clearNotifications, setClearNotifications] = useState(false);
   const stores = useSelector((state) => state.allStoresCopy);
   const users = useSelector((state) => state.allUsers);
+  
   const posts = useSelector((state) => state.allPostsCopy);
   const userData = useSelector((state) => state.userData);
   const savedNotif = useSelector((state) => state.userNotif);
-
   const mixturedNotifications = [...liveNotifications, ...savedNotif];
   const notifications = Array.from(
     new Set(mixturedNotifications.map((notification) => notification.content))
@@ -34,10 +37,6 @@ const Head = () => {
   );
 
   const userId = userData?.id;
-
-  useEffect(() => {
-    allUsers = users;
-  }, [users]);
 
   useEffect(() => {
     if (userId) {
@@ -56,9 +55,6 @@ const Head = () => {
 
   const toggleNotifications = () => {
     setShowNotifications((prevState) => !prevState);
-    if (hasUnreadNotification) {
-      setHasUnreadNotification(false);
-    }
     if (clearNotifications) {
       setClearNotifications(false);
     }
@@ -68,7 +64,9 @@ const Head = () => {
     setHoveredNotificationIndex(index);
     if (notifications[index].read === false) {
       notifications[index].read = true;
+      if (notifications[index]?.id !== undefined)
       dispatch(markNotiAsRead(notifications[index]?.id));
+    setHasUnreadNotification(false)
     }
   };
 
@@ -103,10 +101,6 @@ const Head = () => {
     };
 
     socket?.on("newMessage", handleNewMessage);
-
-    return () => {
-      socket?.off("newMessage", handleNewMessage);
-    };
   }, [stores]);
 
   useEffect(() => {
@@ -144,10 +138,6 @@ const Head = () => {
       console.log("AAAAAAAAAAAAAAAAVERGA", data);
       handleNuevaCompra(data)
     });
-
-    return () => {
-      socket?.off("compraRealizada", handleNuevaCompra);
-    };
   }, [stores]);
 
   useEffect(() => {
@@ -185,16 +175,12 @@ const Head = () => {
       console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA", data);
       handleNuevaVenta(data)
     });
-
-    return () => {
-      socket?.off("ventaRealizada", handleNuevaVenta);
-    };
   }, [stores]);
 
   useEffect(() => {
     const handleAddFavorite = (storeId) => {
       const store = stores.find((store) => store.id == storeId);
-
+      
       setLiveNotifications((prevNotifications) => [
         {
           content: `¡Se ha agregado "${store.nombre}" a favoritos!`,
@@ -203,15 +189,11 @@ const Head = () => {
         },
         ...prevNotifications,
       ]);
-
-      setHasUnreadNotification(true);
+      
+      setHasUnreadNotification(true)
     };
 
     socket?.on("addFavorite", handleAddFavorite);
-
-    return () => {
-      socket?.off("addFavorite", handleAddFavorite);
-    };
   }, [stores]);
 
   useEffect(() => {
@@ -231,10 +213,6 @@ const Head = () => {
     };
 
     socket?.on("addFavoritePost", handleAddPostFavorite);
-
-    return () => {
-      socket?.off("addFavoritePost", handleAddPostFavorite);
-    };
   }, [stores]);
 
   useEffect(() => {
@@ -252,10 +230,6 @@ const Head = () => {
     };
 
     socket?.on("waitingStore", handleWaitingStore);
-
-    return () => {
-      socket?.off("waitingStore", handleWaitingStore);
-    };
   }, [stores]);
 
   useEffect(() => {
@@ -273,10 +247,6 @@ const Head = () => {
     };
 
     socket?.on("approvedStore", handleApprovedStore);
-
-    return () => {
-      socket?.off("approvedStore", handleApprovedStore);
-    };
   }, [stores]);
 
   const handleClearNotifications = () => {

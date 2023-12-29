@@ -1,4 +1,4 @@
-const { User, Compra, Post } = require("../DB_config");
+const { User, Compra, Post, Tienda } = require("../DB_config");
 require("dotenv").config();
 const { ACCESS_TOKEN, CLIENT_ID, CLIENT_SECRET, CRYPTO_KEY } = process.env;
 const mercadopago = require("mercadopago");
@@ -55,29 +55,6 @@ exports.createOrder = async (paymentData) => {
 } 
 exports.webhook = async (allData) => {
       try {
-        const comprador = await User.findOne({
-          where: {
-            id: allData.payUserData.userId,
-          },
-        });
-        const post = await Post.findOne({
-          where: {
-              id: allData.payUserData.postId,
-          },
-        });
-
-        const vendedor = await User.findOne({
-          where: {
-            id: post.userId
-          }
-        })
-
-        const store = await Tienda.findOne({
-          where: {
-            userId: vendedor.id
-          }
-        })
-
         if (allData.data.type === "payment") {
 
           if(allData.payUserData.postId){
@@ -105,7 +82,28 @@ exports.webhook = async (allData) => {
             await newCompra.save();
           }
          
-          
+          const comprador = await User.findOne({
+            where: {
+              id: allData.payUserData.userId,
+            },
+          });
+          const post = await Post.findOne({
+            where: {
+                id: allData.payUserData.postId,
+            },
+          });
+  
+          const vendedor = await User.findOne({
+            where: {
+              id: post.userId
+            }
+          })
+  
+          const store = await Tienda.findOne({
+            where: {
+              userId: vendedor.id
+            }
+          })
           
             
             const data = {allData: allData, comprador: comprador, vendedor: vendedor, post: post, store: store}
