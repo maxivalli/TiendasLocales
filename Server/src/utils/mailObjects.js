@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { Code } = require("../DB_config");
 
 const registerTemplate = fs.readFileSync(__dirname + '/register.html', 'utf8');
 const forgotTemplate = fs.readFileSync(__dirname + '/forgot.html', 'utf8');
@@ -54,10 +55,32 @@ const postCreated = (email, postData) => {
   }
 }
 
+
+
+
+
+
 const passwordForgot = (email, id) => {
-  const urlPersonalizada = `https://tiendasLocales.com.ar/#/resetpassword/${id}`;
-  //const urlPersonalizada = `http://localhost:5173/#/resetpassword/${id}`;
-  const forgotTemplateWithLink = forgotTemplate.replace("{{reset_password_link}}", urlPersonalizada);
+  //const urlPersonalizada = `https://tiendasLocales.com.ar/#/resetpassword/${id}`;
+  const urlPersonalizada = `http://localhost:5173/#/resetpassword/${id}`;
+
+  function generarCodigoAleatorio() {
+    const longitudCodigo = 6;
+    const minimo = Math.pow(10, longitudCodigo - 1);
+    const maximo = Math.pow(10, longitudCodigo) - 1;
+  
+    return Math.floor(Math.random() * (maximo - minimo + 1)) + minimo;
+  }
+  
+  const codigo = generarCodigoAleatorio();
+  Code.create({
+    codigoForgot: parseInt(codigo),
+  });
+
+  
+  const forgotTemplateWithLink = forgotTemplate
+  .replace("{{reset_password_link}}", urlPersonalizada)
+  .replace("{{codigo}}", codigo)
   
   return {
     to: email,
