@@ -187,7 +187,7 @@ function App() {
                 );
                 dispatch(getUserStore(userDataResponse?.data.id));
                 dispatch(getAllPosts());
-                dispatch(getAllUsers())
+                dispatch(getAllUsers());
               })
               .catch((userDataError) => {
                 console.error(
@@ -230,22 +230,10 @@ function App() {
     }
   }, [shouldConnectSocket, userId]);
 
-  useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker
-          .register("/firebase-messaging-sw.js")
-          .then((registration) => {
-            console.log("Service Worker registrado con éxito: ", registration);
-            SWregistration = registration;
-          })
-          .catch((err) => {
-            console.error("Error al registrar el Service Worker: ", err);
-          });
-      });
-    }
+  const [isSlowConnection, setIsSlowConnection] = useState(false);
 
-    window.addEventListener("offline", () => {
+  useEffect(() => {
+    const handleOffline = () => {
       const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
@@ -261,9 +249,9 @@ function App() {
         icon: "warning",
         title: "Estás fuera de línea, revisa tu conexión.",
       });
-    });
+    };
 
-    window.addEventListener("online", () => {
+    const handleOnline = () => {
       const Toast = Swal.mixin({
         toast: true,
         position: "top-end",
@@ -279,7 +267,52 @@ function App() {
         icon: "success",
         title: "¡Estás en línea nuevamente!",
       });
-    });
+    };
+
+    const checkConnectionSpeed = () => {
+      const connection =
+        navigator.connection ||
+        navigator.mozConnection ||
+        navigator.webkitConnection;
+
+      if (connection) {
+        const { downlink } = connection;
+        const slowConnectionThreshold = 1;
+
+        if (downlink && downlink < slowConnectionThreshold) {
+          setIsSlowConnection(true);
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "warning",
+            title:
+              "Tu conexión a internet es lenta. La experiencia puede verse afectada.",
+          });
+        } else {
+          setIsSlowConnection(false);
+        }
+      }
+    };
+
+    const connectionSpeedChecker = setInterval(checkConnectionSpeed, 15000);
+
+    window.addEventListener("offline", handleOffline);
+    window.addEventListener("online", handleOnline);
+
+    return () => {
+      window.removeEventListener("offline", handleOffline);
+      window.removeEventListener("online", handleOnline);
+      clearInterval(connectionSpeedChecker);
+    };
   }, []);
 
   useEffect(() => {
