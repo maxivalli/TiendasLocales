@@ -8,27 +8,37 @@ import Head from "../../components/Head/Head";
 
 import style from "./MySales.module.css";
 import { reload } from "firebase/auth";
-
 const MySales = () => {
   const userData = useSelector((state) => state.userData);
   const [comprasData, setCompras] = useState([]);
+  const [ storeId, setStoreId ] = useState();
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `/tiendas/comprasRecibidas/${3}` 
-        );
-        if (response) {
-          setCompras(response.data);
+        const response1 = await axios.get("/tiendas/getStore", {
+          params: { id: userData.id },
+        });
+
+        if (response1) {
+          setStoreId(response1.data.id)
+
+          const response = await axios.get(
+            `/tiendas/comprasRecibidas/${response1.data.id}` 
+          );
+          if (response) {
+            setCompras(response.data);
+          }
         }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
+  
     fetchData();
-  }, [userData.id]);
+  }, [userData.id]); 
+  
 
   const handleEnviado = async (compraId) =>{
     try{
@@ -42,7 +52,8 @@ const MySales = () => {
   }
 
   console.log("compras",comprasData);
-
+  console.log("MIAU", storeId)
+  
   return (
     <>
       <Filters />
@@ -62,7 +73,7 @@ const MySales = () => {
                 price={item?.unit_price}
                 stock={item?.quantity}
                 delivery={true}
-                fn={handleEnviado(1)}
+                fn={()=>{handleEnviado(storeId)}}
               />
             );
           })}
