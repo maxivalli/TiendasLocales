@@ -110,12 +110,26 @@ allUsers = users
   }, [stores]);
 
   useEffect(() => {
+    let cantidad
+    let title
+    let storeName
+    let image
+    let store
+    let post
+    let comprador
+    let allData
+    let vendedor
     const handleNuevaCompra = (data) => {
       const {comprador, store, vendedor, post, allData} = data
-      const cantidad = allData.payUserData.quantity
-      const title = allData.payUserData.title
-      const storeName = store?.nombre
-      const image = post?.image
+      cantidad = allData.payUserData.quantity
+      title = allData.payUserData.title
+      storeName = store?.nombre
+      image = post?.image
+      store = store
+      post = post
+      comprador = comprador
+      vendedor = vendedor
+      allData = allData
       console.log("SOCKET RECIBIDO COMPRA");
 
       setLiveNotifications((prevNotifications) => [
@@ -128,14 +142,17 @@ allUsers = users
       ]);
 
       setHasUnreadNotification(true);
-      const DBdata = {cantidad, title, comprador, store, vendedor, post, allData, userData}
-      socket?.emit("compraRealizadaToDB", DBdata)
     };
-
     socket?.on("compraRealizada", handleNuevaCompra);
+
+
+    const DBdata = {cantidad, title, comprador, store, vendedor, post, allData, userData}
+    socket?.emit("compraRealizadaToDB", DBdata)
+
 
     return () => {
       socket?.off("compraRealizada", handleNuevaCompra);
+      socket?.emit("compraRealizadaToDB", DBdata)
     };
   }, [stores]);
 
