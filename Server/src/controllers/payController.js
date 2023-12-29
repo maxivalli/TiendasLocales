@@ -89,7 +89,7 @@ exports.webhook = async (allData) => {
               id: allData.payUserData.userId,
             },
           });
-
+          console.log("COMPRADOOOOOOOOOOOOOOOOOOOOOOOOR", comprador);
           const post = await Post.findOne({
             where: {
                 id: allData.payUserData.postId,
@@ -101,6 +101,7 @@ exports.webhook = async (allData) => {
               id: post.userId
             }
           })
+          console.log("VENDEDOOOOOOOOOOOOOOOOOOOOOOOOOOOOR", vendedor);
 
           const store = await Tienda.findOne({
             where: {
