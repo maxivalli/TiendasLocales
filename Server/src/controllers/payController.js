@@ -109,6 +109,7 @@ exports.webhook = async (allData) => {
           
             
             const data = {allData: allData, comprador: comprador, vendedor: vendedor, post: post, store: store}
+            console.log("ESTO SE ENVIA EN LOS SOCKET", data);
             io.to(vendedor?.socketId).emit('ventaRealizada', data)
             io.to(comprador?.socketId).emit('compraRealizada', data)
             await transporter.sendMail(compraMail(comprador));
