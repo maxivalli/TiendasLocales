@@ -34,20 +34,20 @@
 }
 
 @media (max-width: 1280px) {
-  .stores {
+  .pendientes {
     grid-template-columns: 1fr 1fr;
   }
 
-  .products {
+  .entregadas {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (max-width: 768px) {
-  .stores {
+  .pendientes {
     grid-template-columns: 1fr;
   }
-  .products {
+  .entregadas {
     grid-template-columns: 1fr;
   }
 }
