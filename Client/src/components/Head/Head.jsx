@@ -127,7 +127,7 @@ allUsers = users
       ]);
 
       setHasUnreadNotification(true);
-      const DBdata = {comprador, store, vendedor, post, allData, userData}
+      const DBdata = {cantidad, title, comprador, store, vendedor, post, allData, userData}
       socket?.emit("compraRealizadaToDB", DBdata)
     };
 
@@ -156,7 +156,7 @@ allUsers = users
       ]);
 
       setHasUnreadNotification(true);
-      const DBdata = {comprador, store, vendedor, post, allData, title, compradorName}
+      const DBdata = {cantidad, comprador, store, vendedor, post, allData, title, compradorName}
       socket?.emit("ventaRealizadaToDB", DBdata)
     };
 
