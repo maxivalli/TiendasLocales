@@ -116,6 +116,7 @@ allUsers = users
       const title = allData.payUserData.title
       const storeName = store?.nombre
       const image = post?.image
+      console.log("SOCKET RECIBIDO COMPRA");
 
       setLiveNotifications((prevNotifications) => [
         {
@@ -145,6 +146,7 @@ allUsers = users
       const title = allData.payUserData.title
       const image = post?.image
       const compradorName = comprador?.username
+      console.log("SOCKET RECIBIDO VENTA");
 
       setLiveNotifications((prevNotifications) => [
         {
