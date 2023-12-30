@@ -445,7 +445,7 @@ io.on("connection", (socket) => {
         content: compraText,
         userId: vendedor?.id,
         image: image,
-        type: "compra"
+        type: "venta"
       });
       console.log("Notificación almacenada en la base de datos");
     } catch (error) {
