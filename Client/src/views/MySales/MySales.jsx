@@ -1,38 +1,34 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { socket } from "../../App";
 
 import Filters from "../../components/Filters/Filters";
-import CardSquare from "../../components/CardSquare/CardSquare";
 import CardSale from "../../components/CardSales/CardSale";
 import Head from "../../components/Head/Head";
 
 import style from "./MySales.module.css";
-import { reload } from "firebase/auth";
 
 const MySales = () => {
   const userData = useSelector((state) => state.userData);
+  const selectedStore = useSelector((state) => state.selectedStore);
+  const users = useSelector((state) => state.allUsers);
   const [comprasData, setCompras] = useState([]);
-  const [ storeId, setStoreId ] = useState();
+  console.log(comprasData);
+  const comprasEnviadas = comprasData.filter((item) => item.enviado === true)
+ console.log(comprasEnviadas);
+  const storeId = selectedStore.id
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response1 = await axios.get("/tiendas/getStore", {
-          params: { id: userData.id },
-        });
-
-        if (response1) {
-          setStoreId(response1.data.id)
-
           const response = await axios.get(
-            `/tiendas/comprasRecibidas/${response1.data.id}` 
+            `/tiendas/comprasRecibidas/${storeId}` 
           );
           if (response) {
             setCompras(response.data);
           }
-        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -42,20 +38,20 @@ const MySales = () => {
   }, [userData.id]); 
   
 
-  const handleEnviado = async (compraId) =>{
+  const handleEnviado = async (itemId) =>{
     try{
-      const response = await axios.post("/tiendas/enviado", { compraId });
+      const response = await axios.post("/tiendas/enviado", { itemId });
       if(response){
-        window.location.reload();
+        socket?.emit("productoEnviado", itemId)
+       
+        return true
       }
     } catch(error){
       console.error("Error fetching data:", error);
     }
   }
 
-  console.log("compras",comprasData);
-  console.log("MIAU", storeId)
-  
+
   return (
     <>
       <Filters />
@@ -65,20 +61,20 @@ const MySales = () => {
 
         <h3>Pendientes</h3>
         <div className={style.pendientes}>
-          {comprasData.map((item, index) => {
+          {comprasData && comprasData.map((item, index) => {
             return (
               <CardSale
                 key={index}
-                id={item?.postId}
+                id={item?.id}
                 image={item?.productImage}
                 title={item?.title}
                 price={item?.unit_price}
                 quantity={item?.quantity}
-                delivery={true}
-                user={"Maximiliano Valli"}
-                adress={"San Lorenzo 1260"}
-                phone={"3408677294"}
-                fn={()=>{handleEnviado(storeId)}}
+                delivery={item?.delivery}
+                user={users && users.find((user) => user.id === item?.userId)}
+                adress={item?.userDireccion}
+                phone={item?.userDireccion.celular}
+                fn={()=>{handleEnviado(item?.id)}}
               />
             );
           })}
@@ -88,7 +84,25 @@ const MySales = () => {
         </div>
 
         <h3>Enviadas o entregadas</h3>
-        <div className={style.entregadas}></div>
+        <div className={style.entregadas}>
+        {comprasEnviadas && comprasEnviadas.map((item, index) => {
+            return (
+              <CardSale
+                key={index}
+                id={item?.id}
+                image={item?.productImage}
+                title={item?.title}
+                price={item?.unit_price}
+                quantity={item?.quantity}
+                delivery={item?.delivery}
+                user={users && users.find((user) => user.id === item?.userId)}
+                adress={item?.userDireccion}
+                phone={item?.userDireccion.celular}
+                fn={()=>{handleEnviado(item?.id)}}
+              />
+              );
+            })}
+        </div>
       </div>
     </>
   );

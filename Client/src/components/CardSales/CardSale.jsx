@@ -54,10 +54,10 @@ const CardSale = ({
         </div>
 
         <div className={style.button}>
-          {delivery ? (
-            <button onClick={fn}>Enviado</button>
+          {enviado ? (
+            <button disabled={true}>Enviado</button>
           ) : (
-            <button onClick={fn}>Entregado</button>
+            <button onClick={fn}>Enviar</button>
           )}
         </div>
       </div>

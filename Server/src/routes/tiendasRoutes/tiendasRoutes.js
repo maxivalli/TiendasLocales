@@ -223,10 +223,9 @@ router.get("/getStoreByName/name", async (req, res) => {
 })
 
 router.post("/enviado", async (req, res) => {
-  const compraId = req.body;
-  console.log("1",compraId)
+  const itemId = req.body;
   try {
-    const response = await tiendasController.enviado(compraId);
+    const response = await tiendasController.enviado(itemId);
     return res.status(200).json(response);
   } catch (error) {
     return res.status(400).json(error.message);
