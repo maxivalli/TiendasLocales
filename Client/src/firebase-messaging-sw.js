@@ -17,12 +17,12 @@ self.addEventListener("message", (event) => {
 });
 
 registerRoute(
-  /\.(?:png|jpg|jpeg|svg|gif)$/, 
+  /^https:\/\/firebasestorage\.googleapis\.com\//, 
   new CacheFirst({
     cacheName: "TL-images-cache", 
     plugins: [
       new ExpirationPlugin({
-        maxEntries: 10,
+        maxEntries: 50,
       }),
       {
         cacheableResponse: {
