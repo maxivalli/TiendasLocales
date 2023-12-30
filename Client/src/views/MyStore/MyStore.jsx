@@ -3,7 +3,7 @@ import CardSquare from "../../components/CardSquare/CardSquare";
 import Filters from "../../components/Filters/Filters";
 import Head from "../../components/Head/Head";
 import OptButtons from "../../components/OptButtons/ObtButtons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import style from "./MyStore.module.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,10 +15,14 @@ import CardWide from "../../components/CardWide/CardWide";
 import mPago from "../../assets/mPago.png";
 
 const MyStore = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const { storeId } = useParams();
+  console.log(storeId);
   const userData = useSelector((state) => state.userData);
   const stores = useSelector((state) => state.allStoresCopy);
+  const userStore = stores.find((store) => store.userId === userData.id)
+  console.log(userStore.id);
   const storePosts = useSelector((state) => state.storePosts);
   const allPosts = useSelector((state) => state.allPosts);
   const allPostsCopy = useSelector((state) => state.allPostsCopy);
@@ -67,6 +71,11 @@ const MyStore = () => {
       window.location.reload();
     });
   };
+  useEffect(() => {
+    if (storeId != userStore.id) {
+      navigate("/")
+    }
+  }, [dispatch, storeId])
 
   if (loading) {
     return (
@@ -77,6 +86,7 @@ const MyStore = () => {
       </div>
     );
   }
+
 
   return (
     <>
