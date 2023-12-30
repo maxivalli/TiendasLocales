@@ -44,12 +44,12 @@ const CardSale = ({
 
           <div className={style.adress}>
             <span>Dirección:</span>
-            <p>{adress.direccion}</p>
+            <p>{adress && adress.direccion}</p>
           </div>
 
           <div className={style.phone}>
             <span>Teléfono:</span>
-            <p>{phone}</p>
+            <p>{phone && phone}</p>
           </div>
 
         </div>
