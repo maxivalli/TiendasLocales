@@ -176,6 +176,17 @@ router.get("/comprasRecibidas/:id", async (req, res) => {
   }
 });
 
+router.get("/comprasRealizadas/:id", async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const response = await payController.comprasRealizadas(id);
+    return res.json(response);
+  } catch (error) {
+    return res.status(400).json(error.message);
+  }
+});
+
 router.get("/redirectUrl", async (req, res) => {
   const { code, state } = req.query;
 
