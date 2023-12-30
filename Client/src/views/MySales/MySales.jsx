@@ -20,11 +20,6 @@ const MySales = () => {
   const comprasEnviadas = comprasData.filter((item) => item.enviado === true)
 
   useEffect(() => {
-    dispatch(setSelectedStore(userStore.id))
-  }, [dispatch])
-
-
-  useEffect(() => {
     const fetchData = async () => {
       try {
           const response = await axios.get(
