@@ -245,13 +245,11 @@ const Head = () => {
     setHasUnreadNotification(false);
   };
 
-<<<<<<< HEAD
   useEffect(() => {
     if (!hasUnreadNotification) {
       setHasUnreadNotification(false);
     }
   }, [hasUnreadNotification]);
-=======
   const handleNotificationClick = (notification) => {
     switch (notification.type) {
       case "storeMessage":
@@ -274,7 +272,6 @@ const Head = () => {
         break;
     }
   };
->>>>>>> d6fed91e95930edaf1ec347ae1bd5d8dd1b5831c
 
   return (
     <>
