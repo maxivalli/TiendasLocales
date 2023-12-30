@@ -18,7 +18,7 @@ self.addEventListener("message", (event) => {
 
 registerRoute(
   /(.*)/, 
-  new CacheFirst({
+  new NetworkFirst({
     cacheName: "TL-all-cache", 
     plugins: [
       new ExpirationPlugin({
