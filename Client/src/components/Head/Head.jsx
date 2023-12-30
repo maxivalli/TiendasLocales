@@ -32,17 +32,19 @@ const Head = () => {
   const userId = userData?.id;
 
   useEffect(() => {
-    let hasUnread
-    if (savedNotif > 1){
-    hasUnread = savedNotif.some((notification) => notification.read === false);
-    if (hasUnread && !hasUnreadNotification) {
-      setHasUnreadNotification(true);
-    }
+    let hasUnread;
+    if (savedNotif > 1) {
+      hasUnread = savedNotif.some(
+        (notification) => notification.read === false
+      );
+      if (hasUnread && !hasUnreadNotification) {
+        setHasUnreadNotification(true);
+      }
     } else {
-    hasUnread = savedNotif && savedNotif[0]?.read === false
-    if (hasUnread && !hasUnreadNotification) {
-      setHasUnreadNotification(true);
-    }
+      hasUnread = savedNotif && savedNotif[0]?.read === false;
+      if (hasUnread && !hasUnreadNotification) {
+        setHasUnreadNotification(true);
+      }
     }
   }, [dispatch, mixturedNotifications, hoveredNotificationIndex]);
 
@@ -50,7 +52,7 @@ const Head = () => {
     setShowNotifications((prevState) => !prevState);
   };
 
-  const handleMouseOver = (index) => {
+  /*  const handleMouseOver = (index) => {
     setHoveredNotificationIndex(index);
     if (notifications[index].read === false) {
       notifications[index].read = true;
@@ -58,7 +60,7 @@ const Head = () => {
         dispatch(markNotiAsRead(notifications[index]?.id));
       setHasUnreadNotification(false);
     }
-  };
+  }; */
 
   useEffect(() => {
     const handleNewMessage = (data) => {
@@ -191,7 +193,6 @@ const Head = () => {
 
   useEffect(() => {
     const handleAddPostFavorite = (postId) => {
-   
       dispatch(getUserNotif(userId));
 
       setHasUnreadNotification(true);
@@ -239,10 +240,14 @@ const Head = () => {
     dispatch(deleteUserNotif(userId));
     setShowNotifications(false);
     setHoveredNotificationIndex(null);
-    setTimeout(() => {
-      setHasUnreadNotification(false);
-    }, 200);
+    setHasUnreadNotification(false);
   };
+
+  useEffect(() => {
+    if (!hasUnreadNotification) {
+      setHasUnreadNotification(false);
+    }
+  }, [hasUnreadNotification]);
 
   return (
     <>
@@ -274,7 +279,7 @@ const Head = () => {
           {notifications.map((notification, index) => (
             <div
               key={index}
-              onMouseOver={() => handleMouseOver(index)}
+              /* onMouseOver={() => handleMouseOver(index)} */
               className={style.noti}
             >
               <button className={style.notifAcces}>
