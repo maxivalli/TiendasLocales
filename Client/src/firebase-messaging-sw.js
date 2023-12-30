@@ -17,7 +17,7 @@ self.addEventListener("message", (event) => {
 });
 
 registerRoute(
-  /^https:\/\/firebasestorage\.googleapis\.com\/v0\/b\/tiendaslocales-[^/]+\.appspot\.com\//, 
+  ({event}) => event.request.destination === 'image', 
   new CacheFirst({
     cacheName: "TL-images-cache", 
     plugins: [
