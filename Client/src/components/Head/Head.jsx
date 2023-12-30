@@ -250,6 +250,7 @@ const Head = () => {
       setHasUnreadNotification(false);
     }
   }, [hasUnreadNotification]);
+  
   const handleNotificationClick = (notification) => {
     switch (notification.type) {
       case "storeMessage":

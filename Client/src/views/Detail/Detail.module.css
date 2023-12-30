@@ -159,6 +159,11 @@
   margin-top: 25px;
 }
 
+.comprar p {
+  color: red;
+  font-size: 14px;
+}
+
 .comprar button {
   width: 90px;
   height: 40px;
