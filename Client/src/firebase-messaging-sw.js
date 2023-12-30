@@ -22,7 +22,7 @@ registerRoute(
     cacheName: "TL-all-cache", 
     plugins: [
       new ExpirationPlugin({
-        maxEntries: 10,
+        maxEntries: 100,
       }),
       {
         cacheableResponse: {
@@ -33,7 +33,7 @@ registerRoute(
   })
 );
 
-registerRoute(
+/* registerRoute(
   /^https:\/\/tiendaslocales-production\.up\.railway\.app\//,
   new NetworkFirst({
     cacheName: "TL-data-cache", 
@@ -48,7 +48,7 @@ registerRoute(
       },
     ],
   })
-);
+); */
 
 registerRoute(
   /^https:\/\/api\.chatengine\.io\//,
