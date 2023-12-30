@@ -17,12 +17,12 @@ self.addEventListener("message", (event) => {
 });
 
 registerRoute(
-  ({event}) => event.request.destination === 'image', 
+  /(.*)/, 
   new CacheFirst({
-    cacheName: "TL-images-cache", 
+    cacheName: "TL-all-cache", 
     plugins: [
       new ExpirationPlugin({
-        maxEntries: 50,
+        maxEntries: 10,
       }),
       {
         cacheableResponse: {
