@@ -9,15 +9,16 @@ import {
 } from "../../redux/actions";
 import bell from "../../assets/bell.png";
 import bellY from "../../assets/bellY.png";
+import { useNavigate } from "react-router-dom";
 
 const Head = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showNotifications, setShowNotifications] = useState(false);
   const [liveNotifications, setLiveNotifications] = useState([]);
   const [hasUnreadNotification, setHasUnreadNotification] = useState();
   const [hoveredNotificationIndex, setHoveredNotificationIndex] = useState();
   const stores = useSelector((state) => state.allStoresCopy);
-  const posts = useSelector((state) => state.allPostsCopy);
   const userData = useSelector((state) => state.userData);
   const savedNotif = useSelector((state) => state.userNotif);
   const mixturedNotifications = [...liveNotifications, ...savedNotif];
@@ -72,22 +73,31 @@ const Head = () => {
         } else {
           messageNotificationText = `Tu tienda ha recibido un nuevo mensaje de ${sender}`;
         }
+        setLiveNotifications((prevNotifications) => [
+          {
+            content: messageNotificationText,
+            image: image,
+            read: false,
+            type: "storeMessage",
+          },
+          ...prevNotifications,
+        ]);
       } else {
         if (lastMessage.length < 10) {
           messageNotificationText = `Has recibido un nuevo mensaje de ${sender}: "${lastMessage}"`;
         } else {
           messageNotificationText = `Has recibido un nuevo mensaje de ${sender}`;
         }
+        setLiveNotifications((prevNotifications) => [
+          {
+            content: messageNotificationText,
+            image: image,
+            read: false,
+            type: "userMessage",
+          },
+          ...prevNotifications,
+        ]);
       }
-
-      setLiveNotifications((prevNotifications) => [
-        {
-          content: messageNotificationText,
-          image: image,
-          read: false,
-        },
-        ...prevNotifications,
-      ]);
 
       setHasUnreadNotification(true);
     };
@@ -108,6 +118,7 @@ const Head = () => {
           content: `¡Tu compra de ${cantidad} ${title} ha sido notificada a ${storeName}!`,
           image: image,
           read: false,
+          type: "compra",
         },
         ...prevNotifications,
       ]);
@@ -145,6 +156,7 @@ const Head = () => {
           content: `¡${compradorName} te ha comprado ${cantidad} ${title}!`,
           image: image,
           read: false,
+          type: "venta",
         },
         ...prevNotifications,
       ]);
@@ -172,17 +184,6 @@ const Head = () => {
 
   useEffect(() => {
     const handleAddFavorite = (storeId) => {
-      const store = stores.find((store) => store.id == storeId);
-
-      /*   setLiveNotifications((prevNotifications) => [
-        {
-          content: `¡Se ha agregado "${store.nombre}" a favoritos!`,
-          image: store.image,
-          read: false,
-        },
-        ...prevNotifications,
-      ]); */
-
       dispatch(getUserNotif(userId));
 
       setHasUnreadNotification(true);
@@ -226,6 +227,7 @@ const Head = () => {
           content: `Su tienda "${nombre}" fue aprobada!`,
           image: image,
           read: false,
+          type: "store",
         },
         ...prevNotifications,
       ]);
@@ -248,6 +250,29 @@ const Head = () => {
       setHasUnreadNotification(false);
     }
   }, [hasUnreadNotification]);
+  
+  const handleNotificationClick = (notification) => {
+    switch (notification.type) {
+      case "storeMessage":
+        navigate("/mensajes/tienda");
+        break;
+      case "userMessage":
+        navigate("/mensajes/usuario");
+        break;
+      case "compra":
+        navigate("/micuenta");
+        break;
+      case "venta":
+        navigate("/misventas");
+        break;
+      case "favorites":
+        navigate("/favoritos");
+        break;
+      default:
+        //? ? ? ? ? ? ? ? ? ?
+        break;
+    }
+  };
 
   return (
     <>
@@ -282,7 +307,10 @@ const Head = () => {
               /* onMouseOver={() => handleMouseOver(index)} */
               className={style.noti}
             >
-              <button className={style.notifAcces}>
+              <button
+                className={style.notifAcces}
+                onClick={() => handleNotificationClick(notification)}
+              >
                 <img src={notification.image} alt="" />
                 <p>{notification.content}</p>
               </button>
