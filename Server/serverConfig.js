@@ -77,6 +77,7 @@ io.on("connection", (socket) => {
           content: addText,
           userId: userId,
           image: image,
+          type: "favorites"
         });
 
         console.log("Notificación almacenada en la base de datos");
@@ -137,6 +138,7 @@ io.on("connection", (socket) => {
           content: addText,
           userId: userId,
           image: image,
+          type: "favorites"
         });
 
         console.log("Notificación almacenada en la base de datos");
@@ -236,6 +238,7 @@ io.on("connection", (socket) => {
         content: approvedText,
         userId: userId,
         image: image,
+        type: "store"
       });
       console.log("Notificación almacenada en la base de datos");
     } catch (error) {
@@ -286,6 +289,7 @@ io.on("connection", (socket) => {
           content: messageNotificationText,
           userId: userId,
           image: image,
+          type: "storeMessage"
         });
         const user = await User.findByPk(userId);
         const userSocket = user.socketId;
@@ -332,6 +336,7 @@ io.on("connection", (socket) => {
           content: messageNotificationText,
           userId: userId,
           image: image,
+          type: "userMessage"
         });
 
         if (user.FCMtoken) {
@@ -398,6 +403,7 @@ io.on("connection", (socket) => {
         content: compraText,
         userId: comprador?.id,
         image: post?.image,
+        type: "compra"
       });
       console.log("Notificación almacenada en la base de datos");
     } catch (error) {
@@ -439,6 +445,7 @@ io.on("connection", (socket) => {
         content: compraText,
         userId: vendedor?.id,
         image: image,
+        type: "compra"
       });
       console.log("Notificación almacenada en la base de datos");
     } catch (error) {
