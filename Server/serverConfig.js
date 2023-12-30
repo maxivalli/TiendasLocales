@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
     }
   });
 
-  /* socket.on("addFavorite", async (addData) => {
+  socket.on("addFavorite", async (addData) => {
     const { userId, storeId, addText, image, userData } = addData;
 
     if (userData?.FCMtoken) {
@@ -160,7 +160,7 @@ io.on("connection", (socket) => {
     const user = await User.findByPk(userId);
     const userSocket = user.socketId;
     io.to(userSocket).emit("addFavoritePost", postId);
-  }); */
+  });
 
   socket.on("waitingStore", async (data) => {
     const { storeData, userData } = data;

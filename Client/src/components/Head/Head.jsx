@@ -182,7 +182,7 @@ const Head = () => {
     });
   }, [stores]);
 
-  /* useEffect(() => {
+  useEffect(() => {
     const handleAddFavorite = (storeId) => {
       dispatch(getUserNotif(userId));
 
@@ -200,7 +200,7 @@ const Head = () => {
     };
 
     socket?.on("addFavoritePost", handleAddPostFavorite);
-  }, [stores]); */
+  }, [stores]);
 
   useEffect(() => {
     const handleWaitingStore = (data) => {
@@ -245,12 +245,13 @@ const Head = () => {
     setHasUnreadNotification(false);
   };
 
+<<<<<<< HEAD
   useEffect(() => {
     if (!hasUnreadNotification) {
       setHasUnreadNotification(false);
     }
   }, [hasUnreadNotification]);
-
+=======
   const handleNotificationClick = (notification) => {
     switch (notification.type) {
       case "storeMessage":
@@ -265,11 +266,15 @@ const Head = () => {
       case "venta":
         navigate("/misventas");
         break;
+      case "favorites":
+        navigate("/favoritos");
+        break;
       default:
-        navigate("/");
+        //? ? ? ? ? ? ? ? ? ?
         break;
     }
   };
+>>>>>>> d6fed91e95930edaf1ec347ae1bd5d8dd1b5831c
 
   return (
     <>
