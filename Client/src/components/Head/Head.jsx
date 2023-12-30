@@ -15,15 +15,8 @@ const Head = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [liveNotifications, setLiveNotifications] = useState([]);
   const [hasUnreadNotification, setHasUnreadNotification] = useState();
-  useEffect(() => {
-  console.log(hasUnreadNotification);
-}, [hasUnreadNotification])
-  const [hoveredNotificationIndex, setHoveredNotificationIndex] =
-    useState(null);
-  const [clearNotifications, setClearNotifications] = useState(false);
+  const [hoveredNotificationIndex, setHoveredNotificationIndex] = useState();
   const stores = useSelector((state) => state.allStoresCopy);
-  const users = useSelector((state) => state.allUsers);
-  
   const posts = useSelector((state) => state.allPostsCopy);
   const userData = useSelector((state) => state.userData);
   const savedNotif = useSelector((state) => state.userNotif);
@@ -39,25 +32,22 @@ const Head = () => {
   const userId = userData?.id;
 
   useEffect(() => {
-    if (userId) {
-      dispatch(getUserNotif(userId));
-    }
-  }, [dispatch, showNotifications]);
-
-  useEffect(() => {
-    const hasUnread = savedNotif.some(
-      (notification) => notification.read === false
-    );
-    if (hasUnread) {
+    let hasUnread
+    if (savedNotif > 1){
+    hasUnread = savedNotif.some((notification) => notification.read === false);
+    if (hasUnread && !hasUnreadNotification) {
       setHasUnreadNotification(true);
     }
-  }, [dispatch, notifications, hoveredNotificationIndex]);
+    } else {
+    hasUnread = savedNotif && savedNotif[0]?.read === false
+    if (hasUnread && !hasUnreadNotification) {
+      setHasUnreadNotification(true);
+    }
+    }
+  }, [dispatch, mixturedNotifications, hoveredNotificationIndex]);
 
   const toggleNotifications = () => {
     setShowNotifications((prevState) => !prevState);
-    if (clearNotifications) {
-      setClearNotifications(false);
-    }
   };
 
   const handleMouseOver = (index) => {
@@ -65,8 +55,8 @@ const Head = () => {
     if (notifications[index].read === false) {
       notifications[index].read = true;
       if (notifications[index]?.id !== undefined)
-      dispatch(markNotiAsRead(notifications[index]?.id));
-    setHasUnreadNotification(false)
+        dispatch(markNotiAsRead(notifications[index]?.id));
+      setHasUnreadNotification(false);
     }
   };
 
@@ -136,7 +126,7 @@ const Head = () => {
 
     socket?.on("compraRealizada", (data) => {
       console.log("AAAAAAAAAAAAAAAAVERGA", data);
-      handleNuevaCompra(data)
+      handleNuevaCompra(data);
     });
   }, [stores]);
 
@@ -167,30 +157,33 @@ const Head = () => {
         allData: allData,
         title: title,
         compradorName: compradorName,
+        image: image,
       };
       socket?.emit("ventaRealizadaToDB", DBdata);
     };
 
     socket?.on("ventaRealizada", (data) => {
       console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA", data);
-      handleNuevaVenta(data)
+      handleNuevaVenta(data);
     });
   }, [stores]);
 
   useEffect(() => {
     const handleAddFavorite = (storeId) => {
       const store = stores.find((store) => store.id == storeId);
-      
-      setLiveNotifications((prevNotifications) => [
+
+      /*   setLiveNotifications((prevNotifications) => [
         {
           content: `¡Se ha agregado "${store.nombre}" a favoritos!`,
           image: store.image,
           read: false,
         },
         ...prevNotifications,
-      ]);
-      
-      setHasUnreadNotification(true)
+      ]); */
+
+      dispatch(getUserNotif(userId));
+
+      setHasUnreadNotification(true);
     };
 
     socket?.on("addFavorite", handleAddFavorite);
@@ -198,16 +191,8 @@ const Head = () => {
 
   useEffect(() => {
     const handleAddPostFavorite = (postId) => {
-      const post = posts?.find((post) => post.id == postId);
-
-      setLiveNotifications((prevNotifications) => [
-        {
-          content: `¡Se ha agregado "${post?.title}" a favoritos!`,
-          image: post?.image,
-          read: false,
-        },
-        ...prevNotifications,
-      ]);
+   
+      dispatch(getUserNotif(userId));
 
       setHasUnreadNotification(true);
     };
@@ -251,11 +236,12 @@ const Head = () => {
 
   const handleClearNotifications = () => {
     setLiveNotifications([]);
-    setHasUnreadNotification(false);
     dispatch(deleteUserNotif(userId));
-    setClearNotifications(true);
     setShowNotifications(false);
-    setHoveredNotificationIndex(null); // Limpiar el índice cuando se cierran las notificaciones.
+    setHoveredNotificationIndex(null);
+    setTimeout(() => {
+      setHasUnreadNotification(false);
+    }, 200);
   };
 
   return (

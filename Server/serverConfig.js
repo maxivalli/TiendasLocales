@@ -410,7 +410,7 @@ io.on("connection", (socket) => {
 
   socket.on("ventaRealizadaToDB", async (data) => {
     console.log("VENTAREALIZADA", data);
-    const {comprador, cantidad, store, vendedor, post, allData, title, compradorName} = data;
+    const {comprador, cantidad, store, vendedor, post, allData, title, compradorName, image} = data;
     
 
     if (vendedor?.FCMtoken) {
@@ -438,7 +438,7 @@ io.on("connection", (socket) => {
       await Notifications.create({
         content: compraText,
         userId: vendedor?.id,
-        image: post?.id,
+        image: image,
       });
       console.log("Notificación almacenada en la base de datos");
     } catch (error) {
