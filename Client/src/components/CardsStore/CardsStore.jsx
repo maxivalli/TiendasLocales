@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addFavorite, getFavorites, removeFavorite } from "../../redux/actions";
 import { socket } from "../../App";
-import likeG from '../../assets/likeG.png'
-import likeR from '../../assets/likeR.png'
+import likeG from "../../assets/likeG.png";
+import likeR from "../../assets/likeR.png";
 import style from "./CardsStore.module.css";
 import isStoreOpen from "../isStoreOpen/isStoreOpen";
 
@@ -13,7 +13,7 @@ const CardsStore = ({
   image,
   nombre,
   horarios,
-  calificacion,
+  averageRating,
   categoria,
   dias,
 }) => {
@@ -58,25 +58,11 @@ const CardsStore = ({
     }
   }, [userId]);
 
-  const diasSemana = [
-    "domingo",
-    "lunes",
-    "martes",
-    "miercoles",
-    "jueves",
-    "viernes",
-    "sabado",
-  ];
-
   return (
     <div className={style.cardsStore}>
       <div className={style.favorite} onClick={toggleFavorite}>
         <img
-          src={
-            isFavorite
-              ? likeR
-              : likeG
-          }
+          src={isFavorite ? likeR : likeG}
           alt="like"
           className={style.fav}
         />
@@ -86,37 +72,40 @@ const CardsStore = ({
         <div className={style.imagen}>
           <img src={image} alt="avatar" />
         </div>
-          <div className={style.texto}>
-            <h2>{nombre}</h2>
-            <h5
+        <div className={style.texto}>
+          <h2>{nombre}</h2>
+          <h5
             style={{
               color: isStoreOpen(dias, horarios) ? "cornflowerblue" : "red",
             }}
           >
             {isStoreOpen(dias, horarios) ? "✅ Abierto" : "❗️ Cerrado"}
           </h5>
-            <h4>📆 {dias}</h4>
-            <h4>
-              ⏰ {horarios.horario_de_apertura}hs a{" "}
-              {horarios.horario_de_cierre}hs</h4>
+          <h4>📆 {dias}</h4>
+          <h4>
+            ⏰ {horarios.horario_de_apertura}hs a {horarios.horario_de_cierre}hs
+          </h4>
 
-              {horarios.horario_de_apertura2 &&
-                horarios.horario_de_cierre2 && (
-                  <>
-                  <h4> 
-                  {horarios.horario_de_apertura2}hs a{" "}
-                    {horarios.horario_de_cierre2}hs
-                  </h4>
-                  </>
-                )}
+          {horarios.horario_de_apertura2 && horarios.horario_de_cierre2 && (
+            <>
+              <h4>
+                {horarios.horario_de_apertura2}hs a{" "}
+                {horarios.horario_de_cierre2}hs
+              </h4>
+            </>
+          )}
 
-            {calificacion ? (
-              <h4>{calificacion}</h4>
-            ) : (
-              <h4>Sin calificaciones</h4>
-            )}
-            <h4>{categoria}</h4>
-          </div>
+          {averageRating ? (
+            <>
+              {Array.from({ length: averageRating }, (_, index) => (
+                <span key={index}>⭐️</span>
+              ))}
+            </>
+          ) : (
+            <h4>Sin calificaciones</h4>
+          )}
+          <h4>{categoria}</h4>
+        </div>
       </Link>
     </div>
   );

@@ -70,7 +70,7 @@ exports.createStore = async (storeData) => {
         method: "put",
         url: "https://api.chatengine.io/users/",
         headers: {
-          "PRIVATE-KEY": "900fe425-d125-4c43-a60c-834e306082bd",
+          "PRIVATE-KEY": "24bf624d-122e-457d-8e52-ce19f182da6d",
           "Content-Type": "multipart/form-data",
         },
         data: formData,
