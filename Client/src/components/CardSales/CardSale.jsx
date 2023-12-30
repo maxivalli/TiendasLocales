@@ -10,6 +10,7 @@ const CardSale = ({
   user,
   adress,
   phone,
+  enviado,
   fn,
   id,
 }) => {
@@ -33,7 +34,7 @@ const CardSale = ({
 
           <div className={style.user}>
             <span>Comprador:</span>
-            <p>{user}</p>
+            <p>{user.username}</p>
           </div>
 
           <div className={style.delivery}>
@@ -43,7 +44,7 @@ const CardSale = ({
 
           <div className={style.adress}>
             <span>Dirección:</span>
-            <p>{adress}</p>
+            <p>{adress.direccion}</p>
           </div>
 
           <div className={style.phone}>

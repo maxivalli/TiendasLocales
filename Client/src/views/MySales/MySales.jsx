@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { socket } from "../../App";
 
@@ -8,23 +8,22 @@ import CardSale from "../../components/CardSales/CardSale";
 import Head from "../../components/Head/Head";
 
 import style from "./MySales.module.css";
+import { setSelectedStore } from "../../redux/actions";
 
 const MySales = () => {
+  const dispatch = useDispatch()
   const userData = useSelector((state) => state.userData);
-  const selectedStore = useSelector((state) => state.selectedStore);
+  const stores = useSelector((state) => state.allStores);
+  const userStore = stores.find((store) => store.userId === userData.id)
   const users = useSelector((state) => state.allUsers);
   const [comprasData, setCompras] = useState([]);
-  console.log(comprasData);
   const comprasEnviadas = comprasData.filter((item) => item.enviado === true)
- console.log(comprasEnviadas);
-  const storeId = selectedStore.id
-
 
   useEffect(() => {
     const fetchData = async () => {
       try {
           const response = await axios.get(
-            `/tiendas/comprasRecibidas/${storeId}` 
+            `/tiendas/comprasRecibidas/${userStore?.id}` 
           );
           if (response) {
             setCompras(response.data);
@@ -35,12 +34,12 @@ const MySales = () => {
     };
   
     fetchData();
-  }, [userData.id]); 
+  }, [userStore]); 
   
 
   const handleEnviado = async (itemId) =>{
     try{
-      const response = await axios.post("/tiendas/enviado", { itemId });
+      const response = await axios.put(`/tiendas/enviado/${itemId}`);
       if(response){
         socket?.emit("productoEnviado", itemId)
        
@@ -71,6 +70,7 @@ const MySales = () => {
                 price={item?.unit_price}
                 quantity={item?.quantity}
                 delivery={item?.delivery}
+                enviado={item?.enviado}
                 user={users && users.find((user) => user.id === item?.userId)}
                 adress={item?.userDireccion}
                 phone={item?.userDireccion.celular}
