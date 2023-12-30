@@ -18,6 +18,7 @@ const MySales = () => {
   const users = useSelector((state) => state.allUsers);
   const [comprasData, setCompras] = useState([]);
   const comprasEnviadas = comprasData.filter((item) => item.enviado === true)
+  const comprasPorEnviar = comprasData.filter((item) => item.enviado === false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,7 +61,7 @@ const MySales = () => {
 
         <h3>Pendientes</h3>
         <div className={style.pendientes}>
-          {comprasData && comprasData.map((item, index) => {
+          {comprasPorEnviar && comprasPorEnviar.map((item, index) => {
             return (
               <CardSale
                 key={index}
@@ -94,6 +95,7 @@ const MySales = () => {
                 title={item?.title}
                 price={item?.unit_price}
                 quantity={item?.quantity}
+                enviado={item?.enviado}
                 delivery={item?.delivery}
                 user={users && users.find((user) => user.id === item?.userId)}
                 adress={item?.userDireccion}
