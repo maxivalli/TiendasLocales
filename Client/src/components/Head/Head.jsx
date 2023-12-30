@@ -73,30 +73,14 @@ const Head = () => {
         } else {
           messageNotificationText = `Tu tienda ha recibido un nuevo mensaje de ${sender}`;
         }
-        setLiveNotifications((prevNotifications) => [
-          {
-            content: messageNotificationText,
-            image: image,
-            read: false,
-            type: "storeMessage",
-          },
-          ...prevNotifications,
-        ]);
+        dispatch(getUserNotif(userId));
       } else {
         if (lastMessage.length < 10) {
           messageNotificationText = `Has recibido un nuevo mensaje de ${sender}: "${lastMessage}"`;
         } else {
           messageNotificationText = `Has recibido un nuevo mensaje de ${sender}`;
         }
-        setLiveNotifications((prevNotifications) => [
-          {
-            content: messageNotificationText,
-            image: image,
-            read: false,
-            type: "userMessage",
-          },
-          ...prevNotifications,
-        ]);
+        dispatch(getUserNotif(userId));
       }
 
       setHasUnreadNotification(true);
@@ -110,18 +94,8 @@ const Head = () => {
       const { comprador, store, vendedor, post, allData } = data;
       const cantidad = allData.payUserData.quantity;
       const title = allData.payUserData.title;
-      const storeName = store?.nombre;
-      const image = post?.image;
 
-      setLiveNotifications((prevNotifications) => [
-        {
-          content: `¡Tu compra de ${cantidad} ${title} ha sido notificada a ${storeName}!`,
-          image: image,
-          read: false,
-          type: "compra",
-        },
-        ...prevNotifications,
-      ]);
+      dispatch(getUserNotif(userId));
 
       setHasUnreadNotification(true);
       const DBdata = {
@@ -138,7 +112,6 @@ const Head = () => {
     };
 
     socket?.on("compraRealizada", (data) => {
-      console.log("AAAAAAAAAAAAAAAAVERGA", data);
       handleNuevaCompra(data);
     });
   }, [stores]);
@@ -151,15 +124,7 @@ const Head = () => {
       const image = post?.image;
       const compradorName = comprador?.username;
 
-      setLiveNotifications((prevNotifications) => [
-        {
-          content: `¡${compradorName} te ha comprado ${cantidad} ${title}!`,
-          image: image,
-          read: false,
-          type: "venta",
-        },
-        ...prevNotifications,
-      ]);
+      dispatch(getUserNotif(userId));
 
       setHasUnreadNotification(true);
       const DBdata = {
@@ -177,15 +142,13 @@ const Head = () => {
     };
 
     socket?.on("ventaRealizada", (data) => {
-      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA", data);
       handleNuevaVenta(data);
     });
   }, [stores]);
 
   useEffect(() => {
-    const handleAddFavorite = (storeId) => {
+    const handleAddFavorite = () => {
       dispatch(getUserNotif(userId));
-
       setHasUnreadNotification(true);
     };
 
@@ -193,9 +156,8 @@ const Head = () => {
   }, [stores]);
 
   useEffect(() => {
-    const handleAddPostFavorite = (postId) => {
+    const handleAddPostFavorite = () => {
       dispatch(getUserNotif(userId));
-
       setHasUnreadNotification(true);
     };
 
@@ -203,16 +165,8 @@ const Head = () => {
   }, [stores]);
 
   useEffect(() => {
-    const handleWaitingStore = (data) => {
-      const { nombre, image } = data;
-      setLiveNotifications((prevNotifications) => [
-        {
-          content: `Su tienda "${nombre}" se encuentra en espera de aprobación`,
-          image: image,
-          read: false,
-        },
-        ...prevNotifications,
-      ]);
+    const handleWaitingStore = () => {
+      dispatch(getUserNotif(userId));
       setHasUnreadNotification(true);
     };
 
@@ -220,17 +174,8 @@ const Head = () => {
   }, [stores]);
 
   useEffect(() => {
-    const handleApprovedStore = (data) => {
-      const { nombre, image } = data;
-      setLiveNotifications((prevNotifications) => [
-        {
-          content: `Su tienda "${nombre}" fue aprobada!`,
-          image: image,
-          read: false,
-          type: "store",
-        },
-        ...prevNotifications,
-      ]);
+    const handleApprovedStore = () => {
+      dispatch(getUserNotif(userId));
       setHasUnreadNotification(true);
     };
 

@@ -156,12 +156,10 @@ exports.pedidosCompras = async (id) => {
 }
 
 exports.comprasRecibidas = async (id) => {
-
   try{
-
       const misPedidos = await Compra.findAll({
           where: {
-              userId: id
+              storeId: id
           },
         });
 
