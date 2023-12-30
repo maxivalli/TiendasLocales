@@ -18,11 +18,9 @@ const MyStore = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch();
   const { storeId } = useParams();
-  console.log(storeId);
   const userData = useSelector((state) => state.userData);
   const stores = useSelector((state) => state.allStoresCopy);
   const userStore = stores.find((store) => store.userId === userData.id)
-  console.log(userStore.id);
   const storePosts = useSelector((state) => state.storePosts);
   const allPosts = useSelector((state) => state.allPosts);
   const allPostsCopy = useSelector((state) => state.allPostsCopy);

@@ -212,11 +212,11 @@ exports.deleteStore = async (storeId) => {
   }
 };
 
-exports.enviado = async (ItemId) => {
+exports.enviado = async (itemId) => {
   try {
     const compra = await Compra.findOne({
       where: {
-        id: ItemId
+        id: itemId
       },
     });
     compra.enviado = true;
