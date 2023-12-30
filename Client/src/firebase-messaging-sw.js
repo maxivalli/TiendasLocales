@@ -16,8 +16,10 @@ self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
 });
 
+const url = "https://firebasestorage.googleapis.com/v0/b/tiendaslocales-7bbf8.appspot.com";
+
 registerRoute(
-  /^https:\/\/firebasestorage\.googleapis\.com\//, 
+  { url }, 
   new CacheFirst({
     cacheName: "TL-images-cache", 
     plugins: [
