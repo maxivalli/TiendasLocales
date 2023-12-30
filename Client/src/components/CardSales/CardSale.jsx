@@ -10,6 +10,7 @@ const CardSale = ({
   user,
   adress,
   phone,
+  enviado,
   fn,
   id,
 }) => {

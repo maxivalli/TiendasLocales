@@ -71,6 +71,7 @@ const MySales = () => {
                 price={item?.unit_price}
                 quantity={item?.quantity}
                 delivery={item?.delivery}
+                enviado={item?.enviado}
                 user={users && users.find((user) => user.id === item?.userId)}
                 adress={item?.userDireccion}
                 phone={item?.userDireccion.celular}
