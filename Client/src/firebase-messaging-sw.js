@@ -5,8 +5,7 @@ importScripts(
   "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"
 );
 import { registerRoute } from "workbox-routing";
-import { NetworkFirst } from "workbox-strategies";
-import { clientsClaim } from "workbox-core";
+import { NetworkFirst, NetworkOnly, CacheFirst } from "workbox-strategies";
 import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
 
@@ -18,12 +17,12 @@ self.addEventListener("message", (event) => {
 });
 
 registerRoute(
-  /(.*)/,
-  new NetworkFirst({
-    cacheName: "all-cache",
+  /\.(?:png|jpg|jpeg|svg|gif)$/, 
+  new CacheFirst({
+    cacheName: "TL-images-cache", 
     plugins: [
       new ExpirationPlugin({
-        maxSize: 400 * 1024 * 1024,
+        maxEntries: 10,
       }),
       {
         cacheableResponse: {
@@ -32,6 +31,28 @@ registerRoute(
       },
     ],
   })
+);
+
+registerRoute(
+  /^https:\/\/tiendaslocales-production\.up\.railway\.app\//,
+  new NetworkFirst({
+    cacheName: "TL-data-cache", 
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 100,
+      }),
+      {
+        cacheableResponse: {
+          statuses: [0, 200],
+        },
+      },
+    ],
+  })
+);
+
+registerRoute(
+  /^https:\/\/api\.chatengine\.io\//,
+  new NetworkOnly()
 );
 
 const firebaseConfig = {

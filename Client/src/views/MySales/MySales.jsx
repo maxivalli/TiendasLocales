@@ -4,10 +4,12 @@ import axios from "axios";
 
 import Filters from "../../components/Filters/Filters";
 import CardSquare from "../../components/CardSquare/CardSquare";
+import CardSale from "../../components/CardSales/CardSale";
 import Head from "../../components/Head/Head";
 
 import style from "./MySales.module.css";
 import { reload } from "firebase/auth";
+
 const MySales = () => {
   const userData = useSelector((state) => state.userData);
   const [comprasData, setCompras] = useState([]);
@@ -65,14 +67,17 @@ const MySales = () => {
         <div className={style.pendientes}>
           {comprasData.map((item, index) => {
             return (
-              <CardSquare
+              <CardSale
                 key={index}
                 id={item?.postId}
                 image={item?.productImage}
                 title={item?.title}
                 price={item?.unit_price}
-                stock={item?.quantity}
+                quantity={item?.quantity}
                 delivery={true}
+                user={"Maximiliano Valli"}
+                adress={"San Lorenzo 1260"}
+                phone={"3408677294"}
                 fn={()=>{handleEnviado(storeId)}}
               />
             );
