@@ -18,6 +18,7 @@ import del from '../../assets/delete.png'
 const CardSquare = ({
   id,
   title,
+  enviado,
   marca,
   description,
   price,
@@ -104,6 +105,9 @@ const CardSquare = ({
           <h3>${price}</h3>
           <h4>{esVistaMiCuenta ? 'Cantidad' : 'Stock'}: {stock}</h4>
           <h4>{delivery ? "Envío disponible 🛵" : "Retirar en tienda 🙋🏻‍♂️"}</h4>
+          {esVistaMiCuenta && enviado && enviado === true (
+            <h4>Enviado</h4>
+          )}
         </Link>
         {esVistaMiTienda && (
           <div className={style.prodBut}>

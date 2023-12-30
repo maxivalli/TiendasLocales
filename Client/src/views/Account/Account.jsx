@@ -14,6 +14,8 @@ const Account = ({ setAuth, setUserData }) => {
   const [showModal, setShowModal] = useState(false);
   const [comprasData, setCompras] = useState([]);
 
+  const userId = userData?.id
+
   const openModal = () => {
     setShowModal(true);
   };
@@ -36,7 +38,7 @@ const Account = ({ setAuth, setUserData }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `/tiendas/comprasRecibidas/${userData.id}`
+          `/tiendas/comprasRealizadas/${userId}`
         );
         if (response) {
           setCompras(response.data);
@@ -109,9 +111,10 @@ const Account = ({ setAuth, setUserData }) => {
                 id={item?.postId}
                 image={item?.productImage}
                 title={item?.title}
+                eviado={item?.enviado}
                 price={item?.unit_price}
                 stock={item?.quantity}
-                delivery={true}
+                delivery={item?.delivery}
               />
             );
           })}

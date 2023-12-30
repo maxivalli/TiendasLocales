@@ -169,6 +169,20 @@ exports.comprasRecibidas = async (id) => {
   }
 }
 
+exports.comprasRealizadas = async (id) => {
+  try{
+      const misPedidos = await Compra.findAll({
+          where: {
+              userId: id
+          },
+        });
+
+      return misPedidos
+  } catch (error){
+     throw new Error(error)
+  }
+}
+
 const secretKey = CRYPTO_KEY;
 
 exports.accT = async (code, state) => {

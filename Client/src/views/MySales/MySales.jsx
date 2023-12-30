@@ -24,7 +24,7 @@ const MySales = () => {
     const fetchData = async () => {
       try {
           const response = await axios.get(
-            `/tiendas/comprasRecibidas/${userStore?.id}` 
+            `/tiendas/comprasRecibidas/${userStore?.id}`
           );
           if (response) {
             setCompras(response.data);
