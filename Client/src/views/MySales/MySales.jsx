@@ -74,7 +74,6 @@ const MySales = () => {
                 enviado={item?.enviado}
                 user={users && users.find((user) => user.id === item?.userId)}
                 adress={item?.userDireccion}
-                phone={item?.userDireccion.celular}
                 fn={()=>{handleEnviado(item?.id)}}
               />
             );

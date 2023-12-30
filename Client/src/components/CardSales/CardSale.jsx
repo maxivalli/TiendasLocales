@@ -9,7 +9,6 @@ const CardSale = ({
   delivery,
   user,
   adress,
-  phone,
   enviado,
   fn,
   id,
@@ -49,7 +48,7 @@ const CardSale = ({
 
           <div className={style.phone}>
             <span>Teléfono:</span>
-            {phone && ( <p>{phone}</p>)}
+            {adress && adress.direccion && ( <p>{adress.direccion.celular}</p>)}
           </div>
 
         </div>
