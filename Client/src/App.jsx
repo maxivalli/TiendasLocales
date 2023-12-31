@@ -135,7 +135,7 @@ function App() {
     setUserData(user);
     dispatch(saveUserData(user));
     dispatch(getUserStore(user?.id));
-    dispatch(getUserNotif(user?.id))
+    dispatch(getUserNotif(user?.id));
   };
 
   useEffect(() => {
@@ -189,7 +189,7 @@ function App() {
                 dispatch(getUserStore(userDataResponse?.data.id));
                 dispatch(getAllPosts());
                 dispatch(getAllUsers());
-                dispatch(getUserNotif(userDataResponse?.data.id))
+                dispatch(getUserNotif(userDataResponse?.data.id));
               })
               .catch((userDataError) => {
                 console.error(
@@ -245,7 +245,7 @@ function App() {
           });
       });
     }
-  }, []);  
+  }, []);
 
   const [isSlowConnection, setIsSlowConnection] = useState(false);
 
