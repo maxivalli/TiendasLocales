@@ -9,13 +9,15 @@ import b2 from "../../assets/Banner2.jpg";
 import b3 from "../../assets/Banner3.jpg";
 import style from "./SearchResult.module.css";
 import CardSquare from "../../components/CardSquare/CardSquare";
-import { setFilteredPostsByName, setFilteredStoresByName } from "../../redux/actions";
+import {
+  setFilteredPostsByName,
+  setFilteredStoresByName,
+} from "../../redux/actions";
 
 const SearchResult = () => {
   const dispatch = useDispatch();
   const stores = useSelector((state) => state.filteredStoresByName);
   const posts = useSelector((state) => state.filteredPostsByName);
- 
 
   const [filterStores, setStores] = useState([]);
 
@@ -29,7 +31,6 @@ const SearchResult = () => {
     if (storedPosts.length > 0) {
       dispatch(setFilteredPostsByName(storedPosts));
     }
-
 
     if (stores) {
       localStorage.setItem("stores", JSON.stringify(stores));
@@ -68,21 +69,23 @@ const SearchResult = () => {
         <div className={style.title}>
           <h2>Productos</h2>
           {posts.length === 0 && (
-            <p>No hay productos que coincidan con la búsqueda</p>
+            <div className={style.noProd}>
+              <p>No hay productos que coincidan con la búsqueda</p>
+            </div>
           )}
         </div>
 
         <div className={style.productos}>
           {posts &&
-            posts.map((store, index) => (
-            <CardSquare key={index} {...store} />
-            ))}
+            posts.map((store, index) => <CardSquare key={index} {...store} />)}
         </div>
 
         <div className={style.title}>
           <h2>Tiendas</h2>
           {sortedStores.length === 0 && (
-            <p>No hay tiendas que coincidan con la búsqueda</p>
+            <div className={style.noTiend}>
+              <p>No hay tiendas que coincidan con la búsqueda</p>
+            </div>
           )}
         </div>
 
