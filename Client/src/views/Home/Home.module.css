@@ -40,6 +40,72 @@
   display: grid;
 }
 
+.catDest {
+  display: grid;
+}
+
+.catDest h2 {
+  font-style: italic;
+}
+
+.cat {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  width: 1280px;
+  justify-self: center;
+  gap: 10px;
+}
+
+.cat h4 {
+  font-style: italic;
+  font-size: 22px;
+  margin-bottom: 0;
+}
+
+.roti {
+  justify-self: center;
+  width: 280px;
+  height: 200px;
+  background-color: red;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  cursor: pointer;
+}
+
+.helad {
+  justify-self: center;
+  width: 280px;
+  height: 200px;
+  background-color: cornflowerblue;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  cursor: pointer;
+}
+
+.const {
+  justify-self: center;
+  width: 280px;
+  height: 200px;
+  background-color: rgb(255, 230, 0);
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  cursor: pointer;
+}
+
+.ropa {
+  justify-self: center;
+  width: 280px;
+  height: 200px;
+  background-color: blueviolet;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  cursor: pointer;
+}
+
 .stores {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -52,11 +118,21 @@
   .stores {
     grid-template-columns: 1fr 1fr 1fr;
   }
+
+  .cat {
+    width: auto;
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (max-width: 900px) {
   .stores {
     grid-template-columns: 1fr;
     gap: 15px;
+  }
+
+  .cat {
+    width: auto;
+    grid-template-columns: 1fr;
   }
 }
