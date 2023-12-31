@@ -295,7 +295,7 @@ function App() {
 
       if (connection) {
         const { downlink } = connection;
-        const slowConnectionThreshold = 1;
+        const slowConnectionThreshold = 0.5;
 
         if (downlink && downlink < slowConnectionThreshold) {
           setIsSlowConnection(true);
