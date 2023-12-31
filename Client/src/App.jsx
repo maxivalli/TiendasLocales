@@ -135,7 +135,7 @@ function App() {
     setUserData(user);
     dispatch(saveUserData(user));
     dispatch(getUserStore(user?.id));
-    dispatch(getUserNotif(user?.id))
+    dispatch(getUserNotif(user?.id));
   };
 
   useEffect(() => {
@@ -189,7 +189,7 @@ function App() {
                 dispatch(getUserStore(userDataResponse?.data.id));
                 dispatch(getAllPosts());
                 dispatch(getAllUsers());
-                dispatch(getUserNotif(userDataResponse?.data.id))
+                dispatch(getUserNotif(userDataResponse?.data.id));
               })
               .catch((userDataError) => {
                 console.error(
@@ -231,6 +231,22 @@ function App() {
       socket.emit("assignSocketId", userId);
     }
   }, [shouldConnectSocket, userId]);
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("/firebase-messaging-sw.js")
+          .then((registration) => {
+            console.log("Service Worker registrado con éxito: ", registration);
+            SWregistration = registration;
+          })
+          .catch((err) => {
+            console.error("Error al registrar el Service Worker: ", err);
+          });
+      });
+    }
+  }, []);
 
   const [isSlowConnection, setIsSlowConnection] = useState(false);
 
@@ -829,5 +845,3 @@ function App() {
 }
 
 export { App, socket, SWregistration };
-
-//

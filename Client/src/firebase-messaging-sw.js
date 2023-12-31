@@ -5,7 +5,7 @@ importScripts(
   "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"
 );
 import { registerRoute } from "workbox-routing";
-import { NetworkFirst, NetworkOnly, CacheFirst } from "workbox-strategies";
+import { NetworkFirst, NetworkOnly } from "workbox-strategies";
 import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
 
@@ -17,7 +17,7 @@ self.addEventListener("message", (event) => {
 });
 
 registerRoute(
-  /(.*)/, 
+  /^((?!https:\/\/api-chat-engine-io).)*$/, 
   new NetworkFirst({
     cacheName: "TL-all-cache", 
     plugins: [
