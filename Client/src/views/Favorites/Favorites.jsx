@@ -25,15 +25,19 @@ const Favorites = () => {
     dispatch(getFavorites(userId));
   }, [dispatch]);
 
-  const favoriteStores = stores && stores.filter((store) =>
-    favorites.some(
-      (favorite) => favorite.storeId === store.id && favorite.postId === null
-    )
-  );
+  const favoriteStores =
+    stores &&
+    stores.filter((store) =>
+      favorites.some(
+        (favorite) => favorite.storeId === store.id && favorite.postId === null
+      )
+    );
 
-  const favoritePosts = posts && posts.filter((post) =>
-    favorites.some((favorite) => favorite.postId === post.id)
-  );
+  const favoritePosts =
+    posts &&
+    posts.filter((post) =>
+      favorites.some((favorite) => favorite.postId === post.id)
+    );
 
   let noFavoriteStores = favoriteStores.length === 0;
   let noFavoritePosts = favoritePosts.length === 0;
@@ -46,7 +50,9 @@ const Favorites = () => {
         <h2 className={style.title}>Tiendas favoritas</h2>
 
         {noFavoriteStores ? (
-          <p>Aún no agregaste tiendas favoritas.</p>
+          <div className={style.noTiend}>
+            <p>Aún no agregaste tiendas favoritas.</p>
+          </div>
         ) : (
           <div className={style.stores}>
             {favoriteStores.map((store, index) => (
@@ -58,7 +64,9 @@ const Favorites = () => {
         <h2 className={style.title}>Productos favoritos</h2>
 
         {noFavoritePosts ? (
-          <p>Aún no agregaste productos favoritos.</p>
+          <div className={style.noProd}>
+            <p>Aún no agregaste productos favoritos.</p>
+          </div>
         ) : (
           <div className={style.products}>
             {favoritePosts.map((post, index) => (
