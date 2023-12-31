@@ -22,7 +22,7 @@ const NavButtons = ({ storeId }) => {
   };
 
   const handleChatButtonClick = async () => {
-    const projectID = "0db63f59-dfc5-4451-9b2d-ded66de9a430";
+    const projectID = "236f9c42-06cc-414f-98cd-b7465ea5c29e";
     const userName = userData.username;
     const userSecret = userData.email;
 

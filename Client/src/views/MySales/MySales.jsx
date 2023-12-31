@@ -78,9 +78,6 @@ const MySales = () => {
               />
             );
           })}
-          {/* <button onClick={() => handleEnviado(1)}>
-          HOLA
-          </button> */}
         </div>
 
         <h3>Enviadas o entregadas</h3>
@@ -98,7 +95,6 @@ const MySales = () => {
                 delivery={item?.delivery}
                 user={users && users.find((user) => user.id === item?.userId)}
                 adress={item?.userDireccion}
-                phone={item?.userDireccion.celular}
                 fn={()=>{handleEnviado(item?.id)}}
               />
               );

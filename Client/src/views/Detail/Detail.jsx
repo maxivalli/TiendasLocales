@@ -210,7 +210,7 @@ const Detail = ({ userData }) => {
                 </button>
               </div>) : (<div className={style.comprar}>
                 <p >
-                  Necesitas una direccion para comprar productos con envio
+                  Necesitas una dirección para comprar productos con envio.
                 </p>
               </div>)
             ) : (<div className={style.comprar}>

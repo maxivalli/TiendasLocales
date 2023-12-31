@@ -53,7 +53,7 @@ const Head = () => {
     setShowNotifications((prevState) => !prevState);
   };
 
-  const handleMouseOver = (index) => {
+  /*  const handleMouseOver = (index) => {
     setHoveredNotificationIndex(index);
     if (notifications[index].read === false) {
       notifications[index].read = true;
@@ -61,7 +61,7 @@ const Head = () => {
         dispatch(markNotiAsRead(notifications[index]?.id));
       setHasUnreadNotification(false);
     }
-  };
+  }; */
 
   useEffect(() => {
     const handleNewMessage = (data) => {
@@ -187,11 +187,15 @@ const Head = () => {
     dispatch(deleteUserNotif(userId));
     setShowNotifications(false);
     setHoveredNotificationIndex(null);
-    setTimeout(() => {
-      setHasUnreadNotification(false);
-    }, 200);
+    setHasUnreadNotification(false);
   };
 
+  useEffect(() => {
+    if (!hasUnreadNotification) {
+      setHasUnreadNotification(false);
+    }
+  }, [hasUnreadNotification]);
+  
   const handleNotificationClick = (notification) => {
     switch (notification.type) {
       case "storeMessage":
@@ -245,7 +249,7 @@ const Head = () => {
           {notifications.map((notification, index) => (
             <div
               key={index}
-              onMouseOver={() => handleMouseOver(index)}
+              /* onMouseOver={() => handleMouseOver(index)} */
               className={style.noti}
             >
               <button

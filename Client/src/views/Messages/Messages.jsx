@@ -108,7 +108,7 @@ const Messages = () => {
     <>
       <div className="chat">
         <ChatEngine
-          publicKey="0db63f59-dfc5-4451-9b2d-ded66de9a430"
+          publicKey="236f9c42-06cc-414f-98cd-b7465ea5c29e"
           userName={chatUserName}
           userSecret={userSecret}
           onGetChats={(chats) => {
