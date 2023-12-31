@@ -37,6 +37,7 @@ import {
   SELECTED_CATEGORY,
   SELECTED_PRICE,
   GET_STORES_BY_CATEGORY,
+  GET_STORES_BY_CATEGORY2,
   SELECTED_STORE,
   GET_STORE_BY_NAME,
   GET_POST_BY_NAME,
@@ -492,7 +493,6 @@ function rootReducer(state = initialState, action) {
           filteredStoress.some((store) => store.id === post.storeId)
         );
       }
-      console.log(filteredStoressByName);
 
       return {
         ...state,
@@ -537,6 +537,26 @@ function rootReducer(state = initialState, action) {
         allPosts: filteredPosts,
         filteredStoresByName: filterStoresByName,
         filteredPostsByName: filterPostsByName,
+      };
+
+      case GET_STORES_BY_CATEGORY2:
+        let filteredStores2 = action.payload;
+
+        if (state.selectedCategory !== "🔍 Mostrar todas") {
+          filteredStores2 = state.allStoresCopy.filter(
+            (store) => store.categoria === state.selectedCategory
+          );
+        } else {
+          filteredStores2 = state.allStoresCopy;
+        }
+
+        const filteredPosts2 = state.allPostsCopy.filter((post) =>
+        filteredStores2.some((store) => store.id === post.storeId)
+      );
+      return {
+        ...state,
+        filteredStoresByName: action.payload,
+        filteredPostsByName: filteredPosts2,
       };
 
     case RESET_FILTERS:
