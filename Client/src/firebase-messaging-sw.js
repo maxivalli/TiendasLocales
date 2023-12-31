@@ -17,7 +17,7 @@ self.addEventListener("message", (event) => {
 });
 
 registerRoute(
-  /(.*)/, 
+  /^((?!https:\/\/api\.chatengine\.io).)*$/, 
   new NetworkFirst({
     cacheName: "TL-all-cache", 
     plugins: [
