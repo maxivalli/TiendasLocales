@@ -43,6 +43,7 @@ import {
   SELECTED_ALPHABET,
   SELECTED_PRICE,
   GET_STORES_BY_CATEGORY,
+  GET_STORES_BY_CATEGORY2,
   RESET_FILTERS,
   SELECTED_STORE,
   SAVE_FILTERED_POSTS,
@@ -554,6 +555,16 @@ export function getStoresByCategory(category) {
     const response = await axios(`/tiendas/categories/${category}`);
     return dispatch({
       type: GET_STORES_BY_CATEGORY,
+      payload: response.data,
+    });
+  };
+}
+
+export function getStores2ByCategory(category) {
+  return async function (dispatch) {
+    const response = await axios(`/tiendas/categories/${category}`);
+    return dispatch({
+      type: GET_STORES_BY_CATEGORY2,
       payload: response.data,
     });
   };

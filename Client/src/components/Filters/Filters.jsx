@@ -8,6 +8,7 @@ import {
   selectPrice,
   getAllPosts,
   getAllStores,
+  getStores2ByCategory,
 } from "../../redux/actions";
 
 import style from "./Filters.module.css";
@@ -36,6 +37,7 @@ const Filters = () => {
     const category = event.target.value;
     dispatch(selectCategory(category));
     dispatch(getStoresByCategory(category));
+    dispatch(getStores2ByCategory(category));
   };
 
   const uniqueCategories = () => {

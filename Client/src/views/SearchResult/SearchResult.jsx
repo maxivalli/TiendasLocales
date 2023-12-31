@@ -10,7 +10,6 @@ import b3 from "../../assets/Banner3.jpg";
 import style from "./SearchResult.module.css";
 import CardSquare from "../../components/CardSquare/CardSquare";
 import { setFilteredPostsByName, setFilteredStoresByName } from "../../redux/actions";
-import SearchBar from "../../components/SearchBar/SearchBar";
 
 const SearchResult = () => {
   const dispatch = useDispatch();

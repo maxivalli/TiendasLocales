@@ -13,9 +13,11 @@ import food from '../../assets/food.png'
 import icecream from '../../assets/icecream.png'
 import constr from '../../assets/constr.png'
 import ropa from '../../assets/ropa.png'
-import { getAllStores } from "../../redux/actions";
+import { getAllStores, getStores2ByCategory, getStoresByCategory, selectCategory } from "../../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const stores = useSelector((state) => state.allStoresCopy);
   const [filterStores, setStores] = useState([]);
@@ -34,6 +36,35 @@ const Home = () => {
   const sortedStores = filterStores
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .slice(0, 12);
+
+
+    const handleCategoriaClick = (categoria) => {
+      switch (categoria) {
+        case "🍕 Rotisería y restaurantes":
+          dispatch(selectCategory(categoria));
+          dispatch(getStores2ByCategory(categoria));
+          navigate("/resultados");
+          break;
+        case "🍦 Heladerías":
+          dispatch(selectCategory(categoria));
+          dispatch(getStores2ByCategory(categoria));
+          navigate("/resultados");
+          break;
+        case "🚧 Construcción":
+          dispatch(selectCategory(categoria));
+          dispatch(getStores2ByCategory(categoria));
+          navigate("/resultados");
+          break;
+        case "👕 Ropa e indumentaría":
+          dispatch(selectCategory(categoria));
+          dispatch(getStores2ByCategory(categoria));
+          navigate("/resultados");
+          break;
+        default:
+          // Manejar el caso por defecto si es necesario
+          break;
+      }
+    };
 
   return (
     <>
@@ -56,22 +87,27 @@ const Home = () => {
         <div className={style.catDest}>
           <h2>Categotías destacadas</h2>
           <div className={style.cat}>
-            <div className={style.roti}>
+
+            <div className={style.roti} onClick={() => handleCategoriaClick("🍕 Rotisería y restaurantes")}>
               <h4>Rotiserías</h4>
               <img src={food} alt="comida" />
             </div>
-            <div className={style.helad}>
+
+            <div className={style.helad} onClick={() => handleCategoriaClick("🍦 Heladerías")}>
               <h4>Heladerías</h4>
               <img src={icecream} alt="healdos" />
             </div>
-            <div className={style.const}>
+
+            <div className={style.const} onClick={() => handleCategoriaClick("🚧 Construcción")}>
               <h4>Construcción</h4>
               <img src={constr} alt="construccion" />
             </div>
-            <div className={style.ropa}>
+
+            <div className={style.ropa} onClick={() => handleCategoriaClick("👕 Ropa e indumentaría")}>
               <h4>Ropa e indumentaria</h4>
               <img src={ropa} alt="ropa" />
             </div>
+
           </div>
         </div>
 
