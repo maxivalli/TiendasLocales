@@ -18,6 +18,7 @@ const SearchResult = () => {
   const dispatch = useDispatch();
   const stores = useSelector((state) => state.filteredStoresByName);
   const posts = useSelector((state) => state.filteredPostsByName);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [filterStores, setStores] = useState([]);
 
@@ -42,6 +43,7 @@ const SearchResult = () => {
     return () => {
       localStorage.removeItem("stores");
       localStorage.removeItem("posts");
+      setIsLoading(false);
     };
   }, [dispatch, stores, posts]);
 
@@ -56,6 +58,16 @@ const SearchResult = () => {
     filterStores
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       .slice(0, 10);
+
+  if (isLoading) {
+    return (
+      <div className={style.spinner}>
+        <div className={style.bounce1}></div>
+        <div className={style.bounce2}></div>
+        <div className={style.bounce3}></div>
+      </div>
+    );
+  }
 
   return (
     <>
