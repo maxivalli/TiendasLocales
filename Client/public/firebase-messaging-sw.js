@@ -4,8 +4,8 @@ importScripts(
 importScripts(
   "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"
 );
-import { registerRoute } from "workbox-routing";
-import { NetworkFirst, NetworkOnly } from "workbox-strategies";
+/* import { registerRoute } from "workbox-routing";
+import { NetworkFirst, NetworkOnly, CacheFirst } from "workbox-strategies";
 import { ExpirationPlugin } from "workbox-expiration";
 import { precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
 
@@ -31,7 +31,7 @@ registerRoute(
       },
     ],
   })
-);
+); */
 
 /* registerRoute(
   /^https:\/\/tiendaslocales-production\.up\.railway\.app\//,
@@ -50,10 +50,10 @@ registerRoute(
   })
 ); */
 
-registerRoute(
+/* registerRoute(
   /^https:\/\/api\.chatengine\.io\//,
   new NetworkOnly()
-);
+); */
 
 const firebaseConfig = {
   apiKey: "AIzaSyAiXwnw-mIc8s-DkV2y8JaSwjKa__KF6i8",
