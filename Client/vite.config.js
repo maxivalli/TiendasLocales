@@ -61,6 +61,17 @@ const manifestForPlugIn = {
         ],
       },
       {
+        name: "Mis ventas",
+        description: "Agregar un producto",
+        url: "https://tiendaslocales.com.ar/#/misventas",
+        icons: [
+          {
+            src: "sales.png",
+            sizes: "192x192",
+          },
+        ],
+      },
+      {
         name: "Mensajes",
         description: "Mis mensajes",
         url: "https://tiendaslocales.com.ar/#/mensajes",
