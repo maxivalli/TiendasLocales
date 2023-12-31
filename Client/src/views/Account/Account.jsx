@@ -4,6 +4,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import UbiForm from "../../components/UbiForm/UbiForm";
 import CardSquare from "../../components/CardSquare/CardSquare";
 import Filters from "../../components/Filters/Filters";
+import salir from '../../assets/salir.png';
+import buzon from '../../assets/buzon.png';
 import style from "./Account.module.css";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -83,8 +85,8 @@ const Account = ({ setAuth, setUserData }) => {
               <img
                 width="22"
                 height="22"
-                src="https://img.icons8.com/ios-filled/50/FFFFFF/mailbox-opened-flag-down.png"
-                alt="mailbox-opened-flag-down"
+                src={buzon}
+                alt="direccion"
               />
             </button>
 
@@ -92,8 +94,8 @@ const Account = ({ setAuth, setUserData }) => {
               <img
                 width="22"
                 height="22"
-                src="https://img.icons8.com/ios-filled/50/FFFFFF/logout-rounded.png"
-                alt="logout-rounded"
+                src={salir}
+                alt="salir"
               />
             </button>
           </div>
