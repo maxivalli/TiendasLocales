@@ -33,28 +33,6 @@ registerRoute(
   })
 );
 
-/* registerRoute(
-  /^https:\/\/tiendaslocales-production\.up\.railway\.app\//,
-  new NetworkFirst({
-    cacheName: "TL-data-cache", 
-    plugins: [
-      new ExpirationPlugin({
-        maxEntries: 100,
-      }),
-      {
-        cacheableResponse: {
-          statuses: [0, 200],
-        },
-      },
-    ],
-  })
-); */
-
-registerRoute(
-  /^https:\/\/api\.chatengine\.io\//,
-  new NetworkOnly()
-);
-
 const firebaseConfig = {
   apiKey: "AIzaSyAiXwnw-mIc8s-DkV2y8JaSwjKa__KF6i8",
   authDomain: "tiendaslocales-7bbf8.firebaseapp.com",

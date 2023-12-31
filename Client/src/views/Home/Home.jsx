@@ -26,6 +26,22 @@ const Home = () => {
     setStores(filtered);
   }, [dispatch, stores]);
 
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("/firebase-messaging-sw.js")
+          .then((registration) => {
+            console.log("Service Worker registrado con éxito: ", registration);
+            SWregistration = registration;
+          })
+          .catch((err) => {
+            console.error("Error al registrar el Service Worker: ", err);
+          });
+      });
+    }
+  }, []);
+
   const sortedStores = filterStores.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 12);
 
   return (
