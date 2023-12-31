@@ -6,8 +6,46 @@
   width: 100vw;
 }
 
-.misventas h3 {
+.pend {
+  text-align: center;
   justify-self: center;
+  color: red;
+  font-style: italic;
+}
+
+.nopend {
+  display: grid;
+  width: 280px;
+  height: 100px;
+  border-radius: 10px;
+  justify-self: center;
+  box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.3);
+}
+
+.nopend p {
+  text-align: center;
+  align-self: center;
+}
+
+.ent {
+  font-style: italic;
+  text-align: center;
+  justify-self: center;
+  color: cornflowerblue;
+}
+
+.noent {
+  display: grid;
+  width: 280px;
+  height: 100px;
+  border-radius: 10px;
+  justify-self: center;
+  box-shadow: 0px 5px 10px rgba(128, 128, 128, 0.3);
+}
+
+.noent p {
+  text-align: center;
+  align-self: center;
 }
 
 .title {
