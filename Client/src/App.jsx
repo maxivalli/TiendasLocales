@@ -844,5 +844,3 @@ function App() {
 }
 
 export { App, socket, SWregistration };
-
-//
