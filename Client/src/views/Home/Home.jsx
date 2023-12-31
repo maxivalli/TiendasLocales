@@ -15,7 +15,6 @@ const Home = () => {
   const dispatch = useDispatch()
   const stores = useSelector((state) => state.allStoresCopy);
   const [filterStores, setStores] = useState([]);
-  let SWregistration;
 
   useEffect(() => {
     dispatch(getAllStores());
@@ -25,22 +24,6 @@ const Home = () => {
     const filtered = stores.filter((store) => store.habilitado === "habilitado");
     setStores(filtered);
   }, [dispatch, stores]);
-
-  useEffect(() => {
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker
-          .register("/firebase-messaging-sw.js")
-          .then((registration) => {
-            console.log("Service Worker registrado con éxito: ", registration);
-            SWregistration = registration;
-          })
-          .catch((err) => {
-            console.error("Error al registrar el Service Worker: ", err);
-          });
-      });
-    }
-  }, []);
 
   const sortedStores = filterStores.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 12);
 

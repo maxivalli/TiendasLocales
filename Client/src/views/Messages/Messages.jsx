@@ -7,10 +7,10 @@ import { getToken } from "firebase/messaging";
 import { getAuth, signInAnonymously } from "firebase/auth";
 import { messaging } from "../../components/Firebase/config";
 
-import { socket, SWregistration } from "../../App";
+import { socket } from "../../App";
 import { updateUser, updateUserData } from "../../redux/actions";
 
-const Messages = () => {
+const Messages = ({ SWregistration }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [savedStoreData, setSavedStoreData] = useState(() => {
@@ -50,7 +50,22 @@ const Messages = () => {
     const loginNotifications = () => {
       signInAnonymously(getAuth()).then((usuario) => console.log(usuario));
     };
+
     const activarMensajes = async () => {
+      if (!SWregistration) {
+        // Si el Service Worker no está registrado, intenta registrarlo
+        try {
+          const registration = await navigator.serviceWorker.register(
+            "/firebase-messaging-sw.js"
+          );
+          SWregistration = registration;
+          console.log("Service Worker registrado correctamente.");
+        } catch (error) {
+          console.error("Error al registrar el Service Worker:", error);
+          return;
+        }
+      }
+
       const token = await getToken(messaging, {
         vapidKey:
           "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
@@ -58,17 +73,20 @@ const Messages = () => {
       }).catch((error) => {
         console.log("Error al generar el token", error);
       });
+
       if (token) {
-        console.log("tu token: ", token);
+        console.log("Tu token: ", token);
         userData.FCMtoken = token;
         const id = userData.id;
         dispatch(updateUser(id, userData));
+      } else {
+        console.log("No se pudo obtener el token");
       }
-      if (!token) console.log("no hay token");
     };
+
     loginNotifications();
     activarMensajes();
-  }, []);
+  }, [SWregistration]);
 
   useEffect(() => {
     const updateDOMElements = () => {

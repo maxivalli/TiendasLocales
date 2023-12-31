@@ -535,7 +535,7 @@ function App() {
           element={
             isAuthenticated || isAuthenticatedAuth0 ? (
               user || userData ? (
-                <Messages userData={userData} setAuth={setAuth} />
+                <Messages userData={userData} setAuth={setAuth} registration={SWregistration}/>
               ) : (
                 <div className="spinner">
                   <div className="bounce1"></div>
@@ -844,4 +844,4 @@ function App() {
   );
 }
 
-export { App, socket, SWregistration };
+export { App, socket };
