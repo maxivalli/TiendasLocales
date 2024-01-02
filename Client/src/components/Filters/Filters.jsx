@@ -25,14 +25,15 @@ const Filters = () => {
   const openStores = useSelector((state) => state.openStores);
   const [botonFiltros, setBotonFiltros] = useState(false);
   const [botonTiendasAbiertas, setBotonTiendasAbiertas] = useState("");
+  const [isShowOpenStoresPressed, setIsShowOpenStoresPressed] = useState(false);
 
   useEffect(() => {
-  if (openStores) {
-    setBotonTiendasAbiertas("Mostrando solo abiertas");
-  } else {
-    setBotonTiendasAbiertas("Mostrando todas");
-  }
-}, [openStores])
+    if (openStores) {
+      setBotonTiendasAbiertas("Mostrar todas");
+    } else {
+      setBotonTiendasAbiertas("Mostrar tiendas abiertas");
+    }
+  }, [openStores]);
 
   const handlePriceChange = (event) => {
     const price = event.target.value;
@@ -43,6 +44,8 @@ const Filters = () => {
     openStores
       ? dispatch(isOpenStoresFilter(false))
       : dispatch(isOpenStoresFilter(true));
+
+    setIsShowOpenStoresPressed(!isShowOpenStoresPressed);
   };
 
   const handleAlphabetChange = (event) => {
@@ -117,7 +120,16 @@ const Filters = () => {
               <option value="asc">A-Z</option>
               <option value="desc">Z-A</option>
             </select>
-            <button onClick={showOpenStores}>{botonTiendasAbiertas}</button>
+            <button
+              onClick={showOpenStores}
+              className={
+                isShowOpenStoresPressed
+                  ? `${style.todas} ${style.todas}`
+                  : style.abiertas
+              }
+            >
+              {botonTiendasAbiertas}
+            </button>
             <button onClick={toggleFilters}>Hecho</button>
             <button onClick={handleResetFilters} className={style.limpiar}>
               Limpiar filtros

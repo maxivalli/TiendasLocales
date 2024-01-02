@@ -57,6 +57,20 @@
   background-color: transparent;
 }
 
+.filtros .abiertas {
+  width: 200px;
+  height: 30px;
+  background-color: yellowgreen;
+  align-self: center;
+}
+
+.filtros .todas {
+  width: 200px;
+  height: 30px;
+  background-color: white;
+  align-self: center; 
+}
+
 @media (max-width: 768px) {
   .filters {
     gap: 5px;
