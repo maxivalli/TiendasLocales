@@ -1,5 +1,8 @@
+import { useDispatch } from "react-redux";
+import { isStoreOpenSwitch } from "../../redux/actions";
 
 export default function isStoreOpen(dias, horarios)  {
+
     const diasSemana = [
       "lunes",
       "martes",
@@ -11,7 +14,7 @@ export default function isStoreOpen(dias, horarios)  {
     ];
 
     const now = new Date();
-    const currentDay = diasSemana[now.getDay()];
+    const currentDay = diasSemana[now.getDay() -1];
     const currentTime = now.getHours() * 100 + now.getMinutes();
   
     const matchDays = dias?.match(/De (\w+) a (\w+)(?: \(excepto (\w+)\))?/i);
@@ -28,7 +31,6 @@ export default function isStoreOpen(dias, horarios)  {
       if (primerDiaIndex !== -1 && ultimoDiaIndex !== -1) {
         if (now.getDay() >= primerDiaIndex && now.getDay() <= ultimoDiaIndex) {
   
-          
           if (diaExcluido && currentDay === diaExcluido) {
             return false;
           }
@@ -63,6 +65,5 @@ export default function isStoreOpen(dias, horarios)  {
         }
       }
     }
-  
     return false;
   };

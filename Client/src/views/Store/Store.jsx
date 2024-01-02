@@ -7,7 +7,7 @@ import NavButtons from "../../components/NavButtons/NavButtons";
 import style from "./Store.module.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getStorePosts, setSelectedStore } from "../../redux/actions";
+import { getStorePosts, isStoreOpenSwitch, setSelectedStore } from "../../redux/actions";
 import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 
 const Store = ({ userData }) => {
@@ -79,6 +79,10 @@ const Store = ({ userData }) => {
     }
   };
 
+  useEffect(() => {
+    dispatch(isStoreOpenSwitch(isStoreOpen(selectedStore?.dias, selectedStore?.horarios), storeId))
+  }, [dispatch])
+  
   if (loading) {
     return (
       <div className={style.spinner}>
@@ -88,6 +92,7 @@ const Store = ({ userData }) => {
       </div>
     );
   }
+
 
   return (
     <>
@@ -141,13 +146,14 @@ const Store = ({ userData }) => {
                 style={{
                   color: isStoreOpen(
                     selectedStore?.dias,
-                    selectedStore?.horarios
+                    selectedStore?.horarios,
+                    storeId
                   )
                     ? "cornflowerblue"
                     : "red",
                 }}
               >
-                {isStoreOpen(selectedStore?.dias, selectedStore?.horarios)
+                {isStoreOpen(selectedStore?.dias, selectedStore?.horarios, storeId)
                   ? "✅ Abierto"
                   : "❗️ Cerrado"}
               </span>
