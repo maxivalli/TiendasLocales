@@ -144,10 +144,14 @@ const MyStore = () => {
               </span>
             </p>
             <p>
-              📍 {selectedStore?.direccion?.calle}{" "}
-              {selectedStore?.direccion?.numero} (piso:{" "}
-              {selectedStore?.direccion?.piso} local:{" "}
-              {selectedStore?.direccion?.depto})
+              📍 {selectedStore?.direccion.calle}{" "}
+              {selectedStore?.direccion.numero}
+              {selectedStore?.direccion.piso && (
+                <> (piso: {selectedStore?.direccion.piso})</>
+              )}
+              {selectedStore?.direccion.depto && (
+                <> (local: {selectedStore?.direccion.depto})</>
+              )}
             </p>
             <p>📆 {selectedStore?.dias}</p>
             <p>
@@ -197,7 +201,7 @@ const MyStore = () => {
 
         <div className={style.store2}>
           {storePosts.map((post, index) => (
-            <CardSquare key={index} {...post} storeId={storeId}/>
+            <CardSquare key={index} {...post} storeId={storeId} />
           ))}
         </div>
         <OptButtons storeId={storeId} />
