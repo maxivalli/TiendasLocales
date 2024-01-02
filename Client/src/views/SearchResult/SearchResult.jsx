@@ -53,13 +53,11 @@ const SearchResult = () => {
     setStores(filtered);
   }, [dispatch, stores]);
 
-/*   const sortedStores =
+  /*   const sortedStores =
     filterStores &&
     filterStores
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       .slice(0, 10); */
-
-     
 
   if (isLoading) {
     return (
@@ -81,6 +79,21 @@ const SearchResult = () => {
         </div>
 
         <div className={style.title}>
+          <h2>Tiendas</h2>
+          {filterStores.length === 0 && (
+            <div className={style.noTiend}>
+              <p>No hay tiendas que coincidan con la búsqueda</p>
+            </div>
+          )}
+        </div>
+        <div className={style.stores}>
+          {filterStores &&
+            filterStores.map((store, index) => (
+              <CardsStore key={index} {...store} />
+            ))}
+        </div>
+
+        <div className={style.title}>
           <h2>Productos</h2>
           {posts.length === 0 && (
             <div className={style.noProd}>
@@ -88,27 +101,9 @@ const SearchResult = () => {
             </div>
           )}
         </div>
-
         <div className={style.productos}>
           {posts &&
             posts.map((store, index) => <CardSquare key={index} {...store} />)}
-        </div>
-
-        <div className={style.title}>
-          <h2>Tiendas</h2>
-
-          {filterStores.length === 0 && (
-            <div className={style.noTiend}>
-            <p>No hay tiendas que coincidan con la búsqueda</p>
-            </div>
-          )}
-        </div>
-
-        <div className={style.stores}>
-          {filterStores &&
-            filterStores.map((store, index) => (
-              <CardsStore key={index} {...store} />
-            ))}
         </div>
       </div>
     </>
