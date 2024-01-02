@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ProductImages from "../../components/productImages/ProductImages";
 import Head from "../../components/Head/Head";
+import likeG from '../../assets/likeG.png'
+import likeR from '../../assets/likeR.png'
 import style from "./Detail.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getPostById, isStoreOpenSwitch } from "../../redux/actions";
+import { addFavoritePost, getFavorites, getPostById, isStoreOpenSwitch, removeFavoritePost } from "../../redux/actions";
 import axios from "axios";
 import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 
@@ -13,6 +15,8 @@ const Detail = ({ userData }) => {
   const dispatch = useDispatch();
   const selectedPost = useSelector((state) => state.selectedPost);
   const stores = useSelector((state) => state.allStores);
+  const favorites = useSelector((state) => state.favorites);
+
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(selectedPost?.price);
   const [ buyButton, setBuyButton ] = useState(false)
@@ -21,6 +25,8 @@ const Detail = ({ userData }) => {
   const selectedStore = stores?.find(
     (store) => store.id == selectedPost?.storeId
   );
+  const userId = selectedPost?.userId
+  const postId = selectedPost?.id
 
   useEffect(()=>{
     const fetchDataAcct = async () => {
@@ -111,6 +117,33 @@ const Detail = ({ userData }) => {
     dispatch(isStoreOpenSwitch(isStoreOpen(selectedStore?.dias, selectedStore?.horarios), selectedStore?.id))
   }, [dispatch])
 
+
+  const isPostFavorite =
+  favorites && favorites.some((favorite) => favorite.postId == postId);
+const [isFavorite, setIsFavorite] = useState(isPostFavorite);
+
+const toggleFavorite = () => {
+  if (isFavorite) {
+    setIsFavorite(false);
+    dispatch(removeFavoritePost(userId, selectedStore?.id, postId));
+  } else {
+    setIsFavorite(true);
+    dispatch(addFavoritePost(userId, selectedStore?.id, postId));
+  }
+};
+
+useEffect(() => {
+  const isPostFavorite =
+    favorites && favorites.some((favorite) => favorite.postId === postId);
+  setIsFavorite(isPostFavorite);
+}, [favorites, postId]);
+
+useEffect(() => {
+  if (postId !== undefined) {
+    dispatch(getFavorites(userId));
+  }
+}, [dispatch, postId]);
+
   if (isLoading) {
     return (
       <div className={style.spinner}>
@@ -174,6 +207,17 @@ const Detail = ({ userData }) => {
                 )}
             </h4>
           </div>
+        </div>
+        <div className={style.favorite} onClick={toggleFavorite}>
+          <img
+            src={
+              isFavorite
+                ? likeR
+                : likeG
+            }
+            alt="like"
+            className={style.fav}
+          />
         </div>
         <div className={style.images}>
           <ProductImages images={selectedPost.image} />
