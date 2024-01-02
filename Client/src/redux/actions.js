@@ -54,6 +54,8 @@ import {
   GET_STORE_BY_NAME,
   FILTER_BY_NAME,
   GET_POST_BY_NAME,
+  ENVIAR_PRODUCTO,
+  COMPRAS_RECIBIDAS,
   // CODES
 } from "./actionTypes";
 
@@ -195,6 +197,27 @@ export function getUserStore(userId) {
     } catch (error) {
       throw error;
     }
+  };
+}
+
+export function getComprasRecibidas(storeId) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`/tiendas/comprasRecibidas/${storeId}`)
+      dispatch({ type: COMPRAS_RECIBIDAS, payload: response.data });
+    } catch (error) {
+      throw error;
+    }
+  };
+}
+
+export function enviarProducto(itemId) {
+  return async function (dispatch) {
+    const response =  await axios.put(`/tiendas/enviado/${itemId}`);
+    return dispatch({
+      type: ENVIAR_PRODUCTO,
+      payload: itemId,
+    });
   };
 }
 
@@ -640,3 +663,7 @@ export function filterByName(string) {
     payload: string,
   };
 }
+
+
+//_____________________________________________________________OTHERS________________________________________________________________________
+

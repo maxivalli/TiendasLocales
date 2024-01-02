@@ -7,7 +7,11 @@ import { Link, useNavigate } from "react-router-dom";
 import style from "./MyStore.module.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getStorePosts, isStoreOpenSwitch, setSelectedStore } from "../../redux/actions";
+import {
+  getStorePosts,
+  isStoreOpenSwitch,
+  setSelectedStore,
+} from "../../redux/actions";
 import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -15,12 +19,12 @@ import CardWide from "../../components/CardWide/CardWide";
 import mPago from "../../assets/mPago.png";
 
 const MyStore = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { storeId } = useParams();
   const userData = useSelector((state) => state.userData);
   const stores = useSelector((state) => state.allStoresCopy);
-  const userStore = stores.find((store) => store.userId === userData.id)
+  const userStore = stores.find((store) => store.userId === userData.id);
   const storePosts = useSelector((state) => state.storePosts);
   const allPosts = useSelector((state) => state.allPosts);
   const allPostsCopy = useSelector((state) => state.allPostsCopy);
@@ -30,6 +34,7 @@ const MyStore = () => {
 
   useEffect(() => {
     dispatch(setSelectedStore(selectedStore));
+    dispatch(getComprasRecibidas(storeId));
     dispatch(getStorePosts(storeId))
       .then(() => {
         setLoading(false);
@@ -71,14 +76,19 @@ const MyStore = () => {
   };
   useEffect(() => {
     if (storeId != userStore.id) {
-      navigate("/")
+      navigate("/");
     }
-  }, [dispatch, storeId])
+  }, [dispatch, storeId]);
 
   useEffect(() => {
-    dispatch(isStoreOpenSwitch(isStoreOpen(selectedStore?.dias, selectedStore?.horarios), storeId))
-  }, [dispatch])
-  
+    dispatch(
+      isStoreOpenSwitch(
+        isStoreOpen(selectedStore?.dias, selectedStore?.horarios),
+        storeId
+      )
+    );
+  }, [dispatch]);
+
   if (loading) {
     return (
       <div className={style.spinner}>
@@ -88,7 +98,6 @@ const MyStore = () => {
       </div>
     );
   }
-
 
   return (
     <>
