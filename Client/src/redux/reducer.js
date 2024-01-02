@@ -44,6 +44,7 @@ import {
   RESET_FILTERS,
   SAVE_FILTERED_STORES,
   SAVE_FILTERED_POSTS,
+  IS_STORE_OPEN,
 } from "./actionTypes";
 
 const initialState = {
@@ -60,6 +61,7 @@ const initialState = {
   // STORES
   allStores: [],
   allStoresCopy: [],
+  openStores: null,
   userStore: {},
   selectedStore: {},
   // POSTS
@@ -367,7 +369,9 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allPosts: state.allPosts.filter((post) => post.id !== action.payload),
-        allPostsCopy: state.allPostsCopy.filter((post) => post.id !== action.payload),
+        allPostsCopy: state.allPostsCopy.filter(
+          (post) => post.id !== action.payload
+        ),
       };
 
     case DELETE_STORE:
@@ -410,101 +414,178 @@ function rootReducer(state = initialState, action) {
     case SELECTED_PRICE:
       let sortedPostsByPrice = state.allPostsCopy.slice();
       let sortedPostByPriceAndName = state.filteredPostsByName?.slice();
-
+    
       if (action.payload === "asc") {
         sortedPostsByPrice.sort((a, b) => a.price - b.price);
-        sortedPostByPriceAndName && sortedPostByPriceAndName.sort((a, b) => a.price - b.price);
+        sortedPostByPriceAndName &&
+          sortedPostByPriceAndName.sort((a, b) => a.price - b.price);
       } else if (action.payload === "desc") {
         sortedPostsByPrice.sort((a, b) => b.price - a.price);
-        sortedPostByPriceAndName && sortedPostByPriceAndName?.sort((a, b) => b.price - a.price);
+        sortedPostByPriceAndName &&
+          sortedPostByPriceAndName.sort((a, b) => b.price - a.price);
       }
-
-      let filteredPostsByPrice = sortedPostsByPrice;
-      let filteredPostByPriceAndName = sortedPostByPriceAndName
-
+    
       // Aplica el filtro de categoría si no se seleccionó "Mostrar Todo"
-      if (
-        state.selectedCategory &&
-        state.selectedCategory !== "🔍 Mostrar todas"
-      ) {
+      if (state.selectedCategory && state.selectedCategory !== "🔍 Mostrar todas") {
         const filteredStores = state.allStoresCopy.filter(
           (store) => store.categoria === state.selectedCategory
         );
-
-        filteredPostsByPrice = sortedPostsByPrice.filter((post) =>
+    
+        sortedPostsByPrice = sortedPostsByPrice.filter((post) =>
           filteredStores.some((store) => store.id === post.storeId)
         );
-       filteredPostByPriceAndName = sortedPostByPriceAndName && sortedPostByPriceAndName.filter((post) =>
-        filteredStores.some((store) => store.id === post.storeId)
-      );
+    
+        sortedPostByPriceAndName =
+          sortedPostByPriceAndName &&
+          sortedPostByPriceAndName.filter((post) =>
+            filteredStores.some((store) => store.id === post.storeId)
+          );
       }
-
+    
+      // Filtra por tiendas abiertas si openStores es true
+      if (state.openStores) {
+        const openStoresIds = state.allStoresCopy
+          .filter((store) => store.isOpen)
+          .map((store) => store.id);
+    
+        sortedPostsByPrice = sortedPostsByPrice.filter((post) =>
+          openStoresIds.includes(post.storeId)
+        );
+    
+        sortedPostByPriceAndName =
+          sortedPostByPriceAndName &&
+          sortedPostByPriceAndName.filter((post) =>
+            openStoresIds.includes(post.storeId)
+          );
+      }
+    
       return {
         ...state,
         selectedPrice: action.payload,
-        allPosts: filteredPostsByPrice,
+        allPosts: sortedPostsByPrice,
         // Actualiza storePosts solo si no se seleccionó una categoría
-        storePosts: filteredPostsByPrice.filter(
+        storePosts: sortedPostsByPrice.filter(
           (post) => post.storeId === state.selectedStore.id
         ),
-        filteredPostsByName: filteredPostByPriceAndName,
+        filteredPostsByName: sortedPostByPriceAndName,
       };
+    
 
-    case SELECTED_ALPHABET:
-      let sortedPostsByAlphabet = state.allPostsCopy.slice();
-      let sortedStoresByAlphabet = state.allStoresCopy.slice();
-      let sortedPostsByAlphabetAndName = state.filteredPostsByName.slice();
-      let sortedStoresByAlphabetAndName = state.filteredStoresByName.slice();
-
-      if (action.payload === "asc") {
-        sortedPostsByAlphabet.sort((a, b) => a.title.localeCompare(b.title));
-        sortedStoresByAlphabet.sort((a, b) => a.nombre.localeCompare(b.nombre));
-        sortedPostsByAlphabetAndName && sortedPostsByAlphabetAndName.sort((a, b) => a.title.localeCompare(b.title));
-        sortedStoresByAlphabetAndName && sortedStoresByAlphabetAndName.sort((a, b) => a.nombre.localeCompare(b.nombre));
-      } else if (action.payload === "desc") {
-        sortedPostsByAlphabet.sort((a, b) => b.title.localeCompare(a.title));
-        sortedStoresByAlphabet.sort((a, b) => b.nombre.localeCompare(a.nombre));
-        sortedPostsByAlphabetAndName && sortedPostsByAlphabetAndName.sort((a, b) => b.title.localeCompare(a.title));
-        sortedStoresByAlphabetAndName && sortedStoresByAlphabetAndName.sort((a, b) => b.nombre.localeCompare(a.nombre));
-      }
-
-      let filteredPostss = sortedPostsByAlphabet;
-      let filteredStoress = sortedStoresByAlphabet;
-      let filteredPostssByName = sortedPostsByAlphabetAndName;
-      let filteredStoressByName = sortedStoresByAlphabetAndName;
-
-      if (
-        state.selectedCategory &&
-        state.selectedCategory !== "🔍 Mostrar todas"
-      ) {
-        filteredStoress = sortedStoresByAlphabet.filter(
-          (store) => store.categoria === state.selectedCategory
-        );
-
-        filteredPostss = sortedPostsByAlphabet.filter((post) =>
-          filteredStoress.some((store) => store.id === post.storeId)
-        );
-
-        filteredStoressByName = sortedStoresByAlphabetAndName && sortedStoresByAlphabetAndName.filter(
-          (store) => store.categoria === state.selectedCategory
-        );
-
-        filteredPostssByName = sortedPostsByAlphabetAndName && sortedPostsByAlphabetAndName.filter((post) =>
-          filteredStoress.some((store) => store.id === post.storeId)
-        );
-      }
-
-      return {
-        ...state,
-        selectedAlphabetOrder: action.payload,
-        allPosts: filteredPostss,
-        allStores: filteredStoress,
-        storePosts: sortedPostsByAlphabet.filter(
-          (post) => post.storeId === state.selectedStore.id
-        ),
-        filteredPostsByName: filteredPostssByName,
-        filteredStoresByName: filteredStoressByName,
-      };
+      case SELECTED_ALPHABET:
+        let sortedPostsByAlphabet = state.allPostsCopy.slice();
+        let sortedStoresByAlphabet = state.allStoresCopy.slice();
+        let sortedPostsByAlphabetAndName = state.filteredPostsByName.slice();
+        let sortedStoresByAlphabetAndName = state.filteredStoresByName.slice();
+      
+        if (action.payload === "asc") {
+          sortedPostsByAlphabet.sort((a, b) => a.title.localeCompare(b.title));
+          sortedStoresByAlphabet.sort((a, b) => a.nombre.localeCompare(b.nombre));
+          sortedPostsByAlphabetAndName &&
+            sortedPostsByAlphabetAndName.sort((a, b) =>
+              a.title.localeCompare(b.title)
+            );
+          sortedStoresByAlphabetAndName &&
+            sortedStoresByAlphabetAndName.sort((a, b) =>
+              a.nombre.localeCompare(b.nombre)
+            );
+        } else if (action.payload === "desc") {
+          sortedPostsByAlphabet.sort((a, b) => b.title.localeCompare(a.title));
+          sortedStoresByAlphabet.sort((a, b) => b.nombre.localeCompare(a.nombre));
+          sortedPostsByAlphabetAndName &&
+            sortedPostsByAlphabetAndName.sort((a, b) =>
+              b.title.localeCompare(a.title)
+            );
+          sortedStoresByAlphabetAndName &&
+            sortedStoresByAlphabetAndName.sort((a, b) =>
+              b.nombre.localeCompare(a.nombre)
+            );
+        }
+      
+        let filteredPostss = sortedPostsByAlphabet;
+        let filteredStoress = sortedStoresByAlphabet;
+        let filteredPostssByName = sortedPostsByAlphabetAndName;
+        let filteredStoressByName = sortedStoresByAlphabetAndName;
+      
+        if (state.openStores) {
+          // Filtrar solo tiendas abiertas y ordenar por nombre
+          filteredStoress = sortedStoresByAlphabet
+            .filter((store) => store.isOpen)
+            .sort((a, b) => a.nombre.localeCompare(b.nombre));
+      
+          // Filtrar también por categoría, si está seleccionada
+          if (
+            state.selectedCategory &&
+            state.selectedCategory !== "🔍 Mostrar todas"
+          ) {
+            filteredStoress = filteredStoress.filter(
+              (store) => store.categoria === state.selectedCategory
+            );
+          }
+      
+          // Actualizar los posts y tiendas filtradas por nombre
+          filteredPostss = sortedPostsByAlphabet.filter((post) =>
+            filteredStoress.some((store) => store.id === post.storeId)
+          );
+      
+          filteredStoressByName =
+            sortedStoresByAlphabetAndName &&
+            sortedStoresByAlphabetAndName
+              .filter((store) => store.isOpen)
+              .sort((a, b) => a.nombre.localeCompare(b.nombre));
+      
+          filteredPostssByName =
+            sortedPostsByAlphabetAndName &&
+            sortedPostsByAlphabetAndName.filter((post) =>
+              filteredStoress.some((store) => store.id === post.storeId)
+            );
+      
+          if (
+            state.selectedCategory &&
+            state.selectedCategory !== "🔍 Mostrar todas"
+          ) {
+            filteredStoressByName = filteredStoressByName.filter(
+              (store) => store.categoria === state.selectedCategory
+            );
+          }
+        } else {
+          // Si openStores no está activado, aplicar la lógica de filtrado por categoría
+          if (
+            state.selectedCategory &&
+            state.selectedCategory !== "🔍 Mostrar todas"
+          ) {
+            filteredStoress = sortedStoresByAlphabet.filter(
+              (store) => store.categoria === state.selectedCategory
+            );
+            filteredPostss = sortedPostsByAlphabet.filter((post) =>
+              filteredStoress.some((store) => store.id === post.storeId)
+            );
+      
+            filteredStoressByName =
+              sortedStoresByAlphabetAndName &&
+              sortedStoresByAlphabetAndName.filter(
+                (store) => store.categoria === state.selectedCategory
+              );
+      
+            filteredPostssByName =
+              sortedPostsByAlphabetAndName &&
+              sortedPostsByAlphabetAndName.filter((post) =>
+                filteredStoress.some((store) => store.id === post.storeId)
+              );
+          }
+        }
+      
+        return {
+          ...state,
+          selectedAlphabetOrder: action.payload,
+          allPosts: filteredPostss,
+          allStores: filteredStoress,
+          storePosts: sortedPostsByAlphabet.filter(
+            (post) => post.storeId === state.selectedStore.id
+          ),
+          filteredPostsByName: filteredPostssByName,
+          filteredStoresByName: filteredStoressByName,
+        };
+      
 
     case SELECTED_CATEGORY:
       return {
@@ -512,50 +593,67 @@ function rootReducer(state = initialState, action) {
         selectedCategory: action.payload,
       };
 
-    case GET_STORES_BY_CATEGORY:
-      let filteredStores = action.payload;
-      let filterStoresByName;
-
-      if (state.selectedCategory !== "🔍 Mostrar todas") {
-        filterStoresByName = state.filteredStoresByNameCopy.filter(
-          (store) => store.categoria === state.selectedCategory
-        );
-      } else {
-        filterStoresByName = state.filteredStoresByNameCopy;
-      }
-
-      const filteredPosts = state.allPostsCopy.filter((post) =>
-        filteredStores.some((store) => store.id === post.storeId)
-      );
-      const filterPostsByName = state.filteredPostsByNameCopy && state.filteredPostsByNameCopy.filter((post) =>
-        filterStoresByName.some((store) => store.id === post.storeId)
-      );
-    
-      return {
-        ...state,
-        allStores: filteredStores,
-        allPosts: filteredPosts,
-        filteredStoresByName: filterStoresByName,
-        filteredPostsByName: filterPostsByName,
-      };
-
-      case GET_STORES_BY_CATEGORY2:
-        let filteredStores2 = action.payload;
-
+      case GET_STORES_BY_CATEGORY:
+        let filteredStores = action.payload;
+        let filterStoresByName;
+      
         if (state.selectedCategory !== "🔍 Mostrar todas") {
-          filteredStores2 = state.allStoresCopy.filter(
+          filterStoresByName = state.filteredStoresByNameCopy.filter(
             (store) => store.categoria === state.selectedCategory
           );
         } else {
-          filteredStores2 = state.allStoresCopy;
+          filterStoresByName = state.filteredStoresByNameCopy;
         }
+      console.log(state.openStores);
+        if (state.openStores) {
+          filteredStores = filteredStores.filter((store) => store.isOpen === true);
+          console.log(filteredStores);
+          if (filterStoresByName) {
+            filterStoresByName = filterStoresByName.filter((store) => store.isOpen === true);
+          }
+        }
+      
+        const filteredPosts = state.allPostsCopy.filter((post) =>
+          filteredStores.some((store) => store.id === post.storeId)
+        );
+      
+        const filterPostsByName =
+          state.filteredPostsByNameCopy &&
+          state.filteredPostsByNameCopy.filter((post) =>
+            filterStoresByName.some((store) => store.id === post.storeId)
+          );
+      
+        return {
+          ...state,
+          allStores: filteredStores,
+          allPosts: filteredPosts,
+          filteredStoresByName: filterStoresByName,
+          filteredPostsByName: filterPostsByName,
+        };
 
-        const filteredPosts2 = state.allPostsCopy.filter((post) =>
+    case GET_STORES_BY_CATEGORY2:
+      let filteredStores2 = action.payload;
+
+      if (state.selectedCategory !== "🔍 Mostrar todas") {
+        filteredStores2 = state.allStoresCopy.filter(
+          (store) => store.categoria === state.selectedCategory
+        );
+      } else {
+        filteredStores2 = state.allStoresCopy;
+      }
+
+      if (state.openStores) {
+        filteredStores2 = filteredStores2.filter((store) => store.isOpen === true);
+        console.log(filteredStores2);
+      
+      }
+
+      const filteredPosts2 = state.allPostsCopy.filter((post) =>
         filteredStores2.some((store) => store.id === post.storeId)
       );
       return {
         ...state,
-        filteredStoresByName: action.payload,
+        filteredStoresByName: filteredStores2,
         filteredPostsByName: filteredPosts2,
       };
 
@@ -570,7 +668,7 @@ function rootReducer(state = initialState, action) {
           (post) => post.storeId === state.selectedStore.id
         ),
         filteredPostsByName: state.filteredPostsByNameCopy,
-        filteredStoresByName: state.filteredStoresByNameCopy
+        filteredStoresByName: state.filteredStoresByNameCopy,
       };
 
     case SAVE_FILTERED_STORES:
@@ -584,6 +682,39 @@ function rootReducer(state = initialState, action) {
         ...state,
         filteredPostsByName: action.payload,
       };
+
+    case IS_STORE_OPEN:
+      console.log(action.payload);
+      if (action.payload === true) {
+        const { selectedCategory, selectedPost, selectedPrice, selectedAlphabetOrder, ...rest } = state;
+const previousState = { ...rest };
+
+
+        let openStores = state.allStores.filter(
+          (stores) => stores.isOpen === true
+        );
+        let openStoresByName = state.filteredStoresByName.filter(
+          (stores) => stores.isOpen === true
+        );
+        let openStoresFilteredPostsByName = state.allPostsCopy.filter((post) =>
+          openStoresByName.some((store) => store.id === post.storeId)
+        );
+        const openStoresFilteredPosts = state.allPostsCopy.filter((post) =>
+          openStores.some((store) => store.id === post.storeId)
+        );
+
+        return {
+          ...state,
+          openStores: action.payload,
+          allStores: openStores,
+          filteredStoresByName: openStoresByName,
+          allPosts: openStoresFilteredPosts,
+          filteredPostsByName: openStoresFilteredPostsByName,
+          previousState, 
+        };
+      } else {
+        return state.previousState || state;
+      }
 
     // ______________________________________________________________SEARCHBAR____________________________________________________________
     case GET_STORE_BY_NAME:
@@ -599,7 +730,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         allPosts: action.payload,
         filteredPostsByName: action.payload,
-        filteredPostsByNameCopy: action.payload
+        filteredPostsByNameCopy: action.payload,
       };
 
     default:

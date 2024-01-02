@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import style from "./MyStore.module.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getStorePosts, setSelectedStore } from "../../redux/actions";
+import { getStorePosts, isStoreOpenSwitch, setSelectedStore } from "../../redux/actions";
 import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -85,6 +85,9 @@ const MyStore = () => {
     );
   }
 
+  useEffect(() => {
+    dispatch(isStoreOpenSwitch(isStoreOpen(selectedStore?.dias, selectedStore?.horarios), storeId))
+  }, [dispatch])
 
   return (
     <>

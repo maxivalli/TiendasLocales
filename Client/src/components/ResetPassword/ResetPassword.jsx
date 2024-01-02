@@ -77,8 +77,9 @@ const ResetPassword = () => {
             icon: "success",
             title: "Registro de nueva contraseña exitoso",
             text: "¡Inicie sesion con su nueva contraseña!",
-          });
+          }).then(() => {
           navigate("/");
+        })
         }
       })
       .catch((err) => console.log(err));

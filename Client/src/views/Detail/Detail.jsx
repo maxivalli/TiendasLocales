@@ -117,6 +117,10 @@ const Detail = ({ userData }) => {
     );
   }
 
+  useEffect(() => {
+    dispatch(isStoreOpenSwitch(isStoreOpen(selectedStore?.dias, selectedStore?.horarios), selectedStore?.id))
+  }, [dispatch])
+
   return (
     <>
       <Head />
@@ -136,7 +140,7 @@ const Detail = ({ userData }) => {
                 style={{
                   color: isStoreOpen(
                     selectedStore?.dias,
-                    selectedStore?.horarios
+                    selectedStore?.horarios,
                   )
                     ? "cornflowerblue"
                     : "red",

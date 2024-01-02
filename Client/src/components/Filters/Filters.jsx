@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectCategory,
@@ -9,6 +9,7 @@ import {
   getAllPosts,
   getAllStores,
   getStores2ByCategory,
+  isOpenStoresFilter,
 } from "../../redux/actions";
 
 import style from "./Filters.module.css";
@@ -21,11 +22,27 @@ const Filters = () => {
   );
   const selectedCategory = useSelector((state) => state.selectedCategory);
   const allStores = useSelector((state) => state.allStoresCopy);
+  const openStores = useSelector((state) => state.openStores);
   const [botonFiltros, setBotonFiltros] = useState(false);
+  const [botonTiendasAbiertas, setBotonTiendasAbiertas] = useState("");
+
+  useEffect(() => {
+  if (openStores) {
+    setBotonTiendasAbiertas("Mostrando solo abiertas");
+  } else {
+    setBotonTiendasAbiertas("Mostrando todas");
+  }
+}, [openStores])
 
   const handlePriceChange = (event) => {
     const price = event.target.value;
     dispatch(selectPrice(price));
+  };
+
+  const showOpenStores = () => {
+    openStores
+      ? dispatch(isOpenStoresFilter(false))
+      : dispatch(isOpenStoresFilter(true));
   };
 
   const handleAlphabetChange = (event) => {
@@ -43,7 +60,7 @@ const Filters = () => {
   const uniqueCategories = () => {
     const filteredPosts = allStores;
     const categories = [
-      ...new Set(filteredPosts.map((post) => post.categoria)),
+      ...new Set(filteredPosts && filteredPosts.map((post) => post.categoria)),
     ];
     categories.unshift("🔍 Mostrar todas");
     return categories;
@@ -67,7 +84,7 @@ const Filters = () => {
           <div className={style.filtros}>
             <h3>Filtros</h3>
             {!location.hash.includes("/mitienda/") &&
-              !location.hash.includes("/tienda/") && 
+              !location.hash.includes("/tienda/") &&
               !location.hash.includes("/misventas") && (
                 <select
                   value={selectedCategory}
@@ -100,6 +117,7 @@ const Filters = () => {
               <option value="asc">A-Z</option>
               <option value="desc">Z-A</option>
             </select>
+            <button onClick={showOpenStores}>{botonTiendasAbiertas}</button>
             <button onClick={toggleFilters}>Hecho</button>
             <button onClick={handleResetFilters} className={style.limpiar}>
               Limpiar filtros
