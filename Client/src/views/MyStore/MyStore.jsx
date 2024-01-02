@@ -75,6 +75,10 @@ const MyStore = () => {
     }
   }, [dispatch, storeId])
 
+  useEffect(() => {
+    dispatch(isStoreOpenSwitch(isStoreOpen(selectedStore?.dias, selectedStore?.horarios), storeId))
+  }, [dispatch])
+  
   if (loading) {
     return (
       <div className={style.spinner}>
@@ -85,9 +89,6 @@ const MyStore = () => {
     );
   }
 
-  useEffect(() => {
-    dispatch(isStoreOpenSwitch(isStoreOpen(selectedStore?.dias, selectedStore?.horarios), storeId))
-  }, [dispatch])
 
   return (
     <>
