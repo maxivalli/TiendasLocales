@@ -8,6 +8,7 @@ import style from "./MyStore.module.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getComprasRecibidas,
   getStorePosts,
   isStoreOpenSwitch,
   setSelectedStore,
