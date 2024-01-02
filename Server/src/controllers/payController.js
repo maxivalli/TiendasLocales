@@ -32,9 +32,9 @@ exports.createOrder = async (paymentData) => {
                 description: paymentData.description,
             }],
             back_urls: {  // Corrected property name to 'back_urls'
-                failure: "https://tiendaslocales.com.ar/#/account",
-                pending: "https://tiendaslocales.com.ar/#/account",
-                success: "https://tiendaslocales.com.ar/#/account"
+                failure: "https://tiendaslocales.com.ar/#/",
+                pending: "https://tiendaslocales.com.ar/#/",
+                success: "https://tiendaslocales.com.ar/#/"
             },
             notification_url: "https://tiendaslocales-production.up.railway.app/tiendas/webhook"
         }
