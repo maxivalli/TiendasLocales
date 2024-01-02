@@ -5,6 +5,13 @@
   height: fit-content;
 }
 
+.favorite {
+  position: absolute;
+  left: 170px;
+  top: 400px;
+}
+
+
 .avatar {
   display: grid;
   grid-template-columns: 1fr 5fr;
