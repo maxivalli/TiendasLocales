@@ -105,7 +105,7 @@ const More = () => {
           link={"/consultas"}
         />
         <CardWide
-          textButton={"FAQ"}
+          textButton={"Preguntas"}
           logo={
             <img
               width="60"
