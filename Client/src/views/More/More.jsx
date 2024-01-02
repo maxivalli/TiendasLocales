@@ -73,9 +73,9 @@ const More = () => {
             <>
             <div className={style.cenC}>
               <p>
-                Para que la tienda sea habilitada deberás pagar<br></br>
-                la suscripción en el centro Centro Comercial,<br></br>
-                allí el personal aprobará tu cuenta.
+                La habilitación de tiendas no es un proceso automático.<br></br>
+                El personal del Centro Comercial, revisará sus datos<br></br>
+                y si todo es correcto procederá a la habilitación.
               </p>
               </div>
               <CardWide
@@ -105,7 +105,7 @@ const More = () => {
           link={"/consultas"}
         />
         <CardWide
-          textButton={"FAQ"}
+          textButton={"Preguntas"}
           logo={
             <img
               width="60"

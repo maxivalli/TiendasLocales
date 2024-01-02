@@ -98,7 +98,9 @@ const SearchResult = () => {
           <h2>Tiendas</h2>
 
           {filterStores.length === 0 && (
+            <div className={style.noTiend}>
             <p>No hay tiendas que coincidan con la búsqueda</p>
+            </div>
           )}
         </div>
 
