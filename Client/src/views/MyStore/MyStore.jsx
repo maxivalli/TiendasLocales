@@ -187,7 +187,7 @@ const MyStore = () => {
 
         <div className={style.store2}>
           {storePosts.map((post, index) => (
-            <CardSquare key={index} {...post} storeId={storeId} onDelete={true}/>
+            <CardSquare key={index} {...post} storeId={storeId}/>
           ))}
         </div>
         <OptButtons storeId={storeId} />
