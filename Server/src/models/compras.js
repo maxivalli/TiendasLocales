@@ -52,6 +52,9 @@ module.exports = (sequelize) => {
         enviado: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
-        }
+        },
+        eliminado: {
+            type: DataTypes.STRING,
+        },
     });
 };

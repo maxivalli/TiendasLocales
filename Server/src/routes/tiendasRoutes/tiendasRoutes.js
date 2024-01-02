@@ -266,4 +266,16 @@ router.put("/getOpenStores", async (req, res) => {
     return res.status(400).json(error.message);
   }
 });
+
+router.post("/eliminado", async (req, res) => {
+  const postId = req.body;
+
+  try {
+    const response = await tiendasController.eliminado(postId);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json(error.message);
+  }
+});
+
 module.exports = router;
