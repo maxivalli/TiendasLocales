@@ -120,16 +120,11 @@ const Filters = () => {
               <option value="asc">A-Z</option>
               <option value="desc">Z-A</option>
             </select>
-            <button
-              onClick={showOpenStores}
-              className={
-                isShowOpenStoresPressed
-                  ? `${style.todas} ${style.todas}`
-                  : style.abiertas
-              }
-            >
-              {botonTiendasAbiertas}
-            </button>
+            {!location.hash.includes("/mitienda/") &&
+              !location.hash.includes("/tienda/") &&
+              !location.hash.includes("/misventas") && (
+            <button onClick={showOpenStores}>{botonTiendasAbiertas}</button>
+            )}
             <button onClick={toggleFilters}>Hecho</button>
             <button onClick={handleResetFilters} className={style.limpiar}>
               Limpiar filtros

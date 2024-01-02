@@ -4,7 +4,7 @@ import ProductImages from "../../components/productImages/ProductImages";
 import Head from "../../components/Head/Head";
 import style from "./Detail.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getPostById } from "../../redux/actions";
+import { getPostById, isStoreOpenSwitch } from "../../redux/actions";
 import axios from "axios";
 import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 
@@ -14,7 +14,7 @@ const Detail = ({ userData }) => {
   const selectedPost = useSelector((state) => state.selectedPost);
   const stores = useSelector((state) => state.allStores);
   const [quantity, setQuantity] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(selectedPost.price);
+  const [totalPrice, setTotalPrice] = useState(selectedPost?.price);
   const [ buyButton, setBuyButton ] = useState(false)
   const [isLoading, setIsLoading] = useState(true);
   const [ buyDirButton, setBuyDirButton ] = useState(false);
@@ -107,6 +107,10 @@ const Detail = ({ userData }) => {
     }
   };
 
+  useEffect(() => {
+    dispatch(isStoreOpenSwitch(isStoreOpen(selectedStore?.dias, selectedStore?.horarios), selectedStore?.id))
+  }, [dispatch])
+
   if (isLoading) {
     return (
       <div className={style.spinner}>
@@ -117,9 +121,7 @@ const Detail = ({ userData }) => {
     );
   }
 
-  useEffect(() => {
-    dispatch(isStoreOpenSwitch(isStoreOpen(selectedStore?.dias, selectedStore?.horarios), selectedStore?.id))
-  }, [dispatch])
+ 
 
   return (
     <>
