@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { socket } from "../../App";
 
 import Filters from "../../components/Filters/Filters";
@@ -8,46 +7,30 @@ import CardSale from "../../components/CardSales/CardSale";
 import Head from "../../components/Head/Head";
 
 import style from "./MySales.module.css";
-import { setSelectedStore } from "../../redux/actions";
+import {
+  enviarProducto,
+  getComprasRecibidas,
+} from "../../redux/actions";
 
 const MySales = () => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userData);
   const stores = useSelector((state) => state.allStores);
   const userStore = stores.find((store) => store.userId === userData.id);
+  const comprasRecibidas = useSelector((state) => state.comprasRecibidas);
   const users = useSelector((state) => state.allUsers);
-  const [comprasData, setCompras] = useState([]);
-  const comprasEnviadas = comprasData.filter((item) => item.enviado === true);
-  const comprasPorEnviar = comprasData.filter((item) => item.enviado === false);
+  const comprasEnviadas = comprasRecibidas.filter((item) => item.enviado === true);
+  const comprasPorEnviar = comprasRecibidas.filter((item) => item.enviado === false);
+  const [actualizador, setActualizador] = useState()
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `/tiendas/comprasRecibidas/${userStore?.id}`
-        );
-        if (response) {
-          setCompras(response.data);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [userStore]);
+    dispatch(getComprasRecibidas(userStore?.id));
+  }, [userStore, actualizador]);
 
   const handleEnviado = async (itemId) => {
-    try {
-      const response = await axios.put(`/tiendas/enviado/${itemId}`);
-      if (response) {
-        socket?.emit("productoEnviado", itemId);
-
-        return true;
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+    dispatch(enviarProducto(itemId));
+    socket?.emit("productoEnviado", itemId);
+    setActualizador(actualizador++)
   };
 
   return (
