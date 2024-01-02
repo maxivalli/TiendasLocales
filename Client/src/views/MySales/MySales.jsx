@@ -30,7 +30,7 @@ const MySales = () => {
   const handleEnviado = async (itemId) => {
     dispatch(enviarProducto(itemId));
     socket?.emit("productoEnviado", itemId);
-    setActualizador(actualizador++)
+    setActualizador((prevActualizador) => prevActualizador + 1);
   };
 
   return (
