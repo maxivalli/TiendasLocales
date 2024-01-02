@@ -29,7 +29,7 @@ export default function isStoreOpen(dias, horarios)  {
       const ultimoDiaIndex = diasSemana.indexOf(ultimoDia);
   
       if (primerDiaIndex !== -1 && ultimoDiaIndex !== -1) {
-        if (now.getDay() >= primerDiaIndex && now.getDay() <= ultimoDiaIndex) {
+        if (now.getDay() -1 >= primerDiaIndex && now.getDay() -1 <= ultimoDiaIndex) {
   
           if (diaExcluido && currentDay === diaExcluido) {
             return false;
