@@ -52,8 +52,7 @@ messaging.onBackgroundMessage((payload) => {
   return self.registration.showNotification(payload.data.title, {
     body: payload.data.text,
     icon: "https://firebasestorage.googleapis.com/v0/b/tiendaslocales-7bbf8.appspot.com/o/logo.png?alt=media&token=bca80e33-79d3-4b7e-8e50-e7cb026a2a58",
-    badge: "https://firebasestorage.googleapis.com/v0/b/tiendaslocales-7bbf8.appspot.com/o/badge.png?alt=media&token=cb641376-612e-4760-801a-a6ea969b6f8e",
-    vibrate: [100, 50, 100],
+    badge: "https://firebasestorage.googleapis.com/v0/b/tiendaslocales-7bbf8.appspot.com/o/BadgeOK.png?alt=media&token=c0d844a3-9e9f-432c-a848-8f66e272dbbb",
     actions: [
       { action: "close", title: "Cerrar" },
     ],
