@@ -216,7 +216,7 @@ exports.enviado = async (itemId) => {
   try {
     const compra = await Compra.findOne({
       where: {
-        id: itemId
+        id: itemId,
       },
     });
     compra.enviado = true;
@@ -239,15 +239,15 @@ exports.habStore = async (id) => {
     await store.save();
 
     const user = await User.findOne({
-        where: {
-          id: store.userId,
-        },
-      });
-      user.vendedor = "vendedor";
-      await user.save();
+      where: {
+        id: store.userId,
+      },
+    });
+    user.vendedor = "vendedor";
+    await user.save();
 
-      await transporter.sendMail(habStoreMail(user));
-      return store;
+    await transporter.sendMail(habStoreMail(user));
+    return store;
   } catch (error) {
     throw error;
   }
@@ -303,8 +303,35 @@ exports.getStoreByName = async (name) => {
         },
       },
     });
-    if (stores.length >= 1) 
-      return stores;
+    if (stores.length >= 1) return stores;
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.isStoreOpen = async (valor, storeId) => {
+  try {
+    const store = await Tienda.findOne({
+      where: {
+        id: storeId,
+      },
+    });
+    store.isOpen = valor;
+    store.save();
+    return true;
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.getOpenStores = async () => {
+  try {
+    const stores = await Tienda.findAll({
+      where: {
+        isOpen: true,
+      },
+    });
+    return stores;
   } catch (error) {
     throw error;
   }

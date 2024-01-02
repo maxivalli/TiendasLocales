@@ -48,12 +48,13 @@ import {
   SELECTED_STORE,
   SAVE_FILTERED_POSTS,
   SAVE_FILTERED_STORES,
+  IS_STORE_OPEN,
+  SET_STORE_OPEN,
   // SEARCHBAR
   GET_STORE_BY_NAME,
   FILTER_BY_NAME,
   GET_POST_BY_NAME,
   // CODES
-  VERIFICAR_CODIGO
 } from "./actionTypes";
 
 // _____________________________________________________________USERS_________________________________________________________________
@@ -106,15 +107,10 @@ export const sortUsersByID = (order) => {
   };
 };
 
-
 export function createGoogleUser(user) {
-
-  console.log("actions entrega",user);
+  console.log("actions entrega", user);
   return async (dispatch) => {
-    const result = await axios.post(
-      "/users/registerGoogle",
-      user
-    );
+    const result = await axios.post("/users/registerGoogle", user);
     dispatch({
       type: CREATE_USER,
       payload: result.data,
@@ -163,32 +159,32 @@ export function restoreUser(id) {
   };
 }
 
-export function saveUserData(userData){
+export function saveUserData(userData) {
   return {
     type: USER_DATA,
-    payload: userData
-  }
+    payload: userData,
+  };
 }
 
-export function updateUserData(userData){
+export function updateUserData(userData) {
   return {
     type: UPDATE_USER_DATA,
-    payload:userData
-  }
+    payload: userData,
+  };
 }
 // _____________________________________________________________STORES__________________________________________________________________
 export function getAllStores() {
   return async function (dispatch) {
     try {
-      const response = await axios('/tiendas/getAllStores');
+      const response = await axios("/tiendas/getAllStores");
       return dispatch({
         type: GET_STORES,
-        payload: response.data
-      })
-    }catch (error) {
-      throw error
+        payload: response.data,
+      });
+    } catch (error) {
+      throw error;
     }
-  }
+  };
 }
 
 export function getUserStore(userId) {
@@ -197,7 +193,7 @@ export function getUserStore(userId) {
       const response = await axios.get(`/tiendas/getUserStore/${userId}`);
       dispatch({ type: GET_USER_STORE, payload: response.data });
     } catch (error) {
-      throw error
+      throw error;
     }
   };
 }
@@ -205,7 +201,7 @@ export function getUserStore(userId) {
 export const setSelectedStore = (store) => {
   return {
     type: SELECTED_STORE,
-    payload: store
+    payload: store,
   };
 };
 // _________________________________________________________________FAVORITES_______________________________________________________________
@@ -215,7 +211,7 @@ export function addFavorite(userId, storeId) {
       await axios.post(`/favorites/addFavorite/${userId}/${storeId}`);
       dispatch({ type: ADD_FAVORITE });
     } catch (error) {
-      throw error
+      throw error;
     }
   };
 }
@@ -224,9 +220,9 @@ export function removeFavorite(userId, storeId) {
   return async function (dispatch) {
     try {
       await axios.delete(`/favorites/removeFavorite/${userId}/${storeId}`);
-      dispatch({ type: REMOVE_FAVORITE});
+      dispatch({ type: REMOVE_FAVORITE });
     } catch (error) {
-      throw error
+      throw error;
     }
   };
 }
@@ -237,7 +233,7 @@ export function getFavorites(userId) {
       const response = await axios.get(`/favorites/getFavorites/${userId}`);
       dispatch({ type: GET_FAVORITES, payload: response.data });
     } catch (error) {
-      throw error
+      throw error;
     }
   };
 }
@@ -245,10 +241,12 @@ export function getFavorites(userId) {
 export function addFavoritePost(userId, storeId, postId) {
   return async function (dispatch) {
     try {
-      await axios.post(`/favorites/addFavoritePost/${userId}/${storeId}/${postId}`);
+      await axios.post(
+        `/favorites/addFavoritePost/${userId}/${storeId}/${postId}`
+      );
       dispatch({ type: ADD_FAVORITE_POST });
     } catch (error) {
-      throw error
+      throw error;
     }
   };
 }
@@ -256,10 +254,12 @@ export function addFavoritePost(userId, storeId, postId) {
 export function removeFavoritePost(userId, storeId, postId) {
   return async function (dispatch) {
     try {
-      await axios.delete(`/favorites/removeFavoritePost/${userId}/${storeId}/${postId}`);
-      dispatch({ type: REMOVE_FAVORITE_POST});
+      await axios.delete(
+        `/favorites/removeFavoritePost/${userId}/${storeId}/${postId}`
+      );
+      dispatch({ type: REMOVE_FAVORITE_POST });
     } catch (error) {
-      throw error
+      throw error;
     }
   };
 }
@@ -270,7 +270,7 @@ export function getUserNotif(userId) {
       const response = await axios.get(`/notif/getUserNotif/${userId}`);
       dispatch({ type: GET_USER_NOTIFICATIONS, payload: response.data });
     } catch (error) {
-      throw error
+      throw error;
     }
   };
 }
@@ -281,7 +281,7 @@ export function deleteUserNotif(userId) {
       const response = await axios.delete(`/notif/deleteUserNotif/${userId}`);
       dispatch({ type: DELETE_USER_NOTIFICATIONS, payload: response.data });
     } catch (error) {
-      throw error
+      throw error;
     }
   };
 }
@@ -292,7 +292,7 @@ export function markNotiAsRead(notiId) {
       const response = await axios.put(`/notif/markNotiAsRead/${notiId}`);
       dispatch({ type: MARK_NOTI_AS_READ, payload: response.data });
     } catch (error) {
-      throw error
+      throw error;
     }
   };
 }
@@ -349,10 +349,12 @@ export function getPostById(id) {
 
 export function updateStock(quantity, postId) {
   return async (dispatch) => {
-    const result = await axios.put(`/posts/updateStock/${postId}`, {quantity});
+    const result = await axios.put(`/posts/updateStock/${postId}`, {
+      quantity,
+    });
     dispatch({
       type: UPDATE_STOCK,
-      payload: {quantity, postId},
+      payload: { quantity, postId },
     });
   };
 }
@@ -362,9 +364,9 @@ export function saveOtherUserData(otherUserName, otherUserImage) {
     type: OTHER_USER_DATA,
     payload: {
       otherUserImage,
-      otherUserName
-    }
-  }
+      otherUserName,
+    },
+  };
 }
 
 export const clearDetail = () => {
@@ -384,7 +386,6 @@ export const selectedPost = (postId, postImage) => {
     },
   };
 };
-
 
 export function updatePost(id, post) {
   return async (dispatch) => {
@@ -446,14 +447,13 @@ export function resetPostsFilter() {
   };
 }
 
-
 export function messagesHistory(chatId) {
   return async (dispatch) => {
     try {
       const response = await axios.get(`/messages/${chatId}`);
       dispatch({
         type: CARGAR_HISTORIAL_MENSAJES,
-        payload: response.data
+        payload: response.data,
       });
     } catch (error) {
       console.error("Error al cargar el historial de mensajes:", error);
@@ -467,7 +467,7 @@ export function createMessage(chatId, userId, content) {
       await axios.post(`/messages/${chatId}`, {
         chatId,
         userId,
-        content, 
+        content,
       });
     } catch (error) {
       console.error("Error al crear el mensaje:", error);
@@ -479,20 +479,23 @@ export function createMessage(chatId, userId, content) {
 export function createChat(userId, anotherUserId) {
   return async (dispatch) => {
     try {
-    const chatId = await axios.post("/chats/create", {
-      userId,
-      anotherUserId,
-    })
-    dispatch({
-      type: CHAT_CREATED,
-      payload: { chatId: chatId.data, user1Id: userId, user2Id: anotherUserId },
-    });
+      const chatId = await axios.post("/chats/create", {
+        userId,
+        anotherUserId,
+      });
+      dispatch({
+        type: CHAT_CREATED,
+        payload: {
+          chatId: chatId.data,
+          user1Id: userId,
+          user2Id: anotherUserId,
+        },
+      });
 
-    return chatId.data
-
-  }catch (error) {
+      return chatId.data;
+    } catch (error) {
       console.error("Error al crear el chat:", error);
-      throw error
+      throw error;
     }
   };
 }
@@ -576,46 +579,64 @@ export function resetFilters() {
   };
 }
 
-export function setFilteredStoresByName(storedStores){
+export function setFilteredStoresByName(storedStores) {
   return {
     type: SAVE_FILTERED_STORES,
-    payload: storedStores
-  }
+    payload: storedStores,
+  };
 }
 
-export function setFilteredPostsByName(storedPosts){
+export function setFilteredPostsByName(storedPosts) {
   return {
     type: SAVE_FILTERED_POSTS,
-    payload: storedPosts
-  }
+    payload: storedPosts,
+  };
+}
+
+export function isStoreOpenSwitch(valor, storeId) {
+  return async function (dispatch) {
+    const response = await axios.put(
+      `/tiendas/isStoreOpen/${valor}/${storeId}`
+    );
+    return dispatch({
+      type: SET_STORE_OPEN,
+      payload: response.data,
+    });
+  };
+}
+
+export function isOpenStoresFilter(valor) {
+  return {
+    type: IS_STORE_OPEN,
+    payload: valor,
+  };
 }
 
 // ______________________________________________________________SEARCHBAR________________________________________________________________
 
 export function getStoreByName(name) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     const response = await axios(`/tiendas/getStoreByName/name?name=${name}`);
     return dispatch({
-          type: GET_STORE_BY_NAME,
-          payload: response.data
-      })
-  }
+      type: GET_STORE_BY_NAME,
+      payload: response.data,
+    });
+  };
 }
 
 export function getPostByName(name) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     const response = await axios(`/posts/getPostByName/name?name=${name}`);
     return dispatch({
-          type: GET_POST_BY_NAME,
-          payload: response.data
-      })
-  }
+      type: GET_POST_BY_NAME,
+      payload: response.data,
+    });
+  };
 }
 
 export function filterByName(string) {
-  return{
+  return {
     type: FILTER_BY_NAME,
-    payload: string
-  }
+    payload: string,
+  };
 }
-

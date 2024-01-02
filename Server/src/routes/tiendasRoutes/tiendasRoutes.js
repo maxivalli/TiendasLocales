@@ -133,7 +133,7 @@ router.post("/webhook", async (req, res) => {
     data: data,
     payUserData: payUserData,
   };
-  console.log("all", allData)
+  console.log("all", allData);
   try {
     const response = await payController.webhook(allData);
     return res.json(response);
@@ -163,7 +163,6 @@ router.get("/pedidosCompras/:id", async (req, res) => {
     return res.status(400).json(error.message);
   }
 });
-
 
 router.get("/comprasRecibidas/:id", async (req, res) => {
   const id = req.params.id;
@@ -226,15 +225,20 @@ router.get("/categories/:category", async (req, res) => {
 router.get("/getStoreByName/name", async (req, res) => {
   const { name } = req.query;
   try {
-    const stores = await tiendasController.getStoreByName(name)
+    const stores = await tiendasController.getStoreByName(name);
     return res.status(200).json(stores);
   } catch (error) {
-    res.status(500).json({error: "There was an error obtaining the store information", details: error.message});
+    res
+      .status(500)
+      .json({
+        error: "There was an error obtaining the store information",
+        details: error.message,
+      });
   }
-})
+});
 
 router.put("/enviado/:itemId", async (req, res) => {
-  const  { itemId }= req.params;
+  const { itemId } = req.params;
   try {
     const response = await tiendasController.enviado(itemId);
     return res.status(200).json(response);
@@ -243,4 +247,23 @@ router.put("/enviado/:itemId", async (req, res) => {
   }
 });
 
+router.put("/isStoreOpen/:valor/:storeId", async (req, res) => {
+  const { valor } = req.params;
+  const { storeId } = req.params;
+  try {
+    const response = await tiendasController.isStoreOpen(valor, storeId);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json(error.message);
+  }
+});
+
+router.put("/getOpenStores", async (req, res) => {
+  try {
+    const response = await tiendasController.getOpenStores();
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json(error.message);
+  }
+});
 module.exports = router;

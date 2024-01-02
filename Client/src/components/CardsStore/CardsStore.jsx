@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addFavorite, getFavorites, removeFavorite } from "../../redux/actions";
+import { addFavorite, getFavorites, isStoreOpenSwitch, removeFavorite } from "../../redux/actions";
 import { socket } from "../../App";
 import likeG from "../../assets/likeG.png";
 import likeR from "../../assets/likeR.png";
@@ -57,6 +57,10 @@ const CardsStore = ({
       dispatch(getFavorites(userId));
     }
   }, [userId]);
+
+  useEffect(() => {
+    dispatch(isStoreOpenSwitch(isStoreOpen(dias, horarios), id))
+  }, [dispatch])
 
   return (
     <div className={style.cardsStore}>
