@@ -9,13 +9,16 @@ import b2 from "../../assets/Banner2.jpg";
 import b3 from "../../assets/Banner3.jpg";
 import style from "./SearchResult.module.css";
 import CardSquare from "../../components/CardSquare/CardSquare";
-import { setFilteredPostsByName, setFilteredStoresByName } from "../../redux/actions";
+import {
+  setFilteredPostsByName,
+  setFilteredStoresByName,
+} from "../../redux/actions";
 
 const SearchResult = () => {
   const dispatch = useDispatch();
   const stores = useSelector((state) => state.filteredStoresByName);
   const posts = useSelector((state) => state.filteredPostsByName);
- 
+  const [isLoading, setIsLoading] = useState(true);
 
   const [filterStores, setStores] = useState([]);
 
@@ -30,7 +33,6 @@ const SearchResult = () => {
       dispatch(setFilteredPostsByName(storedPosts));
     }
 
-
     if (stores) {
       localStorage.setItem("stores", JSON.stringify(stores));
     }
@@ -41,6 +43,7 @@ const SearchResult = () => {
     return () => {
       localStorage.removeItem("stores");
       localStorage.removeItem("posts");
+      setIsLoading(false);
     };
   }, [dispatch, stores, posts]);
 
@@ -58,6 +61,16 @@ const SearchResult = () => {
 
      
 
+  if (isLoading) {
+    return (
+      <div className={style.spinner}>
+        <div className={style.bounce1}></div>
+        <div className={style.bounce2}></div>
+        <div className={style.bounce3}></div>
+      </div>
+    );
+  }
+
   return (
     <>
       <Filters />
@@ -70,19 +83,20 @@ const SearchResult = () => {
         <div className={style.title}>
           <h2>Productos</h2>
           {posts.length === 0 && (
-            <p>No hay productos que coincidan con la búsqueda</p>
+            <div className={style.noProd}>
+              <p>No hay productos que coincidan con la búsqueda</p>
+            </div>
           )}
         </div>
 
         <div className={style.productos}>
           {posts &&
-            posts.map((store, index) => (
-            <CardSquare key={index} {...store} />
-            ))}
+            posts.map((store, index) => <CardSquare key={index} {...store} />)}
         </div>
 
         <div className={style.title}>
           <h2>Tiendas</h2>
+
           {filterStores.length === 0 && (
             <p>No hay tiendas que coincidan con la búsqueda</p>
           )}
