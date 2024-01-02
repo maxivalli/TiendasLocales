@@ -17,9 +17,9 @@ self.addEventListener("message", (event) => {
 });
 
 registerRoute(
-  /^((?!https:\/\/api-chat-engine-io).)*$/, 
+  /^((?!https:\/\/api-chat-engine-io).)*$/,
   new NetworkFirst({
-    cacheName: "TL-all-cache", 
+    cacheName: "TL-all-cache",
     plugins: [
       new ExpirationPlugin({
         maxEntries: 100,
@@ -54,6 +54,10 @@ messaging.onBackgroundMessage((payload) => {
     icon: "https://firebasestorage.googleapis.com/v0/b/tiendaslocales-7bbf8.appspot.com/o/logo.png?alt=media&token=bca80e33-79d3-4b7e-8e50-e7cb026a2a58",
     badge:
       "https://firebasestorage.googleapis.com/v0/b/tiendaslocales-7bbf8.appspot.com/o/badge.png?alt=media&token=cb641376-612e-4760-801a-a6ea969b6f8e",
+    actions: [
+      { action: "view", title: "Ver" },
+      { action: "close", title: "Cerrar" },
+    ],
   });
 });
 
