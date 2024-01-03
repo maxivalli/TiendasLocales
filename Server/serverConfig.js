@@ -2,7 +2,7 @@ const express = require("express");
 const { createServer } = require("node:http");
 const { Server } = require("socket.io");
 
-const { User, Notifications, Tienda } = require("./src/DB_config");
+const { User, Notifications, Tienda, Compra } = require("./src/DB_config");
 
 const router = require("./src/routes/routes");
 const matchsSockets = require("./src/controllers/payController");
@@ -39,6 +39,69 @@ io.on("connection", (socket) => {
     } catch (error) {
       console.error("Error al asignar Socket.id al usuario:", error);
     }
+  });
+
+  socket.on("productoEnviado", async (data) => {
+    const { itemId, comprador, userStore } = data;
+
+    const item = await Compra.findByPk(itemId);
+    const text = `Su compra de ${item.quantity} ${item.title} ya ha sido despachada por ${userStore.nombre}`
+
+    if (comprador.FCMtoken) {
+      const message = {
+        data: {
+          title: `${comprador.username}`,
+          text: text,
+        },
+        token: comprador.FCMtoken,
+      };
+
+      admin
+        .messaging()
+        .send(message)
+        .then((response) => {
+          console.log("Successfully sent message:", response);
+        })
+        .catch((error) => {
+          console.log("Error sending message:", error);
+        });
+    }
+
+    try {
+      const existingNotification = await Notifications.findOne({
+        where: {
+          content: text,
+          userId: comprador.id,
+        },
+      });
+
+      if (!existingNotification) {
+        await Notifications.create({
+          content: text,
+          userId: comprador.id,
+          image: item.productImage,
+          type: "envio"
+        });
+
+        console.log("Notificación almacenada en la base de datos");
+      } else {
+        existingNotification.read = false;
+        await existingNotification.save();
+
+        console.log(
+          "Notificación ya existe en la base de datos, propiedad 'read' actualizada a true"
+        );
+      }
+    } catch (error) {
+      console.error(
+        "Error al almacenar/comprobar notificación en la base de datos:",
+        error
+      );
+    }
+
+    const userSocket = comprador.socketId;
+    io.to(userSocket).emit("productoEnviado", storeId);
+    console.log(`socket productoEnviado emitido al front a ${comprador.username}`);
   });
 
   socket.on("addFavorite", async (addData) => {

@@ -174,6 +174,15 @@ const Head = () => {
   }, [stores]);
 
   useEffect(() => {
+    const handleIncomingProduct = () => {
+      dispatch(getUserNotif(userId));
+      setHasUnreadNotification(true);
+    };
+
+    socket?.on("productoEnviado", handleIncomingProduct);
+  }, [stores]);
+
+  useEffect(() => {
     const handleApprovedStore = () => {
       dispatch(getUserNotif(userId));
       setHasUnreadNotification(true);
@@ -195,7 +204,7 @@ const Head = () => {
       setHasUnreadNotification(false);
     }
   }, [hasUnreadNotification]);
-  
+
   const handleNotificationClick = (notification) => {
     switch (notification.type) {
       case "storeMessage":
@@ -212,6 +221,9 @@ const Head = () => {
         break;
       case "favorites":
         navigate("/favoritos");
+        break;
+      case "envio":
+        navigate("/micuenta");
         break;
       default:
         //? ? ? ? ? ? ? ? ? ?
