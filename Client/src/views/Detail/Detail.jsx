@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ProductImages from "../../components/productImages/ProductImages";
 import Head from "../../components/Head/Head";
 import likeG from "../../assets/likeG.png";
@@ -18,6 +18,7 @@ import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 
 const Detail = ({ userData }) => {
   const { id } = useParams();
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const selectedPost = useSelector((state) => state.selectedPost);
   const stores = useSelector((state) => state.allStores);
@@ -163,6 +164,47 @@ const Detail = ({ userData }) => {
     );
   }
 
+
+  const handleChatButtonClick = async () => {
+    const projectID = "236f9c42-06cc-414f-98cd-b7465ea5c29e";
+    const userName = userData.username;
+    const userSecret = userData.email;
+
+    const apiUrl = "https://api.chatengine.io/chats/";
+
+    const usernames = [selectedStore?.nombre];
+    const title = selectedPost?.title;
+    const isDirectChat = true;
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Project-ID": projectID,
+          "User-Name": userName,
+          "User-Secret": userSecret,
+        },
+        body: JSON.stringify({
+          usernames,
+          title,
+          is_direct_chat: isDirectChat,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create chat");
+      }
+
+      console.log("Chat created successfully");
+      navigate("/mensajes/usuario");
+    } catch (error) {
+      console.error("Error creating chat:", error.message);
+      throw error;
+    }
+  };
+
+
   return (
     <>
       <Head />
@@ -284,7 +326,7 @@ const Detail = ({ userData }) => {
           ) : (
             <div>
               <div className={style.comprar}>
-                <button disabled={isBuyButtonDisabled}>Consultar</button>
+                <button disabled={isBuyButtonDisabled} onClick={handleChatButtonClick}>Consultar</button>
               </div>
             </div>
           )}

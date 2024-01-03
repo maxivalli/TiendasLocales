@@ -27,9 +27,11 @@ const MySales = () => {
     dispatch(getComprasRecibidas(userStore?.id));
   }, [userStore, actualizador]);
 
-  const handleEnviado = async (itemId) => {
+  const handleEnviado = async (itemId, compradorId) => {
+    const comprador = users && users.find((user) => user.id === compradorId)
+    const data = {itemId, comprador, userStore: userStore}
     dispatch(enviarProducto(itemId));
-    socket?.emit("productoEnviado", itemId);
+    socket?.emit("productoEnviado", data);
     setActualizador((prevActualizador) => prevActualizador + 1);
   };
 
@@ -57,8 +59,9 @@ const MySales = () => {
                 user={users && users.find((user) => user.id === item?.userId)}
                 address={item?.userDireccion}
                 fn={() => {
-                  handleEnviado(item?.id);
+                  handleEnviado(item?.id, item?.userId);
                 }}
+                userStore={userStore}
               />
             ))}
           </div>
