@@ -16,6 +16,7 @@ import controlP from '../../assets/controlP.png'
 const More = () => {
   const userData = useSelector((state) => state.userData);
   const [storeData, setStoreData] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +26,7 @@ const More = () => {
         });
         if (response) {
           setStoreData(response.data);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -33,6 +35,16 @@ const More = () => {
 
     fetchData();
   }, [userData.id]);
+
+  if (loading) {
+    return (
+      <div className={style.spinner}>
+        <div className={style.bounce1}></div>
+        <div className={style.bounce2}></div>
+        <div className={style.bounce3}></div>
+      </div>
+    );
+  }
 
   return (
     <>

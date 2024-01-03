@@ -4,9 +4,9 @@ import Banner from "../../components/Banners/Banners";
 import CardsStore from "../../components/CardsStore/CardsStore";
 import Filters from "../../components/Filters/Filters";
 import Head from "../../components/Head/Head";
-import b1 from "../../assets/Banner1.jpg";
-import b2 from "../../assets/Banner2.jpg";
-import b3 from "../../assets/Banner3.jpg";
+import b4 from "../../assets/Banner4.jpg";
+import b5 from "../../assets/Banner5.jpg";
+import b6 from "../../assets/Banner6.jpg";
 import style from "./SearchResult.module.css";
 import CardSquare from "../../components/CardSquare/CardSquare";
 import {
@@ -75,7 +75,7 @@ const SearchResult = () => {
       <Head />
       <div className={style.home}>
         <div>
-          <Banner b1={b1} b2={b2} b3={b3} />
+          <Banner b1={b4} b2={b5} b3={b6} />
         </div>
 
         <div className={style.title}>
