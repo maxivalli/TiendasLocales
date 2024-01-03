@@ -48,6 +48,10 @@
   text-align: center;
 }
 
+.modal p {
+  color: red;
+}
+
 .avatar img {
   width: 150px;
   height: 150px;
