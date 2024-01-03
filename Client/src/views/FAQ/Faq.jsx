@@ -55,7 +55,7 @@ const Faq = () => {
             <p>
               Los datos de su tienda serán enviados al administrador, y si todo está
               correcto será habilitada. Le llegará una notificación y un mail para informarle. 
-              si hubiera algún problema con la habilitación también se le informará. Una vez 
+              Si hubiera algún problema con la habilitación también se le informará. Una vez 
               habilitada se le mostrará un botón para tener acceso a la misma.
             </p>
           </details>
