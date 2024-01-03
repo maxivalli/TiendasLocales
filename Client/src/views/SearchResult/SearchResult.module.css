@@ -70,6 +70,11 @@
   align-self: center;
 }
 
+.spinner {
+  width: 70px;
+  text-align: center;
+}
+
 .spinner > div {
   width: 18px;
   height: 18px;

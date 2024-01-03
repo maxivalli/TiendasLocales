@@ -7,7 +7,6 @@
 
 .container {
   display: grid;
-  justify-self: center;
   margin-top: 90px;
   margin-bottom: 90px;
 }
@@ -18,25 +17,31 @@
   justify-self: center;
 }
 
-.container summary {
-  font-style: italic;
-  color: cornflowerblue;
-}
-
 .container details {
   width: 100vw;
   justify-self: center;
-  text-align: center;
   margin-top: 30px;
+}
+
+.container summary {
+  font-style: italic;
+  color: cornflowerblue;
+  text-align: left;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .container p {
   padding: 20px;
   margin: 20px;
-  margin-left: 70px;
-  margin-right: 70px;
   background-color: rgba(128, 128, 128, 0.2);
   border-radius: 10px;
-  text-align: left;
+  text-align: justify;
 }
+
+/* @media (max-width: 900px) {
+  .container {
+    width: 100vw;
+  }
+} */
 

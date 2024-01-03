@@ -13,14 +13,14 @@ const Faq = () => {
           <details close>
             <summary>¿Cómo puedo comprar un producto en la página?</summary>
             <p>
-              Para comprar un producto, localíselo en la página, para tal fin
+              Para comprar un producto, localízelo en la página, para tal fin
               puede utilizar el buscador. Una vez que lo encuentre asegúrese de que
               reuna las condiciones que necesite, es decir, si tiene o no envío, precio,
               tamaño u otras características. Si el producto tiene la opción de compra directa
               a través de Mercado Pago, verá un botón que dice "Comprar", si la tienda no 
               acepta ventas a través de MP, verá un botón que dice "Consultar", si presiona
-              sobre el, será dirijido a un chat directo donde la tienda podrá informarle los
-              medios de pago disponibles.
+              sobre el mismo, será dirijido a un chat directo donde la tienda podrá informarle los
+              medios de pago que tiene disponibles.
             </p>
           </details>
 
@@ -54,7 +54,7 @@ const Faq = () => {
             <summary>¿Una vez que creo la tienda que sucede?</summary>
             <p>
               Los datos de su tienda serán enviados al administrador, y si todo está
-              correcto será habilitada. Le llegará una notificación y un mail para informarle, 
+              correcto será habilitada. Le llegará una notificación y un mail para informarle. 
               si hubiera algún problema con la habilitación también se le informará. Una vez 
               habilitada se le mostrará un botón para tener acceso a la misma.
             </p>
@@ -66,7 +66,7 @@ const Faq = () => {
               Cuando su tienda ya se encuentre habilitada, en el perfil de su tienda
               verá un botón para concectarse a su cuenta de Mercado Pago, si lo desea
               puede conectarla a la plataforma de pagos para poder vender 
-              de manera más sencilla en la tienda. Si no lo desea aún puede vender,
+              de manera más sencilla en la tienda. Si decide no trabajar con MP aún puede vender,
               pero deberá enviarle a los usuarios por chat algún medio de pago, tambíen
               puede considerar cobrar contra-entrega.
             </p>
@@ -85,7 +85,7 @@ const Faq = () => {
             <summary>¿Cómo publico mis productos?</summary>
             <p>
               Dentro del perfil de la tienda encontrará un botón que dice "Agregar",
-              si presiona sobre el, se mostrará un formulario para completar con los 
+              si presiona sobre el mismo, se mostrará un formulario para completar con los 
               datos del producto. De la misma forma que con los datos de su tienda,
               el producto se puede editar posteriormente.
             </p>
@@ -95,7 +95,7 @@ const Faq = () => {
             <summary>¿Puedo publicar sin precio?</summary>
             <p>
               Si, puede publicar un producto o servicio sin precio, pero debe ingresar
-              algún número en el campo, puede utilizar algo simbólico como 111 u otro.
+              algún número en el campo, puede utilizar algún valor simbólico como 1 u otro.
             </p>
           </details>
 
