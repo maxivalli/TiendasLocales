@@ -33,7 +33,10 @@
 .container p {
   padding: 20px;
   margin: 20px;
+  margin-left: 70px;
+  margin-right: 70px;
   background-color: rgba(128, 128, 128, 0.2);
   border-radius: 10px;
+  text-align: left;
 }
 

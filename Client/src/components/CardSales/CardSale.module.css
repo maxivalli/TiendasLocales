@@ -101,3 +101,7 @@
   border: none;
   border-radius: 5px;
 }
+
+.button button:disabled {
+  background-color: rgb(75, 75, 75);
+}

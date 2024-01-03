@@ -71,6 +71,12 @@
   margin-bottom: 100px;
 }
 
+.over {
+  background-color: rgb(128, 128, 128);
+  border-radius: 10px;
+  opacity: 70%;
+}
+
 @media (max-width: 1280px) {
   .pendientes {
     grid-template-columns: 1fr 1fr;
