@@ -59,6 +59,7 @@ const MySales = () => {
                 fn={() => {
                   handleEnviado(item?.id);
                 }}
+                userStore={userStore}
               />
             ))}
           </div>
