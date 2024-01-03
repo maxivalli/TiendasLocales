@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     domain="dev-o1hla43pri3h7cvl.us.auth0.com"
     clientId="sQO7mPVWHtDSBUpFtajxUHKQrSQ0y9Q9"
     authorizationParams={{
-      redirect_uri: window.location.origin,
+      redirect_uri: "https://tiendaslocales.com.ar/",
     }}
   >
     <Provider store={store}>
