@@ -14,6 +14,7 @@ import likeG from '../../assets/likeG.png'
 import likeR from '../../assets/likeR.png'
 import edit from '../../assets/edit.png'
 import del from '../../assets/delete.png'
+import axios from 'axios';
 
 const CardSquare = ({
   id,
@@ -26,6 +27,7 @@ const CardSquare = ({
   delivery,
   image,
   storeId,
+  onDelete,
 }) => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userData);
@@ -52,7 +54,6 @@ const CardSquare = ({
       socket.emit("addFavoritePost", addData);
     }
   };
-
   useEffect(() => {
     const isPostFavorite =
       favorites && favorites.some((favorite) => favorite.postId === postId);
@@ -84,6 +85,18 @@ const CardSquare = ({
   const esVistaMiCuenta = location.pathname.includes('/micuenta');
   const esVistaMiTienda = location.pathname.includes('/mitienda');
 
+  const handleEliminado = async (id) => {
+    try {
+      const newEliminado = await axios.post("/tiendas/eliminado", { postId: id });
+      
+      if(newEliminado){
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error handling elimination:", error);
+    }
+  };
+
   return (
     <>
       <div className={style.cardSquare}>
@@ -98,6 +111,9 @@ const CardSquare = ({
             className={style.fav}
           />
         </div>
+
+        {onDelete && <button onClick={() => handleEliminado(id)}>Eliminar</button>} 
+
         <Link to={`/post/${id}`}>
           <img src={image} alt="image" />
           <h2>{title}</h2>

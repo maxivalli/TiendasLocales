@@ -336,3 +336,23 @@ exports.getOpenStores = async () => {
     throw error;
   }
 };
+
+exports.eliminado = async (id) => {
+  try {
+    let newId = {
+      id
+    }
+    const compra = await Compra.findByPk(newId.id.postId);
+
+    if (!compra) {
+      throw new Error("Compra not found");
+    } else {
+      compra.eliminado = "eliminado";
+      await compra.save();
+    }
+
+    return true;
+  } catch (error) {
+    throw error;
+  }
+};

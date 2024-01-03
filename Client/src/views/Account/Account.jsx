@@ -52,7 +52,7 @@ const Account = ({ setAuth, setUserData }) => {
 
     fetchData();
   }, [userData.id]);
-
+  
   return (
     <>
       <Filters />
@@ -107,18 +107,21 @@ const Account = ({ setAuth, setUserData }) => {
 
         <div className={style.misCompras}>
           {comprasData.map((item, index) => {
-            return (
-              <CardSquare
-                key={index}
-                id={item?.postId}
-                image={item?.productImage}
-                title={item?.title}
-                eviado={item?.enviado}
-                price={item?.unit_price}
-                stock={item?.quantity}
-                delivery={item?.delivery}
-              />
-            );
+            if(item.eliminado != "eliminado"){
+              return (
+                <CardSquare
+                  key={index}
+                  id={item?.postId}
+                  image={item?.productImage}
+                  title={item?.title}
+                  eviado={item?.enviado}
+                  price={item?.unit_price}
+                  stock={item?.quantity}
+                  delivery={item?.delivery}
+                  onDelete={true}
+                />
+              );
+            } 
           })}
         </div>
 

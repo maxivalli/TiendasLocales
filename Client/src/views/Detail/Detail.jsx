@@ -2,9 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ProductImages from "../../components/productImages/ProductImages";
 import Head from "../../components/Head/Head";
+import likeG from "../../assets/likeG.png";
+import likeR from "../../assets/likeR.png";
 import style from "./Detail.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getPostById, isStoreOpenSwitch } from "../../redux/actions";
+import {
+  addFavoritePost,
+  getFavorites,
+  getPostById,
+  isStoreOpenSwitch,
+  removeFavoritePost,
+} from "../../redux/actions";
 import axios from "axios";
 import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 
@@ -13,34 +21,37 @@ const Detail = ({ userData }) => {
   const dispatch = useDispatch();
   const selectedPost = useSelector((state) => state.selectedPost);
   const stores = useSelector((state) => state.allStores);
+  const favorites = useSelector((state) => state.favorites);
+
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(selectedPost?.price);
-  const [ buyButton, setBuyButton ] = useState(false)
+  const [buyButton, setBuyButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [ buyDirButton, setBuyDirButton ] = useState(false);
+  const [buyDirButton, setBuyDirButton] = useState(false);
   const selectedStore = stores?.find(
     (store) => store.id == selectedPost?.storeId
   );
+  const userId = selectedPost?.userId;
+  const postId = selectedPost?.id;
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchDataAcct = async () => {
-      if(selectedStore){
+      if (selectedStore) {
         const result = await axios.get(
           `/users/anotherUserId/?id=${selectedStore.userId}`
         );
 
-        if(result.data.accT){
-          setBuyButton(true)
-        } 
+        if (result.data.accT) {
+          setBuyButton(true);
+        }
 
-        if (userData.direccion){
-          setBuyDirButton(true)
-        } 
+        if (userData.direccion) {
+          setBuyDirButton(true);
+        }
       }
-    }
-    fetchDataAcct()
-  },[selectedStore, selectedPost])
-
+    };
+    fetchDataAcct();
+  }, [selectedStore, selectedPost]);
 
   const linkName = selectedStore?.nombre.replace(/\s/g, "-");
   const isBuyButtonDisabled = quantity <= 0 || selectedPost.stock === 0;
@@ -108,8 +119,39 @@ const Detail = ({ userData }) => {
   };
 
   useEffect(() => {
-    dispatch(isStoreOpenSwitch(isStoreOpen(selectedStore?.dias, selectedStore?.horarios), selectedStore?.id))
-  }, [dispatch])
+    dispatch(
+      isStoreOpenSwitch(
+        isStoreOpen(selectedStore?.dias, selectedStore?.horarios),
+        selectedStore?.id
+      )
+    );
+  }, [dispatch]);
+
+  const isPostFavorite =
+    favorites && favorites.some((favorite) => favorite.postId == postId);
+  const [isFavorite, setIsFavorite] = useState(isPostFavorite);
+
+  const toggleFavorite = () => {
+    if (isFavorite) {
+      setIsFavorite(false);
+      dispatch(removeFavoritePost(userId, selectedStore?.id, postId));
+    } else {
+      setIsFavorite(true);
+      dispatch(addFavoritePost(userId, selectedStore?.id, postId));
+    }
+  };
+
+  useEffect(() => {
+    const isPostFavorite =
+      favorites && favorites.some((favorite) => favorite.postId === postId);
+    setIsFavorite(isPostFavorite);
+  }, [favorites, postId]);
+
+  useEffect(() => {
+    if (postId !== undefined) {
+      dispatch(getFavorites(userId));
+    }
+  }, [dispatch, postId]);
 
   if (isLoading) {
     return (
@@ -120,8 +162,6 @@ const Detail = ({ userData }) => {
       </div>
     );
   }
-
- 
 
   return (
     <>
@@ -142,7 +182,7 @@ const Detail = ({ userData }) => {
                 style={{
                   color: isStoreOpen(
                     selectedStore?.dias,
-                    selectedStore?.horarios,
+                    selectedStore?.horarios
                   )
                     ? "cornflowerblue"
                     : "red",
@@ -155,9 +195,13 @@ const Detail = ({ userData }) => {
             </h4>
             <h4>
               📍 {selectedStore?.direccion.calle}{" "}
-              {selectedStore?.direccion.numero} (piso:{" "}
-              {selectedStore?.direccion.piso} local:{" "}
-              {selectedStore?.direccion.depto})
+              {selectedStore?.direccion.numero}
+              {selectedStore?.direccion.piso && (
+                <> (piso: {selectedStore?.direccion.piso})</>
+              )}
+              {selectedStore?.direccion.depto && (
+                <> (local: {selectedStore?.direccion.depto})</>
+              )}
             </h4>
             <h4>{selectedStore?.categoria}</h4>
             <h4>📆 {selectedStore.dias}</h4>
@@ -174,6 +218,13 @@ const Detail = ({ userData }) => {
                 )}
             </h4>
           </div>
+        </div>
+        <div className={style.favorite} onClick={toggleFavorite}>
+          <img
+            src={isFavorite ? likeR : likeG}
+            alt="like"
+            className={style.fav}
+          />
         </div>
         <div className={style.images}>
           <ProductImages images={selectedPost.image} />
@@ -208,30 +259,35 @@ const Detail = ({ userData }) => {
                 : "Retirar en tienda 🙋🏻‍♂️"}
             </h5>
           </div>
-          {buyButton ? 
-            (selectedPost.delivery ? (buyDirButton ?
-              (<div className={style.comprar}>
+          {buyButton ? (
+            selectedPost.delivery ? (
+              buyDirButton ? (
+                <div className={style.comprar}>
+                  <button onClick={handleBuy} disabled={isBuyButtonDisabled}>
+                    Comprar
+                  </button>
+                </div>
+              ) : (
+                <div className={style.comprar}>
+                  <p>
+                    Necesitas una dirección para comprar productos con envio.
+                  </p>
+                </div>
+              )
+            ) : (
+              <div className={style.comprar}>
                 <button onClick={handleBuy} disabled={isBuyButtonDisabled}>
                   Comprar
                 </button>
-              </div>) : (<div className={style.comprar}>
-                <p >
-                  Necesitas una dirección para comprar productos con envio.
-                </p>
-              </div>)
-            ) : (<div className={style.comprar}>
-              <button onClick={handleBuy} disabled={isBuyButtonDisabled}>
-                Comprar
-              </button>
-            </div>)) : 
-            (<div>
-              <div className={style.comprar}>
-                <button disabled={isBuyButtonDisabled}>
-                  Consultar
-                </button>
               </div>
-            </div>)
-          }
+            )
+          ) : (
+            <div>
+              <div className={style.comprar}>
+                <button disabled={isBuyButtonDisabled}>Consultar</button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div className={style.desc}>

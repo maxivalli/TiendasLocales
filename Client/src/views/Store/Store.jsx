@@ -4,10 +4,18 @@ import CardSquare from "../../components/CardSquare/CardSquare";
 import Filters from "../../components/Filters/Filters";
 import Head from "../../components/Head/Head";
 import NavButtons from "../../components/NavButtons/NavButtons";
+import likeG from "../../assets/likeG.png";
+import likeR from "../../assets/likeR.png";
 import style from "./Store.module.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getStorePosts, isStoreOpenSwitch, setSelectedStore } from "../../redux/actions";
+import {
+  addFavorite,
+  getStorePosts,
+  isStoreOpenSwitch,
+  removeFavorite,
+  setSelectedStore,
+} from "../../redux/actions";
 import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 
 const Store = ({ userData }) => {
@@ -15,9 +23,11 @@ const Store = ({ userData }) => {
   const { linkName } = useParams();
   const stores = useSelector((state) => state.allStores);
   const storePosts = useSelector((state) => state.storePosts);
+  const favorites = useSelector((state) => state.favorites);
   const storeName = linkName.replace(/-/g, " ");
   const selectedStore = stores.find((store) => store.nombre === storeName);
   const storeId = selectedStore?.id;
+  const userId = selectedStore?.userId;
 
   const [loading, setLoading] = useState(true);
   const [alreadyReview, setAlredyReview] = useState(false);
@@ -80,9 +90,38 @@ const Store = ({ userData }) => {
   };
 
   useEffect(() => {
-    dispatch(isStoreOpenSwitch(isStoreOpen(selectedStore?.dias, selectedStore?.horarios), storeId))
-  }, [dispatch])
-  
+    dispatch(
+      isStoreOpenSwitch(
+        isStoreOpen(selectedStore?.dias, selectedStore?.horarios),
+        storeId
+      )
+    );
+  }, [dispatch]);
+
+  const isStoreFavorite =
+    favorites &&
+    favorites.some(
+      (favorite) => favorite.storeId === storeId && favorite.postId === null
+    );
+  const [isFavorite, setIsFavorite] = useState(isStoreFavorite);
+
+  const toggleFavorite = () => {
+    if (isFavorite) {
+      setIsFavorite(false);
+      dispatch(removeFavorite(userId, storeId));
+    } else {
+      setIsFavorite(true);
+      dispatch(addFavorite(userId, storeId));
+    }
+  };
+
+  useEffect(() => {
+    const isStoreFavorite = favorites.some(
+      (favorite) => favorite.storeId === storeId && favorite.postId === null
+    );
+    setIsFavorite(isStoreFavorite);
+  }, [favorites, storeId]);
+
   if (loading) {
     return (
       <div className={style.spinner}>
@@ -93,13 +132,19 @@ const Store = ({ userData }) => {
     );
   }
 
-
   return (
     <>
       <Filters />
       <Head />
       <div className={style.viewStore}>
         <div className={style.store}>
+          <div className={style.favorite} onClick={toggleFavorite}>
+            <img
+              src={isFavorite ? likeR : likeG}
+              alt="like"
+              className={style.fav}
+            />
+          </div>
           <div className={style.avatar}>
             <img src={selectedStore.image} alt="avatar" />
             {selectedStore.averageRating && (
@@ -153,16 +198,24 @@ const Store = ({ userData }) => {
                     : "red",
                 }}
               >
-                {isStoreOpen(selectedStore?.dias, selectedStore?.horarios, storeId)
+                {isStoreOpen(
+                  selectedStore?.dias,
+                  selectedStore?.horarios,
+                  storeId
+                )
                   ? "✅ Abierto"
                   : "❗️ Cerrado"}
               </span>
             </p>
             <p>
-              📍 {selectedStore.direccion.calle}{" "}
-              {selectedStore.direccion.numero} (piso:{" "}
-              {selectedStore.direccion.piso} local:{" "}
-              {selectedStore.direccion.depto})
+              📍 {selectedStore?.direccion.calle}{" "}
+              {selectedStore?.direccion.numero}
+              {selectedStore?.direccion.piso && (
+                <> (piso: {selectedStore?.direccion.piso})</>
+              )}
+              {selectedStore?.direccion.depto && (
+                <> (local: {selectedStore?.direccion.depto})</>
+              )}
             </p>
             <p>📆 {selectedStore.dias}</p>
             <p>

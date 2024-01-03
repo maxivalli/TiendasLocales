@@ -40,10 +40,10 @@ const SearchResult = () => {
       localStorage.setItem("posts", JSON.stringify(posts));
     }
 
+    setIsLoading(false);
     return () => {
       localStorage.removeItem("stores");
       localStorage.removeItem("posts");
-      setIsLoading(false);
     };
   }, [dispatch, stores, posts]);
 

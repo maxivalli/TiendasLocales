@@ -4,6 +4,14 @@
   left: 0;
 }
 
+
+.favorite {
+  position: absolute;
+  right: 15px;
+  top: 80px;
+}
+
+
 .store {
   display: grid;
   grid-template-columns: 200px 6fr;
