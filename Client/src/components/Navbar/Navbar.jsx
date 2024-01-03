@@ -154,7 +154,7 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
               </button>
             )}
           </Link>
-          <Link to={`/mitienda/${userStore.id}`}>
+          <Link to={`/mitienda/${userStore && userStore.id}`}>
           {userStore && (
             <button>
               <img src={userStore && userStore.image} className={style.profilePicture} />
