@@ -22,7 +22,7 @@ registerRoute(
     cacheName: "TL-all-cache",
     plugins: [
       new ExpirationPlugin({
-        maxEntries: 100,
+        maxEntries: 200,
       }),
       {
         cacheableResponse: {
