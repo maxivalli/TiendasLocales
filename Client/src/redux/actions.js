@@ -14,7 +14,6 @@ import {
   ADD_FAVORITE,
   REMOVE_FAVORITE_POST,
   ADD_FAVORITE_POST,
-  OTHER_USER_DATA,
   GET_ALL_POSTS,
   GET_ALL_DISABLED_POSTS,
   GET_ALL_EXISTING_POSTS,
@@ -378,16 +377,6 @@ export function updateStock(quantity, postId) {
       type: UPDATE_STOCK,
       payload: { quantity, postId },
     });
-  };
-}
-
-export function saveOtherUserData(otherUserName, otherUserImage) {
-  return {
-    type: OTHER_USER_DATA,
-    payload: {
-      otherUserImage,
-      otherUserName,
-    },
   };
 }
 

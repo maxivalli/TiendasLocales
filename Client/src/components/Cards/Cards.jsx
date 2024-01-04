@@ -9,7 +9,6 @@ import { getAllPosts } from "../../redux/actions";
 
 
 const Cards = () => {
-
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.allPostsCopy)
 

@@ -6,7 +6,6 @@ const { User, Notifications, Tienda, Compra } = require("./src/DB_config");
 
 const router = require("./src/routes/routes");
 const matchsSockets = require("./src/controllers/payController");
-const { Message } = require("./src/DB_config");
 
 const admin = require("firebase-admin");
 const serviceAccount = require("./src/keys/tiendaslocales-7bbf8-firebase-adminsdk-m33z6-85cb8f0439.json");
@@ -102,127 +101,6 @@ io.on("connection", (socket) => {
     const userSocket = comprador.socketId;
     io.to(userSocket).emit("productoEnviado");
     console.log(`socket productoEnviado emitido al front a ${comprador.username}`);
-  });
-
-  socket.on("addFavorite", async (addData) => {
-    const { userId, storeId, addText, image, userData } = addData;
-
-    if (userData?.FCMtoken) {
-      const message = {
-        data: {
-          title: `${userData.username}`,
-          text: addText,
-        },
-        token: userData.FCMtoken,
-      };
-
-      admin
-        .messaging()
-        .send(message)
-        .then((response) => {
-          console.log("Successfully sent message:", response);
-        })
-        .catch((error) => {
-          console.log("Error sending message:", error);
-        });
-    }
-
-    try {
-      const existingNotification = await Notifications.findOne({
-        where: {
-          content: addText,
-          userId: userId,
-        },
-      });
-
-      if (!existingNotification) {
-        await Notifications.create({
-          content: addText,
-          userId: userId,
-          image: image,
-          type: "favorites"
-        });
-
-        console.log("Notificación almacenada en la base de datos");
-      } else {
-        existingNotification.read = false;
-        await existingNotification.save();
-
-        console.log(
-          "Notificación ya existe en la base de datos, propiedad 'read' actualizada a true"
-        );
-      }
-    } catch (error) {
-      console.error(
-        "Error al almacenar/comprobar notificación en la base de datos:",
-        error
-      );
-    }
-
-    const user = await User.findByPk(userId);
-    const userSocket = user.socketId;
-    io.to(userSocket).emit("addFavorite", storeId);
-    console.log(`socket addFavorite emitido al front a ${userSocket}`);
-  });
-
-  socket.on("addFavoritePost", async (addData) => {
-    const { userId, postId, addText, image, userData } = addData;
-
-    if (userData?.FCMtoken) {
-      const message = {
-        data: {
-          title: `${userData?.username}`,
-          text: addText,
-        },
-        token: userData?.FCMtoken,
-      };
-
-      admin
-        .messaging()
-        .send(message)
-        .then((response) => {
-          console.log("Successfully sent message:", response);
-        })
-        .catch((error) => {
-          console.log("Error sending message:", error);
-        });
-    }
-
-    try {
-      const existingNotification = await Notifications.findOne({
-        where: {
-          content: addText,
-          userId: userId,
-        },
-      });
-
-      if (!existingNotification) {
-        await Notifications.create({
-          content: addText,
-          userId: userId,
-          image: image,
-          type: "favorites"
-        });
-
-        console.log("Notificación almacenada en la base de datos");
-      } else {
-        existingNotification.read = false;
-        await existingNotification.save();
-
-        console.log(
-          "Notificación ya existe en la base de datos, propiedad 'read' actualizada a true"
-        );
-      }
-    } catch (error) {
-      console.error(
-        "Error al almacenar/comprobar notificación en la base de datos:",
-        error
-      );
-    }
-
-    const user = await User.findByPk(userId);
-    const userSocket = user.socketId;
-    io.to(userSocket).emit("addFavoritePost", postId);
   });
 
   socket.on("waitingStore", async (data) => {

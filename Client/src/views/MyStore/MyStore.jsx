@@ -23,15 +23,16 @@ const MyStore = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { storeId } = useParams();
+
   const userData = useSelector((state) => state.userData);
   const stores = useSelector((state) => state.allStoresCopy);
-  const userStore = stores.find((store) => store.userId === userData.id);
   const storePosts = useSelector((state) => state.storePosts);
-  const allPosts = useSelector((state) => state.allPosts);
   const allPostsCopy = useSelector((state) => state.allPostsCopy);
-  const selectedStore = stores && stores.find((store) => store.id == storeId);
-  const [comprasData, setCompras] = useState([]);
+
   const [loading, setLoading] = useState(true);
+  
+  const selectedStore = stores && stores.find((store) => store.id == storeId);
+  const userStore = stores.find((store) => store.userId === userData.id);
 
   useEffect(() => {
     dispatch(setSelectedStore(selectedStore));
@@ -45,22 +46,6 @@ const MyStore = () => {
         setLoading(false);
       });
   }, [dispatch, storeId, allPostsCopy]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`/tiendas/pedidosCompras/${storeId}`);
-        if (response) {
-          setCompras(response.data);
-         
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [dispatch, storeId, allPosts]);
 
   const handleConnectMP = () => {
     window.open(

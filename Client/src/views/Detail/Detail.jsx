@@ -20,6 +20,7 @@ const Detail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const selectedPost = useSelector((state) => state.selectedPost);
   const stores = useSelector((state) => state.allStoresCopy);
   const userData = useSelector((state) => state.userData);
@@ -156,11 +157,6 @@ const Detail = () => {
     }
   }, [dispatch, postId]);
 
-
-
-
-
-
   const handleChatButtonClick = async () => {
     const projectID = "236f9c42-06cc-414f-98cd-b7465ea5c29e";
     const userName = userData.username;
@@ -187,11 +183,9 @@ const Detail = () => {
           is_direct_chat: isDirectChat,
         }),
       });
-
       if (!response.ok) {
         throw new Error("Failed to create chat");
       }
-
       navigate("/mensajes/usuario");
     } catch (error) {
       console.error("Error creating chat:", error.message);

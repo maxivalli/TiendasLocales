@@ -8,7 +8,7 @@ import { getAuth, signInAnonymously } from "firebase/auth";
 import { messaging } from "../../components/Firebase/config";
 
 import { socket } from "../../App";
-import { updateUser, updateUserData } from "../../redux/actions";
+import { updateUser } from "../../redux/actions";
 
 const Messages = ({ SWregistration }) => {
   const navigate = useNavigate();
@@ -53,7 +53,6 @@ const Messages = ({ SWregistration }) => {
 
     const activarMensajes = async () => {
       if (!SWregistration) {
-        // Si el Service Worker no está registrado, intenta registrarlo
         try {
           const registration = await navigator.serviceWorker.register(
             "/firebase-messaging-sw.js"

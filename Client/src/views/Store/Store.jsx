@@ -22,26 +22,29 @@ import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 const Store = ({ userData }) => {
   const dispatch = useDispatch();
   const { linkName } = useParams();
+
   const stores = useSelector((state) => state.allStoresCopy);
   const storePosts = useSelector((state) => state.storePosts);
   const favorites = useSelector((state) => state.favorites);
-  const storeName = linkName.replace(/-/g, " ");
-  const selectedStore = stores && stores.find((store) => store.nombre === storeName);
-  const storeId = selectedStore?.id;
-  const userId = selectedStore?.userId;
 
   const [loading, setLoading] = useState(true);
   const [alreadyReview, setAlreadyReview] = useState(false);
 
+  const storeName = linkName.replace(/-/g, " ");
+  const selectedStore =
+    stores && stores.find((store) => store.nombre === storeName);
+  const storeId = selectedStore?.id;
+  const userId = selectedStore?.userId;
+
   useEffect(() => {
     async function fetchData() {
-        if (userId) {
-          const response = await axios.get(`/reviews/${userData.id}/${userId}`);
-          if (response.data) {
-            setAlreadyReview(true);
-          }
+      if (userId) {
+        const response = await axios.get(`/reviews/${userData.id}/${userId}`);
+        if (response.data) {
+          setAlreadyReview(true);
         }
-      } 
+      }
+    }
     if (userId) {
       fetchData();
     }
@@ -49,11 +52,10 @@ const Store = ({ userData }) => {
 
   useEffect(() => {
     dispatch(setSelectedStore(selectedStore));
-    storeId && dispatch(getStorePosts(storeId))
-    dispatch(getAllStores())
-      .then(() => {
-        setLoading(false);
-      })
+    storeId && dispatch(getStorePosts(storeId));
+    dispatch(getAllStores()).then(() => {
+      setLoading(false);
+    });
   }, [dispatch, storeId, alreadyReview]);
 
   const handleRating = async (value) => {
@@ -63,19 +65,15 @@ const Store = ({ userData }) => {
         reviewedUserId: selectedStore.userId,
         rating: value,
       };
-
       const newRating = await axios.post("/reviews/postReview", newReview);
-
       if (newRating) {
         setAlreadyReview(true);
         let usuarioId = newRating.data.reviewedUserId;
-
         const response = await axios.get("/reviews/getAverageRating", {
           params: {
             usuarioId: usuarioId,
           },
         });
-
         if (response) {
           selectedStore.averageRating = response.data;
         }
@@ -86,10 +84,13 @@ const Store = ({ userData }) => {
   };
 
   useEffect(() => {
-    storeId && dispatch(
-      isStoreOpenSwitch(
-        isStoreOpen(selectedStore?.dias,selectedStore?.horarios), storeId)
-    );
+    storeId &&
+      dispatch(
+        isStoreOpenSwitch(
+          isStoreOpen(selectedStore?.dias, selectedStore?.horarios),
+          storeId
+        )
+      );
   }, [stores]);
 
   const isStoreFavorite =
@@ -116,6 +117,8 @@ const Store = ({ userData }) => {
     setIsFavorite(isStoreFavorite);
   }, [favorites, storeId]);
 
+
+  
   if (loading) {
     return (
       <div className={style.spinner}>
@@ -125,7 +128,6 @@ const Store = ({ userData }) => {
       </div>
     );
   }
-
   return (
     <>
       <Filters />

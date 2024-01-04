@@ -15,6 +15,7 @@ import controlP from '../../assets/controlP.png'
 
 const More = () => {
   const userData = useSelector((state) => state.userData);
+  
   const [storeData, setStoreData] = useState("");
   const [loading, setLoading] = useState(true);
 

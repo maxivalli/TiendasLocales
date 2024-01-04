@@ -73,7 +73,5 @@ const VALID_CELULAR_REGEX = /^[+]?[0-9]+$/;
     errors.celular = 'El número de celular debe contener solo dígitos y, opcionalmente, "+" al inicio';
   }
 
-  // Puedes agregar más validaciones según tus necesidades
-
   return errors;
 };
