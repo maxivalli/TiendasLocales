@@ -122,7 +122,7 @@ const Detail = () => {
   };
 
   useEffect(() => {
-    dispatch(
+    selectedStore && dispatch(
       isStoreOpenSwitch(
         isStoreOpen(selectedStore?.dias, selectedStore?.horarios),
         selectedStore?.id
@@ -230,7 +230,7 @@ const Detail = () => {
               {" "}
               <span
                 style={{
-                  color: isStoreOpen(
+                  color:isStoreOpen(
                     selectedStore?.dias,
                     selectedStore?.horarios
                   )

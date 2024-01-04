@@ -1,5 +1,4 @@
-import { useDispatch } from "react-redux";
-import { isStoreOpenSwitch } from "../../redux/actions";
+
 
 export default function isStoreOpen(dias, horarios)  {
 
