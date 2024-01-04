@@ -72,7 +72,6 @@ const ProductUpdate = ({ id }) => {
         postData[key] = productData[key];
       }
     });
-
     try {
       const response = await axios.put(`/posts/updatePost/${id}`, postData);
       if (response) {

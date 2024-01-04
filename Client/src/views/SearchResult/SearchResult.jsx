@@ -18,23 +18,23 @@ import {
 
 const SearchResult = () => {
   const dispatch = useDispatch();
+
   const stores = useSelector((state) => state.filteredStoresByName);
   const posts = useSelector((state) => state.filteredPostsByName);
 
   const [filterStores, setStores] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [filteredPostsPaginado, setFilteredPosts] = useState([]);
   const [filteredStoresPaginado, setFilteredStores] = useState([]);
   const [storePage, setStorePage] = useState(1);
   const [postPage, setPostPage] = useState(1);
+
   const storesPerPage = 1;
   const postsPerPage = 2;
 
   useEffect(() => {
     const storedStores = JSON.parse(localStorage.getItem("stores")) || [];
     const storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
-
     if (storedStores.length > 0) {
       dispatch(setFilteredStoresByName(storedStores));
       setStores(storedStores.filter((store) => store.habilitado === "habilitado"));
@@ -43,36 +43,28 @@ const SearchResult = () => {
       dispatch(setFilteredPostsByName(storedPosts));
       setFilteredPosts(storedPosts);
     }
-
     setTimeout(() => {
       setLoading(false);
     }, 750);
   }, [dispatch]);
 
   useEffect(() => {
-    // Filtro de tiendas
     const filtered =
       stores && stores.filter((store) => store.habilitado === "habilitado");
     setStores(filtered);
-
-    // Actualizar localStorage
     localStorage.setItem("stores", JSON.stringify(filtered));
   }, [dispatch, stores]);
 
   useEffect(() => {
-    // Paginación de tiendas
     const startStoreIndex = (storePage - 1) * storesPerPage;
     const endStoreIndex = startStoreIndex + storesPerPage;
     setFilteredStores(filterStores.slice(startStoreIndex, endStoreIndex));
   }, [filterStores, storePage]);
 
   useEffect(() => {
-    // Filtro de productos
     const startPostIndex = (postPage - 1) * postsPerPage;
     const endPostIndex = startPostIndex + postsPerPage;
     setFilteredPosts(posts.slice(startPostIndex, endPostIndex));
-
-    // Actualizar localStorage
     localStorage.setItem("posts", JSON.stringify(posts));
   }, [posts, postPage]);
 
@@ -84,6 +76,8 @@ const SearchResult = () => {
     setPostPage(data.selected + 1);
   };
 
+
+  
   if (loading) {
     return (
       <div className={style.spinner}>
@@ -93,7 +87,6 @@ const SearchResult = () => {
       </div>
     );
   }
-
   return (
     <>
       <Filters />

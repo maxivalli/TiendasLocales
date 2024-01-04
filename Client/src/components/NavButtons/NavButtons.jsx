@@ -12,9 +12,12 @@ import share from '../../assets/share.png'
 
 const NavButtons = ({ storeId }) => {
   const navigate = useNavigate();
+
   const userData = useSelector((state) => state.userData);
   const stores = useSelector((state) => state.allStores);
+
   const [mostrarBotonesExtras, setMostrarBotonesExtras] = useState(false);
+  
   const store = stores.find((store) => store.id == storeId);
 
   const handleNavButtonClick = () => {
@@ -47,11 +50,9 @@ const NavButtons = ({ storeId }) => {
           is_direct_chat: isDirectChat,
         }),
       });
-
       if (!response.ok) {
         throw new Error("Failed to create chat");
       }
-
       navigate("/mensajes/usuario");
     } catch (error) {
       console.error("Error creating chat:", error.message);
@@ -61,7 +62,6 @@ const NavButtons = ({ storeId }) => {
 
   const handleShareButtonClick = async () => {
     const storeLink = window.location.href;
-
     try {
       await navigator.clipboard.writeText(storeLink);
       alert("Enlace copiado al portapapeles:", storeLink);

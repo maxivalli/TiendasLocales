@@ -2,7 +2,6 @@ import { React, useState } from "react";
 import style from "./SearchBar.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  filterByName,
   getPostByName,
   getStoreByName,
 } from "../../redux/actions";
@@ -11,9 +10,6 @@ import { useNavigate } from "react-router-dom";
 const SearchBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const allStores = useSelector((state) => state.allStores);
-  const allPosts = useSelector((state) => state.allPosts);
 
   const [searchString, setSearchString] = useState("");
 

@@ -32,16 +32,12 @@ const CardsStore = ({
   const [isFavorite, setIsFavorite] = useState(isStoreFavorite);
 
   const toggleFavorite = () => {
-    const addText = `¡Se ha agregado "${nombre}" a favoritos!`;
-    const addData = { userId, storeId, addText, image, userData };
     if (isFavorite) {
       setIsFavorite(false);
       dispatch(removeFavorite(userId, storeId));
-      // socket.emit("removeFavorite", data);
     } else {
       setIsFavorite(true);
       dispatch(addFavorite(userId, storeId));
-      socket.emit("addFavorite", addData);
     }
   };
 

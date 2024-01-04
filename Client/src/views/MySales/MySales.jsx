@@ -14,15 +14,17 @@ import {
 
 const MySales = () => {
   const dispatch = useDispatch();
+
   const userData = useSelector((state) => state.userData);
   const stores = useSelector((state) => state.allStores);
-  console.log(stores);
-  const userStore = stores.find((store) => store.userId === userData.id);
   const comprasRecibidas = useSelector((state) => state.comprasRecibidas);
   const users = useSelector((state) => state.allUsers);
-  const comprasEnviadas = comprasRecibidas.filter((item) => item.enviado === true);
-  const comprasPorEnviar = comprasRecibidas.filter((item) => item.enviado === false);
+
   const [actualizador, setActualizador] = useState()
+  
+  const comprasPorEnviar = comprasRecibidas.filter((item) => item.enviado === false);
+  const comprasEnviadas = comprasRecibidas.filter((item) => item.enviado === true);
+  const userStore = stores.find((store) => store.userId === userData.id);
 
   useEffect(() => {
     userStore && dispatch(getComprasRecibidas(userStore?.id));

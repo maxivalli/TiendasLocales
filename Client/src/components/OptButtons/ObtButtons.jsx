@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import style from "./OptButtons.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import StoreUpdate from "../StoreUpdate/StoreUpdate.jsx";
 import { deleteStore } from "../../redux/actions.js";
 import more from '../../assets/more.png'
@@ -12,7 +12,7 @@ import edit from '../../assets/edit.png'
 const OptButtons = ({ storeId }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const stores = useSelector((state) => state.allStores);
+
   const [mostrarBotonesExtras, setMostrarBotonesExtras] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
@@ -32,7 +32,6 @@ const OptButtons = ({ storeId }) => {
     if (confirmDelete) {
       dispatch(deleteStore(storeId));
       navigate("/").then(() => {
-        // Esta función se ejecutará después de que el usuario haga clic en "OK"
         window.location.reload();
     })
     }

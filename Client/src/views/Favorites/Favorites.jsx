@@ -9,6 +9,7 @@ import CardSquare from "../../components/CardSquare/CardSquare";
 
 const Favorites = () => {
   const dispatch = useDispatch();
+  
   const userData = useSelector((state) => state.userData);
   const stores = useSelector((state) => state.allStores);
   const favorites = useSelector((state) => state.favorites);

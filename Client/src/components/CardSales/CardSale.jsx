@@ -2,7 +2,6 @@ import React from "react";
 import style from "./CardSale.module.css";
 import { useNavigate } from "react-router-dom";
 
-
 const CardSale = ({
   image,
   title,
@@ -13,7 +12,6 @@ const CardSale = ({
   adress,
   enviado,
   fn,
-  id,
   userStore
 }) => {
 const navigate = useNavigate()
