@@ -43,7 +43,6 @@ const ForgotPassword = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
 
       if (err.response && err.response.data.error === "El usuario no existe") {
         Swal.fire({

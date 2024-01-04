@@ -59,7 +59,7 @@ const ResetPassword = () => {
           })
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log());
   };
 
 
@@ -82,7 +82,7 @@ const ResetPassword = () => {
         })
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log());
   };
 
   const [showPassword, setShowPassword] = useState(false);

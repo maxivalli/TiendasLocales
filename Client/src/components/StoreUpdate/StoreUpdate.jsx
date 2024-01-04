@@ -185,7 +185,7 @@ const StoreUpdate = ({ storeId }) => {
 
     if (Object.values(formErrors).some((error) => error)) {
       setErrors(formErrors);
-      console.log(formErrors);
+
       return;
     }
 

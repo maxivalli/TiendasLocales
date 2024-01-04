@@ -52,7 +52,7 @@ const MyStore = () => {
         const response = await axios.get(`/tiendas/pedidosCompras/${storeId}`);
         if (response) {
           setCompras(response.data);
-          console.log(comprasData);
+         
         }
       } catch (error) {
         console.error("Error fetching data:", error);

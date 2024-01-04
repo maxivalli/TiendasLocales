@@ -7,10 +7,13 @@
 
 .favorite {
   position: absolute;
-  left: 170px;
-  top: 400px;
+  right: 120px;
+  margin-top: -5px;
 }
 
+.fav {
+  width: 30px;
+}
 
 .avatar {
   display: grid;
@@ -255,6 +258,11 @@
     padding-left: 5px;
     margin: 0;
     border: none;
+  }
+
+  .favorite {
+    right: 40px;
+    margin-top: 10px;
   }
 
   .info h2 {

@@ -47,7 +47,6 @@ const app = firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging(app);
 
 messaging.onBackgroundMessage((payload) => {
-  console.log("Recibiste un mensaje mientras estabas ausente", payload);
 
   return self.registration.showNotification(payload.data.title, {
     body: payload.data.text,

@@ -43,8 +43,6 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
     }
   };
 
-  console.log(userStore);
-
   return (
     <>
       <div className={style.navbar}>

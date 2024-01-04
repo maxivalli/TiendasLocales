@@ -18,9 +18,8 @@ const SearchResult = () => {
   const dispatch = useDispatch();
   const stores = useSelector((state) => state.filteredStoresByName);
   const posts = useSelector((state) => state.filteredPostsByName);
-  const [isLoading, setIsLoading] = useState(true);
-
   const [filterStores, setStores] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const storedStores = JSON.parse(localStorage.getItem("stores")) || [];
@@ -33,19 +32,10 @@ const SearchResult = () => {
       dispatch(setFilteredPostsByName(storedPosts));
     }
 
-    if (stores) {
-      localStorage.setItem("stores", JSON.stringify(stores));
-    }
-    if (posts) {
-      localStorage.setItem("posts", JSON.stringify(posts));
-    }
-
-    setIsLoading(false);
-    return () => {
-      localStorage.removeItem("stores");
-      localStorage.removeItem("posts");
-    };
-  }, [dispatch, stores, posts]);
+    setTimeout(() => {
+      setLoading(false); 
+    }, 750); 
+  }, [dispatch]);
 
   useEffect(() => {
     const filtered =
@@ -53,13 +43,7 @@ const SearchResult = () => {
     setStores(filtered);
   }, [dispatch, stores]);
 
-  /*   const sortedStores =
-    filterStores &&
-    filterStores
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-      .slice(0, 10); */
-
-  if (isLoading) {
+  if (loading) {
     return (
       <div className={style.spinner}>
         <div className={style.bounce1}></div>
