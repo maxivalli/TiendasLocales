@@ -77,7 +77,8 @@ exports.webhook = async (allData) => {
               unit_price: allData.payUserData.unit_price,
               currency_id: allData.payUserData.currency_id,
               description: allData.payUserData.description,
-              productImage: post.image
+              productImage: post.image,
+              enviado: false,
             });
             await newCompra.save();
           }

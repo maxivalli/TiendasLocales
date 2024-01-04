@@ -1,7 +1,7 @@
-const { Tienda, User, Compra } = require("../DB_config");
+const { Tienda, User, Compra, Post } = require("../DB_config");
 const axios = require("axios");
 const { Op } = require("sequelize");
-const { habStoreMail } = require("../utils/mailObjects");
+const { habStoreMail, enviadoMail } = require("../utils/mailObjects");
 const { transporter } = require("../config/mailer");
 
 async function getImageBlobFromURL(imageUrl) {
@@ -221,6 +221,26 @@ exports.enviado = async (itemId) => {
     });
     compra.enviado = true;
     await compra.save();
+
+    const user = await User.findOne({
+      where: {
+        id: compra.userId
+      }
+    })
+
+    const post = await Post.findOne({
+      where: {
+        id: compra.postId
+      }
+    })
+
+    const infoMail = {
+      email: user.email,
+      productName: post.title,
+      userEnvia: compra.storeId,
+    }
+    await transporter.sendMail(enviadoMail(infoMail));
+
     return true;
   } catch (error) {
     throw error;
