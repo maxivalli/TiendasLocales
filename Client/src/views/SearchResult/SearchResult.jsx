@@ -63,6 +63,19 @@ const SearchResult = () => {
         </div>
 
         <div className={style.title}>
+          <h2>Productos</h2>
+          {posts.length === 0 && (
+            <div className={style.noProd}>
+              <p>No hay productos que coincidan con la búsqueda</p>
+            </div>
+          )}
+        </div>
+        <div className={style.productos}>
+          {posts &&
+            posts.map((store, index) => <CardSquare key={index} {...store} />)}
+        </div>
+
+        <div className={style.title}>
           <h2>Tiendas</h2>
           {filterStores.length === 0 && (
             <div className={style.noTiend}>
@@ -76,19 +89,7 @@ const SearchResult = () => {
               <CardsStore key={index} {...store} />
             ))}
         </div>
-
-        <div className={style.title}>
-          <h2>Productos</h2>
-          {posts.length === 0 && (
-            <div className={style.noProd}>
-              <p>No hay productos que coincidan con la búsqueda</p>
-            </div>
-          )}
-        </div>
-        <div className={style.productos}>
-          {posts &&
-            posts.map((store, index) => <CardSquare key={index} {...store} />)}
-        </div>
+        
       </div>
     </>
   );
