@@ -89,7 +89,7 @@ const SearchResult = () => {
               <CardsStore key={index} {...store} />
             ))}
         </div>
-
+        
       </div>
     </>
   );
