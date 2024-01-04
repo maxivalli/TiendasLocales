@@ -16,6 +16,7 @@ const MySales = () => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userData);
   const stores = useSelector((state) => state.allStores);
+  console.log(stores);
   const userStore = stores.find((store) => store.userId === userData.id);
   const comprasRecibidas = useSelector((state) => state.comprasRecibidas);
   const users = useSelector((state) => state.allUsers);
@@ -24,7 +25,7 @@ const MySales = () => {
   const [actualizador, setActualizador] = useState()
 
   useEffect(() => {
-    dispatch(getComprasRecibidas(userStore?.id));
+    userStore && dispatch(getComprasRecibidas(userStore?.id));
   }, [userStore, actualizador]);
 
   const handleEnviado = async (itemId, compradorId) => {
