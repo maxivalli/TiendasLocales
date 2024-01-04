@@ -9,9 +9,9 @@ import Head from '../../components/Head/Head'
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const storesRef = useRef(stores);
-
+  
   const stores = useSelector((state) => state.allStores);
+  const storesRef = useRef(stores);
   const userData = useSelector((state) => state.userData);
   
   const [filterStores, setStores] = useState([]);
