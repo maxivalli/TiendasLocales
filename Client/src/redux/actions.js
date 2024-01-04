@@ -64,7 +64,6 @@ import {
 export function getAllUsers() {
   return async function (dispatch) {
     const response = await axios("/users/allUsers");
-   
     return dispatch({
       type: GET_ALL_USERS,
       payload: response.data,
