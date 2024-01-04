@@ -40,8 +40,9 @@ const Detail = () => {
   }, [dispatch, postId]);
 
   const selectedStore = stores?.find(
-    (store) => store.userId == userData?.id
+    (store) => store.id == selectedPost.storeId
   );
+
 
   useEffect(() => {
     const fetchDataAcct = async () => {
@@ -253,16 +254,16 @@ const Detail = () => {
               )}
             </h4>
             <h4>{selectedStore?.categoria}</h4>
-            <h4>📆 {selectedStore.dias}</h4>
+            <h4>📆 {selectedStore?.dias}</h4>
             <h4>
-              ⏰ {selectedStore.horarios.horario_de_apertura}hs a{" "}
-              {selectedStore.horarios.horario_de_cierre}hs
-              {selectedStore.horarios.horario_de_apertura2 &&
-                selectedStore.horarios.horario_de_cierre2 && (
+              ⏰ {selectedStore?.horarios.horario_de_apertura}hs a{" "}
+              {selectedStore?.horarios.horario_de_cierre}hs
+              {selectedStore?.horarios.horario_de_apertura2 &&
+                selectedStore?.horarios.horario_de_cierre2 && (
                   <>
                     {" y "}
-                    {selectedStore.horarios.horario_de_apertura2}hs a{" "}
-                    {selectedStore.horarios.horario_de_cierre2}hs
+                    {selectedStore?.horarios.horario_de_apertura2}hs a{" "}
+                    {selectedStore?.horarios.horario_de_cierre2}hs
                   </>
                 )}
             </h4>
