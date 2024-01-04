@@ -16,7 +16,6 @@ const MySales = () => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userData);
   const stores = useSelector((state) => state.allStores);
-  console.log(stores);
   const userStore = stores.find((store) => store.userId === userData.id);
   const comprasRecibidas = useSelector((state) => state.comprasRecibidas);
   const users = useSelector((state) => state.allUsers);

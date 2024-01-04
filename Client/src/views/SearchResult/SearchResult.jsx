@@ -28,8 +28,8 @@ const SearchResult = () => {
   const [filteredStoresPaginado, setFilteredStores] = useState([]);
   const [storePage, setStorePage] = useState(1);
   const [postPage, setPostPage] = useState(1);
-  const storesPerPage = 1;
-  const postsPerPage = 2;
+  const storesPerPage = 4;
+  const postsPerPage = 6;
 
   useEffect(() => {
     const storedStores = JSON.parse(localStorage.getItem("stores")) || [];
@@ -37,7 +37,9 @@ const SearchResult = () => {
 
     if (storedStores.length > 0) {
       dispatch(setFilteredStoresByName(storedStores));
-      setStores(storedStores.filter((store) => store.habilitado === "habilitado"));
+      setStores(
+        storedStores.filter((store) => store.habilitado === "habilitado")
+      );
     }
     if (storedPosts.length > 0) {
       dispatch(setFilteredPostsByName(storedPosts));
@@ -104,19 +106,6 @@ const SearchResult = () => {
         </div>
 
         <div className={style.title}>
-          <h2>Productos</h2>
-          {posts.length === 0 && (
-            <div className={style.noProd}>
-              <p>No hay productos que coincidan con la búsqueda</p>
-            </div>
-          )}
-        </div>
-        <div className={style.productos}>
-          {posts &&
-            posts.map((store, index) => <CardSquare key={index} {...store} />)}
-        </div>
-
-        <div className={style.title}>
           <h2>Tiendas</h2>
           {filterStores.length === 0 && (
             <div className={style.noTiend}>
@@ -129,17 +118,20 @@ const SearchResult = () => {
             filteredStoresPaginado.map((store, index) => (
               <CardsStore key={index} {...store} />
             ))}
-          {filterStores.length > storesPerPage && (
-            <ReactPaginate
-              pageCount={Math.ceil(filterStores.length / storesPerPage)}
-              pageRangeDisplayed={2}
-              marginPagesDisplayed={1}
-              onPageChange={handleStorePageClick}
-              containerClassName={style.pagination}
-              activeClassName={style.active}
-            />
-          )}
         </div>
+
+        {filterStores.length > storesPerPage && (
+          <ReactPaginate
+            pageCount={Math.ceil(filterStores.length / storesPerPage)}
+            pageRangeDisplayed={2}
+            marginPagesDisplayed={1}
+            onPageChange={handleStorePageClick}
+            containerClassName={style.pagination}
+            activeClassName={style.active}
+            nextLabel=">"
+            previousLabel="<"
+          />
+        )}
 
         <div className={style.title}>
           <h2>Productos</h2>
@@ -154,17 +146,21 @@ const SearchResult = () => {
             filteredPostsPaginado.map((store, index) => (
               <CardSquare key={index} {...store} />
             ))}
-          {posts.length > postsPerPage && (
-            <ReactPaginate
-              pageCount={Math.ceil(posts.length / postsPerPage)}
-              pageRangeDisplayed={2}
-              marginPagesDisplayed={1}
-              onPageChange={handlePostPageClick}
-              containerClassName={style.pagination}
-              activeClassName={style.active}
-            />
-          )}
         </div>
+
+        {posts.length > postsPerPage && (
+          <ReactPaginate
+            pageCount={Math.ceil(posts.length / postsPerPage)}
+            pageRangeDisplayed={2}
+            marginPagesDisplayed={1}
+            onPageChange={handlePostPageClick}
+            containerClassName={style.pagination2}
+            activeClassName={style.active2}
+            nextLabel=">"
+            previousLabel="<"
+          />
+        )}
+        <div className={style.margin}></div>
       </div>
     </>
   );
