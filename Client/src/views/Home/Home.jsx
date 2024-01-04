@@ -13,13 +13,15 @@ import food from '../../assets/food.png'
 import icecream from '../../assets/icecream.png'
 import constr from '../../assets/constr.png'
 import ropa from '../../assets/ropa.png'
-import { getAllStores, getStores2ByCategory, getStoresByCategory, selectCategory } from "../../redux/actions";
+import { getAllStores, getStores2ByCategory, selectCategory } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const stores = useSelector((state) => state.allStoresCopy);
+
   const [filterStores, setStores] = useState([]);
 
   useEffect(() => {
@@ -61,7 +63,6 @@ const Home = () => {
           navigate("/resultados");
           break;
         default:
-          // Manejar el caso por defecto si es necesario
           break;
       }
     };

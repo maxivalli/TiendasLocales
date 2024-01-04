@@ -58,8 +58,6 @@ const initialState = {
   allExistingUsersCopy: [],
   allDisabledUsers: [],
   selectedUser: "",
-  otherUserName: "",
-  otherUserImage: "",
   // STORES
   allStores: [],
   allStoresCopy: [],
@@ -76,8 +74,6 @@ const initialState = {
   allExistingPosts: [],
   allExistingPostsCopy: [],
   postDetail: [],
-  selectedPostToInteract: "",
-  selectedPostImage: "",
   // FILTERS
   selectedPost: "",
   selectedPrice: "",
@@ -105,12 +101,6 @@ function rootReducer(state = initialState, action) {
         allUsers: action.payload,
       };
 
-    case OTHER_USER_DATA:
-      return {
-        ...state,
-        otherUserName: action.payload.otherUserName,
-        otherUserImage: action.payload.otherUserImage,
-      };
 
     case UPDATE_USER_DATA:
       return {

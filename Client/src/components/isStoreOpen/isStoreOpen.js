@@ -1,5 +1,3 @@
-
-
 export default function isStoreOpen(dias, horarios)  {
 
     const diasSemana = [

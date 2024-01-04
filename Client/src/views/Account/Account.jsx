@@ -11,8 +11,10 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 const Account = ({ setAuth, setUserData }) => {
+  const { logout } = useAuth0();
+
   const userData = useSelector((state) => state.userData);
-  const { user, logout } = useAuth0(); // Fix here: destructure 'logout' correctly
+  
   const [showModal, setShowModal] = useState(false);
   const [comprasData, setCompras] = useState([]);
 

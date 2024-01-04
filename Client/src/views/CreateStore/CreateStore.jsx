@@ -12,14 +12,16 @@ import { useSelector } from "react-redux";
 
 const CreateStore = () => {
   const navigate = useNavigate();
+
   const userData = useSelector((state) => state.userData)
+
   const [showFacebookInput, setShowFacebookInput] = useState(false);
   const [showInstagramInput, setShowInstagramInput] = useState(false);
   const [showWhatsappInput, setShowWhatsappInput] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const categories = [
-    "🪇 Arte y artesanías",
+    "🎨 Arte y artesanías",
     "☕️ Cafeterías",
     "🚧 Construcción",
     "📺 Electrodomésticos",
@@ -117,7 +119,6 @@ const CreateStore = () => {
     if (type === "checkbox") {
       setFormData({ ...formData, [name]: checked });
     } else if (type === "time") {
-      // Actualizar el estado según el nombre del campo (apertura/cierre)
       setFormData({ ...formData, [name]: value });
     } else {
       setFormData({ ...formData, [name]: value });

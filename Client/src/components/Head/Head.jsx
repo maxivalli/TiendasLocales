@@ -22,6 +22,7 @@ const Head = () => {
   const userData = useSelector((state) => state.userData);
   const savedNotif = useSelector((state) => state.userNotif);
   const mixturedNotifications = [...liveNotifications, ...savedNotif];
+
   const notifications = Array.from(
     new Set(mixturedNotifications.map((notification) => notification.content))
   ).map((content) =>
@@ -53,7 +54,7 @@ const Head = () => {
     setShowNotifications((prevState) => !prevState);
   };
 
-  /*  const handleMouseOver = (index) => {
+    const handleClick = (index) => {
     setHoveredNotificationIndex(index);
     if (notifications[index].read === false) {
       notifications[index].read = true;
@@ -61,11 +62,11 @@ const Head = () => {
         dispatch(markNotiAsRead(notifications[index]?.id));
       setHasUnreadNotification(false);
     }
-  }; */
+  }; 
 
   useEffect(() => {
     const handleNewMessage = (data) => {
-      const { storeId, image, lastMessage, sender } = data;
+      const { storeId, lastMessage, sender } = data;
       let messageNotificationText;
       if (storeId) {
         if (lastMessage.length < 10) {
@@ -147,24 +148,6 @@ const Head = () => {
   }, [stores]);
 
   useEffect(() => {
-    const handleAddFavorite = () => {
-      dispatch(getUserNotif(userId));
-      setHasUnreadNotification(true);
-    };
-
-    socket?.on("addFavorite", handleAddFavorite);
-  }, [stores]);
-
-  useEffect(() => {
-    const handleAddPostFavorite = () => {
-      dispatch(getUserNotif(userId));
-      setHasUnreadNotification(true);
-    };
-
-    socket?.on("addFavoritePost", handleAddPostFavorite);
-  }, [stores]);
-
-  useEffect(() => {
     const handleWaitingStore = () => {
       dispatch(getUserNotif(userId));
       setHasUnreadNotification(true);
@@ -219,9 +202,6 @@ const Head = () => {
       case "venta":
         navigate("/misventas");
         break;
-      case "favorites":
-        navigate("/favoritos");
-        break;
       case "envio":
         navigate("/micuenta");
         break;
@@ -261,7 +241,7 @@ const Head = () => {
           {notifications.map((notification, index) => (
             <div
               key={index}
-              /* onMouseOver={() => handleMouseOver(index)} */
+               onClick={() => handleClick(index)} 
               className={style.noti}
             >
               <button

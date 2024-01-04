@@ -13,7 +13,7 @@ const StoreUpdate = ({ storeId }) => {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const categories = [
-    "🪇 Arte y artesanías",
+    "🎨 Arte y artesanías",
     "☕️ Cafeterías",
     "🚧 Construcción",
     "📺 Electrodomésticos",

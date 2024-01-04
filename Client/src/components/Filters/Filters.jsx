@@ -17,12 +17,11 @@ import style from "./Filters.module.css";
 const Filters = () => {
   const dispatch = useDispatch();
   const selectedPrice = useSelector((state) => state.selectedPrice);
-  const selectedAlphabetOrder = useSelector(
-    (state) => state.selectedAlphabetOrder
-  );
+  const selectedAlphabetOrder = useSelector((state) => state.selectedAlphabetOrder);
   const selectedCategory = useSelector((state) => state.selectedCategory);
   const allStores = useSelector((state) => state.allStoresCopy);
   const openStores = useSelector((state) => state.openStores);
+
   const [botonFiltros, setBotonFiltros] = useState(false);
   const [botonTiendasAbiertas, setBotonTiendasAbiertas] = useState("");
   const [isShowOpenStoresPressed, setIsShowOpenStoresPressed] = useState(false);
@@ -44,7 +43,6 @@ const Filters = () => {
     openStores
       ? dispatch(isOpenStoresFilter(false))
       : dispatch(isOpenStoresFilter(true));
-
     setIsShowOpenStoresPressed(!isShowOpenStoresPressed);
   };
 

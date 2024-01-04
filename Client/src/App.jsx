@@ -50,14 +50,9 @@ let SWregistration;
 
 function App() {
   const dispatch = useDispatch();
-  //axios.defaults.baseURL = "http://localhost:3001/";
-  axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/";
-  const {
-    user,
-    isAuthenticated: isAuthenticatedAuth0,
-    loginWithRedirect,
-    isLoading,
-  } = useAuth0();
+  axios.defaults.baseURL = "http://localhost:3001/";
+  //axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/";
+  const { user, isAuthenticated: isAuthenticatedAuth0, isLoading } = useAuth0();
 
   const handleUserGoogle = async () => {
     if (isAuthenticatedAuth0) {
@@ -101,7 +96,7 @@ function App() {
               position: "top-end",
               showConfirmButton: false,
               timer: 1000,
-              timerProgressBar: true, 
+              timerProgressBar: true,
               didOpen: (toast) => {
                 toast.addEventListener("mouseleave", Swal.resumeTimer);
               },
@@ -136,7 +131,7 @@ function App() {
     dispatch(saveUserData(user));
     dispatch(getUserStore(user?.id));
     dispatch(getUserNotif(user?.id));
-    dispatch(getAllStores())
+    dispatch(getAllStores());
   };
 
   useEffect(() => {
@@ -191,7 +186,7 @@ function App() {
                 dispatch(getAllPosts());
                 dispatch(getAllUsers());
                 dispatch(getUserNotif(userDataResponse?.data.id));
-                dispatch(getAllStores())
+                dispatch(getAllStores());
               })
               .catch((userDataError) => {
                 console.error(
@@ -211,7 +206,6 @@ function App() {
       setIsAuthenticated(false);
     }
   }, [isAuthenticated]);
-
 
   const userId = userData?.id;
 
@@ -341,36 +335,15 @@ function App() {
     <>
       <ToastContainer />
       {isAuthenticated || isAuthenticatedAuth0 ? (
-        <Navbar
-          isAuthenticated={isAuthenticated}
-          setAuth={setAuth}
-          userData={userData}
-        />
+        <Navbar isAuthenticated={isAuthenticated} />
       ) : null}
+
       <Routes>
         <Route
           path="/"
           element={
-            isAuthenticated ? (
-              userData ? (
-                <Home userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <Home userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              <Home />
             ) : (
               <Login setAuth={setAuth} />
             )
@@ -380,26 +353,8 @@ function App() {
         <Route
           path="/resultados"
           element={
-            isAuthenticated ? (
-              userData ? (
-                <SearchResult setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <SearchResult setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              <SearchResult />
             ) : (
               <Login setAuth={setAuth} />
             )
@@ -409,434 +364,183 @@ function App() {
         <Route
           path="/register"
           element={
-            isAuthenticated ? (
-              userData && <Home userData={userData} setAuth={setAuth} />
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              <Home />
             ) : (
               <Register setAuth={setAuth} />
             )
           }
         />
+
         <Route
           path="/inicio"
           element={
-            isAuthenticated ? (
-              userData ? (
-                <Home userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <Home userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              <Home />
             ) : (
               <Login setAuth={setAuth} />
             )
           }
         />
+
         <Route
           path="/post/:id"
           element={
-            isAuthenticated ? (
-              userData ? (
-                <Detail userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <Detail userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              <Detail />
             ) : (
               <Login setAuth={setAuth} />
             )
           }
         />
+
         <Route
           path="favoritos"
           element={
-            isAuthenticated ? (
-              userData ? (
-                <Favorites userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <Favorites userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              <Favorites />
             ) : (
               <Login setAuth={setAuth} />
             )
           }
         />
+
         <Route
           path="/ubiForm"
           element={
-            isAuthenticated ? (
-              userData ? (
-                <UbiForm userData={userData} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <UbiForm userData={userData} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              <UbiForm userData={userData} />
             ) : (
               <Login setAuth={setAuth} />
             )
           }
         />
+
         <Route
           path="/mensajes/*"
           element={
             isAuthenticated || isAuthenticatedAuth0 ? (
-              user || userData ? (
-                <Messages userData={userData} setAuth={setAuth} registration={SWregistration}/>
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+              <Messages registration={SWregistration} />
             ) : (
               <Login setAuth={setAuth} />
             )
           }
         />
+
         <Route
           path="/micuenta"
           element={
-            isAuthenticated ? (
-              userData ? (
-                <Account
-                  userData={userData}
-                  setUserData={setUserData}
-                  setAuth={setAuth}
-                />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <Account
-                  userData={userData}
-                  setUserData={setUserData}
-                  setAuth={setAuth}
-                />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              <Account setUserData={setUserData} setAuth={setAuth} />
             ) : (
               <Login setAuth={setAuth} />
             )
           }
         />
+
         <Route
           path="/mas"
           element={
-            isAuthenticated ? (
-              userData ? (
-                <More userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <More userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              <More />
             ) : (
               <Login setAuth={setAuth} />
             )
           }
         />
+
         <Route
           path="/createstore"
           element={
-            isAuthenticated ? (
-              userData ? (
-                <CreateStore userData={userData} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <CreateStore userData={userData} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              <CreateStore />
             ) : (
               <Login setAuth={setAuth} />
             )
           }
         />
+
         <Route
           path="/mitienda/:storeId"
           element={
-            isAuthenticated ? (
-              userData ? (
-                <MyStore userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <MyStore userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              <MyStore />
             ) : (
               <Login setAuth={setAuth} />
             )
           }
         />
+
         <Route
           path="/misventas"
           element={
-            isAuthenticated ? (
-              userData ? (
-                <MySales userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <MySales userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              <MySales />
             ) : (
               <Login setAuth={setAuth} />
             )
           }
         />
+
         <Route
           path="/tienda/:linkName"
           element={
-            isAuthenticated ? (
-              userData ? (
-                <Store userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <Store userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              <Store userData={userData} />
             ) : (
               <Login setAuth={setAuth} />
             )
           }
         />
+
         <Route
           path="/consultas"
           element={
-            isAuthenticated ? (
-              userData ? (
-                <Queries userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <Queries userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              <Queries />
             ) : (
               <Login setAuth={setAuth} />
             )
           }
         />
+
         <Route
           path="/faq"
           element={
-            isAuthenticated ? (
-              userData ? (
-                <Faq userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <Faq userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              <Faq />
             ) : (
               <Login setAuth={setAuth} />
             )
           }
         />
+
         <Route
           path="/dashboard"
           element={
-            isAuthenticated ? (
-              userData ? (
-                <Dashboard userData={userData} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <Dashboard userData={userData} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              <Dashboard />
             ) : (
               <Login setAuth={setAuth} />
             )
           }
         />
+
         <Route
           path="/agregarproducto"
           element={
-            isAuthenticated ? (
-              userData ? (
-                <AddProduct userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
-            ) : isAuthenticatedAuth0 ? (
-              user ? (
-                <AddProduct userData={userData} setAuth={setAuth} />
-              ) : (
-                <div className="spinner">
-                  <div className="bounce1"></div>
-                  <div className="bounce2"></div>
-                  <div className="bounce3"></div>
-                </div>
-              )
+            isAuthenticated || isAuthenticatedAuth0 ? (
+              <AddProduct  />
             ) : (
               <Login setAuth={setAuth} />
             )
           }
         />
+
         <Route path="/forgotpassword" element={<ForgotPassword />} />
 
         <Route path="/resetpassword/:id" element={<ResetPassword />} />
+        
       </Routes>
     </>
   );
