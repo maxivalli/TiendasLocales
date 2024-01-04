@@ -34,7 +34,7 @@ const SearchResult = () => {
 
     setTimeout(() => {
       setLoading(false); 
-    }, 1000); 
+    }, 750); 
   }, [dispatch]);
 
   useEffect(() => {
