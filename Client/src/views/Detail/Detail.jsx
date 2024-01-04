@@ -8,7 +8,6 @@ import style from "./Detail.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addFavoritePost,
-  getAllStores,
   getFavorites,
   getPostById,
   isStoreOpenSwitch,
@@ -156,15 +155,10 @@ const Detail = () => {
     }
   }, [dispatch, postId]);
 
-  if (isLoading) {
-    return (
-      <div className={style.spinner}>
-        <div className={style.bounce1}></div>
-        <div className={style.bounce2}></div>
-        <div className={style.bounce3}></div>
-      </div>
-    );
-  }
+
+
+
+
 
   const handleChatButtonClick = async () => {
     const projectID = "236f9c42-06cc-414f-98cd-b7465ea5c29e";
@@ -204,6 +198,11 @@ const Detail = () => {
     }
   };
 
+
+
+
+
+
   if (isLoading) {
     return (
       <div className={style.spinner}>
@@ -213,10 +212,6 @@ const Detail = () => {
       </div>
     );
   }
-
-
-
-
   return (
     <>
       <Head />
