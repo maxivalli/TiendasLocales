@@ -67,7 +67,7 @@ const Store = ({ userData }) => {
       };
       const newRating = await axios.post("/reviews/postReview", newReview);
       if (newRating) {
-        setAlredyReview(true);
+        setAlreadyReview(true);
         let usuarioId = newRating.data.reviewedUserId;
         const response = await axios.get("/reviews/getAverageRating", {
           params: {
