@@ -16,12 +16,13 @@ import {
 import axios from "axios";
 import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 
-const Detail = ({ userData }) => {
+const Detail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const selectedPost = useSelector((state) => state.selectedPost);
-  const stores = useSelector((state) => state.allStores);
+  const stores = useSelector((state) => state.allStoresCopy);
+  const userData = useSelector((state) => state.userData);
   const favorites = useSelector((state) => state.favorites);
 
   const [quantity, setQuantity] = useState(1);
@@ -29,11 +30,19 @@ const Detail = ({ userData }) => {
   const [buyButton, setBuyButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [buyDirButton, setBuyDirButton] = useState(false);
+ 
+  const userId = userData?.id;
+  const postId = parseInt(id);
+
+  useEffect(() => {
+    dispatch(getPostById(postId))
+    .then(() => setIsLoading(false))
+  }, [dispatch, postId]);
+
   const selectedStore = stores?.find(
-    (store) => store.id == selectedPost?.storeId
+    (store) => store.id == selectedPost.storeId
   );
-  const userId = selectedPost?.userId;
-  const postId = selectedPost?.id;
+
 
   useEffect(() => {
     const fetchDataAcct = async () => {
@@ -54,7 +63,7 @@ const Detail = ({ userData }) => {
     fetchDataAcct();
   }, [selectedStore, selectedPost]);
 
-  const linkName = selectedStore?.nombre.replace(/\s/g, "-");
+  const linkName = selectedStore && selectedStore.nombre.replace(/\s/g, "-");
   const isBuyButtonDisabled = quantity <= 0 || selectedPost.stock === 0;
 
   function decrement() {
@@ -72,14 +81,7 @@ const Detail = ({ userData }) => {
     setTotalPrice(selectedPost.price * quantity);
   }, [quantity, selectedPost.price]);
 
-  useEffect(() => {
-    dispatch(getPostById(id))
-      .then(() => setIsLoading(false))
-      .catch((error) => {
-        setIsLoading(false);
-        console.error("Error fetching post by ID:", error);
-      });
-  }, [dispatch, id]);
+ 
 
   const handleBuy = async () => {
     try {
@@ -120,7 +122,7 @@ const Detail = ({ userData }) => {
   };
 
   useEffect(() => {
-    dispatch(
+    selectedStore && dispatch(
       isStoreOpenSwitch(
         isStoreOpen(selectedStore?.dias, selectedStore?.horarios),
         selectedStore?.id
@@ -154,15 +156,10 @@ const Detail = ({ userData }) => {
     }
   }, [dispatch, postId]);
 
-  if (isLoading) {
-    return (
-      <div className={style.spinner}>
-        <div className={style.bounce1}></div>
-        <div className={style.bounce2}></div>
-        <div className={style.bounce3}></div>
-      </div>
-    );
-  }
+
+
+
+
 
   const handleChatButtonClick = async () => {
     const projectID = "236f9c42-06cc-414f-98cd-b7465ea5c29e";
@@ -202,6 +199,20 @@ const Detail = ({ userData }) => {
     }
   };
 
+
+
+
+
+
+  if (isLoading) {
+    return (
+      <div className={style.spinner}>
+        <div className={style.bounce1}></div>
+        <div className={style.bounce2}></div>
+        <div className={style.bounce3}></div>
+      </div>
+    );
+  }
   return (
     <>
       <Head />
@@ -219,7 +230,7 @@ const Detail = ({ userData }) => {
               {" "}
               <span
                 style={{
-                  color: isStoreOpen(
+                  color:isStoreOpen(
                     selectedStore?.dias,
                     selectedStore?.horarios
                   )
@@ -243,16 +254,16 @@ const Detail = ({ userData }) => {
               )}
             </h4>
             <h4>{selectedStore?.categoria}</h4>
-            <h4>📆 {selectedStore.dias}</h4>
+            <h4>📆 {selectedStore?.dias}</h4>
             <h4>
-              ⏰ {selectedStore.horarios.horario_de_apertura}hs a{" "}
-              {selectedStore.horarios.horario_de_cierre}hs
-              {selectedStore.horarios.horario_de_apertura2 &&
-                selectedStore.horarios.horario_de_cierre2 && (
+              ⏰ {selectedStore?.horarios.horario_de_apertura}hs a{" "}
+              {selectedStore?.horarios.horario_de_cierre}hs
+              {selectedStore?.horarios.horario_de_apertura2 &&
+                selectedStore?.horarios.horario_de_cierre2 && (
                   <>
                     {" y "}
-                    {selectedStore.horarios.horario_de_apertura2}hs a{" "}
-                    {selectedStore.horarios.horario_de_cierre2}hs
+                    {selectedStore?.horarios.horario_de_apertura2}hs a{" "}
+                    {selectedStore?.horarios.horario_de_cierre2}hs
                   </>
                 )}
             </h4>

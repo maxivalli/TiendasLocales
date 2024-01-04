@@ -9,6 +9,8 @@ import b5 from "../../assets/Banner5.jpg";
 import b6 from "../../assets/Banner6.jpg";
 import style from "./SearchResult.module.css";
 import CardSquare from "../../components/CardSquare/CardSquare";
+import ReactPaginate from "react-paginate";
+
 import {
   setFilteredPostsByName,
   setFilteredStoresByName,
@@ -18,8 +20,16 @@ const SearchResult = () => {
   const dispatch = useDispatch();
   const stores = useSelector((state) => state.filteredStoresByName);
   const posts = useSelector((state) => state.filteredPostsByName);
+
   const [filterStores, setStores] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [filteredPostsPaginado, setFilteredPosts] = useState([]);
+  const [filteredStoresPaginado, setFilteredStores] = useState([]);
+  const [storePage, setStorePage] = useState(1);
+  const [postPage, setPostPage] = useState(1);
+  const storesPerPage = 1;
+  const postsPerPage = 2;
 
   useEffect(() => {
     const storedStores = JSON.parse(localStorage.getItem("stores")) || [];
@@ -27,21 +37,52 @@ const SearchResult = () => {
 
     if (storedStores.length > 0) {
       dispatch(setFilteredStoresByName(storedStores));
+      setStores(storedStores.filter((store) => store.habilitado === "habilitado"));
     }
     if (storedPosts.length > 0) {
       dispatch(setFilteredPostsByName(storedPosts));
+      setFilteredPosts(storedPosts);
     }
 
     setTimeout(() => {
-      setLoading(false); 
-    }, 750); 
+      setLoading(false);
+    }, 750);
   }, [dispatch]);
 
   useEffect(() => {
+    // Filtro de tiendas
     const filtered =
       stores && stores.filter((store) => store.habilitado === "habilitado");
     setStores(filtered);
+
+    // Actualizar localStorage
+    localStorage.setItem("stores", JSON.stringify(filtered));
   }, [dispatch, stores]);
+
+  useEffect(() => {
+    // Paginación de tiendas
+    const startStoreIndex = (storePage - 1) * storesPerPage;
+    const endStoreIndex = startStoreIndex + storesPerPage;
+    setFilteredStores(filterStores.slice(startStoreIndex, endStoreIndex));
+  }, [filterStores, storePage]);
+
+  useEffect(() => {
+    // Filtro de productos
+    const startPostIndex = (postPage - 1) * postsPerPage;
+    const endPostIndex = startPostIndex + postsPerPage;
+    setFilteredPosts(posts.slice(startPostIndex, endPostIndex));
+
+    // Actualizar localStorage
+    localStorage.setItem("posts", JSON.stringify(posts));
+  }, [posts, postPage]);
+
+  const handleStorePageClick = (data) => {
+    setStorePage(data.selected + 1);
+  };
+
+  const handlePostPageClick = (data) => {
+    setPostPage(data.selected + 1);
+  };
 
   if (loading) {
     return (
@@ -84,12 +125,46 @@ const SearchResult = () => {
           )}
         </div>
         <div className={style.stores}>
-          {filterStores &&
-            filterStores.map((store, index) => (
+          {filteredStoresPaginado &&
+            filteredStoresPaginado.map((store, index) => (
               <CardsStore key={index} {...store} />
             ))}
+          {filterStores.length > storesPerPage && (
+            <ReactPaginate
+              pageCount={Math.ceil(filterStores.length / storesPerPage)}
+              pageRangeDisplayed={2}
+              marginPagesDisplayed={1}
+              onPageChange={handleStorePageClick}
+              containerClassName={style.pagination}
+              activeClassName={style.active}
+            />
+          )}
         </div>
-        
+
+        <div className={style.title}>
+          <h2>Productos</h2>
+          {posts.length === 0 && (
+            <div className={style.noProd}>
+              <p>No hay productos que coincidan con la búsqueda</p>
+            </div>
+          )}
+        </div>
+        <div className={style.productos}>
+          {filteredPostsPaginado &&
+            filteredPostsPaginado.map((store, index) => (
+              <CardSquare key={index} {...store} />
+            ))}
+          {posts.length > postsPerPage && (
+            <ReactPaginate
+              pageCount={Math.ceil(posts.length / postsPerPage)}
+              pageRangeDisplayed={2}
+              marginPagesDisplayed={1}
+              onPageChange={handlePostPageClick}
+              containerClassName={style.pagination}
+              activeClassName={style.active}
+            />
+          )}
+        </div>
       </div>
     </>
   );

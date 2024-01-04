@@ -40,9 +40,6 @@ const getReviewById = async (reviewId, othId) => {
         reviewedUserId: othId,
       },
     });
-    if (!review) {
-      throw new Error("Este usuario todavia no tiene calificacion");
-    }
     return review;
   } catch (error) {
     throw error;

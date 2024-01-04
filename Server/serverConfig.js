@@ -100,7 +100,7 @@ io.on("connection", (socket) => {
     }
 
     const userSocket = comprador.socketId;
-    io.to(userSocket).emit("productoEnviado", storeId);
+    io.to(userSocket).emit("productoEnviado");
     console.log(`socket productoEnviado emitido al front a ${comprador.username}`);
   });
 

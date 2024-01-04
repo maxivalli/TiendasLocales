@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addFavorite,
+  getAllStores,
   getStorePosts,
   isStoreOpenSwitch,
   removeFavorite,
@@ -21,43 +22,38 @@ import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 const Store = ({ userData }) => {
   const dispatch = useDispatch();
   const { linkName } = useParams();
-  const stores = useSelector((state) => state.allStores);
+  const stores = useSelector((state) => state.allStoresCopy);
   const storePosts = useSelector((state) => state.storePosts);
   const favorites = useSelector((state) => state.favorites);
   const storeName = linkName.replace(/-/g, " ");
-  const selectedStore = stores.find((store) => store.nombre === storeName);
+  const selectedStore = stores && stores.find((store) => store.nombre === storeName);
   const storeId = selectedStore?.id;
   const userId = selectedStore?.userId;
 
   const [loading, setLoading] = useState(true);
-  const [alreadyReview, setAlredyReview] = useState(false);
+  const [alreadyReview, setAlreadyReview] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
-      try {
-        const response = await axios.get(
-          `/reviews/${userData.id}/${selectedStore.userId}`
-        );
-        if (response) {
-          setAlredyReview(true);
+        if (userId) {
+          const response = await axios.get(`/reviews/${userData.id}/${userId}`);
+          if (response.data) {
+            setAlreadyReview(true);
+          }
         }
-      } catch (error) {
-        throw error;
-      }
+      } 
+    if (userId) {
+      fetchData();
     }
-    fetchData();
-  }, [alreadyReview]);
+  }, [userId]);
 
   useEffect(() => {
     dispatch(setSelectedStore(selectedStore));
-    dispatch(getStorePosts(storeId))
+    storeId && dispatch(getStorePosts(storeId))
+    dispatch(getAllStores())
       .then(() => {
         setLoading(false);
       })
-      .catch((error) => {
-        console.error("Error fetching store posts:", error);
-        setLoading(false);
-      });
   }, [dispatch, storeId, alreadyReview]);
 
   const handleRating = async (value) => {
@@ -90,13 +86,11 @@ const Store = ({ userData }) => {
   };
 
   useEffect(() => {
-    dispatch(
+    storeId && dispatch(
       isStoreOpenSwitch(
-        isStoreOpen(selectedStore?.dias, selectedStore?.horarios),
-        storeId
-      )
+        isStoreOpen(selectedStore?.dias,selectedStore?.horarios), storeId)
     );
-  }, [dispatch]);
+  }, [stores]);
 
   const isStoreFavorite =
     favorites &&

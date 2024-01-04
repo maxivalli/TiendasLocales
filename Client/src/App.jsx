@@ -50,8 +50,8 @@ let SWregistration;
 
 function App() {
   const dispatch = useDispatch();
-  //axios.defaults.baseURL = "http://localhost:3001/";
-  axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/";
+  axios.defaults.baseURL = "http://localhost:3001/";
+  //axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/";
   const {
     user,
     isAuthenticated: isAuthenticatedAuth0,
@@ -101,7 +101,7 @@ function App() {
               position: "top-end",
               showConfirmButton: false,
               timer: 1000,
-              timerProgressBar: true,
+              timerProgressBar: true, 
               didOpen: (toast) => {
                 toast.addEventListener("mouseleave", Swal.resumeTimer);
               },
@@ -136,6 +136,7 @@ function App() {
     dispatch(saveUserData(user));
     dispatch(getUserStore(user?.id));
     dispatch(getUserNotif(user?.id));
+    dispatch(getAllStores())
   };
 
   useEffect(() => {
@@ -190,6 +191,7 @@ function App() {
                 dispatch(getAllPosts());
                 dispatch(getAllUsers());
                 dispatch(getUserNotif(userDataResponse?.data.id));
+                dispatch(getAllStores())
               })
               .catch((userDataError) => {
                 console.error(
@@ -210,9 +212,6 @@ function App() {
     }
   }, [isAuthenticated]);
 
-  useEffect(() => {
-    dispatch(getAllStores());
-  }, [dispatch]);
 
   const userId = userData?.id;
 
@@ -220,8 +219,8 @@ function App() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      socket = io("https://tiendaslocales-production.up.railway.app/");
-      //socket = io("http://localhost:3001/");
+      //socket = io("https://tiendaslocales-production.up.railway.app/");
+      socket = io("http://localhost:3001/");
       setShouldConnectSocket(true);
     }
   }, [isAuthenticated]);
