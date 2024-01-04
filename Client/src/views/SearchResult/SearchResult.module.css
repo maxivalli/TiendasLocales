@@ -28,6 +28,8 @@
   grid-template-columns: 1fr 1fr 1fr;
   gap: 20px;
   justify-self: center;
+  margin-top: 10px;
+  margin-bottom: 100px;
 }
 
 .stores {
@@ -35,7 +37,6 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
   justify-self: center;
-  margin-bottom: 100px;
   margin-top: 10px;
 }
 
@@ -67,6 +68,11 @@
 .noTiend p {
   text-align: center;
   align-self: center;
+}
+
+.spinner {
+  width: 70px;
+  text-align: center;
 }
 
 .spinner > div {

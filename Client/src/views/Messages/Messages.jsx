@@ -59,7 +59,7 @@ const Messages = ({ SWregistration }) => {
             "/firebase-messaging-sw.js"
           );
           SWregistration = registration;
-          console.log("Service Worker registrado correctamente.");
+        
         } catch (error) {
           console.error("Error al registrar el Service Worker:", error);
           return;
@@ -71,16 +71,16 @@ const Messages = ({ SWregistration }) => {
           "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
         serviceWorkerRegistration: SWregistration,
       }).catch((error) => {
-        console.log("Error al generar el token", error);
+        
       });
 
       if (token) {
-        console.log("Tu token: ", token);
+       
         userData.FCMtoken = token;
         const id = userData.id;
         dispatch(updateUser(id, userData));
       } else {
-        console.log("No se pudo obtener el token");
+        console.log();
       }
     };
 

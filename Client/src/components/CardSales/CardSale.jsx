@@ -48,8 +48,6 @@ const navigate = useNavigate()
       if (!response.ok) {
         throw new Error("Failed to create chat");
       }
-
-      console.log("Chat created successfully");
       navigate("/mensajes/usuario");
     } catch (error) {
       console.error("Error creating chat:", error.message);

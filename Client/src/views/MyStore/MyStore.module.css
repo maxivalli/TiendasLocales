@@ -48,6 +48,10 @@
   text-align: center;
 }
 
+.modal p {
+  color: red;
+}
+
 .avatar img {
   width: 150px;
   height: 150px;
@@ -163,7 +167,6 @@
 }
 
 .spinner {
-  margin-top: 300px;
   width: 70px;
   text-align: center;
 }

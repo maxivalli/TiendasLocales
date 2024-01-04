@@ -50,8 +50,8 @@ let SWregistration;
 
 function App() {
   const dispatch = useDispatch();
-  axios.defaults.baseURL = "http://localhost:3001/";
-  //axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/";
+  //axios.defaults.baseURL = "http://localhost:3001/";
+  axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/";
   const {
     user,
     isAuthenticated: isAuthenticatedAuth0,
@@ -88,7 +88,7 @@ function App() {
               text: `¡Bienvenido ${userByGoogle.username}!`,
             });
           } else {
-            console.log("Hubo un error al crear el usuario.");
+            console.log();
           }
         } else {
           const response = await axios.post("/users/login", userByGoogle);
@@ -112,11 +112,11 @@ function App() {
               title: "Login exitoso",
             });
           } else {
-            console.log("Hubo un error al crear el usuario.");
+            console.log();
           }
         }
       } catch (error) {
-        console.log(error);
+        console.log();
       }
     }
   };
@@ -219,8 +219,8 @@ function App() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      //socket = io("https://tiendaslocales-production.up.railway.app/");
-      socket = io("http://localhost:3001/");
+      socket = io("https://tiendaslocales-production.up.railway.app/");
+      //socket = io("http://localhost:3001/");
       setShouldConnectSocket(true);
     }
   }, [isAuthenticated]);
@@ -237,7 +237,6 @@ function App() {
         navigator.serviceWorker
           .register("/firebase-messaging-sw.js")
           .then((registration) => {
-            console.log("Service Worker registrado con éxito: ", registration);
             SWregistration = registration;
           })
           .catch((err) => {

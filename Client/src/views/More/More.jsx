@@ -6,6 +6,7 @@ import style from "./More.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import crear from '../../assets/crear.png'
+import mysales from '../../assets/mysales.png'
 import mitienda from '../../assets/mitienda.png'
 import contacto from '../../assets/contacto.png'
 import faq from '../../assets/faq.png'
@@ -15,6 +16,7 @@ import controlP from '../../assets/controlP.png'
 const More = () => {
   const userData = useSelector((state) => state.userData);
   const [storeData, setStoreData] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,6 +26,7 @@ const More = () => {
         });
         if (response) {
           setStoreData(response.data);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -32,6 +35,16 @@ const More = () => {
 
     fetchData();
   }, [userData.id]);
+
+  if (loading) {
+    return (
+      <div className={style.spinner}>
+        <div className={style.bounce1}></div>
+        <div className={style.bounce2}></div>
+        <div className={style.bounce3}></div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -54,8 +67,9 @@ const More = () => {
         )}
         {userData.vendedor === "vendedor" &&
         storeData?.habilitado === "habilitado" ? (
+          <>
           <CardWide
-            textButton={"Mi Tienda"}
+            textButton={"Mi tienda"}
             logo={
               <img
                 width="60"
@@ -64,8 +78,21 @@ const More = () => {
                 alt="online-order"
               />
             }
-            link={`/mitienda/${storeData.id}`}
+            link={`/mitienda/${storeData && storeData.id}`}
           />
+          <CardWide
+            textButton={"Mis ventas"}
+            logo={
+              <img
+                width="60"
+                height="60"
+                src={mysales}
+                alt="online-order"
+              />
+            }
+            link={`/misventas`}
+          />
+          </>
         ) : (
           storeData &&
           userData.vendedor === "noVendedor" &&

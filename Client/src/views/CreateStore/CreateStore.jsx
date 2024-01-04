@@ -224,7 +224,7 @@ const CreateStore = () => {
           text: "¡Debes esperar que tu tienda sea aprobada, nosotros te avisaremos por mail!",
         });
       } else {
-        console.log("Hubo un error al crear la tienda.");
+        console.log();
       }
     } catch (error) {
       console.error("Error al enviar los datos al servidor:", error);

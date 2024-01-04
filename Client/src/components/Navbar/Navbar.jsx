@@ -154,6 +154,13 @@ const Navbar = ({ isAuthenticated, setAuth }) => {
               </button>
             )}
           </Link>
+          <Link to={`/mitienda/${userStore && userStore.id}`}>
+          {userStore && userStore.habilitado === "habilitado" && (
+            <button>
+              <img src={userStore && userStore.image} className={style.profilePicture} />
+            </button>
+          )}
+          </Link>
           <Link to="/mas">
             <button>
               <img

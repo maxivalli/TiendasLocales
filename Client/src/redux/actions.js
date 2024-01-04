@@ -64,6 +64,7 @@ import {
 export function getAllUsers() {
   return async function (dispatch) {
     const response = await axios("/users/allUsers");
+   
     return dispatch({
       type: GET_ALL_USERS,
       payload: response.data,
@@ -109,7 +110,7 @@ export const sortUsersByID = (order) => {
 };
 
 export function createGoogleUser(user) {
-  console.log("actions entrega", user);
+
   return async (dispatch) => {
     const result = await axios.post("/users/registerGoogle", user);
     dispatch({
@@ -132,7 +133,7 @@ export function createUser(user) {
 export function updateUser(id, userData) {
   return async (dispatch) => {
     const result = await axios.put(`/users/${id}`, userData);
-    console.log(result.data);
+  
     dispatch({
       type: UPDATE_USER,
       payload: result.data,

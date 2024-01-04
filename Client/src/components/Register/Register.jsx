@@ -148,11 +148,11 @@ const Register = ({setAuth}) => {
         text: '¡Te has registrado exitosamente!',
       });
     } else {
-      console.log('Hubo un error al crear el usuario.');
+      console.log();
     }
   } catch (error) {
     console.error('Error al enviar los datos al servidor:', error);
-    console.log('Hubo un error al crear el usuario.');
+    console.log();
 
     if (error.response && error.response.data === 'El email ya se encuentra registrado') {
       Swal.fire({

@@ -19,7 +19,7 @@ import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 
 const Detail = () => {
   const { id } = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const selectedPost = useSelector((state) => state.selectedPost);
   const stores = useSelector((state) => state.allStoresCopy);
@@ -112,7 +112,7 @@ const Detail = () => {
 
       if (response) {
         window.open(response.data.response.body.init_point);
-        console.log(response);
+        
       } else {
         console.error("Init point not found in the response");
       }
@@ -156,6 +156,16 @@ const Detail = () => {
     }
   }, [dispatch, postId]);
 
+  if (isLoading) {
+    return (
+      <div className={style.spinner}>
+        <div className={style.bounce1}></div>
+        <div className={style.bounce2}></div>
+        <div className={style.bounce3}></div>
+      </div>
+    );
+  }
+
   const handleChatButtonClick = async () => {
     const projectID = "236f9c42-06cc-414f-98cd-b7465ea5c29e";
     const userName = userData.username;
@@ -187,7 +197,6 @@ const Detail = () => {
         throw new Error("Failed to create chat");
       }
 
-      console.log("Chat created successfully");
       navigate("/mensajes/usuario");
     } catch (error) {
       console.error("Error creating chat:", error.message);
@@ -264,18 +273,19 @@ const Detail = () => {
             </h4>
           </div>
         </div>
-        <div className={style.favorite} onClick={toggleFavorite}>
-          <img
-            src={isFavorite ? likeR : likeG}
-            alt="like"
-            className={style.fav}
-          />
-        </div>
+
         <div className={style.images}>
           <ProductImages images={selectedPost.image} />
         </div>
 
         <div className={style.info}>
+          <div className={style.favorite} onClick={toggleFavorite}>
+            <img
+              src={isFavorite ? likeR : likeG}
+              alt="like"
+              className={style.fav}
+            />
+          </div>
           <h2>{selectedPost.title}</h2>
           <div className={style.precio}>
             <span>Precio:</span>
@@ -329,7 +339,12 @@ const Detail = () => {
           ) : (
             <div>
               <div className={style.comprar}>
-                <button disabled={isBuyButtonDisabled} onClick={handleChatButtonClick}>Consultar</button>
+                <button
+                  disabled={isBuyButtonDisabled}
+                  onClick={handleChatButtonClick}
+                >
+                  Consultar
+                </button>
               </div>
             </div>
           )}

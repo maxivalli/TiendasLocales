@@ -64,19 +64,16 @@ const Login = ({ setAuth, userData }) => {
           title: "Login exitoso",
         });
       } else {
-        console.log("Hubo un error al iniciar sesión.");
         setErrors("Usuario o contraseña incorrectos");
       }
     } catch (error) {
       if (error.response) {
-        console.log(error.response.data);
         setErrors(`Error: ${error.response.data.message}`);
       } else if (error.request) {
-        console.log(error.request);
         setErrors("Error: No response received from server");
       }
       console.error("Error al enviar los datos al servidor:", error);
-      // console.log("Hubo un error al iniciar sesión.");
+      
       setErrors("Usuario o contraseña incorrectos");
     }
   };

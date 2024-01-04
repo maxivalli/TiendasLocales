@@ -4,13 +4,15 @@
   left: 0;
 }
 
-
 .favorite {
   position: absolute;
-  right: 15px;
+  right: 35px;
   top: 80px;
 }
 
+.favorite .fav {
+  width: 30px;
+}
 
 .store {
   display: grid;
@@ -149,7 +151,6 @@
 }
 
 .spinner {
-  margin-top: 300px;
   width: 70px;
   text-align: center;
 }

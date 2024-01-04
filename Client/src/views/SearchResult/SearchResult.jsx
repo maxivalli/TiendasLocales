@@ -4,9 +4,9 @@ import Banner from "../../components/Banners/Banners";
 import CardsStore from "../../components/CardsStore/CardsStore";
 import Filters from "../../components/Filters/Filters";
 import Head from "../../components/Head/Head";
-import b1 from "../../assets/Banner1.jpg";
-import b2 from "../../assets/Banner2.jpg";
-import b3 from "../../assets/Banner3.jpg";
+import b4 from "../../assets/Banner4.jpg";
+import b5 from "../../assets/Banner5.jpg";
+import b6 from "../../assets/Banner6.jpg";
 import style from "./SearchResult.module.css";
 import CardSquare from "../../components/CardSquare/CardSquare";
 import {
@@ -18,9 +18,8 @@ const SearchResult = () => {
   const dispatch = useDispatch();
   const stores = useSelector((state) => state.filteredStoresByName);
   const posts = useSelector((state) => state.filteredPostsByName);
-  const [isLoading, setIsLoading] = useState(true);
-
   const [filterStores, setStores] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const storedStores = JSON.parse(localStorage.getItem("stores")) || [];
@@ -33,19 +32,10 @@ const SearchResult = () => {
       dispatch(setFilteredPostsByName(storedPosts));
     }
 
-    if (stores) {
-      localStorage.setItem("stores", JSON.stringify(stores));
-    }
-    if (posts) {
-      localStorage.setItem("posts", JSON.stringify(posts));
-    }
-
-    setIsLoading(false);
-    return () => {
-      localStorage.removeItem("stores");
-      localStorage.removeItem("posts");
-    };
-  }, [dispatch, stores, posts]);
+    setTimeout(() => {
+      setLoading(false); 
+    }, 750); 
+  }, [dispatch]);
 
   useEffect(() => {
     const filtered =
@@ -53,15 +43,7 @@ const SearchResult = () => {
     setStores(filtered);
   }, [dispatch, stores]);
 
-/*   const sortedStores =
-    filterStores &&
-    filterStores
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-      .slice(0, 10); */
-
-     
-
-  if (isLoading) {
+  if (loading) {
     return (
       <div className={style.spinner}>
         <div className={style.bounce1}></div>
@@ -77,7 +59,22 @@ const SearchResult = () => {
       <Head />
       <div className={style.home}>
         <div>
-          <Banner b1={b1} b2={b2} b3={b3} />
+          <Banner b1={b4} b2={b5} b3={b6} />
+        </div>
+
+        <div className={style.title}>
+          <h2>Tiendas</h2>
+          {filterStores.length === 0 && (
+            <div className={style.noTiend}>
+              <p>No hay tiendas que coincidan con la búsqueda</p>
+            </div>
+          )}
+        </div>
+        <div className={style.stores}>
+          {filterStores &&
+            filterStores.map((store, index) => (
+              <CardsStore key={index} {...store} />
+            ))}
         </div>
 
         <div className={style.title}>
@@ -88,27 +85,9 @@ const SearchResult = () => {
             </div>
           )}
         </div>
-
         <div className={style.productos}>
           {posts &&
             posts.map((store, index) => <CardSquare key={index} {...store} />)}
-        </div>
-
-        <div className={style.title}>
-          <h2>Tiendas</h2>
-
-          {filterStores.length === 0 && (
-            <div className={style.noTiend}>
-            <p>No hay tiendas que coincidan con la búsqueda</p>
-            </div>
-          )}
-        </div>
-
-        <div className={style.stores}>
-          {filterStores &&
-            filterStores.map((store, index) => (
-              <CardsStore key={index} {...store} />
-            ))}
         </div>
       </div>
     </>
