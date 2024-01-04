@@ -101,7 +101,7 @@ function App() {
               position: "top-end",
               showConfirmButton: false,
               timer: 1000,
-              timerProgressBar: true,
+              timerProgressBar: true, 
               didOpen: (toast) => {
                 toast.addEventListener("mouseleave", Swal.resumeTimer);
               },
@@ -136,6 +136,7 @@ function App() {
     dispatch(saveUserData(user));
     dispatch(getUserStore(user?.id));
     dispatch(getUserNotif(user?.id));
+    dispatch(getAllStores())
   };
 
   useEffect(() => {
@@ -190,6 +191,7 @@ function App() {
                 dispatch(getAllPosts());
                 dispatch(getAllUsers());
                 dispatch(getUserNotif(userDataResponse?.data.id));
+                dispatch(getAllStores())
               })
               .catch((userDataError) => {
                 console.error(
@@ -210,9 +212,6 @@ function App() {
     }
   }, [isAuthenticated]);
 
-  useEffect(() => {
-    dispatch(getAllStores());
-  }, [dispatch]);
 
   const userId = userData?.id;
 
