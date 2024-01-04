@@ -18,7 +18,7 @@ import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 
 const Detail = ({ userData }) => {
   const { id } = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const selectedPost = useSelector((state) => state.selectedPost);
   const stores = useSelector((state) => state.allStores);
@@ -164,7 +164,6 @@ const Detail = ({ userData }) => {
     );
   }
 
-
   const handleChatButtonClick = async () => {
     const projectID = "236f9c42-06cc-414f-98cd-b7465ea5c29e";
     const userName = userData.username;
@@ -203,7 +202,6 @@ const Detail = ({ userData }) => {
       throw error;
     }
   };
-
 
   return (
     <>
@@ -261,18 +259,19 @@ const Detail = ({ userData }) => {
             </h4>
           </div>
         </div>
-        <div className={style.favorite} onClick={toggleFavorite}>
-          <img
-            src={isFavorite ? likeR : likeG}
-            alt="like"
-            className={style.fav}
-          />
-        </div>
+
         <div className={style.images}>
           <ProductImages images={selectedPost.image} />
         </div>
 
         <div className={style.info}>
+          <div className={style.favorite} onClick={toggleFavorite}>
+            <img
+              src={isFavorite ? likeR : likeG}
+              alt="like"
+              className={style.fav}
+            />
+          </div>
           <h2>{selectedPost.title}</h2>
           <div className={style.precio}>
             <span>Precio:</span>
@@ -326,7 +325,12 @@ const Detail = ({ userData }) => {
           ) : (
             <div>
               <div className={style.comprar}>
-                <button disabled={isBuyButtonDisabled} onClick={handleChatButtonClick}>Consultar</button>
+                <button
+                  disabled={isBuyButtonDisabled}
+                  onClick={handleChatButtonClick}
+                >
+                  Consultar
+                </button>
               </div>
             </div>
           )}
