@@ -31,23 +31,21 @@ const Store = ({ userData }) => {
   const userId = selectedStore?.userId;
 
   const [loading, setLoading] = useState(true);
-  const [alreadyReview, setAlredyReview] = useState(false);
+  const [alreadyReview, setAlreadyReview] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
-      try {
-        const response = userId && await axios.get(
-          `/reviews/${userData.id}/${userId}`
-        );
-        if (response) {
-          setAlredyReview(true);
+        if (userId) {
+          const response = await axios.get(`/reviews/${userData.id}/${userId}`);
+          if (response.data) {
+            setAlreadyReview(true);
+          }
         }
-      } catch (error) {
-        throw error;
-      }
+      } 
+    if (userId) {
+      fetchData();
     }
-    fetchData();
-  }, [alreadyReview]);
+  }, [userId]);
 
   useEffect(() => {
     dispatch(setSelectedStore(selectedStore));
