@@ -630,12 +630,12 @@ function rootReducer(state = initialState, action) {
       } else {
         filterStoresByName = state.filteredStoresByNameCopy;
       }
-      console.log(state.openStores);
+      
       if (state.openStores) {
         filteredStores = filteredStores.filter(
           (store) => store.isOpen === true
         );
-        console.log(filteredStores);
+       
         if (filterStoresByName) {
           filterStoresByName = filterStoresByName.filter(
             (store) => store.isOpen === true
@@ -676,7 +676,7 @@ function rootReducer(state = initialState, action) {
         filteredStores2 = filteredStores2.filter(
           (store) => store.isOpen === true
         );
-        console.log(filteredStores2);
+        
       }
 
       const filteredPosts2 = state.allPostsCopy.filter((post) =>
@@ -715,7 +715,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case IS_STORE_OPEN:
-      console.log(action.payload);
+      
       if (action.payload === true) {
         const {
           selectedCategory,

@@ -88,7 +88,7 @@ function App() {
               text: `¡Bienvenido ${userByGoogle.username}!`,
             });
           } else {
-            console.log("Hubo un error al crear el usuario.");
+            console.log();
           }
         } else {
           const response = await axios.post("/users/login", userByGoogle);
@@ -112,11 +112,11 @@ function App() {
               title: "Login exitoso",
             });
           } else {
-            console.log("Hubo un error al crear el usuario.");
+            console.log();
           }
         }
       } catch (error) {
-        console.log(error);
+        console.log();
       }
     }
   };
@@ -238,7 +238,6 @@ function App() {
         navigator.serviceWorker
           .register("/firebase-messaging-sw.js")
           .then((registration) => {
-            console.log("Service Worker registrado con éxito: ", registration);
             SWregistration = registration;
           })
           .catch((err) => {

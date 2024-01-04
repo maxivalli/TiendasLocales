@@ -110,7 +110,7 @@ const Detail = ({ userData }) => {
 
       if (response) {
         window.open(response.data.response.body.init_point);
-        console.log(response);
+        
       } else {
         console.error("Init point not found in the response");
       }
@@ -195,7 +195,6 @@ const Detail = ({ userData }) => {
         throw new Error("Failed to create chat");
       }
 
-      console.log("Chat created successfully");
       navigate("/mensajes/usuario");
     } catch (error) {
       console.error("Error creating chat:", error.message);
