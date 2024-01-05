@@ -1,7 +1,7 @@
 const { Tienda, User, Compra, Post } = require("../DB_config");
 const axios = require("axios");
 const { Op, Sequelize } = require("sequelize");
-const { habStoreMail, enviadoMail } = require("../utils/mailObjects");
+const { habStoreMail, enviadoMail, waitingStoreMail } = require("../utils/mailObjects");
 const { transporter } = require("../config/mailer");
 
 async function getImageBlobFromURL(imageUrl) {
@@ -56,6 +56,13 @@ exports.createStore = async (storeData) => {
         email: newStore.email,
         first_name: newStore.nombre,
       };
+
+      const admins = await User.findAll({
+        where: {
+          rol: 'admin'
+        }
+      });
+      await transporter.sendMail(waitingStoreMail(admins));
 
       const imageBlob = await getImageBlobFromURL(storeData.image);
 
