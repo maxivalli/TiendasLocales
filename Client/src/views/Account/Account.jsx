@@ -41,7 +41,7 @@ const Account = ({ setAuth, setUserData }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
+        const response = userId && await axios.get(
           `/tiendas/comprasRealizadas/${userId}`
         );
         if (response) {
