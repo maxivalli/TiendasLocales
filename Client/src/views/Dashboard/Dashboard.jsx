@@ -17,7 +17,6 @@ const Dashboard = () => {
 
   const allUsers = useSelector((state) => state.allUsers);
   const storesByName = useSelector((state) => state.filteredStoresByName);
-  console.log(storesByName);
   const disabledStores = useSelector((state) => state.disabledStores);
   const allStores = useSelector((state) => state.allStoresCopy);
   const posts = useSelector((state) => state.filteredPostsByName);
@@ -27,7 +26,6 @@ const Dashboard = () => {
 
   const [filteredStores, setStores] = useState([]);
   const [habilitedStores, setHabilitedStores] = useState([]);
-  console.log(habilitedStores);
   const [postsWithStores, setPostsWithStores] = useState([]);
   const [waitingStores, setWaitingStores] = useState([]);
   const [actualizar, setActualizar] = useState();
@@ -167,7 +165,7 @@ const Dashboard = () => {
         return { ...post, store: associatedStore };
       });
     setPostsWithStores(postsDataWithStores);
-  }, [allStores, posts]);
+  }, [allStores, posts, actualizar]);
 
   const [mensaje, setMensaje] = useState({
     titulo: "",

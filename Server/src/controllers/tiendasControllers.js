@@ -412,7 +412,7 @@ exports.desStore = async (storeId) => {
 exports.habilitarStore = async (storeId) => {
   console.log(storeId);
   try {
-    const store = await Tienda.findByPk(storeId.storeId, {paranoid:false})
+    const store = await Tienda.findByPk(storeId.storeId, { paranoid: false });
 
     if (!store) {
       throw new Error("Store not found");
@@ -426,6 +426,7 @@ exports.habilitarStore = async (storeId) => {
       where: {
         storeId: storeId.storeId,
       },
+      paranoid: false, // Asegúrate de desactivar el modo paranoid para los posts
     });
 
     if (posts) {
