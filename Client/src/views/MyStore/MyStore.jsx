@@ -31,9 +31,11 @@ const MyStore = () => {
   const allPostsCopy = useSelector((state) => state.allPostsCopy);
 
   const [loading, setLoading] = useState(true);
-  
+
   const selectedStore = stores && stores.find((store) => store.id == storeId);
   const userStore = stores.find((store) => store.userId === userData.id);
+
+  console.log(userStore)
 
   useEffect(() => {
     dispatch(setSelectedStore(selectedStore));
@@ -61,9 +63,12 @@ const MyStore = () => {
       window.location.reload();
     });
   };
+
   useEffect(() => {
     if (storeId != userStore?.id) {
       navigate("/");
+      console.log(storeId);
+      console.log(userStore?.id);
     }
   }, [dispatch, storeId]);
 
