@@ -31,7 +31,7 @@ const Dashboard = () => {
     const fechaActual = new Date();
     const fechaHaceUnMes = new Date();
     fechaHaceUnMes.setMonth(fechaActual.getMonth() - 1);
-    
+
     // Filtrar usuarios registrados en el último mes
     const usuariosNuevos = allUsers.filter(
       (usuario) => new Date(usuario.createdAt) >= fechaHaceUnMes
@@ -45,10 +45,10 @@ const Dashboard = () => {
   //CANTIDAD DE PUBLICACIONES REGISTRADAS EN TOTAL
   const cantidadPublicaciones = allPosts.length;
 
-    //CANTIDAD DE PUBLICACIONES REGISTRADAS EN TOTAL
-    const cantidadCompras = allCompras.length;
+  //CANTIDAD DE PUBLICACIONES REGISTRADAS EN TOTAL
+  const cantidadCompras = allCompras.length;
 
-      //CANTIDAD DE USUARIOS QUE SE REGISTRARON EN EL ULTIMO MES
+  //CANTIDAD DE USUARIOS QUE SE REGISTRARON EN EL ULTIMO MES
   const comprasUltimoMes = () => {
     const fechaActual = new Date();
     const fechaHaceUnMes = new Date();
@@ -63,7 +63,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getAllStores());
-    dispatch(getAllCompras())
+    dispatch(getAllCompras());
   }, [dispatch]);
 
   useEffect(() => {
