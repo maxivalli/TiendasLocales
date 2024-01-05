@@ -137,8 +137,10 @@ const Dashboard = () => {
                       {post.delivery && <p>Cuenta con envío ✅</p>}
                       {!post.delivery && <p>No cuenta con envío ❌</p>}
                       {post.store && (
+                        <>
                         <p>Tienda: {post.store.nombre}</p>
-                        // Puedes incluir más información de la tienda si es necesario
+                        <p>Email de tienda: {post.store.email}</p>
+                        </>
                       )}
                     </div>
                   </div>
