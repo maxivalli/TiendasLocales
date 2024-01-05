@@ -15,11 +15,13 @@ const Dashboard = () => {
     (state) => state.filteredStoresByName
   );
   const allStores = useSelector((state) => state.filteredStoresByName);
-  const posts = useSelector((state) => state.filteredPostsByName);;
+  const posts = useSelector((state) => state.filteredPostsByName);
   const storesRef = useRef(allStores);
   const userData = useSelector((state) => state.userData);
 
   const [filteredStores, setStores] = useState([]);
+  const [postsWithStores, setPostsWithStores] = useState([]);
+  console.log(postsWithStores);
 
   useEffect(() => {
     dispatch(getAllStores());
@@ -61,6 +63,16 @@ const Dashboard = () => {
     }
   };
 
+  useEffect(() => {
+    const postsDataWithStores = posts.map((post) => {
+      const associatedStore = allStores.find(
+        (store) => store.id === post.storeId
+      );
+      return { ...post, store: associatedStore };
+    });
+    setPostsWithStores(postsDataWithStores);
+  }, [allStores, posts]);
+
   return (
     <>
       <Head />
@@ -101,14 +113,14 @@ const Dashboard = () => {
           ))}
         </div>
 
-        {posts.length !== 0 && (
+        {postsWithStores.length !== 0 && (
           <>
             <div className={style.head}>
               <p>Revision de publicaciones</p>
             </div>
 
             <div className={style.stores}>
-              {posts.map((post, index) => (
+              {postsWithStores.map((post, index) => (
                 <div key={index} className={style.storeCard}>
                   <div className={style.title}>
                     <h2>{post.title}</h2>
@@ -122,18 +134,16 @@ const Dashboard = () => {
                     <div className={style.text}>
                       <p>{post.description}</p>
                       <p>Precio: ${post.price}</p>
-                      {post.delivery === true && (
-                      <p>Cuenta con envio</p>
-                      )}
-                       {post.delivery === false && (
-                      <p>No cuenta con envio</p>
+                      {post.delivery && <p>Cuenta con envío</p>}
+                      {!post.delivery && <p>No cuenta con envío</p>}
+                      {post.store && (
+                        <p>Tienda: {post.store.nombre}</p>
+                        // Puedes incluir más información de la tienda si es necesario
                       )}
                     </div>
                   </div>
                   <div className={style.button}>
-                    <button>
-                      Deshabilitar
-                    </button>
+                    <button>Deshabilitar</button>
                   </div>
                 </div>
               ))}
