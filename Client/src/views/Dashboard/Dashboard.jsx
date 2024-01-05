@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { socket } from "../../App";
 import Head from "../../components/Head/Head";
 import SearchBar from "../../components/SearchBar/SearchBar";
+import { TextInput } from "react-chat-engine";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,6 @@ const Dashboard = () => {
   const allUsers = useSelector((state) => state.allUsers);
   const storesByName = useSelector((state) => state.filteredStoresByName);
   const allStores = useSelector((state) => state.allStoresCopy);
-  console.log(allStores);
   const posts = useSelector((state) => state.filteredPostsByName);
   const allPosts = useSelector((state) => state.allPosts);
   const userData = useSelector((state) => state.userData);
@@ -23,7 +23,6 @@ const Dashboard = () => {
   const [filteredStores, setStores] = useState([]);
   const [postsWithStores, setPostsWithStores] = useState([]);
   const [waitingStores, setWaitingStores] = useState([]);
-
 
   //CANTIDAD DE USUARIOS REGISTRADOS EN TOTAL
   const cantidadUsuarios = allUsers.length;
@@ -60,7 +59,9 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllStores()).then(() => {setWaitingStores(false)});
+    dispatch(getAllStores()).then(() => {
+      setWaitingStores(false);
+    });
     dispatch(getAllCompras());
   }, [dispatch]);
 
@@ -71,11 +72,10 @@ const Dashboard = () => {
         (store) => store.habilitado === "noHabilitado"
       );
     } else {
-      waitingStores = allStores && allStores.filter(
-        (store) => store.habilitado === "noHabilitado"
-      );
+      waitingStores =
+        allStores &&
+        allStores.filter((store) => store.habilitado === "noHabilitado");
     }
-    console.log(waitingStores);
     setStores(waitingStores);
   }, [waitingStores]);
 
@@ -102,7 +102,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    const postsDataWithStores = posts.map((post) => {
+    const postsDataWithStores = posts && posts.map((post) => {
       const associatedStore = allStores.find(
         (store) => store.id === post.storeId
       );
@@ -110,6 +110,71 @@ const Dashboard = () => {
     });
     setPostsWithStores(postsDataWithStores);
   }, [allStores, posts]);
+
+
+  const [mensaje, setMensaje] = useState({
+    titulo: "",
+    texto: "",
+  });
+
+  const [error, setError] = useState({
+    titulo: "",
+    texto: "",
+  });
+
+  
+  const validateTitulo = (titulo) => {
+    if (titulo === '' && titulo === null) {
+        return "Debes completar el campo";
+      }
+    if (titulo.length > 30) {
+      return  `Titulo demasiado largo (${titulo.length} de 30)`;
+    }
+    return null;
+  }
+
+  const validatetexto = (texto) => {
+    if (texto === '' && texto === null) {
+      return "Debes completar el campo";
+    } else if (texto.length > 80) {
+      return `Mensaje demasiado largo (${texto.length} de 80)`;
+    }
+    else if (texto.length <= 5) {
+      return "Mensaje demasiado corto";
+    }
+    return null;
+}
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setMensaje({
+      ...mensaje,
+      [name]: value,
+    });
+    if (name === "titulo") {
+      setError({ ...error, titulo: validateTitulo(value) });
+    } else if (name === "texto") {
+      setError({
+        ...error,
+        texto: validatetexto(value, mensaje.texto),
+      });
+    }
+  };
+
+  function isSubmitDisabled() {
+    return Object.values(error).some((error) => error !== null);
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (error.titulo || error.texto) {
+      return;
+    }
+
+    const data = {titulo: mensaje.titulo, texto: mensaje.texto}
+    socket?.emit("mensajeGeneral", data);
+  };
 
   return (
     <>
@@ -190,6 +255,62 @@ const Dashboard = () => {
             </div>
           </>
         )}
+
+        <div className={style.container}>
+          <div className={style.title}>
+            <h2>Enviar notificacion general</h2>
+          </div>
+
+          <div className={style.form}>
+            <form onSubmit={handleSubmit}>
+              <div className={style.sI}>
+                <div className={style.titulo}>
+                  <p>titulo:</p>
+                  <input
+                    type="text"
+                    id="titulo"
+                    name="titulo"
+                    value={mensaje.titulo}
+                    onChange={handleChange}
+                    placeholder="Inserte un breve titulo"
+                    required
+                  />
+                  {error.titulo && (
+                    <span className={style.error}>{error.titulo}</span>
+                  )}
+                </div>
+
+                <div className={style.mensaje}>
+                  <p>Mensaje:</p>
+                  <textarea 
+                    id="texto"
+                    name="texto"
+                    value={mensaje.texto}
+                    onChange={handleChange}
+                    placeholder="Inserte un breve mensaje"
+                    required
+                  />
+                  {error.texto && (
+                    <span className={style.error}>{error.texto}</span>
+                  )}
+                </div>
+              </div>
+              <div>
+                <button
+                  className={
+                    isSubmitDisabled()
+                      ? `${style.register} ${style.buttonDisabled}`
+                      : style.register
+                  }
+                  disabled={isSubmitDisabled()}
+                  type="submit"
+                >
+                  Enviar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </>
   );

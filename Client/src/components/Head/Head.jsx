@@ -157,6 +157,15 @@ const Head = () => {
   }, [stores]);
 
   useEffect(() => {
+    const handleMensajeGeneral = () => {
+      dispatch(getUserNotif(userId));
+      setHasUnreadNotification(true);
+    };
+
+    socket?.on("mensajeGeneral", handleMensajeGeneral);
+  }, [stores]);
+
+  useEffect(() => {
     const handleIncomingProduct = () => {
       dispatch(getUserNotif(userId));
       setHasUnreadNotification(true);
