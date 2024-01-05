@@ -46,7 +46,6 @@ const More = () => {
       </div>
     );
   }
-
   return (
     <>
       <Head />

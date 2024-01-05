@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ChatEngine } from "react-chat-engine";
 import "./Messages.css";
+import style from "../More/More.module.css";
 import { useNavigate } from "react-router";
 import { getToken } from "firebase/messaging";
 import { getAuth, signInAnonymously } from "firebase/auth";
@@ -17,6 +18,7 @@ const Messages = ({ SWregistration }) => {
     const storedData = localStorage.getItem("userStore");
     return storedData ? JSON.parse(storedData) : null;
   });
+  const [loading, setLoading] = useState(true);
 
   const userData = useSelector((state) => state?.userData);
   const userName = userData?.username;
@@ -30,6 +32,7 @@ const Messages = ({ SWregistration }) => {
     if (userStore) {
       localStorage.setItem("userStore", JSON.stringify(userStore));
     }
+    setLoading(false);
   }, [userStore]);
 
   const url = new URL(window.location.href);
@@ -121,6 +124,16 @@ const Messages = ({ SWregistration }) => {
 
   const [chats, setChats] = useState();
 
+  
+  if (loading) {
+    return (
+      <div className={style.spinner}>
+        <div className={style.bounce1}></div>
+        <div className={style.bounce2}></div>
+        <div className={style.bounce3}></div>
+      </div>
+    );
+  }
   return (
     <>
       <div className="chat">
