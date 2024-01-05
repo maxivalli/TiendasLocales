@@ -35,7 +35,6 @@ const MyStore = () => {
   const selectedStore = stores && stores.find((store) => store.id == storeId);
   const userStore = stores.find((store) => store.userId === userData.id);
 
-  console.log(userStore)
 
   useEffect(() => {
     dispatch(setSelectedStore(selectedStore));
@@ -65,10 +64,10 @@ const MyStore = () => {
   };
 
   useEffect(() => {
-    if (storeId != userStore?.id) {
+    if (userStore && storeId != userStore?.id) {
       navigate("/");
     }
-  }, [dispatch]);
+  }, [selectedStore]);
 
   useEffect(() => {
     dispatch(
