@@ -55,6 +55,7 @@ import {
   GET_POST_BY_NAME,
   ENVIAR_PRODUCTO,
   COMPRAS_RECIBIDAS,
+  GET_COMPRAS,
   // CODES
 } from "./actionTypes";
 
@@ -184,6 +185,16 @@ export function getAllStores() {
     } catch (error) {
       throw error;
     }
+  };
+}
+
+export function getAllCompras() {
+  return async function (dispatch) {
+      const response = await axios("/tiendas/allCompras");
+      return dispatch({
+        type: GET_COMPRAS,
+        payload: response.data,
+      });
   };
 }
 

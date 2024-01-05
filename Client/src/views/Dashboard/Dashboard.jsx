@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Dashboard.module.css";
-import { getAllStores } from "../../redux/actions";
+import { getAllCompras, getAllStores } from "../../redux/actions";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { socket } from "../../App";
@@ -11,26 +11,65 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 const Dashboard = () => {
   const dispatch = useDispatch();
 
-  const filteredStoresByName = useSelector(
-    (state) => state.filteredStoresByName
-  );
+  const allUsers = useSelector((state) => state.allUsers);
+  const storesByName = useSelector((state) => state.filteredStoresByName);
   const allStores = useSelector((state) => state.filteredStoresByName);
   const posts = useSelector((state) => state.filteredPostsByName);
+  const allPosts = useSelector((state) => state.allPosts);
   const storesRef = useRef(allStores);
   const userData = useSelector((state) => state.userData);
+  const allCompras = useSelector((state) => state.allCompras);
 
   const [filteredStores, setStores] = useState([]);
   const [postsWithStores, setPostsWithStores] = useState([]);
-  console.log(postsWithStores);
+
+  //CANTIDAD DE USUARIOS REGISTRADOS EN TOTAL
+  const cantidadUsuarios = allUsers.length;
+
+  //CANTIDAD DE USUARIOS QUE SE REGISTRARON EN EL ULTIMO MES
+  const registrosUltimoMes = () => {
+    const fechaActual = new Date();
+    const fechaHaceUnMes = new Date();
+    fechaHaceUnMes.setMonth(fechaActual.getMonth() - 1);
+    
+    // Filtrar usuarios registrados en el último mes
+    const usuariosNuevos = allUsers.filter(
+      (usuario) => new Date(usuario.createdAt) >= fechaHaceUnMes
+    );
+    return usuariosNuevos.length;
+  };
+
+  //CANTIDAD DE TIENDAS REGISTRADAS EN TOTAL
+  const cantidadTiendas = allStores.length;
+
+  //CANTIDAD DE PUBLICACIONES REGISTRADAS EN TOTAL
+  const cantidadPublicaciones = allPosts.length;
+
+    //CANTIDAD DE PUBLICACIONES REGISTRADAS EN TOTAL
+    const cantidadCompras = allCompras.length;
+
+      //CANTIDAD DE USUARIOS QUE SE REGISTRARON EN EL ULTIMO MES
+  const comprasUltimoMes = () => {
+    const fechaActual = new Date();
+    const fechaHaceUnMes = new Date();
+
+    fechaHaceUnMes.setMonth(fechaActual.getMonth() - 1);
+
+    const ComprasUltimoMes = allCompras.filter(
+      (compra) => new Date(compra.createdAt) >= fechaHaceUnMes
+    );
+    return ComprasUltimoMes.length;
+  };
 
   useEffect(() => {
     dispatch(getAllStores());
+    dispatch(getAllCompras())
   }, [dispatch]);
 
   useEffect(() => {
     let waitingStores;
-    if (filteredStoresByName) {
-      waitingStores = filteredStoresByName.filter(
+    if (storesByName) {
+      waitingStores = storesByName.filter(
         (store) => store.habilitado === "noHabilitado"
       );
     } else {
@@ -138,8 +177,8 @@ const Dashboard = () => {
                       {!post.delivery && <p>No cuenta con envío ❌</p>}
                       {post.store && (
                         <>
-                        <p>Tienda: {post.store.nombre}</p>
-                        <p>Email de tienda: {post.store.email}</p>
+                          <p>Tienda: {post.store.nombre}</p>
+                          <p>Email de tienda: {post.store.email}</p>
                         </>
                       )}
                     </div>
