@@ -1,68 +1,79 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
-      margin: 0;
-      padding: 0;
-    }
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+      }
 
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff3b9;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff3b9;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
 
-    .header {
-      background-color: #ffe66d;
-      color: #333;
-      text-align: center;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-    }
+      .header {
+        background-color: #ffe66d;
+        color: #333;
+        text-align: center;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      }
 
-    .content {
-      padding: 20px;
-      text-align: center;
-      background-color: #f1f1f1;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-    }
+      .content {
+        padding: 20px;
+        text-align: center;
+        background-color: #f1f1f1;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
 
-    .button {
-      display: inline-block;
-      background-color: #ffe66d;
-      color: #333;
-      padding: 10px 20px;
-      text-decoration: none;
-      border-radius: 5px;
-    }
+      .button {
+        display: inline-block;
+        background-color: #ffe66d;
+        color: #333;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+      }
 
-    .footer {
-      text-align: center;
-      padding: 10px 0;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <img src="https://firebasestorage.googleapis.com/v0/b/tiendaslocales-df366.appspot.com/o/logo.png?alt=media&token=2dcdac4d-91fe-438a-aafe-5bfc33270db8">
+      .footer {
+        text-align: center;
+        padding: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <img
+          src="https://firebasestorage.googleapis.com/v0/b/tiendaslocales-df366.appspot.com/o/logo.png?alt=media&token=2dcdac4d-91fe-438a-aafe-5bfc33270db8"
+        />
+      </div>
+      <div class="content">
+        <h4>🛒 Hay una tienda en espera de aprobación: 🛒</h4>
+        <img
+          src="{{image}}"
+          alt="Imagen de tu publicación"
+          style="width: 180px; height: auto"
+        />
+        <p>
+          {{nombre}} ha solicitado aprobacón para poder vender productos de
+          {{categoria}} en el sitio:
+        </p>
+        <p><b>WhatsApp:</b> {{whatsapp}}</p>
+        <p>Revisa el panel de admin en TiendasLocales para más detalles.</p>
+        <a class="button" href="https://tiendaslocales.com.ar/#/dashboard"
+          >Ir al Sitio</a
+        >
+      </div>
+      <div class="footer">&copy; 2024 Tiendas Locales</div>
     </div>
-    <div class="content"> 
-      <b>🎉 Una tienda esta esperando a ser aprobada 🎉</b>
-      <p> Revisa el panel de admin en TiendasLocales para más detalles.
-      </p>
-      <a class="button" href="https://tiendaslocales.com.ar/#/dashboard">Ir al Sitio</a>
-    </div>
-    <div class="footer">
-      &copy; 2024 Tiendas Locales
-    </div>
-  </div>
-</body>
+  </body>
 </html>

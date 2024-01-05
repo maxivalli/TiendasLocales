@@ -49,13 +49,21 @@ const compraMail = (user) => {
   };
 };
 
-const waitingStoreMail = (admins) => {
+const waitingStoreMail = (admins, newStore) => {
+  const {nombre, image, categoria, whatsapp} = newStore
   const adminEmails = admins.map(admin => admin.email);
+
+  const notificationEmail = waitingStoreTemplate
+    .replace('{{nombre}}', nombre)
+    .replace('{{categoria}}', categoria)
+    .replace('{{whatsapp}}', whatsapp)
+    .replace('{{image}}', image)
+
   return {
     to: adminEmails,
     from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
     subject: "Tienda en espera de aprobación",
-    html: waitingStoreTemplate,
+    html: notificationEmail,
   };
 };
 
