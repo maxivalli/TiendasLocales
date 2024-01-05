@@ -123,16 +123,18 @@ const Dashboard = () => {
       const response = await axios.post("/tiendas/desStore", { storeId });
       if (response) {
         setHabilitedStores((prevStores) =>
-        prevStores.filter((store) => store.id !== storeId)
-      );
-        
+          prevStores.filter((store) => store.id !== storeId)
+        );
+
         Swal.fire({
           icon: "success",
           title: `Tienda Deshabilitada!`,
           text: "¡La tienda fue deshabilitada con exito!",
-        }).then(() => {setTimeout(() => {
-          dispatch(getDisabledStores())})
-        }, 1200); 
+        }).then(() => {
+          setTimeout(() => {
+            dispatch(getDisabledStores());
+          });
+        }, 1200);
       }
     } catch (error) {
       console.error(error);
@@ -143,12 +145,14 @@ const Dashboard = () => {
     try {
       const response = await axios.post("/tiendas/habilitarStore", { storeId });
       if (response) {
-        setActualizar(false)
+        setActualizar(false);
         Swal.fire({
           icon: "success",
           title: `¡Tienda habilitada!`,
           text: "La tienda fue habilitada con exito",
-        }).then(() => { setActualizar(true)})
+        }).then(() => {
+          setActualizar(true);
+        });
       }
     } catch (error) {
       console.error(error);
@@ -292,7 +296,7 @@ const Dashboard = () => {
               </form>
             </div>
           </div>
-          <h2>Tiendas en espera de aprobacion</h2>
+          <h2>Tiendas para habilitar</h2>
         </div>
 
         <div className={style.stores}>
@@ -334,25 +338,20 @@ const Dashboard = () => {
             <div className={style.stores}>
               {habilitedStores.map((store, index) => (
                 <div key={index} className={style.storeCard}>
-                  <div className={style.title}>
+                  <div className={style.avatar}>
+                    <img src={store.image} alt={store.nombre} />
+                  </div>
+
+                  <div className={style.text}>
                     <h2>{store.nombre}</h2>
+                    <p>✉️ {store.email}</p>
+                    <p>
+                      📍 {store.direccion.calle} {store.direccion.numero} (piso:{" "}
+                      {store.direccion.piso} local: {store.direccion.depto})
+                    </p>
+                    <p>{store.categoria}</p>
                   </div>
 
-                  <div className={style.info}>
-                    <div className={style.avatar}>
-                      <img src={store.image} alt={store.nombre} />
-                    </div>
-
-                    <div className={style.text}>
-                      <p>✉️ {store.email}</p>
-                      <p>
-                        📍 {store.direccion.calle} {store.direccion.numero}{" "}
-                        (piso: {store.direccion.piso} local:{" "}
-                        {store.direccion.depto})
-                      </p>
-                      <p>{store.categoria}</p>
-                    </div>
-                  </div>
                   <div className={style.button}>
                     <button onClick={() => handleDeshabilitarStore(store.id)}>
                       Deshabilitar
@@ -367,34 +366,29 @@ const Dashboard = () => {
         {disabledStores.length !== 0 && (
           <>
             <div className={style.head}>
-              <p>Tiendas deshabilitadas:</p>
+              <h2>Tiendas deshabilitadas</h2>
             </div>
 
             <div className={style.stores}>
               {disabledStores.map((store, index) => (
                 <div key={index} className={style.storeCard}>
-                  <div className={style.title}>
+                  <div className={style.avatar}>
+                    <img src={store.image} alt={store.nombre} />
+                  </div>
+
+                  <div className={style.text}>
                     <h2>{store.nombre}</h2>
+                    <p>📬 {store.email}</p>
+                    <p>
+                      📍 {store.direccion.calle} {store.direccion.numero} (piso:{" "}
+                      {store.direccion.piso} local: {store.direccion.depto})
+                    </p>
+                    <p>{store.categoria}</p>
                   </div>
 
-                  <div className={style.info}>
-                    <div className={style.avatar}>
-                      <img src={store.image} alt={store.nombre} />
-                    </div>
-
-                    <div className={style.text}>
-                      <p>📬 {store.email}</p>
-                      <p>
-                        📍 {store.direccion.calle} {store.direccion.numero}{" "}
-                        (piso: {store.direccion.piso} local:{" "}
-                        {store.direccion.depto})
-                      </p>
-                      <p>{store.categoria}</p>
-                    </div>
-                  </div>
                   <div className={style.button}>
                     <button onClick={() => handleHabilitarStore(store.id)}>
-                      Habilitar de nuevo
+                      Habilitar
                     </button>
                   </div>
                 </div>
@@ -412,26 +406,23 @@ const Dashboard = () => {
             <div className={style.stores}>
               {postsWithStores.map((post, index) => (
                 <div key={index} className={style.storeCard}>
-                  <div className={style.title}>
-                    <h2>{post.title}</h2>
+                  <div className={style.avatar}>
+                    <img src={post.image} alt={post.title} />
                   </div>
 
                   <div className={style.info}>
-                    <div className={style.avatar}>
-                      <img src={post.image} alt={post.title} />
-                    </div>
-
                     <div className={style.text}>
-                      <p>📝{post.description}</p>
-                      <p>💰${post.price}</p>
-                      {post.delivery && <p>✅ Cuenta con envío</p>}
-                      {!post.delivery && <p>❌ No cuenta con envío</p>}
+                      <h2>{post.title}</h2>
                       {post.store && (
                         <>
                           <p>🏪 "{post.store.nombre}"</p>
                           <p>✉️ {post.store.email}</p>
                         </>
                       )}
+                      <p>📝{post.description}</p>
+                      {post.delivery && <p>✅ Cuenta con envío</p>}
+                      {!post.delivery && <p>❌ No cuenta con envío</p>}
+                      <h3>${post.price}</h3>
                     </div>
                   </div>
                   <div className={style.button}>
