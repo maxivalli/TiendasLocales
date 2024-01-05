@@ -1,10 +1,7 @@
 import { React, useState } from "react";
 import style from "./SearchBar.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getPostByName,
-  getStoreByName,
-} from "../../redux/actions";
+import { useDispatch } from "react-redux";
+import { getPostByName, getStoreByName } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
@@ -19,7 +16,9 @@ const SearchBar = () => {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    navigate("/resultados");
+    if (!location.hash.includes("/dashboard")) {
+      navigate("/resultados");
+    }
     try {
       await dispatch(getStoreByName(searchString));
       await dispatch(getPostByName(searchString));

@@ -34,10 +34,7 @@ export const validateStoreForm = (formData) => {
   }
 
   const MAX_PISO_LENGTH = 3;
-  const VALID_PISO_REGEX = /^[0-9-]+$/;
-  if (formData.pisoDeptoChecked && !formData.piso.trim()) {
-    errors.piso = "El número de piso es requerido";
-  }
+  const VALID_PISO_REGEX = /^[0-9-]*$/;
   if (formData.pisoDeptoChecked && formData.piso.length > MAX_PISO_LENGTH) {
     errors.piso = `El número de piso debe tener como máximo ${MAX_PISO_LENGTH} caracteres`;
   }
@@ -46,10 +43,7 @@ export const validateStoreForm = (formData) => {
   }
 
   const MAX_DEPTO_LENGTH = 4;
-  const VALID_DEPTO_REGEX = /^[a-zA-Z0-9]+$/;
-  if (formData.pisoDeptoChecked && !formData.depto.trim()) {
-    errors.depto = "El número de departamento es requerido";
-  }
+  const VALID_DEPTO_REGEX = /^[a-zA-Z0-9]*$/;
   if (formData.pisoDeptoChecked && formData.depto.length > MAX_DEPTO_LENGTH) {
     errors.depto = `El número de departamento debe tener como máximo ${MAX_DEPTO_LENGTH} caracteres`;
   }
