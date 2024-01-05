@@ -327,7 +327,14 @@ function App() {
 
   useEffect(() => {
     onMessage(messaging, (message) => {
-      toast(message.data.text);
+      const { title, text } = message.data;
+        toast(
+        <div>
+          <strong>{title}</strong>
+          <br />
+          {text}
+        </div>
+      );
     });
   }, []); 
 

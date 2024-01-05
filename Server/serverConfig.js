@@ -40,6 +40,67 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("mensajeGeneral", async (data) => {
+    const { titulo, texto } = data;
+
+    const users = await User.findAll();
+
+    users.forEach(async (user) => {
+      if (user.FCMtoken) {
+        const message = {
+          data: {
+            title: titulo,
+            text: texto,
+          },
+          token: user.FCMtoken,
+        };
+    
+        admin
+          .messaging()
+          .send(message)
+          .then((response) => {
+            console.log(`Successfully sent message to ${user.username}:`, response);
+          })
+          .catch((error) => {
+            console.log(`Error sending message to ${user.username}:`, error);
+          });
+      }
+      try {
+        const existingNotification = await Notifications.findOne({
+          where: {
+            content: texto,
+            userId: user.id,
+          },
+        });
+  
+        if (!existingNotification) {
+          await Notifications.create({
+            content: `Mensaje de administrador: ${texto}`,
+            userId: user.id,
+            image: user.image,
+            type: "aviso"
+          });
+  
+          console.log("Notificación almacenada en la base de datos");
+        } else {
+          existingNotification.read = false;
+          await existingNotification.save();
+  
+          console.log(
+            "Notificación ya existe en la base de datos, propiedad 'read' actualizada a true"
+          );
+        }
+      } catch (error) {
+        console.error(
+          "Error al almacenar/comprobar notificación en la base de datos:",
+          error
+        );
+      }
+      const userSocket = user.socketId;
+      io.to(userSocket).emit("mensajeGeneral");
+    });
+  });
+
   socket.on("productoEnviado", async (data) => {
     const { itemId, comprador, userStore } = data;
 

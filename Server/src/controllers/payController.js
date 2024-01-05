@@ -140,31 +140,16 @@ exports.allCompras = async (id) => {
     }
 }
 
-exports.pedidosCompras = async (id) => {
-
-    try{
-
-        const misPedidos = await Compra.findAll({
-            where: {
-                storeId: id
-            },
-          });
-
-        return misPedidos
-    } catch (error){
-       throw new Error(error)
-    }
-}
 
 exports.comprasRecibidas = async (id) => {
   try{
-      const misPedidos = await Compra.findAll({
+      const comprasRecibidas = await Compra.findAll({
           where: {
               storeId: id
           },
         });
 
-      return misPedidos
+      return comprasRecibidas
   } catch (error){
      throw new Error(error)
   }
@@ -179,6 +164,15 @@ exports.comprasRealizadas = async (id) => {
         });
 
       return misPedidos
+  } catch (error){
+     throw new Error(error)
+  }
+}
+
+exports.allCompras = async () => {
+  try{
+      const allCompras = await Compra.findAll();
+      return allCompras
   } catch (error){
      throw new Error(error)
   }

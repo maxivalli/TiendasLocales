@@ -47,6 +47,7 @@ import {
   IS_STORE_OPEN,
   COMPRAS_RECIBIDAS,
   ENVIAR_PRODUCTO,
+  GET_COMPRAS,
 } from "./actionTypes";
 
 const initialState = {
@@ -65,6 +66,7 @@ const initialState = {
   userStore: {},
   selectedStore: {},
   comprasRecibidas: [],
+  allCompras: [],
   // POSTS
   storePosts: [],
   allPosts: [],
@@ -100,7 +102,6 @@ function rootReducer(state = initialState, action) {
         ...state,
         allUsers: action.payload,
       };
-
 
     case UPDATE_USER_DATA:
       return {
@@ -243,6 +244,12 @@ function rootReducer(state = initialState, action) {
         allStoresCopy: action.payload,
       };
 
+    case GET_COMPRAS:
+      return {
+        ...state,
+        allCompras: action.payload,
+      };
+
     case COMPRAS_RECIBIDAS:
       return {
         ...state,
@@ -261,21 +268,21 @@ function rootReducer(state = initialState, action) {
         selectedStore: action.payload,
       };
 
-      case ENVIAR_PRODUCTO:
-        const productoEnviado = state.comprasRecibidas.map((compra) => {
-          if (compra.id == action.payload) {
-            return {
-              ...compra,
-              enviado: true
-            };
-          }
-          return compra;
-        });
-      
-        return {
-          ...state,
-          comprasRecibidas: productoEnviado
-        };
+    case ENVIAR_PRODUCTO:
+      const productoEnviado = state.comprasRecibidas.map((compra) => {
+        if (compra.id == action.payload) {
+          return {
+            ...compra,
+            enviado: true,
+          };
+        }
+        return compra;
+      });
+
+      return {
+        ...state,
+        comprasRecibidas: productoEnviado,
+      };
     // ________________________________________________________FAVORITES___________________________________________________________
     case GET_FAVORITES:
       return {
@@ -620,12 +627,12 @@ function rootReducer(state = initialState, action) {
       } else {
         filterStoresByName = state.filteredStoresByNameCopy;
       }
-      
+
       if (state.openStores) {
         filteredStores = filteredStores.filter(
           (store) => store.isOpen === true
         );
-       
+
         if (filterStoresByName) {
           filterStoresByName = filterStoresByName.filter(
             (store) => store.isOpen === true
@@ -666,7 +673,6 @@ function rootReducer(state = initialState, action) {
         filteredStores2 = filteredStores2.filter(
           (store) => store.isOpen === true
         );
-        
       }
 
       const filteredPosts2 = state.allPostsCopy.filter((post) =>
@@ -705,7 +711,6 @@ function rootReducer(state = initialState, action) {
       };
 
     case IS_STORE_OPEN:
-      
       if (action.payload === true) {
         const {
           selectedCategory,

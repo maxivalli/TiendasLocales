@@ -153,17 +153,6 @@ router.get("/allCompras", async (req, res) => {
   }
 });
 
-router.get("/pedidosCompras/:id", async (req, res) => {
-  const id = req.params.id;
-
-  try {
-    const response = await payController.pedidosCompras(id);
-    return res.json(response);
-  } catch (error) {
-    return res.status(400).json(error.message);
-  }
-});
-
 router.get("/comprasRecibidas/:id", async (req, res) => {
   const id = req.params.id;
 
@@ -272,6 +261,26 @@ router.post("/eliminado", async (req, res) => {
 
   try {
     const response = await tiendasController.eliminado(postId);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json(error.message);
+  }
+});
+
+router.get("/allCompras", async (req, res) => {
+  try {
+    const response = await payController.allCompras();
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json(error.message);
+  }
+});
+
+router.post("/desStore", async (req, res) => {
+  const storeId = req.body;
+
+  try {
+    const response = await tiendasController.desStore(storeId);
     return res.status(200).json(response);
   } catch (error) {
     return res.status(400).json(error.message);
