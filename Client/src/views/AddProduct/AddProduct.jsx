@@ -16,8 +16,8 @@ const AddProduct = () => {
   const userData = useSelector((state) => state.userData);
   const stores = useSelector((state) => state.allStores);
 
-  const userStore = stores.find((store) => store.userId === userId);
   const userId = userData?.id;
+  const userStore = stores.find((store) => store.userId === userId);
   const storeId = userStore?.id;
 
   const [newProduct, setNewProduct] = useState({
