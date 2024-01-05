@@ -54,7 +54,7 @@ const Head = () => {
     setShowNotifications((prevState) => !prevState);
   };
 
-    const handleClick = (index) => {
+  const handleClick = (index) => {
     setHoveredNotificationIndex(index);
     if (notifications[index].read === false) {
       notifications[index].read = true;
@@ -62,7 +62,7 @@ const Head = () => {
         dispatch(markNotiAsRead(notifications[index]?.id));
       setHasUnreadNotification(false);
     }
-  }; 
+  };
 
   useEffect(() => {
     const handleNewMessage = (data) => {
@@ -205,6 +205,9 @@ const Head = () => {
       case "envio":
         navigate("/micuenta");
         break;
+      case "store":
+        navigate("/micuenta");
+        break;
       default:
         //? ? ? ? ? ? ? ? ? ?
         break;
@@ -241,7 +244,7 @@ const Head = () => {
           {notifications.map((notification, index) => (
             <div
               key={index}
-               onClick={() => handleClick(index)} 
+              onClick={() => handleClick(index)}
               className={style.noti}
             >
               <button
