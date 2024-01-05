@@ -17,6 +17,7 @@ const Dashboard = () => {
 
   const allUsers = useSelector((state) => state.allUsers);
   const storesByName = useSelector((state) => state.filteredStoresByName);
+  console.log(storesByName);
   const disabledStores = useSelector((state) => state.disabledStores);
   const allStores = useSelector((state) => state.allStoresCopy);
   const posts = useSelector((state) => state.filteredPostsByName);
@@ -26,6 +27,7 @@ const Dashboard = () => {
 
   const [filteredStores, setStores] = useState([]);
   const [habilitedStores, setHabilitedStores] = useState([]);
+  console.log(habilitedStores);
   const [postsWithStores, setPostsWithStores] = useState([]);
   const [waitingStores, setWaitingStores] = useState([]);
   const [actualizar, setActualizar] = useState();
@@ -38,7 +40,7 @@ const Dashboard = () => {
         storesByName.filter((store) => store.habilitado === "habilitado");
     }
     setHabilitedStores(habilitedStores);
-  }, [storesByName, actualizar]);
+  }, [dispatch, storesByName, actualizar]);
 
   //CANTIDAD DE USUARIOS REGISTRADOS EN TOTAL
   const cantidadUsuarios = allUsers.length;
@@ -325,7 +327,7 @@ const Dashboard = () => {
           ))}
         </div>
 
-        {habilitedStores && (
+        {habilitedStores && habilitedStores.length !== 0 && (
           <>
             <div className={style.head}>
               <h2>Revision de tiendas</h2>
