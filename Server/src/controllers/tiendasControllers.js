@@ -1,6 +1,6 @@
 const { Tienda, User, Compra, Post } = require("../DB_config");
 const axios = require("axios");
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 const { habStoreMail, enviadoMail } = require("../utils/mailObjects");
 const { transporter } = require("../config/mailer");
 
@@ -224,21 +224,21 @@ exports.enviado = async (itemId) => {
 
     const user = await User.findOne({
       where: {
-        id: compra.userId
-      }
-    })
+        id: compra.userId,
+      },
+    });
 
     const post = await Post.findOne({
       where: {
-        id: compra.postId
-      }
-    })
+        id: compra.postId,
+      },
+    });
 
     const infoMail = {
       email: user.email,
       productName: post.title,
       userEnvia: compra.storeId,
-    }
+    };
     await transporter.sendMail(enviadoMail(infoMail));
 
     return true;
@@ -360,8 +360,8 @@ exports.getOpenStores = async () => {
 exports.eliminado = async (id) => {
   try {
     let newId = {
-      id
-    }
+      id,
+    };
     const compra = await Compra.findByPk(newId.id.postId);
 
     if (!compra) {
@@ -386,7 +386,7 @@ exports.desStore = async (storeId) => {
     });
 
     if (!store) {
-      throw new Error('Store not found');
+      throw new Error("Store not found");
     }
 
     // Instead of store.Deshabilitado, use the destroy method to handle soft deletion
@@ -405,6 +405,54 @@ exports.desStore = async (storeId) => {
 
     return true;
   } catch (error) {
+    throw error;
+  }
+};
+
+exports.habilitarStore = async (storeId) => {
+  console.log(storeId);
+  try {
+    const store = await Tienda.findByPk(storeId.storeId, {paranoid:false})
+
+    if (!store) {
+      throw new Error("Store not found");
+    }
+
+    // Restaurar la tienda
+    await store.restore();
+
+    // Restaurar los posts asociados a la tienda
+    const posts = await Post.findAll({
+      where: {
+        storeId: storeId.storeId,
+      },
+    });
+
+    if (posts) {
+      for (const post of posts) {
+        await post.restore();
+      }
+    }
+
+    return true;
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.getDisabledStores = async () => {
+  try {
+    const tiendasDeshabilitadas = await Tienda.findAll({
+      where: {
+        Deshabilitado: { [Sequelize.Op.not]: null },
+      },
+      paranoid: false,
+    });
+
+    console.log(tiendasDeshabilitadas);
+    return tiendasDeshabilitadas;
+  } catch (error) {
+    console.error('Error en getDisabledStores:', error);
     throw error;
   }
 };
