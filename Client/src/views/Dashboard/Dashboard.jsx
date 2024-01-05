@@ -110,7 +110,7 @@ const Dashboard = () => {
         Swal.fire({
           icon: "success",
           title: `Tienda Aprobada!`,
-          text: "La tienda fue aprobada, se mandara un mail al usuario!",
+          text: "¡La tienda fue aprobada, se mandara un mail al usuario!",
         });
       }
     } catch (error) {
@@ -129,7 +129,7 @@ const Dashboard = () => {
         Swal.fire({
           icon: "success",
           title: `Tienda Deshabilitada!`,
-          text: "La tienda fue deshabilitada con exito!",
+          text: "¡La tienda fue deshabilitada con exito!",
         }).then(() => {setTimeout(() => {
           dispatch(getDisabledStores())})
         }, 1200); 
@@ -146,8 +146,8 @@ const Dashboard = () => {
         setActualizar(false)
         Swal.fire({
           icon: "success",
-          title: `Tienda habilitada!`,
-          text: "La tienda fue habilitada con exito!",
+          title: `¡Tienda habilitada!`,
+          text: "La tienda fue habilitada con exito",
         }).then(() => { setActualizar(true)})
       }
     } catch (error) {
