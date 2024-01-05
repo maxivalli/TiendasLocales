@@ -24,6 +24,10 @@ const Dashboard = () => {
   const [postsWithStores, setPostsWithStores] = useState([]);
   const [waitingStores, setWaitingStores] = useState([]);
 
+  const habilitedStores = storesByName && storesByName.filter(
+    (store) => store.habilitado === "habilitado"
+  );
+
   //CANTIDAD DE USUARIOS REGISTRADOS EN TOTAL
   const cantidadUsuarios = allUsers.length;
 
@@ -271,6 +275,43 @@ const Dashboard = () => {
           ))}
         </div>
 
+        {habilitedStores.length !== 0 && (
+          <>
+            <div className={style.head}>
+              <p>Revision de tiendas:</p>
+            </div>
+
+            <div className={style.stores}>
+              {habilitedStores.map((store, index) => (
+                <div key={index} className={style.storeCard}>
+                  <div className={style.title}>
+                    <h2>{store.nombre}</h2>
+                  </div>
+
+                  <div className={style.info}>
+                    <div className={style.avatar}>
+                      <img src={store.image} alt={store.nombre} />
+                    </div>
+
+                    <div className={style.text}>
+                      <p>📬 {store.email}</p>
+                      <p>
+                        📍 {store.direccion.calle} {store.direccion.numero}{" "}
+                        (piso: {store.direccion.piso} local:{" "}
+                        {store.direccion.depto})
+                      </p>
+                      <p>{store.categoria}</p>
+                    </div>
+                  </div>
+                  <div className={style.button}>
+                    <button>Deshabilitar</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
         {postsWithStores.length !== 0 && (
           <>
             <div className={style.head}>
@@ -296,7 +337,7 @@ const Dashboard = () => {
                       {!post.delivery && <p>No cuenta con envío ❌</p>}
                       {post.store && (
                         <>
-                          <p>Tienda: {post.store.nombre}</p>
+                          <p>Tienda: "{post.store.nombre}"</p>
                           <p>Email de tienda: {post.store.email}</p>
                         </>
                       )}
