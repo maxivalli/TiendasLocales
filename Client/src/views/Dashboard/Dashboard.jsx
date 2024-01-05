@@ -15,8 +15,7 @@ const Dashboard = () => {
     (state) => state.filteredStoresByName
   );
   const allStores = useSelector((state) => state.filteredStoresByName);
-  const posts = useSelector((state) => state.filteredPostsByName);
-  console.log(posts);
+  const posts = useSelector((state) => state.filteredPostsByName);;
   const storesRef = useRef(allStores);
   const userData = useSelector((state) => state.userData);
 
