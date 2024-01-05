@@ -56,6 +56,7 @@ import {
   ENVIAR_PRODUCTO,
   COMPRAS_RECIBIDAS,
   GET_COMPRAS,
+  GET_DISABLED_STORES,
   // CODES
 } from "./actionTypes";
 
@@ -180,6 +181,20 @@ export function getAllStores() {
       const response = await axios("/tiendas/getAllStores");
       return dispatch({
         type: GET_STORES,
+        payload: response.data,
+      });
+    } catch (error) {
+      throw error;
+    }
+  };
+}
+
+export function getDisabledStores() {
+  return async function (dispatch) {
+    try {
+      const response = await axios("/tiendas/getDisabledStores");
+      return dispatch({
+        type: GET_DISABLED_STORES,
         payload: response.data,
       });
     } catch (error) {

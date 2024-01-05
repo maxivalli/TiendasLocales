@@ -1,19 +1,23 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Dashboard.module.css";
-import { getAllCompras, getAllStores } from "../../redux/actions";
+import {
+  getAllCompras,
+  getAllStores,
+  getDisabledStores,
+} from "../../redux/actions";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { socket } from "../../App";
 import Head from "../../components/Head/Head";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import { TextInput } from "react-chat-engine";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
 
   const allUsers = useSelector((state) => state.allUsers);
   const storesByName = useSelector((state) => state.filteredStoresByName);
+  const disabledStores = useSelector((state) => state.disabledStores);
   const allStores = useSelector((state) => state.allStoresCopy);
   const posts = useSelector((state) => state.filteredPostsByName);
   const allPosts = useSelector((state) => state.allPosts);
@@ -21,12 +25,20 @@ const Dashboard = () => {
   const allCompras = useSelector((state) => state.allCompras);
 
   const [filteredStores, setStores] = useState([]);
+  const [habilitedStores, setHabilitedStores] = useState([]);
   const [postsWithStores, setPostsWithStores] = useState([]);
   const [waitingStores, setWaitingStores] = useState([]);
+  const [actualizar, setActualizar] = useState();
 
-  const habilitedStores = storesByName && storesByName.filter(
-    (store) => store.habilitado === "habilitado"
-  );
+  useEffect(() => {
+    let habilitedStores;
+    if (storesByName.length !== 0) {
+      habilitedStores =
+        storesByName &&
+        storesByName.filter((store) => store.habilitado === "habilitado");
+    }
+    setHabilitedStores(habilitedStores);
+  }, [storesByName, actualizar]);
 
   //CANTIDAD DE USUARIOS REGISTRADOS EN TOTAL
   const cantidadUsuarios = allUsers.length;
@@ -63,11 +75,12 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    dispatch(getDisabledStores());
     dispatch(getAllStores()).then(() => {
       setWaitingStores(false);
     });
     dispatch(getAllCompras());
-  }, [dispatch]);
+  }, [dispatch, actualizar]);
 
   useEffect(() => {
     let waitingStores;
@@ -99,6 +112,43 @@ const Dashboard = () => {
           title: `Tienda Aprobada!`,
           text: "La tienda fue aprobada, se mandara un mail al usuario!",
         });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeshabilitarStore = async (storeId) => {
+    try {
+      const response = await axios.post("/tiendas/desStore", { storeId });
+      if (response) {
+        setHabilitedStores((prevStores) =>
+        prevStores.filter((store) => store.id !== storeId)
+      );
+        
+        Swal.fire({
+          icon: "success",
+          title: `Tienda Deshabilitada!`,
+          text: "La tienda fue deshabilitada con exito!",
+        }).then(() => {setTimeout(() => {
+          dispatch(getDisabledStores())})
+        }, 1200); 
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleHabilitarStore = async (storeId) => {
+    try {
+      const response = await axios.post("/tiendas/habilitarStore", { storeId });
+      if (response) {
+        setActualizar(false)
+        Swal.fire({
+          icon: "success",
+          title: `Tienda habilitada!`,
+          text: "La tienda fue habilitada con exito!",
+        }).then(() => { setActualizar(true)})
       }
     } catch (error) {
       console.error(error);
@@ -275,7 +325,7 @@ const Dashboard = () => {
           ))}
         </div>
 
-        {habilitedStores.length !== 0 && (
+        {habilitedStores && (
           <>
             <div className={style.head}>
               <h2>Revision de tiendas</h2>
@@ -304,7 +354,48 @@ const Dashboard = () => {
                     </div>
                   </div>
                   <div className={style.button}>
-                    <button>Deshabilitar</button>
+                    <button onClick={() => handleDeshabilitarStore(store.id)}>
+                      Deshabilitar
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {disabledStores.length !== 0 && (
+          <>
+            <div className={style.head}>
+              <p>Tiendas deshabilitadas:</p>
+            </div>
+
+            <div className={style.stores}>
+              {disabledStores.map((store, index) => (
+                <div key={index} className={style.storeCard}>
+                  <div className={style.title}>
+                    <h2>{store.nombre}</h2>
+                  </div>
+
+                  <div className={style.info}>
+                    <div className={style.avatar}>
+                      <img src={store.image} alt={store.nombre} />
+                    </div>
+
+                    <div className={style.text}>
+                      <p>📬 {store.email}</p>
+                      <p>
+                        📍 {store.direccion.calle} {store.direccion.numero}{" "}
+                        (piso: {store.direccion.piso} local:{" "}
+                        {store.direccion.depto})
+                      </p>
+                      <p>{store.categoria}</p>
+                    </div>
+                  </div>
+                  <div className={style.button}>
+                    <button onClick={() => handleHabilitarStore(store.id)}>
+                      Habilitar de nuevo
+                    </button>
                   </div>
                 </div>
               ))}

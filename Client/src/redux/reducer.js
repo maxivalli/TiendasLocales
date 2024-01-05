@@ -48,6 +48,7 @@ import {
   COMPRAS_RECIBIDAS,
   ENVIAR_PRODUCTO,
   GET_COMPRAS,
+  GET_DISABLED_STORES,
 } from "./actionTypes";
 
 const initialState = {
@@ -62,6 +63,7 @@ const initialState = {
   // STORES
   allStores: [],
   allStoresCopy: [],
+  disabledStores: [],
   openStores: null,
   userStore: {},
   selectedStore: {},
@@ -242,6 +244,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         allStores: action.payload,
         allStoresCopy: action.payload,
+      };
+
+    case GET_DISABLED_STORES:
+      return {
+        ...state,
+        disabledStores: action.payload,
       };
 
     case GET_COMPRAS:

@@ -287,4 +287,23 @@ router.post("/desStore", async (req, res) => {
   }
 });
 
+router.post("/habilitarStore", async (req, res) => {
+  const storeId = req.body;
+  try {
+    const response = await tiendasController.habilitarStore(storeId);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json(error.message);
+  }
+});
+
+router.get("/getDisabledStores", async (req, res) => {
+  try {
+    const response = await tiendasController.getDisabledStores();
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json(error.message);
+  }
+});
+
 module.exports = router;
