@@ -376,3 +376,35 @@ exports.eliminado = async (id) => {
     throw error;
   }
 };
+
+exports.desStore = async (storeId) => {
+  try {
+    const store = await Tienda.findOne({
+      where: {
+        id: storeId.storeId,
+      },
+    });
+
+    if (!store) {
+      throw new Error('Store not found');
+    }
+
+    // Instead of store.Deshabilitado, use the destroy method to handle soft deletion
+    await store.destroy();
+
+    // Find and destroy all posts related to the store
+    const posts = await Post.findAll({
+      where: {
+        storeId: storeId.storeId,
+      },
+    });
+
+    if (posts) {
+      posts.forEach(async (post) => await post.destroy());
+    }
+
+    return true;
+  } catch (error) {
+    throw error;
+  }
+};

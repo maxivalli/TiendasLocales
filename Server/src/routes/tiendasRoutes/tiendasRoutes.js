@@ -276,4 +276,15 @@ router.get("/allCompras", async (req, res) => {
   }
 });
 
+router.post("/desStore", async (req, res) => {
+  const storeId = req.body;
+
+  try {
+    const response = await tiendasController.desStore(storeId);
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json(error.message);
+  }
+});
+
 module.exports = router;
