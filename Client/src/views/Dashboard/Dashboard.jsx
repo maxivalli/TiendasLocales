@@ -24,6 +24,10 @@ const Dashboard = () => {
   const [postsWithStores, setPostsWithStores] = useState([]);
   const [waitingStores, setWaitingStores] = useState([]);
 
+  const habilitedStores = storesByName && storesByName.filter(
+    (store) => store.habilitado === "habilitado"
+  );
+
   //CANTIDAD DE USUARIOS REGISTRADOS EN TOTAL
   const cantidadUsuarios = allUsers.length;
 
@@ -102,15 +106,16 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    const postsDataWithStores = posts && posts.map((post) => {
-      const associatedStore = allStores.find(
-        (store) => store.id === post.storeId
-      );
-      return { ...post, store: associatedStore };
-    });
+    const postsDataWithStores =
+      posts &&
+      posts.map((post) => {
+        const associatedStore = allStores.find(
+          (store) => store.id === post.storeId
+        );
+        return { ...post, store: associatedStore };
+      });
     setPostsWithStores(postsDataWithStores);
   }, [allStores, posts]);
-
 
   const [mensaje, setMensaje] = useState({
     titulo: "",
@@ -122,28 +127,26 @@ const Dashboard = () => {
     texto: "",
   });
 
-  
   const validateTitulo = (titulo) => {
-    if (titulo === '' && titulo === null) {
-        return "Debes completar el campo";
-      }
+    if (titulo === "" && titulo === null) {
+      return "Debes completar el campo";
+    }
     if (titulo.length > 30) {
-      return  `Titulo demasiado largo (${titulo.length} de 30)`;
+      return `Titulo demasiado largo (${titulo.length} de 30)`;
     }
     return null;
-  }
+  };
 
   const validatetexto = (texto) => {
-    if (texto === '' && texto === null) {
+    if (texto === "" && texto === null) {
       return "Debes completar el campo";
     } else if (texto.length > 80) {
       return `Mensaje demasiado largo (${texto.length} de 80)`;
-    }
-    else if (texto.length <= 5) {
+    } else if (texto.length <= 5) {
       return "Mensaje demasiado corto";
     }
     return null;
-}
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -172,7 +175,7 @@ const Dashboard = () => {
       return;
     }
 
-    const data = {titulo: mensaje.titulo, texto: mensaje.texto}
+    const data = { titulo: mensaje.titulo, texto: mensaje.texto };
     socket?.emit("mensajeGeneral", data);
   };
 
@@ -216,6 +219,43 @@ const Dashboard = () => {
           ))}
         </div>
 
+        {habilitedStores.length !== 0 && (
+          <>
+            <div className={style.head}>
+              <p>Revision de tiendas:</p>
+            </div>
+
+            <div className={style.stores}>
+              {habilitedStores.map((store, index) => (
+                <div key={index} className={style.storeCard}>
+                  <div className={style.title}>
+                    <h2>{store.nombre}</h2>
+                  </div>
+
+                  <div className={style.info}>
+                    <div className={style.avatar}>
+                      <img src={store.image} alt={store.nombre} />
+                    </div>
+
+                    <div className={style.text}>
+                      <p>📬 {store.email}</p>
+                      <p>
+                        📍 {store.direccion.calle} {store.direccion.numero}{" "}
+                        (piso: {store.direccion.piso} local:{" "}
+                        {store.direccion.depto})
+                      </p>
+                      <p>{store.categoria}</p>
+                    </div>
+                  </div>
+                  <div className={style.button}>
+                    <button>Deshabilitar</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
         {postsWithStores.length !== 0 && (
           <>
             <div className={style.head}>
@@ -241,7 +281,7 @@ const Dashboard = () => {
                       {!post.delivery && <p>No cuenta con envío ❌</p>}
                       {post.store && (
                         <>
-                          <p>Tienda: {post.store.nombre}</p>
+                          <p>Tienda: "{post.store.nombre}"</p>
                           <p>Email de tienda: {post.store.email}</p>
                         </>
                       )}
@@ -282,7 +322,7 @@ const Dashboard = () => {
 
                 <div className={style.mensaje}>
                   <p>Mensaje:</p>
-                  <textarea 
+                  <textarea
                     id="texto"
                     name="texto"
                     value={mensaje.texto}
