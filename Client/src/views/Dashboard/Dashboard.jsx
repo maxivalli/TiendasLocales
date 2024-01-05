@@ -278,7 +278,7 @@ const Dashboard = () => {
         {habilitedStores.length !== 0 && (
           <>
             <div className={style.head}>
-              <p>Revision de tiendas:</p>
+              <h2>Revision de tiendas</h2>
             </div>
 
             <div className={style.stores}>
@@ -294,7 +294,7 @@ const Dashboard = () => {
                     </div>
 
                     <div className={style.text}>
-                      <p>📬 {store.email}</p>
+                      <p>✉️ {store.email}</p>
                       <p>
                         📍 {store.direccion.calle} {store.direccion.numero}{" "}
                         (piso: {store.direccion.piso} local:{" "}
@@ -315,7 +315,7 @@ const Dashboard = () => {
         {postsWithStores.length !== 0 && (
           <>
             <div className={style.head}>
-              <p>Revision de publicaciones</p>
+              <h2>Revision de publicaciones</h2>
             </div>
 
             <div className={style.stores}>
@@ -331,14 +331,14 @@ const Dashboard = () => {
                     </div>
 
                     <div className={style.text}>
-                      <p>{post.description}</p>
-                      <p>Precio: ${post.price}</p>
-                      {post.delivery && <p>Cuenta con envío ✅</p>}
-                      {!post.delivery && <p>No cuenta con envío ❌</p>}
+                      <p>📝{post.description}</p>
+                      <p>💰${post.price}</p>
+                      {post.delivery && <p>✅ Cuenta con envío</p>}
+                      {!post.delivery && <p>❌ No cuenta con envío</p>}
                       {post.store && (
                         <>
-                          <p>Tienda: "{post.store.nombre}"</p>
-                          <p>Email de tienda: {post.store.email}</p>
+                          <p>🏪 "{post.store.nombre}"</p>
+                          <p>✉️ {post.store.email}</p>
                         </>
                       )}
                     </div>
