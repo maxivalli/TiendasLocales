@@ -102,15 +102,16 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    const postsDataWithStores = posts && posts.map((post) => {
-      const associatedStore = allStores.find(
-        (store) => store.id === post.storeId
-      );
-      return { ...post, store: associatedStore };
-    });
+    const postsDataWithStores =
+      posts &&
+      posts.map((post) => {
+        const associatedStore = allStores.find(
+          (store) => store.id === post.storeId
+        );
+        return { ...post, store: associatedStore };
+      });
     setPostsWithStores(postsDataWithStores);
   }, [allStores, posts]);
-
 
   const [mensaje, setMensaje] = useState({
     titulo: "",
@@ -122,28 +123,26 @@ const Dashboard = () => {
     texto: "",
   });
 
-  
   const validateTitulo = (titulo) => {
-    if (titulo === '' && titulo === null) {
-        return "Debes completar el campo";
-      }
+    if (titulo === "" && titulo === null) {
+      return "Debes completar el campo";
+    }
     if (titulo.length > 30) {
-      return  `Titulo demasiado largo (${titulo.length} de 30)`;
+      return `Titulo demasiado largo (${titulo.length} de 30)`;
     }
     return null;
-  }
+  };
 
   const validatetexto = (texto) => {
-    if (texto === '' && texto === null) {
+    if (texto === "" && texto === null) {
       return "Debes completar el campo";
     } else if (texto.length > 80) {
       return `Mensaje demasiado largo (${texto.length} de 80)`;
-    }
-    else if (texto.length <= 5) {
+    } else if (texto.length <= 5) {
       return "Mensaje demasiado corto";
     }
     return null;
-}
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -172,7 +171,7 @@ const Dashboard = () => {
       return;
     }
 
-    const data = {titulo: mensaje.titulo, texto: mensaje.texto}
+    const data = { titulo: mensaje.titulo, texto: mensaje.texto };
     socket?.emit("mensajeGeneral", data);
   };
 
@@ -183,7 +182,63 @@ const Dashboard = () => {
       <div className={style.dash}>
         <div className={style.head}>
           <h2>Panel de control</h2>
-          <p>Tiendas en espera de aprobacion</p>
+
+          <div className={style.container}>
+            <div className={style.title}>
+              <h2>Enviar notificacion general</h2>
+            </div>
+
+            <div className={style.form}>
+              <form onSubmit={handleSubmit}>
+                <div className={style.sI}>
+                  <div className={style.titulo}>
+                    <p>Título:</p>
+                    <input
+                      type="text"
+                      id="titulo"
+                      name="titulo"
+                      value={mensaje.titulo}
+                      onChange={handleChange}
+                      placeholder="Inserte un breve titulo"
+                      required
+                    />
+                    {error.titulo && (
+                      <span className={style.error}>{error.titulo}</span>
+                    )}
+                  </div>
+
+                  <div className={style.mensaje}>
+                    <p>Mensaje:</p>
+                    <textarea
+                      id="texto"
+                      name="texto"
+                      value={mensaje.texto}
+                      onChange={handleChange}
+                      placeholder="Inserte un breve mensaje"
+                      required
+                    />
+                    {error.texto && (
+                      <span className={style.error}>{error.texto}</span>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <button
+                    className={
+                      isSubmitDisabled()
+                        ? `${style.register} ${style.buttonDisabled}`
+                        : style.register
+                    }
+                    disabled={isSubmitDisabled()}
+                    type="submit"
+                  >
+                    Enviar
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <h2>Tiendas en espera de aprobacion</h2>
         </div>
 
         <div className={style.stores}>
@@ -255,62 +310,6 @@ const Dashboard = () => {
             </div>
           </>
         )}
-
-        <div className={style.container}>
-          <div className={style.title}>
-            <h2>Enviar notificacion general</h2>
-          </div>
-
-          <div className={style.form}>
-            <form onSubmit={handleSubmit}>
-              <div className={style.sI}>
-                <div className={style.titulo}>
-                  <p>titulo:</p>
-                  <input
-                    type="text"
-                    id="titulo"
-                    name="titulo"
-                    value={mensaje.titulo}
-                    onChange={handleChange}
-                    placeholder="Inserte un breve titulo"
-                    required
-                  />
-                  {error.titulo && (
-                    <span className={style.error}>{error.titulo}</span>
-                  )}
-                </div>
-
-                <div className={style.mensaje}>
-                  <p>Mensaje:</p>
-                  <textarea 
-                    id="texto"
-                    name="texto"
-                    value={mensaje.texto}
-                    onChange={handleChange}
-                    placeholder="Inserte un breve mensaje"
-                    required
-                  />
-                  {error.texto && (
-                    <span className={style.error}>{error.texto}</span>
-                  )}
-                </div>
-              </div>
-              <div>
-                <button
-                  className={
-                    isSubmitDisabled()
-                      ? `${style.register} ${style.buttonDisabled}`
-                      : style.register
-                  }
-                  disabled={isSubmitDisabled()}
-                  type="submit"
-                >
-                  Enviar
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
       </div>
     </>
   );
