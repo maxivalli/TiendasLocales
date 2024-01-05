@@ -13,15 +13,17 @@ const Dashboard = () => {
 
   const allUsers = useSelector((state) => state.allUsers);
   const storesByName = useSelector((state) => state.filteredStoresByName);
-  const allStores = useSelector((state) => state.filteredStoresByName);
+  const allStores = useSelector((state) => state.allStoresCopy);
+  console.log(allStores);
   const posts = useSelector((state) => state.filteredPostsByName);
   const allPosts = useSelector((state) => state.allPosts);
-  const storesRef = useRef(allStores);
   const userData = useSelector((state) => state.userData);
   const allCompras = useSelector((state) => state.allCompras);
 
   const [filteredStores, setStores] = useState([]);
   const [postsWithStores, setPostsWithStores] = useState([]);
+  const [waitingStores, setWaitingStores] = useState([]);
+
 
   //CANTIDAD DE USUARIOS REGISTRADOS EN TOTAL
   const cantidadUsuarios = allUsers.length;
@@ -58,23 +60,24 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    dispatch(getAllStores());
+    dispatch(getAllStores()).then(() => {setWaitingStores(false)});
     dispatch(getAllCompras());
   }, [dispatch]);
 
   useEffect(() => {
     let waitingStores;
-    if (storesByName) {
+    if (storesByName.length !== 0) {
       waitingStores = storesByName.filter(
         (store) => store.habilitado === "noHabilitado"
       );
     } else {
-      waitingStores = allStores.filter(
+      waitingStores = allStores && allStores.filter(
         (store) => store.habilitado === "noHabilitado"
       );
     }
+    console.log(waitingStores);
     setStores(waitingStores);
-  }, [dispatch, storesRef]);
+  }, [waitingStores]);
 
   const handleHabilitacion = async (id) => {
     try {
