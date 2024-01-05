@@ -31,8 +31,6 @@ const Dashboard = () => {
     const fechaActual = new Date();
     const fechaHaceUnMes = new Date();
     fechaHaceUnMes.setMonth(fechaActual.getMonth() - 1);
-
-    // Filtrar usuarios registrados en el último mes
     const usuariosNuevos = allUsers.filter(
       (usuario) => new Date(usuario.createdAt) >= fechaHaceUnMes
     );
@@ -52,9 +50,7 @@ const Dashboard = () => {
   const comprasUltimoMes = () => {
     const fechaActual = new Date();
     const fechaHaceUnMes = new Date();
-
     fechaHaceUnMes.setMonth(fechaActual.getMonth() - 1);
-
     const ComprasUltimoMes = allCompras.filter(
       (compra) => new Date(compra.createdAt) >= fechaHaceUnMes
     );
