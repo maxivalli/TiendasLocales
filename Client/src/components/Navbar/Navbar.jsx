@@ -15,6 +15,10 @@ const Navbar = ({ isAuthenticated }) => {
   const userStore = useSelector((state) => state.userStore);
   const [showAccounts, setShowAccounts] = useState();
 
+  const handleClickOutside = () => {
+    setShowAccounts(false);
+  };
+
   const selectAccount = () => {
     setShowAccounts(false);
   };
@@ -34,14 +38,6 @@ const Navbar = ({ isAuthenticated }) => {
     }
   };
 
-  const handleClick = () => {
-    if (location.hash.startsWith("#/messages")) {
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-    }
-  };
-
   return (
     <>
       <div className={style.navbar}>
@@ -54,82 +50,62 @@ const Navbar = ({ isAuthenticated }) => {
         <div className={style.directAccess}>
           <Link to="/inicio">
             <button>
-              <img
-                width="28"
-                height="28"
-                src={home}
-                alt="home"
-              />
+              <img width="28" height="28" src={home} alt="home" />
             </button>
           </Link>
           <Link to="/favoritos">
             <button>
-              <img
-                width="32"
-                height="32"
-                src={heart}
-                alt="favoritos"
-              />
+              <img width="32" height="32" src={heart} alt="favoritos" />
             </button>
           </Link>
           {userStore ? (
             <button onClick={toggleAccounts}>
-              <img
-                width="28"
-                height="28"
-                src={chat}
-                alt="chat"
-              />
+              <img width="28" height="28" src={chat} alt="chat" />
             </button>
           ) : (
             <Link to="/mensajes/usuario">
               <button>
-                <img
-                  width="28"
-                  height="28"
-                  src={chat}
-                  alt="chat"
-                />
+                <img width="28" height="28" src={chat} alt="chat" />
               </button>
             </Link>
           )}
           {showAccounts && (
-            <div className={style.modal}>
-              <h3>Selecciona una una cuenta para chatear</h3>
-              <div className={style.accounts}>
-                <Link to="/mensajes/usuario">
-                  <button
-                    onClick={() => {
-                      handleClick();
-                      selectAccount();
-                    }}
-                    className={style.profilePicture}
-                  >
-                    <img
-                      src={
-                        (user && user.picture) || (userData && userData.image)
-                      }
+            <div className={style.under} onClick={handleClickOutside}>
+              <div className={style.modal}>
+                <h3>Selecciona una una cuenta para chatear</h3>
+                <div className={style.accounts}>
+                  <Link to="/mensajes/usuario">
+                    <button
+                      onClick={() => {
+                        selectAccount();
+                      }}
                       className={style.profilePicture}
-                      alt="user"
-                    />
-                  </button>
-                </Link>
+                    >
+                      <img
+                        src={
+                          (user && user.picture) || (userData && userData.image)
+                        }
+                        className={style.profilePicture}
+                        alt="user"
+                      />
+                    </button>
+                  </Link>
 
-                <Link to="/mensajes/tienda">
-                  <button
-                    onClick={() => {
-                      handleClick();
-                      selectAccount();
-                    }}
-                    className={style.profilePicture}
-                  >
-                    <img
-                      src={userStore && userStore.image}
+                  <Link to="/mensajes/tienda">
+                    <button
+                      onClick={() => {
+                        selectAccount();
+                      }}
                       className={style.profilePicture}
-                      alt="store"
-                    />
-                  </button>
-                </Link>
+                    >
+                      <img
+                        src={userStore && userStore.image}
+                        className={style.profilePicture}
+                        alt="store"
+                      />
+                    </button>
+                  </Link>
+                </div>
               </div>
             </div>
           )}
@@ -154,20 +130,18 @@ const Navbar = ({ isAuthenticated }) => {
             )}
           </Link>
           <Link to={`/mitienda/${userStore && userStore.id}`}>
-          {userStore && userStore.habilitado === "habilitado" && (
-            <button>
-              <img src={userStore && userStore.image} className={style.profilePicture} />
-            </button>
-          )}
+            {userStore && userStore.habilitado === "habilitado" && (
+              <button>
+                <img
+                  src={userStore && userStore.image}
+                  className={style.profilePicture}
+                />
+              </button>
+            )}
           </Link>
           <Link to="/mas">
             <button>
-              <img
-                width="28"
-                height="28"
-                src={more}
-                alt="mas"
-              />
+              <img width="28" height="28" src={more} alt="mas" />
             </button>
           </Link>
         </div>

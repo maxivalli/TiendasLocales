@@ -78,7 +78,7 @@ const MySales = () => {
         {comprasEnviadas && comprasEnviadas.length > 0 ? (
           <div className={style.entregadas}>
             {comprasEnviadas.map((item, index) => (
-              <div  key={index} className={style.over}>
+              <div key={index} className={style.over}>
               <CardSale
                 key={index}
                 id={item?.id}

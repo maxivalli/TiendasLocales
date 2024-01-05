@@ -1,15 +1,16 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
+import { terser } from "rollup-plugin-terser";
 import { VitePWA } from "vite-plugin-pwa";
 
 const manifestForPlugIn = {
   strategies: "injectManifest",
   injectManifest: {
-    globPatterns: ['**/*.{js,css,html,png}'],
+    globPatterns: ["**/*.{js,css,html,png}"],
   },
   srcDir: "src",
   filename: "firebase-messaging-sw.js",
-  registerType: 'prompt',
+  registerType: "prompt",
   includeAssets: [
     "favicon.ico",
     "apple-touc-icon.png",
@@ -98,9 +99,20 @@ export default defineConfig({
   plugins: [react(), VitePWA(manifestForPlugIn)],
   base: "",
   build: {
-    chunkSizeWarningLimit: 1000000,
+    minify: "terser",
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        passes: 2,
+      },
+      format: {
+        comments: false,
+      },
+    },
+    chunkSizeWarningLimit: 200000,
     commonjsOptions: {
       transformMixedEsModules: true,
     },
   },
 });
+

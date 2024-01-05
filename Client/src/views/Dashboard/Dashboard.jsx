@@ -186,7 +186,63 @@ const Dashboard = () => {
       <div className={style.dash}>
         <div className={style.head}>
           <h2>Panel de control</h2>
-          <p>Tiendas en espera de aprobacion</p>
+
+          <div className={style.container}>
+            <div className={style.title}>
+              <h2>Enviar notificacion general</h2>
+            </div>
+
+            <div className={style.form}>
+              <form onSubmit={handleSubmit}>
+                <div className={style.sI}>
+                  <div className={style.titulo}>
+                    <p>Título:</p>
+                    <input
+                      type="text"
+                      id="titulo"
+                      name="titulo"
+                      value={mensaje.titulo}
+                      onChange={handleChange}
+                      placeholder="Inserte un breve titulo"
+                      required
+                    />
+                    {error.titulo && (
+                      <span className={style.error}>{error.titulo}</span>
+                    )}
+                  </div>
+
+                  <div className={style.mensaje}>
+                    <p>Mensaje:</p>
+                    <textarea
+                      id="texto"
+                      name="texto"
+                      value={mensaje.texto}
+                      onChange={handleChange}
+                      placeholder="Inserte un breve mensaje"
+                      required
+                    />
+                    {error.texto && (
+                      <span className={style.error}>{error.texto}</span>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <button
+                    className={
+                      isSubmitDisabled()
+                        ? `${style.register} ${style.buttonDisabled}`
+                        : style.register
+                    }
+                    disabled={isSubmitDisabled()}
+                    type="submit"
+                  >
+                    Enviar
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <h2>Tiendas en espera de aprobacion</h2>
         </div>
 
         <div className={style.stores}>
@@ -222,7 +278,7 @@ const Dashboard = () => {
         {habilitedStores.length !== 0 && (
           <>
             <div className={style.head}>
-              <p>Revision de tiendas:</p>
+              <h2>Revision de tiendas</h2>
             </div>
 
             <div className={style.stores}>
@@ -238,7 +294,7 @@ const Dashboard = () => {
                     </div>
 
                     <div className={style.text}>
-                      <p>📬 {store.email}</p>
+                      <p>✉️ {store.email}</p>
                       <p>
                         📍 {store.direccion.calle} {store.direccion.numero}{" "}
                         (piso: {store.direccion.piso} local:{" "}
@@ -259,7 +315,7 @@ const Dashboard = () => {
         {postsWithStores.length !== 0 && (
           <>
             <div className={style.head}>
-              <p>Revision de publicaciones</p>
+              <h2>Revision de publicaciones</h2>
             </div>
 
             <div className={style.stores}>
@@ -275,14 +331,14 @@ const Dashboard = () => {
                     </div>
 
                     <div className={style.text}>
-                      <p>{post.description}</p>
-                      <p>Precio: ${post.price}</p>
-                      {post.delivery && <p>Cuenta con envío ✅</p>}
-                      {!post.delivery && <p>No cuenta con envío ❌</p>}
+                      <p>📝{post.description}</p>
+                      <p>💰${post.price}</p>
+                      {post.delivery && <p>✅ Cuenta con envío</p>}
+                      {!post.delivery && <p>❌ No cuenta con envío</p>}
                       {post.store && (
                         <>
-                          <p>Tienda: "{post.store.nombre}"</p>
-                          <p>Email de tienda: {post.store.email}</p>
+                          <p>🏪 "{post.store.nombre}"</p>
+                          <p>✉️ {post.store.email}</p>
                         </>
                       )}
                     </div>
@@ -295,62 +351,6 @@ const Dashboard = () => {
             </div>
           </>
         )}
-
-        <div className={style.container}>
-          <div className={style.title}>
-            <h2>Enviar notificacion general</h2>
-          </div>
-
-          <div className={style.form}>
-            <form onSubmit={handleSubmit}>
-              <div className={style.sI}>
-                <div className={style.titulo}>
-                  <p>titulo:</p>
-                  <input
-                    type="text"
-                    id="titulo"
-                    name="titulo"
-                    value={mensaje.titulo}
-                    onChange={handleChange}
-                    placeholder="Inserte un breve titulo"
-                    required
-                  />
-                  {error.titulo && (
-                    <span className={style.error}>{error.titulo}</span>
-                  )}
-                </div>
-
-                <div className={style.mensaje}>
-                  <p>Mensaje:</p>
-                  <textarea
-                    id="texto"
-                    name="texto"
-                    value={mensaje.texto}
-                    onChange={handleChange}
-                    placeholder="Inserte un breve mensaje"
-                    required
-                  />
-                  {error.texto && (
-                    <span className={style.error}>{error.texto}</span>
-                  )}
-                </div>
-              </div>
-              <div>
-                <button
-                  className={
-                    isSubmitDisabled()
-                      ? `${style.register} ${style.buttonDisabled}`
-                      : style.register
-                  }
-                  disabled={isSubmitDisabled()}
-                  type="submit"
-                >
-                  Enviar
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
       </div>
     </>
   );
