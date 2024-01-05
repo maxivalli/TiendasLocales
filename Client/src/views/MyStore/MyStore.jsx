@@ -67,10 +67,8 @@ const MyStore = () => {
   useEffect(() => {
     if (storeId != userStore?.id) {
       navigate("/");
-      console.log(storeId);
-      console.log(userStore?.id);
     }
-  }, [dispatch, storeId]);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(
