@@ -134,8 +134,8 @@ const Dashboard = () => {
                     <div className={style.text}>
                       <p>{post.description}</p>
                       <p>Precio: ${post.price}</p>
-                      {post.delivery && <p>Cuenta con envío</p>}
-                      {!post.delivery && <p>No cuenta con envío</p>}
+                      {post.delivery && <p>Cuenta con envío ✅</p>}
+                      {!post.delivery && <p>No cuenta con envío ❌</p>}
                       {post.store && (
                         <p>Tienda: {post.store.nombre}</p>
                         // Puedes incluir más información de la tienda si es necesario
