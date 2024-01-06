@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from 'react-router-dom'
 import style from "./Dashboard.module.css";
 import {
   getAllCompras,
@@ -338,10 +339,11 @@ const Dashboard = () => {
             <div className={style.stores}>
               {habilitedStores.map((store, index) => (
                 <div key={index} className={style.storeCard}>
+                  <Link to={`/tienda/${store.nombre}`}>
                   <div className={style.avatar}>
                     <img src={store.image} alt={store.nombre} />
                   </div>
-
+                  </Link>
                   <div className={style.text}>
                     <h2>{store.nombre}</h2>
                     <p>✉️ {store.email}</p>
@@ -406,10 +408,11 @@ const Dashboard = () => {
             <div className={style.stores}>
               {postsWithStores.map((post, index) => (
                 <div key={index} className={style.storeCard}>
+                  <Link to={`/post/${post.id}`}>
                   <div className={style.avatar}>
                     <img src={post.image} alt={post.title} />
                   </div>
-
+                  </Link>
                   <div className={style.info}>
                     <div className={style.text}>
                       <h2>{post.title}</h2>
@@ -419,7 +422,6 @@ const Dashboard = () => {
                           <p>✉️ {post.store.email}</p>
                         </>
                       )}
-                      <p>📝{post.description}</p>
                       {post.delivery && <p>✅ Cuenta con envío</p>}
                       {!post.delivery && <p>❌ No cuenta con envío</p>}
                       <h3>${post.price}</h3>
