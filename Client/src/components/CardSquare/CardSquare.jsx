@@ -7,7 +7,6 @@ import {
   getFavorites,
   removeFavoritePost,
 } from "../../redux/actions";
-import { socket } from "../../App";
 import style from "./CardSquare.module.css";
 import ProductUpdate from "../ProductUpdate/ProductUpdate";
 import likeG from "../../assets/likeG.png";

@@ -7,6 +7,7 @@ const postTemplate = fs.readFileSync(__dirname + '/newPost.html', 'utf8');
 const habStoreTemplate = fs.readFileSync(__dirname + '/habStore.html', 'utf8'); 
 const compraTemplate = fs.readFileSync(__dirname + '/compra.html', 'utf8'); 
 const enviadoTemplate = fs.readFileSync(__dirname + '/enviado.html', 'utf8'); 
+const waitingStoreTemplate = fs.readFileSync(__dirname + '/waitingStore.html', 'utf8'); 
 
 const registerMail = (user) => {
   return {
@@ -45,6 +46,24 @@ const compraMail = (user) => {
     from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
     subject: "Compra Realizada",
     html: compraTemplate,
+  };
+};
+
+const waitingStoreMail = (admins, newStore) => {
+  const {nombre, image, categoria, whatsapp} = newStore
+  const adminEmails = admins.map(admin => admin.email);
+
+  const notificationEmail = waitingStoreTemplate
+    .replace('{{nombre}}', nombre)
+    .replace('{{categoria}}', categoria)
+    .replace('{{whatsapp}}', whatsapp)
+    .replace('{{image}}', image)
+
+  return {
+    to: adminEmails,
+    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
+    subject: "Tienda en espera de aprobación",
+    html: notificationEmail,
   };
 };
 
@@ -104,4 +123,4 @@ const passwordForgot = (email, id) => {
   }
 }
 
-module.exports = { registerMail, postCreated, passwordForgot, habStoreMail, compraMail, enviadoMail };
+module.exports = { registerMail, postCreated, passwordForgot, habStoreMail, compraMail, enviadoMail, waitingStoreMail };

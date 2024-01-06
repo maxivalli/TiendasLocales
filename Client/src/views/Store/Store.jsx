@@ -18,6 +18,7 @@ import {
   setSelectedStore,
 } from "../../redux/actions";
 import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
+import ReactPaginate from "react-paginate";
 
 const Store = ({ userData }) => {
   const dispatch = useDispatch();
@@ -29,6 +30,9 @@ const Store = ({ userData }) => {
 
   const [loading, setLoading] = useState(true);
   const [alreadyReview, setAlreadyReview] = useState(false);
+  const [filteredPostsPaginado, setFilteredPosts] = useState([]);
+  const [postPage, setPostPage] = useState(1);
+  const postsPerPage = 10;
 
   const storeName = linkName.replace(/-/g, " ");
   const selectedStore =
@@ -117,8 +121,28 @@ const Store = ({ userData }) => {
     setIsFavorite(isStoreFavorite);
   }, [favorites, storeId]);
 
+  useEffect(() => {
+    const storedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+    if (storedPosts.length > 0) {
+      setFilteredPosts(storedPosts);
+    }
+    setTimeout(() => {
+      setLoading(false);
+    }, 750);
+  }, [dispatch]);
 
+  useEffect(() => {
+    const startPostIndex = (postPage - 1) * postsPerPage;
+    const endPostIndex = startPostIndex + postsPerPage;
+    setFilteredPosts(storePosts.slice(startPostIndex, endPostIndex));
+    localStorage.setItem("storePosts", JSON.stringify(storePosts));
+  }, [storePosts, postPage]);
   
+
+  const handlePostPageClick = (data) => {
+    setPostPage(data.selected + 1);
+  };
+
   if (loading) {
     return (
       <div className={style.spinner}>
@@ -235,11 +259,28 @@ const Store = ({ userData }) => {
           <h2>Productos disponibles</h2>
         </div>
 
+        {storePosts.length > postsPerPage && (
+          <ReactPaginate
+            pageCount={Math.ceil(storePosts.length / postsPerPage)}
+            pageRangeDisplayed={2}
+            marginPagesDisplayed={1}
+            onPageChange={handlePostPageClick}
+            containerClassName={style.pagination}
+            activeClassName={style.active}
+            nextLabel=">"
+            previousLabel="<"
+          />
+        )}
+
         <div className={style.store2}>
-          {storePosts.map((post, index) => (
-            <CardSquare key={index} {...post} storeId={storeId} />
-          ))}
+          {filteredPostsPaginado &&
+            filteredPostsPaginado.map((post, index) => (
+              <CardSquare key={index} {...post} storeId={storeId} />
+            ))}
         </div>
+
+     
+
         <div className={style.buttons}>
           <NavButtons storeId={storeId} />
         </div>
