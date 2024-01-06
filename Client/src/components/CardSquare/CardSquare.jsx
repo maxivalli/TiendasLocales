@@ -30,16 +30,14 @@ const CardSquare = ({
 }) => {
   const dispatch = useDispatch();
   const location = useLocation();
-
+  const postId = id;
   const userData = useSelector((state) => state.userData);
   const favorites = useSelector((state) => state.favorites);
-  const isPostFavorite = favorites && favorites.some((favorite) => favorite.postId === postId);
+  const isPostFavorite =
+    favorites && favorites.some((favorite) => favorite.postId === postId);
   const [isFavorite, setIsFavorite] = useState(isPostFavorite);
   const [showModal, setShowModal] = useState(false);
-
   const userId = userData?.id;
-  const postId = id;
-
 
   const toggleFavorite = () => {
     if (isFavorite) {
