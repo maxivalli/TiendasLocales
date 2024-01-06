@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import style from "./Dashboard.module.css";
 import {
   getAllCompras,
@@ -303,24 +303,20 @@ const Dashboard = () => {
         <div className={style.stores}>
           {filteredStores.map((store, index) => (
             <div key={index} className={style.storeCard}>
-              <div className={style.title}>
+              <div className={style.avatar}>
+                <img src={store.image} alt={store.nombre} />
+              </div>
+
+              <div className={style.text}>
                 <h2>{store.nombre}</h2>
+                <p>📬 {store.email}</p>
+                <p>
+                  📍 {store.direccion.calle} {store.direccion.numero} (piso:{" "}
+                  {store.direccion.piso} local: {store.direccion.depto})
+                </p>
+                <p>{store.categoria}</p>
               </div>
 
-              <div className={style.info}>
-                <div className={style.avatar}>
-                  <img src={store.image} alt={store.nombre} />
-                </div>
-
-                <div className={style.text}>
-                  <p>📬 {store.email}</p>
-                  <p>
-                    📍 {store.direccion.calle} {store.direccion.numero} (piso:{" "}
-                    {store.direccion.piso} local: {store.direccion.depto})
-                  </p>
-                  <p>{store.categoria}</p>
-                </div>
-              </div>
               <div className={style.button}>
                 <button onClick={() => handleHabilitacion(store.id)}>
                   Habilitar
@@ -340,9 +336,9 @@ const Dashboard = () => {
               {habilitedStores.map((store, index) => (
                 <div key={index} className={style.storeCard}>
                   <Link to={`/tienda/${store.nombre}`}>
-                  <div className={style.avatar}>
-                    <img src={store.image} alt={store.nombre} />
-                  </div>
+                    <div className={style.avatar}>
+                      <img src={store.image} alt={store.nombre} />
+                    </div>
                   </Link>
                   <div className={style.text}>
                     <h2>{store.nombre}</h2>
@@ -409,9 +405,9 @@ const Dashboard = () => {
               {postsWithStores.map((post, index) => (
                 <div key={index} className={style.storeCard}>
                   <Link to={`/post/${post.id}`}>
-                  <div className={style.avatar}>
-                    <img src={post.image} alt={post.title} />
-                  </div>
+                    <div className={style.avatar}>
+                      <img src={post.image} alt={post.title} />
+                    </div>
                   </Link>
                   <div className={style.info}>
                     <div className={style.text}>

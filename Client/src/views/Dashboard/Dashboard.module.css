@@ -78,6 +78,7 @@
   justify-self: center;
   margin: 5px;
   border: 2px solid red;
+  object-fit: cover;
 }
 
 .avatar {

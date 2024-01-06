@@ -36,6 +36,8 @@ const Cards = () => {
       {
         breakpoint: 768,
         settings: {
+          autoplay: true,
+          dots: false,
           arrows: false,
           slidesToShow: 1,
           slidesToScroll: 1,

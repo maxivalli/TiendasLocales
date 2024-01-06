@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ProductImages from "../../components/productImages/ProductImages";
+import Spinner from '../../components/Spinner/Spinner'
 import Head from "../../components/Head/Head";
 import likeG from "../../assets/likeG.png";
 import likeR from "../../assets/likeR.png";
@@ -193,18 +194,9 @@ const Detail = () => {
     }
   };
 
-
-
-
-
-
   if (isLoading) {
     return (
-      <div className={style.spinner}>
-        <div className={style.bounce1}></div>
-        <div className={style.bounce2}></div>
-        <div className={style.bounce3}></div>
-      </div>
+      <Spinner/>
     );
   }
   return (

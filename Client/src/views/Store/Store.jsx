@@ -3,6 +3,7 @@ import axios from "axios";
 import CardSquare from "../../components/CardSquare/CardSquare";
 import Filters from "../../components/Filters/Filters";
 import Head from "../../components/Head/Head";
+import Spinner from "../../components/Spinner/Spinner";
 import NavButtons from "../../components/NavButtons/NavButtons";
 import likeG from "../../assets/likeG.png";
 import likeR from "../../assets/likeR.png";
@@ -144,11 +145,7 @@ const Store = ({ userData }) => {
 
   if (loading) {
     return (
-      <div className={style.spinner}>
-        <div className={style.bounce1}></div>
-        <div className={style.bounce2}></div>
-        <div className={style.bounce3}></div>
-      </div>
+      <Spinner/>
     );
   }
   return (

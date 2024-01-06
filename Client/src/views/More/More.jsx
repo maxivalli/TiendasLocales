@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CardWide from "../../components/CardWide/CardWide";
 import Head from "../../components/Head/Head";
+import Spinner from '../../components/Spinner/Spinner'
 import style from "./More.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -39,11 +40,7 @@ const More = () => {
 
   if (loading) {
     return (
-      <div className={style.spinner}>
-        <div className={style.bounce1}></div>
-        <div className={style.bounce2}></div>
-        <div className={style.bounce3}></div>
-      </div>
+      <Spinner/>
     );
   }
   return (

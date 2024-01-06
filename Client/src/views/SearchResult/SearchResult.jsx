@@ -4,6 +4,7 @@ import Banner from "../../components/Banners/Banners";
 import CardsStore from "../../components/CardsStore/CardsStore";
 import Filters from "../../components/Filters/Filters";
 import Head from "../../components/Head/Head";
+import Spinner from "../../components/Spinner/Spinner";
 import b4 from "../../assets/Banner4.jpg";
 import b5 from "../../assets/Banner5.jpg";
 import b6 from "../../assets/Banner6.jpg";
@@ -81,11 +82,7 @@ const SearchResult = () => {
   
   if (loading) {
     return (
-      <div className={style.spinner}>
-        <div className={style.bounce1}></div>
-        <div className={style.bounce2}></div>
-        <div className={style.bounce3}></div>
-      </div>
+      <Spinner/>
     );
   }
   return (

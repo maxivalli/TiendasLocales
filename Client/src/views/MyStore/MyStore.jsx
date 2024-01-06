@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import CardSquare from "../../components/CardSquare/CardSquare";
 import Filters from "../../components/Filters/Filters";
+import Spinner from '../../components/Spinner/Spinner'
 import Head from "../../components/Head/Head";
 import OptButtons from "../../components/OptButtons/ObtButtons";
 import { Link, useNavigate } from "react-router-dom";
@@ -32,7 +33,7 @@ const MyStore = () => {
   const [loading, setLoading] = useState(true);
   const [filteredPostsPaginado, setFilteredPosts] = useState([]);
   const [postPage, setPostPage] = useState(1);
-  const postsPerPage = 2;
+  const postsPerPage = 12;
 
   const selectedStore = stores && stores.find((store) => store.id == storeId);
   const userStore = stores.find((store) => store.userId === userData.id);
@@ -93,11 +94,7 @@ const MyStore = () => {
 
   if (loading) {
     return (
-      <div className={style.spinner}>
-        <div className={style.bounce1}></div>
-        <div className={style.bounce2}></div>
-        <div className={style.bounce3}></div>
-      </div>
+      <Spinner/>
     );
   }
 
@@ -193,7 +190,7 @@ const MyStore = () => {
         )}
         <Link to="/agregarproducto">
           <div className={style.agregar}>
-            <button>Agregar</button>
+            <button>Agregar un producto</button>
           </div>
         </Link>
         <div className={style.title}>

@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ChatEngine } from "react-chat-engine";
 import "./Messages.css";
-import style from "../More/More.module.css";
+import Spinner from "../../components/Spinner/Spinner";
 import { useNavigate } from "react-router";
 import { getToken } from "firebase/messaging";
 import { getAuth, signInAnonymously } from "firebase/auth";
@@ -127,11 +127,7 @@ const Messages = ({ SWregistration }) => {
   
   if (loading) {
     return (
-      <div className={style.spinner}>
-        <div className={style.bounce1}></div>
-        <div className={style.bounce2}></div>
-        <div className={style.bounce3}></div>
-      </div>
+      <Spinner/>
     );
   }
   return (
