@@ -6,7 +6,7 @@
 .banners img {
   width: 100vw;
   height: 400px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 @media (max-width: 768px) {

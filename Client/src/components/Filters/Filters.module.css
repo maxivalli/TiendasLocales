@@ -10,10 +10,10 @@
 }
 
 .filters button {
-  background-color: white;
-  color: black;
+  background-color: transparent;
+  color: white;
   height: 40px;
-  width: 90px;
+  font-size: 16px;
   border: none;
   border-radius: 5px;
 }
@@ -62,13 +62,15 @@
   height: 30px;
   background-color: yellowgreen;
   align-self: center;
+  color: black;
 }
 
 .filtros .todas {
   width: 200px;
   height: 30px;
   background-color: white;
-  align-self: center; 
+  align-self: center;
+  color: black;
 }
 
 @media (max-width: 768px) {

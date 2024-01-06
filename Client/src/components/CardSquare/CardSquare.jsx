@@ -107,7 +107,7 @@ const CardSquare = ({
         <Link to={`/post/${id}`}>
           <img src={image} alt="image" />
           <h2>{title}</h2>
-          <h3>{marca ? marca : <p></p>}</h3>
+          <h3 className={style.marca}>{marca ? marca : <p></p>}</h3>
           <h3>${price}</h3>
           <h4>
             {esVistaMiCuenta ? "Cantidad" : "Stock"}: {stock}
