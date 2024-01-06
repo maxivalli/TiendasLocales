@@ -12,7 +12,7 @@ const waitingStoreTemplate = fs.readFileSync(__dirname + '/waitingStore.html', '
 const registerMail = (user) => {
   return {
     to: user.email,
-    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
+    from: '"Tiendas Locales" <contacto@mail.tiendaslocales.com.ar>',
     subject: "Registro completado",
     html: registerTemplate,
   };
@@ -21,7 +21,7 @@ const registerMail = (user) => {
 const habStoreMail = (user) => {
   return {
     to: user.email,
-    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
+    from: '"Tiendas Locales" <contacto@mail.tiendaslocales.com.ar>',
     subject: "Tienda habilitada",
     html: habStoreTemplate,
   };
@@ -34,7 +34,7 @@ const enviadoMail = (user) => {
   
   return {
     to: user.email,
-    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
+    from: '"Tiendas Locales" <contacto@mail.tiendaslocales.com.ar>',
     subject: `${user.userEnvia} te ha enviado ${user.productName}`,
     html: enviadoMail,
   };
@@ -43,7 +43,7 @@ const enviadoMail = (user) => {
 const compraMail = (user) => {
   return {
     to: user.email,
-    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
+    from: '"Tiendas Locales" <contacto@mail.tiendaslocales.com.ar>',
     subject: "Compra Realizada",
     html: compraTemplate,
   };
@@ -61,7 +61,7 @@ const waitingStoreMail = (admins, newStore) => {
 
   return {
     to: adminEmails,
-    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
+    from: '"Tiendas Locales" <contacto@mail.tiendaslocales.com.ar>',
     subject: "Tienda en espera de aprobación",
     html: notificationEmail,
   };
@@ -82,7 +82,7 @@ const postCreated = (email, postData) => {
 
   return {
     to: email,
-    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
+    from: '"Tiendas Locales" <contacto@mail.tiendaslocales.com.ar>',
     subject: "Publicación Creada",
     html: notificationEmail,
   }
@@ -117,7 +117,7 @@ const passwordForgot = (email, id) => {
   
   return {
     to: email,
-    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
+    from: '"Tiendas Locales" <contacto@mail.tiendaslocales.com.ar>',
     subject: "Recuperacion de contraseña",
     html: forgotTemplateWithLink,
   }
