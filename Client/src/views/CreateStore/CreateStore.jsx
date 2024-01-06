@@ -197,8 +197,8 @@ const CreateStore = () => {
         horario_de_cierre: formData.horario_de_cierre,
       },
       userId: userData.id,
-      facebook: formData.facebook,
-      instagram: formData.instagram,
+      facebook: `https://www.facebook.com/${formData.facebook}`,
+      instagram: `https://www.instagram.com/${formData.instagram}`,
       whatsapp: `https://wa.me/+54${formData.whatsapp}`,
       email: userData.email,
       dias: generarHorario(),
@@ -521,7 +521,7 @@ const CreateStore = () => {
                   name="facebook"
                   value={formData.facebook}
                   onChange={handleChange}
-                  placeholder="Ej: https://www.facebook.com/tu_pagina"
+                  placeholder="Ej: tu_facebook"
                 />
                 {errors.facebook && (
                   <span className={style.error}>{errors.facebook}</span>
@@ -546,7 +546,7 @@ const CreateStore = () => {
                   name="instagram"
                   value={formData.instagram}
                   onChange={handleChange}
-                  placeholder="Ej: https://www.instagram.com/tu_cuenta"
+                  placeholder="Ej: tu_instagram"
                 />
                 {errors.instagram && (
                   <span className={style.error}>{errors.instagram}</span>
