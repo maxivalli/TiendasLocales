@@ -148,8 +148,8 @@ const SearchResult = () => {
             onPageChange={handlePostPageClick}
             containerClassName={style.pagination2}
             activeClassName={style.active2}
-            nextLabel=">"
-            previousLabel="<"
+            nextLabel="▶️"
+            previousLabel="◀️"
           />
         )}
         <div className={style.margin}></div>

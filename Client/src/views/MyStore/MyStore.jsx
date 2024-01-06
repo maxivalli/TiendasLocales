@@ -15,7 +15,6 @@ import {
   setSelectedStore,
 } from "../../redux/actions";
 import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
-import axios from "axios";
 import Swal from "sweetalert2";
 import CardWide from "../../components/CardWide/CardWide";
 import mPago from "../../assets/mPago.png";
@@ -31,6 +30,9 @@ const MyStore = () => {
   const allPostsCopy = useSelector((state) => state.allPostsCopy);
 
   const [loading, setLoading] = useState(true);
+  const [filteredPostsPaginado, setFilteredPosts] = useState([]);
+  const [postPage, setPostPage] = useState(1);
+  const postsPerPage = 2;
 
   const selectedStore = stores && stores.find((store) => store.id == storeId);
   const userStore = stores.find((store) => store.userId === userData.id);
@@ -77,6 +79,17 @@ const MyStore = () => {
       )
     );
   }, [dispatch]);
+
+  useEffect(() => {
+    const startPostIndex = (postPage - 1) * postsPerPage;
+    const endPostIndex = startPostIndex + postsPerPage;
+    setFilteredPosts(storePosts.slice(startPostIndex, endPostIndex));
+    localStorage.setItem("storePosts", JSON.stringify(storePosts));
+  }, [storePosts, postPage]);
+
+  const handlePostPageClick = (data) => {
+    setPostPage(data.selected + 1);
+  };
 
   if (loading) {
     return (
@@ -188,10 +201,23 @@ const MyStore = () => {
         </div>
 
         <div className={style.store2}>
-          {storePosts.map((post, index) => (
+          {filteredPostsPaginado.map((post, index) => (
             <CardSquare key={index} {...post} storeId={storeId} />
           ))}
         </div>
+        {storePosts.length > postsPerPage && (
+          <ReactPaginate
+            pageCount={Math.ceil(storePosts.length / postsPerPage)}
+            pageRangeDisplayed={2}
+            marginPagesDisplayed={1}
+            onPageChange={handlePostPageClick}
+            containerClassName={style.pagination}
+            activeClassName={style.active}
+            nextLabel="▶️"
+            previousLabel="◀️"
+          />
+        )}
+        <div className={style.margin}></div>
         <OptButtons storeId={storeId} />
       </div>
     </>

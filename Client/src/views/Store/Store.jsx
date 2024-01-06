@@ -32,7 +32,7 @@ const Store = ({ userData }) => {
   const [alreadyReview, setAlreadyReview] = useState(false);
   const [filteredPostsPaginado, setFilteredPosts] = useState([]);
   const [postPage, setPostPage] = useState(1);
-  const postsPerPage = 10;
+  const postsPerPage = 12;
 
   const storeName = linkName.replace(/-/g, " ");
   const selectedStore =
@@ -137,7 +137,6 @@ const Store = ({ userData }) => {
     setFilteredPosts(storePosts.slice(startPostIndex, endPostIndex));
     localStorage.setItem("storePosts", JSON.stringify(storePosts));
   }, [storePosts, postPage]);
-  
 
   const handlePostPageClick = (data) => {
     setPostPage(data.selected + 1);
@@ -259,6 +258,13 @@ const Store = ({ userData }) => {
           <h2>Productos disponibles</h2>
         </div>
 
+        <div className={style.store2}>
+          {filteredPostsPaginado &&
+            filteredPostsPaginado.map((post, index) => (
+              <CardSquare key={index} {...post} storeId={storeId} />
+            ))}
+        </div>
+
         {storePosts.length > postsPerPage && (
           <ReactPaginate
             pageCount={Math.ceil(storePosts.length / postsPerPage)}
@@ -267,20 +273,11 @@ const Store = ({ userData }) => {
             onPageChange={handlePostPageClick}
             containerClassName={style.pagination}
             activeClassName={style.active}
-            nextLabel=">"
-            previousLabel="<"
+            nextLabel="▶️"
+            previousLabel="◀️"
           />
         )}
-
-        <div className={style.store2}>
-          {filteredPostsPaginado &&
-            filteredPostsPaginado.map((post, index) => (
-              <CardSquare key={index} {...post} storeId={storeId} />
-            ))}
-        </div>
-
-     
-
+        <div className={style.margin}></div>
         <div className={style.buttons}>
           <NavButtons storeId={storeId} />
         </div>

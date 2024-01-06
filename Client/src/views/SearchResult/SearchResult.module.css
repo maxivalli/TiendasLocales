@@ -129,9 +129,9 @@
 }
 
 .pagination a {
-  background-color: cornflowerblue;
   padding: 5px;
   border-radius: 5px;
+  font-style: italic;
 }
 
 .pagination li {
@@ -139,7 +139,7 @@
 }
 
 .active {
-  background-color: cadetblue;
+  background-color: cornflowerblue;
   border-radius: 5px;
   width: 20px;
   height: 25px;
@@ -166,7 +166,7 @@
 }
 
 .active2 {
-  background-color: cadetblue;
+  background-color: cornflowerblue;
   border-radius: 5px;
   width: 20px;
   height: 25px;
