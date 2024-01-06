@@ -7,7 +7,6 @@ import {
   getFavorites,
   removeFavoritePost,
 } from "../../redux/actions";
-import { socket } from "../../App";
 import style from "./CardSquare.module.css";
 import ProductUpdate from "../ProductUpdate/ProductUpdate";
 import likeG from "../../assets/likeG.png";
@@ -33,12 +32,12 @@ const CardSquare = ({
 
   const userData = useSelector((state) => state.userData);
   const favorites = useSelector((state) => state.favorites);
-  const isPostFavorite = favorites && favorites.some((favorite) => favorite.postId === postId);
-  const [isFavorite, setIsFavorite] = useState(isPostFavorite);
   const [showModal, setShowModal] = useState(false);
-
+  
   const userId = userData?.id;
   const postId = id;
+  const isPostFavorite = favorites && favorites.some((favorite) => favorite.postId === postId);
+  const [isFavorite, setIsFavorite] = useState(isPostFavorite);
 
 
   const toggleFavorite = () => {
