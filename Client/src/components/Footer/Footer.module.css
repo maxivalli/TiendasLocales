@@ -1,0 +1,131 @@
+.footer {
+  display: grid;
+  justify-self: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100vw;
+  height: 150px;
+}
+
+.expanded {
+  height: 15px;
+  overflow: hidden;
+  transition: height 0.3s ease;
+}
+
+.footer h3 {
+  margin: 0;
+  margin: 10px;
+  align-self: center;
+  font-style: italic;
+}
+
+.toggle {
+  border: none;
+  background-color: transparent;
+}
+
+.left {
+  display: grid;
+}
+
+.right a {
+  margin-left: 50px;
+}
+
+.center {
+  display: grid;
+}
+
+.ab {
+  display: grid;
+  justify-self: left;
+}
+
+.a {
+  display: grid;
+  justify-self: center;
+}
+
+.b {
+  display: grid;
+  justify-self: center;
+}
+
+.b a {
+  justify-self: center;
+}
+
+.a a {
+  justify-self: center;
+}
+
+.center a {
+  font-size: 12px;
+}
+
+.right {
+  display: grid;
+}
+
+.footer a {
+  display: flex;
+  justify-self: left;
+  transition: 200ms;
+}
+
+.footer p {
+  justify-self: left;
+  margin: 0;
+  margin-left: 50px;
+}
+
+.footer a:hover {
+  scale: 1.03;
+}
+
+.bottom {
+  background-color: whitesmoke;
+}
+
+.bottom p {
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .expanded {
+    height: 15px;
+    overflow: hidden;
+    transition: 0.3s ease;
+  }
+
+  .footer a {
+    justify-self: center;
+  }
+
+  .right a {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .footer p {
+    justify-self: center;
+    margin-left: 0;
+  }
+
+  .right a {
+    margin-left: 0;
+  }
+
+  .bottom {
+    margin-bottom: 60px;
+  }
+
+  .ab {
+    justify-self: center;
+  }
+}

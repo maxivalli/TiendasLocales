@@ -10,6 +10,8 @@ const axios = require("axios");
 
 const adminList = ADMIN_USERS.split(", ");
 
+console.log(adminList);
+
 async function getImageBlobFromURL(imageUrl) {
   try {
     const response = await fetch(imageUrl);
