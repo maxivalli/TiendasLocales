@@ -32,7 +32,7 @@ const MyStore = () => {
   const [loading, setLoading] = useState(true);
   const [filteredPostsPaginado, setFilteredPosts] = useState([]);
   const [postPage, setPostPage] = useState(1);
-  const postsPerPage = 2;
+  const postsPerPage = 12;
 
   const selectedStore = stores && stores.find((store) => store.id == storeId);
   const userStore = stores.find((store) => store.userId === userData.id);
