@@ -53,7 +53,7 @@ const manifestForPlugIn = {
       {
         name: "Agregar",
         description: "Agregar un producto",
-        url: "https://tiendaslocales.com.ar/#/agregarproducto",
+        url: "https://www.tiendaslocales.com.ar/#/agregarproducto",
         icons: [
           {
             src: "add.png",
@@ -64,7 +64,7 @@ const manifestForPlugIn = {
       {
         name: "Mis ventas",
         description: "Agregar un producto",
-        url: "https://tiendaslocales.com.ar/#/misventas",
+        url: "https://www.tiendaslocales.com.ar/#/misventas",
         icons: [
           {
             src: "sales.png",
@@ -75,7 +75,7 @@ const manifestForPlugIn = {
       {
         name: "Mensajes",
         description: "Mis mensajes",
-        url: "https://tiendaslocales.com.ar/#/mensajes",
+        url: "https://www.tiendaslocales.com.ar/#/mensajes",
         icons: [
           {
             src: "user.png",

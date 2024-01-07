@@ -476,7 +476,7 @@ app.use(function (req, res, next) {
   //     CAMBIAR POR LAS URL DE TIENDAS LOCALES
   const allowedOrigins = [
     "http://localhost:5173",
-    "https://tiendaslocales.com.ar",
+    "https://www.tiendaslocales.com.ar",
   ]; // Lista de URLs permitidas
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
