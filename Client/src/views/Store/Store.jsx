@@ -151,6 +151,7 @@ const Store = () => {
       <Spinner/>
     );
   }
+
   return (
     <>
       <Filters />
