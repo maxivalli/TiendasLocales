@@ -36,7 +36,7 @@ const More = () => {
     };
 
     fetchData();
-  }, [userData.id]);
+  }, [userData]);
 
   if (loading) {
     return (

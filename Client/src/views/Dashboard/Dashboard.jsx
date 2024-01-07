@@ -153,6 +153,7 @@ const Dashboard = () => {
     try {
       const response = await axios.post("/tiendas/habilitarStore", { storeId });
       if (response) {
+        userData && dispatch(getUserStore(userData?.id));
         setActualizar(false);
         Swal.fire({
           icon: "success",
@@ -232,23 +233,23 @@ const Dashboard = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     if (error.titulo || error.texto) {
       return;
     }
-  
+
     const data = { titulo: mensaje.titulo, texto: mensaje.texto };
-    socket?.emit("mensajeGeneral", data)
-      setMensaje({
-        titulo: "",
-        texto: "",
-      });
-  
-      Swal.fire({
-        icon: "success",
-        title: `¡Notificación enviada!`,
-        text: "Su mensaje fue enviado con éxito a todos los usuarios",
-      });
+    socket?.emit("mensajeGeneral", data);
+    setMensaje({
+      titulo: "",
+      texto: "",
+    });
+
+    Swal.fire({
+      icon: "success",
+      title: `¡Notificación enviada!`,
+      text: "Su mensaje fue enviado con éxito a todos los usuarios",
+    });
   };
 
   return (

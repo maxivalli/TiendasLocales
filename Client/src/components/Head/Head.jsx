@@ -197,6 +197,8 @@ const Head = () => {
     }
   }, [hasUnreadNotification]);
 
+  const myStore = stores && stores.filter((store) => store.userId === userData?.id)
+
   const handleNotificationClick = (notification) => {
     switch (notification.type) {
       case "storeMessage":
@@ -215,8 +217,7 @@ const Head = () => {
         navigate("/micuenta");
         break;
       case "store":
-        const myStore = stores && stores.filter((store) => store.userId === userData?.id)
-        myStore && navigate(`/mitienda/${myStore?.id}`);
+        myStore && navigate(`/mitienda/${myStore[0].id}`);
         break;
       default:
         //? ? ? ? ? ? ? ? ? ?

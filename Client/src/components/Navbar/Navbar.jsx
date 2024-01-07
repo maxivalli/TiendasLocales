@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate} from "react-router-dom";
 import Logo from "../../assets/TLlogoAlpha.png";
 import home from "../../assets/home.png";
@@ -7,10 +7,12 @@ import chat from "../../assets/chat.png";
 import more from "../../assets/more.png";
 import style from "./Navbar.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserStore } from "../../redux/actions";
 
 const Navbar = ({ isAuthenticated }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   
   const userData = useSelector((state) => state.userData);
   const userStore = useSelector((state) => state.userStore);
@@ -19,6 +21,12 @@ const Navbar = ({ isAuthenticated }) => {
   const handleClickOutside = () => {
     setShowAccounts(false);
   };
+
+  const url = new URL(window.location.href);
+
+  useEffect(()=>{
+    userData && dispatch(getUserStore(userData?.id))
+  }, [url.hash])
 
   const goUserChat = () => {
       navigate("/mensajes/usuario")
