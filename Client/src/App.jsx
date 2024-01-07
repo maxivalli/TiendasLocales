@@ -327,7 +327,9 @@ function App() {
 
   useEffect(() => {
     onMessage(messaging, (message) => {
-      const { title, text } = message.data;
+      const { title, text, path } = message.data;
+      console.log(path);
+      if (!path.includes("#/mensajes")) {
         toast(
         <div>
           <strong>{title}</strong>
@@ -335,6 +337,7 @@ function App() {
           {text}
         </div>
       );
+        }
     });
   }, []); 
 

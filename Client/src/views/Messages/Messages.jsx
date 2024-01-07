@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { ChatEngine } from "react-chat-engine";
 import "./Messages.css";
 import Spinner from "../../components/Spinner/Spinner";
-import { useNavigate } from "react-router";
 import { getToken } from "firebase/messaging";
 import { getAuth, signInAnonymously } from "firebase/auth";
 import { messaging } from "../../components/Firebase/config";
@@ -12,7 +11,6 @@ import { socket } from "../../App";
 import { updateUser } from "../../redux/actions";
 
 const Messages = ({ SWregistration }) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [savedStoreData, setSavedStoreData] = useState(() => {
     const storedData = localStorage.getItem("userStore");
@@ -141,11 +139,12 @@ const Messages = ({ SWregistration }) => {
             setChats(chats);
           }}
           onNewMessage={(chatId, message) => {
+            const url = new URL(window.location.href);
             const chat = chats?.find((chat) => chat?.id === chatId);
             const people = chat.people;
             const lastMessage = message.text.replace(/<\/?p>/g, "");
             const sender = message.sender_username;
-            const messageData = { people, lastMessage, sender, userData };
+            const messageData = { people, lastMessage, sender, userData, url: url.hash };
             socket?.emit("newMessage", messageData);
           }}
           height="calc(100vh - 60px)"
