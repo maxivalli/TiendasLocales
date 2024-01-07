@@ -61,10 +61,10 @@ const Dashboard = () => {
   //CANTIDAD DE PUBLICACIONES REGISTRADAS EN TOTAL
   const cantidadPublicaciones = allPosts.length;
 
-  //CANTIDAD DE PUBLICACIONES REGISTRADAS EN TOTAL
+  //CANTIDAD DE COMPRAS REGISTRADAS EN TOTAL
   const cantidadCompras = allCompras.length;
 
-  //CANTIDAD DE USUARIOS QUE SE REGISTRARON EN EL ULTIMO MES
+  //CANTIDAD DE COMPRAS QUE SE REGISTRARON EN EL ULTIMO MES
   const comprasUltimoMes = () => {
     const fechaActual = new Date();
     const fechaHaceUnMes = new Date();
