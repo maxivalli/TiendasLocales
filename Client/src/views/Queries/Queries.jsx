@@ -9,7 +9,7 @@ const Queries = () => {
     <div className={style.container}>
 
       <div className={style.dev}>
-        <h3>Contacto con desarrollo</h3>
+        <h3>Informar un problema</h3>
 
         <div className={style.link}>
         <p>✉️</p>
