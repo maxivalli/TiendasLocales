@@ -91,7 +91,7 @@
   font-size: 12px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1280px) {
   .footer {
     grid-template-columns: 1fr;
     height: auto;
@@ -121,11 +121,11 @@
     margin-left: 0;
   }
 
-  .bottom {
-    margin-bottom: 60px;
-  }
-
   .ab {
     justify-self: center;
+  }
+
+  .bottom {
+    margin-bottom: 60px;
   }
 }
