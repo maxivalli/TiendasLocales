@@ -521,7 +521,7 @@ const CreateStore = () => {
                   name="facebook"
                   value={formData.facebook}
                   onChange={handleChange}
-                  placeholder="Ej: tu_facebook"
+                  placeholder='Ingresa lo que esta despues de "https://www.facebook.com/"'
                 />
                 {errors.facebook && (
                   <span className={style.error}>{errors.facebook}</span>
@@ -546,7 +546,7 @@ const CreateStore = () => {
                   name="instagram"
                   value={formData.instagram}
                   onChange={handleChange}
-                  placeholder="Ej: tu_instagram"
+                  placeholder='Ingresa lo que esta despues de "https://www.instagram.com/"'
                 />
                 {errors.instagram && (
                   <span className={style.error}>{errors.instagram}</span>
