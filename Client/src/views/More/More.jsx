@@ -23,8 +23,8 @@ const More = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/tiendas/getStore", {
-          params: { id: userData.id },
+        const response = userData && await axios.get("/tiendas/getStore", {
+          params: { id: userData?.id },
         });
         if (response) {
           setStoreData(response.data);
