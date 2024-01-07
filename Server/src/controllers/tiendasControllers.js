@@ -1,7 +1,11 @@
 const { Tienda, User, Compra, Post } = require("../DB_config");
 const axios = require("axios");
 const { Op, Sequelize } = require("sequelize");
-const { habStoreMail, enviadoMail, waitingStoreMail } = require("../utils/mailObjects");
+const {
+  habStoreMail,
+  enviadoMail,
+  waitingStoreMail,
+} = require("../utils/mailObjects");
 const { transporter } = require("../config/mailer");
 
 async function getImageBlobFromURL(imageUrl) {
@@ -59,14 +63,19 @@ exports.createStore = async (storeData) => {
 
       const admins = await User.findAll({
         where: {
-          rol: 'admin'
-        }
+          rol: "admin",
+        },
       });
-      const mailResponse = await transporter.sendMail(waitingStoreMail(admins, newStore));
-      if (!mailResponse){
-        throw new Error("Error al enviar mail de waitingStore")
-      }
 
+      if (admins) {
+        const mailResponse = await transporter.sendMail(
+          waitingStoreMail(admins, newStore)
+        );
+        if (!mailResponse) {
+          throw new Error("Error al enviar mail de waitingStore");
+        }
+      }
+      
       const imageBlob = await getImageBlobFromURL(storeData.image);
 
       const formData = new FormData();
@@ -87,12 +96,13 @@ exports.createStore = async (storeData) => {
       };
 
       const response = await axios(config);
-      if (!response){
-        throw new Error ("Ha habido un problema al crear o actualizar usuario de chat")
+      if (!response) {
+        throw new Error(
+          "Ha habido un problema al crear o actualizar usuario de chat"
+        );
       }
-
-      return true;
     }
+    return true;
   } catch (error) {
     console.error(error.message);
     throw new Error("No se ha podido crear la tienda");
@@ -466,7 +476,7 @@ exports.getDisabledStores = async () => {
     console.log(tiendasDeshabilitadas);
     return tiendasDeshabilitadas;
   } catch (error) {
-    console.error('Error en getDisabledStores:', error);
+    console.error("Error en getDisabledStores:", error);
     throw error;
   }
 };
