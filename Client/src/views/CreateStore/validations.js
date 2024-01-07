@@ -94,7 +94,9 @@ export const validateStoreForm = (formData) => {
     errors.ultimoDia = 'El dia de cierre es requerido';
   }
 
-  const urlRegex = /^(https?:\/\/)?([\w.]+)\.([a-z]{2,})(\/?[\w .-]*)*\/?$/;
+  const urlRegex = /^[a-zA-Z0-9_.]{1,30}$/
+
+
   if (formData.facebook && !urlRegex.test(formData.facebook)) {
     errors.facebook = 'La URL de perfil de Facebook no es válida';
   }

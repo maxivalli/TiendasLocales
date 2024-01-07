@@ -78,9 +78,9 @@ const StoreUpdate = ({ storeId }) => {
     ultimoDia: "",
     diaExcluido: "",
     dias: "",
-    facebook: "",
-    instagram: "",
-    whatsapp: "",
+    facebook: `https://www.facebook.com/${formData.facebook}`,
+    instagram: `https://www.instagram.com/${formData.instagram}`,
+    whatsapp: `https://wa.me/+54${formData.whatsapp}`,
   });
 
   const generarHorario = () => {
@@ -546,7 +546,7 @@ const StoreUpdate = ({ storeId }) => {
                 name="facebook"
                 value={storeData.facebook}
                 onChange={handleChange}
-                placeholder="Ej: https://www.facebook.com/tu_pagina"
+                placeholder='Ingresa lo que esta despues de "https://www.facebook.com/"'
                 className={style.input}
               />
               {errors.facebook && (
@@ -572,7 +572,7 @@ const StoreUpdate = ({ storeId }) => {
                 name="instagram"
                 value={storeData.instagram}
                 onChange={handleChange}
-                placeholder="Ej: https://www.instagram.com/tu_cuenta"
+                placeholder='Ingresa lo que esta despues de "https://www.instagram.com/"'
                 className={style.input}
               />
               {errors.instagram && (

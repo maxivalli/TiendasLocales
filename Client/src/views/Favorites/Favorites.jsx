@@ -23,8 +23,8 @@ const Favorites = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getFavorites(userId));
-  }, [dispatch]);
+    userId && dispatch(getFavorites(userId));
+  }, [userId]);
 
   const favoriteStores =
     stores &&
