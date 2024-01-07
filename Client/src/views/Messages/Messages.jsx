@@ -34,7 +34,6 @@ const Messages = ({ SWregistration }) => {
   }, [userStore]);
 
   const url = new URL(window.location.href);
-  console.log(url.hash);
   const lastPathSegment = url.href.split("/").pop();
   const isUserAccount = lastPathSegment == "usuario";
   const chatUserName = isUserAccount
@@ -136,7 +135,6 @@ const Messages = ({ SWregistration }) => {
             const url = new URL(window.location.href);
             const segments = url.pathname.split("/");
             const anteultimoSegmento = segments[segments.length - 1];
-            console.log(anteultimoSegmento);
             const chat = chats?.find((chat) => chat?.id === chatId);
             const people = chat.people;
             const lastMessage = message.text.replace(/<\/?p>/g, "");

@@ -327,7 +327,6 @@ function App() {
   const url = new URL(window.location.href);
   const segments = url.pathname.split("/");
   const anteultimoSegmento = segments[segments.length - 1];
- console.log(url.hash);
   useEffect(() => {
     onMessage(messaging, (message) => {
       const { title, text, path } = message.data
