@@ -45,17 +45,18 @@ const Store = () => {
 
   useEffect(() => {
     async function fetchData() {
-      if (userId) {
-        const response = userData && await axios.get(`/reviews/${userData?.id}/${userId}`);
+      if (userId && userData && userData.id) {
+        const response = await axios.get(`/reviews/${userData.id}/${userId}`);
         if (response.data) {
           setAlreadyReview(true);
         }
       }
     }
-    if (userId) {
+  
+    if (userId && userData && userData.id) {
       fetchData();
     }
-  }, [userId]);
+  }, [userId, userData]);
 
   useEffect(() => {
     dispatch(setSelectedStore(selectedStore));
@@ -151,6 +152,7 @@ const Store = () => {
       <Spinner/>
     );
   }
+
   return (
     <>
       <Filters />
