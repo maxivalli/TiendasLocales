@@ -18,9 +18,9 @@ const Messages = ({ SWregistration }) => {
   });
   const [loading, setLoading] = useState(true);
 
-  const userData = useSelector((state) => state?.userData);
-  const userName = userData?.username;
-  const userEmail = userData?.email;
+  const userData = useSelector((state) => state.userData);
+  const userName =userData && userData?.username;
+  const userEmail =userData && userData?.email;
 
   const userStore = useSelector((state) => state?.userStore);
   const storeName = userStore?.nombre;
@@ -121,6 +121,8 @@ const Messages = ({ SWregistration }) => {
   if (loading) {
     return <Spinner />;
   }
+  console.log(chatUserName);
+  console.log(userSecret);
   return (
     <>
       <div className="chat">

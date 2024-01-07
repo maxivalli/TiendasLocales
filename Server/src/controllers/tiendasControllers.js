@@ -67,7 +67,7 @@ exports.createStore = async (storeData) => {
         },
       });
 
-      if (admins) {
+      if (admins.length !== 0) {
         const mailResponse = await transporter.sendMail(
           waitingStoreMail(admins, newStore)
         );
