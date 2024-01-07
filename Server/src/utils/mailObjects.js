@@ -12,7 +12,7 @@ const waitingStoreTemplate = fs.readFileSync(__dirname + '/waitingStore.html', '
 const registerMail = (user) => {
   return {
     to: user.email,
-    from: '"Tiendas Locales" <contacto@mail.tiendaslocales.com.ar>',
+    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
     subject: "Registro completado",
     html: registerTemplate,
   };
@@ -21,7 +21,7 @@ const registerMail = (user) => {
 const habStoreMail = (user) => {
   return {
     to: user.email,
-    from: '"Tiendas Locales" <contacto@mail.tiendaslocales.com.ar>',
+    from: '"Tiendas Locales" <contacto@mtiendaslocales.com.ar>',
     subject: "Tienda habilitada",
     html: habStoreTemplate,
   };
@@ -34,7 +34,7 @@ const enviadoMail = (user) => {
   
   return {
     to: user.email,
-    from: '"Tiendas Locales" <contacto@mail.tiendaslocales.com.ar>',
+    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
     subject: `${user.userEnvia} te ha enviado ${user.productName}`,
     html: enviadoMail,
   };
@@ -43,7 +43,7 @@ const enviadoMail = (user) => {
 const compraMail = (user) => {
   return {
     to: user.email,
-    from: '"Tiendas Locales" <contacto@mail.tiendaslocales.com.ar>',
+    from: '"Tiendas Locales" <contacto@mtiendaslocales.com.ar>',
     subject: "Compra Realizada",
     html: compraTemplate,
   };
@@ -61,7 +61,7 @@ const waitingStoreMail = (admins, newStore) => {
 
   return {
     to: adminEmails,
-    from: '"Tiendas Locales" <contacto@mail.tiendaslocales.com.ar>',
+    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
     subject: "Tienda en espera de aprobación",
     html: notificationEmail,
   };
@@ -69,7 +69,7 @@ const waitingStoreMail = (admins, newStore) => {
 
 const postCreated = (email, postData) => {
   const { title, description, price, stock, image } = postData;
-  const urlPersonalizada = `http://tiendaslocales.com.ar/#/micuenta`; 
+  const urlPersonalizada = `http://www.tiendaslocales.com.ar/#/micuenta`; 
 
   const notificationEmail = postTemplate
     .replace('{{title}}', title)
@@ -82,7 +82,7 @@ const postCreated = (email, postData) => {
 
   return {
     to: email,
-    from: '"Tiendas Locales" <contacto@mail.tiendaslocales.com.ar>',
+    from: '"Tiendas Locales" <contacto@mtiendaslocales.com.ar>',
     subject: "Publicación Creada",
     html: notificationEmail,
   }
@@ -94,7 +94,7 @@ const postCreated = (email, postData) => {
 
 
 const passwordForgot = (email, id) => {
-  const urlPersonalizada = `https://tiendasLocales.com.ar/#/resetpassword/${id}`;
+  const urlPersonalizada = `https://www.tiendasLocales.com.ar/#/resetpassword/${id}`;
   //const urlPersonalizada = `http://localhost:5173/#/resetpassword/${id}`;
 
   function generarCodigoAleatorio() {
@@ -117,7 +117,7 @@ const passwordForgot = (email, id) => {
   
   return {
     to: email,
-    from: '"Tiendas Locales" <contacto@mail.tiendaslocales.com.ar>',
+    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
     subject: "Recuperacion de contraseña",
     html: forgotTemplateWithLink,
   }

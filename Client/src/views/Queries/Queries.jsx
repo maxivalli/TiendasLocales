@@ -13,7 +13,7 @@ const Queries = () => {
 
         <div className={style.link}>
         <p>✉️</p>
-        <a href='mailto:contacto@mail.tiendaslocales.com.ar' target='blank'>Contactar por mail</a>
+        <a href='mailto:contacto@tiendaslocales.com.ar' target='blank'>Contactar por mail</a>
         </div>
 
         <div className={style.link}>
@@ -32,7 +32,7 @@ const Queries = () => {
 
         <div className={style.link}>
         <p>✉️</p>
-        <a href='mailto:sancristobal@mail.tiendaslocales.com.ar' target='blank'>Contactar por mail</a>
+        <a href='mailto:sancristobal@tiendaslocales.com.ar' target='blank'>Contactar por mail</a>
         </div>
 
         <div className={style.link}>

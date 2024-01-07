@@ -61,7 +61,7 @@ messaging.onBackgroundMessage((payload) => {
 self.addEventListener("notificationclick", function (event) {
   event.notification.close();
 
-  const url = "https://tiendaslocales.com.ar";
+  const url = "https://www.tiendaslocales.com.ar";
 
   event.waitUntil(
     clients.matchAll({ type: "window" }).then((windowClients) => {

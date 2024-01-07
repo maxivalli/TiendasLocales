@@ -46,7 +46,7 @@ const Footer = () => {
             />
             Instagram
           </a>
-          <a href="mailto:contacto@mail.tiendaslocales.com.ar">
+          <a href="mailto:contacto@tiendaslocales.com.ar">
             <img
               width="24"
               height="24"

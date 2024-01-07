@@ -6,8 +6,8 @@ const transporter = nodemailer.createTransport(
     port: 465,
     secure: true,
     auth: {
-      user: "contacto@mail.tiendaslocales.com.ar",
-      pass: "YAjNMXKCphyS", // pasarlo a .env
+      user: "contacto@tiendaslocales.com.ar",
+      pass: "wZRh6sm27fET", // pasarlo a .env
     },    tls: {
       rejectUnauthorized: false
     },
