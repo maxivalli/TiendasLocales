@@ -22,10 +22,11 @@ import {
 import isStoreOpen from "../../components/isStoreOpen/isStoreOpen";
 import ReactPaginate from "react-paginate";
 
-const Store = ({ userData }) => {
+const Store = () => {
   const dispatch = useDispatch();
   const { linkName } = useParams();
 
+  const userData = useSelector((state) => state.userData)
   const stores = useSelector((state) => state.allStoresCopy);
   const storePosts = useSelector((state) => state.storePosts);
   const favorites = useSelector((state) => state.favorites);
@@ -45,7 +46,7 @@ const Store = ({ userData }) => {
   useEffect(() => {
     async function fetchData() {
       if (userId) {
-        const response = await axios.get(`/reviews/${userData?.id}/${userId}`);
+        const response = userData && await axios.get(`/reviews/${userData?.id}/${userId}`);
         if (response.data) {
           setAlreadyReview(true);
         }
