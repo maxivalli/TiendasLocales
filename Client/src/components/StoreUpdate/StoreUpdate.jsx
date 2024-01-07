@@ -78,9 +78,9 @@ const StoreUpdate = ({ storeId }) => {
     ultimoDia: "",
     diaExcluido: "",
     dias: "",
-    facebook: `https://www.facebook.com/${formData.facebook}`,
-    instagram: `https://www.instagram.com/${formData.instagram}`,
-    whatsapp: `https://wa.me/+54${formData.whatsapp}`,
+    facebook: "",
+    instagram: "",
+    whatsapp: "",
   });
 
   const generarHorario = () => {
@@ -190,6 +190,15 @@ const StoreUpdate = ({ storeId }) => {
     }
 
     let updatedStoreData = { ...storeData };
+
+    if (storeData.facebook !== "" || storeData.instagram !== "" || storeData.whatsapp !== "") {
+      updatedStoreData = {
+        ...updatedStoreData,
+        facebook: `https://facebook.com/${storeData.facebook}`,
+        instagram: `https://instagram.com/${storeData.instagram}`,
+        whatsapp: `https://wa.me/${storeData.whatsapp}`,
+      };
+    }    
 
     if (
       storeData.calle !== "" ||
@@ -540,13 +549,13 @@ const StoreUpdate = ({ storeId }) => {
 
           {showFacebookInput && (
             <label>
-              Facebook URL
+              Usuario de Facebook
               <input
                 type="text"
                 name="facebook"
                 value={storeData.facebook}
                 onChange={handleChange}
-                placeholder='Ingresa lo que esta despues de "https://www.facebook.com/"'
+                placeholder='Ingresa tu usuario de Facebook'
                 className={style.input}
               />
               {errors.facebook && (
@@ -566,13 +575,13 @@ const StoreUpdate = ({ storeId }) => {
 
           {showInstagramInput && (
             <label>
-              Instagram URL
+              Usuario de Instagram
               <input
                 type="text"
                 name="instagram"
                 value={storeData.instagram}
                 onChange={handleChange}
-                placeholder='Ingresa lo que esta despues de "https://www.instagram.com/"'
+                placeholder='Ingresa tu usuario de Instagram'
                 className={style.input}
               />
               {errors.instagram && (
