@@ -31,13 +31,13 @@ const Navbar = ({ isAuthenticated }) => {
   const goUserChat = () => {
       navigate("/mensajes/usuario")
     setShowAccounts(false);
-    window.location.reload();
+    
   };
 
   const goStoreChat = () => {
     navigate("/mensajes/tienda")
     setShowAccounts(false);
-      window.location.reload();
+      
   };
 
   const {
