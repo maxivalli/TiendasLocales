@@ -215,7 +215,8 @@ const Head = () => {
         navigate("/micuenta");
         break;
       case "store":
-        navigate("/micuenta");
+        const myStore = stores && stores.filter((store) => store.userId === userData?.id)
+        myStore && navigate(`/mitienda/${myStore?.id}`);
         break;
       default:
         //? ? ? ? ? ? ? ? ? ?

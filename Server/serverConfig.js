@@ -75,7 +75,7 @@ io.on("connection", (socket) => {
   
         if (!existingNotification) {
           await Notifications.create({
-            content: `Tiendas Locales: ${texto}`,
+            content: `Tiendas Locales: ${titulo} - ${texto}`,
             userId: user.id,
             image: "https://firebasestorage.googleapis.com/v0/b/tiendaslocales-7bbf8.appspot.com/o/logo.png?alt=media&token=bca80e33-79d3-4b7e-8e50-e7cb026a2a58",
             type: "aviso"

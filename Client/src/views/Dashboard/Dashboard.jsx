@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import style from "./Dashboard.module.css";
 import {
   getAllCompras,
@@ -15,6 +15,7 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const allUsers = useSelector((state) => state.allUsers);
   const storesByName = useSelector((state) => state.filteredStoresByName);
@@ -30,6 +31,12 @@ const Dashboard = () => {
   const [postsWithStores, setPostsWithStores] = useState([]);
   const [waitingStores, setWaitingStores] = useState([]);
   const [actualizar, setActualizar] = useState();
+
+  useEffect(() => {
+    if (userData && userData.rol !== "admin") {
+      navigate("/");
+    }
+  }, [userData]);
 
   useEffect(() => {
     let habilitedStores;
@@ -61,10 +68,10 @@ const Dashboard = () => {
   //CANTIDAD DE PUBLICACIONES REGISTRADAS EN TOTAL
   const cantidadPublicaciones = allPosts.length;
 
-  //CANTIDAD DE PUBLICACIONES REGISTRADAS EN TOTAL
+  //CANTIDAD DE COMPRAS REGISTRADAS EN TOTAL
   const cantidadCompras = allCompras.length;
 
-  //CANTIDAD DE USUARIOS QUE SE REGISTRARON EN EL ULTIMO MES
+  //CANTIDAD DE COMPRAS QUE SE REGISTRARON EN EL ULTIMO MES
   const comprasUltimoMes = () => {
     const fechaActual = new Date();
     const fechaHaceUnMes = new Date();
@@ -225,13 +232,23 @@ const Dashboard = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     if (error.titulo || error.texto) {
       return;
     }
-
+  
     const data = { titulo: mensaje.titulo, texto: mensaje.texto };
-    socket?.emit("mensajeGeneral", data);
+    socket?.emit("mensajeGeneral", data)
+      setMensaje({
+        titulo: "",
+        texto: "",
+      });
+  
+      Swal.fire({
+        icon: "success",
+        title: `¡Notificación enviada!`,
+        text: "Su mensaje fue enviado con éxito a todos los usuarios",
+      });
   };
 
   return (

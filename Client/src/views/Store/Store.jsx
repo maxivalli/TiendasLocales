@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addFavorite,
   getAllStores,
+  getFavorites,
   getStorePosts,
   isStoreOpenSwitch,
   removeFavorite,
@@ -44,7 +45,7 @@ const Store = ({ userData }) => {
   useEffect(() => {
     async function fetchData() {
       if (userId) {
-        const response = await axios.get(`/reviews/${userData.id}/${userId}`);
+        const response = await axios.get(`/reviews/${userData?.id}/${userId}`);
         if (response.data) {
           setAlreadyReview(true);
         }
@@ -58,6 +59,7 @@ const Store = ({ userData }) => {
   useEffect(() => {
     dispatch(setSelectedStore(selectedStore));
     storeId && dispatch(getStorePosts(storeId));
+    userId && dispatch(getFavorites(userId))
     dispatch(getAllStores()).then(() => {
       setLoading(false);
     });
@@ -162,11 +164,11 @@ const Store = ({ userData }) => {
             />
           </div>
           <div className={style.avatar}>
-            <img src={selectedStore.image} alt="avatar" />
-            {selectedStore.averageRating && (
+            <img src={selectedStore?.image} alt="avatar" />
+            {selectedStore?.averageRating && (
               <div className={style.stars}>
                 {Array.from(
-                  { length: selectedStore.averageRating },
+                  { length: selectedStore?.averageRating },
                   (_, index) => (
                     <span key={index}>⭐️</span>
                   )
@@ -200,7 +202,7 @@ const Store = ({ userData }) => {
           </div>
 
           <div className={style.info}>
-            <h2>{selectedStore.nombre}</h2>
+            <h2>{selectedStore?.nombre}</h2>
             <p>
               {" "}
               <span
@@ -233,12 +235,12 @@ const Store = ({ userData }) => {
                 <> (local: {selectedStore?.direccion.depto})</>
               )}
             </p>
-            <p>📆 {selectedStore.dias}</p>
+            <p>📆 {selectedStore?.dias}</p>
             <p>
-              ⏰ {selectedStore.horarios.horario_de_apertura}hs a{" "}
-              {selectedStore.horarios.horario_de_cierre}hs
-              {selectedStore.horarios.horario_de_apertura2 &&
-                selectedStore.horarios.horario_de_cierre2 && (
+              ⏰ {selectedStore?.horarios.horario_de_apertura}hs a{" "}
+              {selectedStore?.horarios.horario_de_cierre}hs
+              {selectedStore?.horarios.horario_de_apertura2 &&
+                selectedStore?.horarios.horario_de_cierre2 && (
                   <>
                     {" y "}
                     {selectedStore.horarios.horario_de_apertura2}hs a{" "}
@@ -247,7 +249,7 @@ const Store = ({ userData }) => {
                 )}
             </p>
 
-            <p>{selectedStore.categoria}</p>
+            <p>{selectedStore?.categoria}</p>
           </div>
         </div>
 
