@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import Logo from "../../assets/TLlogoAlpha.png";
 import home from "../../assets/home.png";
 import heart from "../../assets/heart.png";
@@ -10,6 +10,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useSelector } from "react-redux";
 
 const Navbar = ({ isAuthenticated }) => {
+  const navigate = useNavigate();
   
   const userData = useSelector((state) => state.userData);
   const userStore = useSelector((state) => state.userStore);
@@ -19,8 +20,16 @@ const Navbar = ({ isAuthenticated }) => {
     setShowAccounts(false);
   };
 
-  const selectAccount = () => {
+  const goUserChat = () => {
+      navigate("/mensajes/usuario")
     setShowAccounts(false);
+    window.location.reload();
+  };
+
+  const goStoreChat = () => {
+    navigate("/mensajes/tienda")
+    setShowAccounts(false);
+      window.location.reload();
   };
 
   const {
@@ -72,12 +81,12 @@ const Navbar = ({ isAuthenticated }) => {
           {showAccounts && (
             <div className={style.under} onClick={handleClickOutside}>
               <div className={style.modal}>
-                <h3>Selecciona una una cuenta para chatear</h3>
+                <h3>Selecciona una cuenta para chatear</h3>
                 <div className={style.accounts}>
                   <Link to="/mensajes/usuario">
                     <button
                       onClick={() => {
-                        selectAccount();
+                        goUserChat();
                       }}
                       className={style.profilePicture}
                     >
@@ -94,7 +103,7 @@ const Navbar = ({ isAuthenticated }) => {
                   <Link to="/mensajes/tienda">
                     <button
                       onClick={() => {
-                        selectAccount();
+                        goStoreChat();
                       }}
                       className={style.profilePicture}
                     >
