@@ -21,7 +21,7 @@ const registerMail = (user) => {
 const habStoreMail = (user) => {
   return {
     to: user.email,
-    from: '"Tiendas Locales" <contacto@mtiendaslocales.com.ar>',
+    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
     subject: "Tienda habilitada",
     html: habStoreTemplate,
   };
