@@ -43,7 +43,7 @@ const enviadoMail = (user) => {
 const compraMail = (user) => {
   return {
     to: user.email,
-    from: '"Tiendas Locales" <contacto@mtiendaslocales.com.ar>',
+    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
     subject: "Compra Realizada",
     html: compraTemplate,
   };
@@ -82,7 +82,7 @@ const postCreated = (email, postData) => {
 
   return {
     to: email,
-    from: '"Tiendas Locales" <contacto@mtiendaslocales.com.ar>',
+    from: '"Tiendas Locales" <contacto@tiendaslocales.com.ar>',
     subject: "Publicación Creada",
     html: notificationEmail,
   }
