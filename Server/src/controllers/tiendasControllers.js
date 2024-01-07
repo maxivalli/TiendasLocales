@@ -62,7 +62,10 @@ exports.createStore = async (storeData) => {
           rol: 'admin'
         }
       });
-      await transporter.sendMail(waitingStoreMail(admins, newStore));
+      const mailResponse = await transporter.sendMail(waitingStoreMail(admins, newStore));
+      if (!mailResponse){
+        throw new Error("Error al enviar mail de waitingStore")
+      }
 
       const imageBlob = await getImageBlobFromURL(storeData.image);
 
@@ -74,7 +77,7 @@ exports.createStore = async (storeData) => {
       formData.append("avatar", imageBlob, "avatar.png");
 
       const config = {
-        method: "put",
+        method: "PUT",
         url: "https://api.chatengine.io/users/",
         headers: {
           "PRIVATE-KEY": "6dd44c34-8014-4535-aabc-4e2591499a03",
@@ -83,7 +86,10 @@ exports.createStore = async (storeData) => {
         data: formData,
       };
 
-      await axios(config);
+      const response = await axios(config);
+      if (!response){
+        throw new Error ("Ha habido un problema al crear o actualizar usuario de chat")
+      }
 
       return true;
     }
