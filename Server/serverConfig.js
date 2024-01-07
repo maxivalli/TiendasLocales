@@ -256,7 +256,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("newMessage", async (messageData) => {
-    const { people, lastMessage, sender, senderId, url } = messageData;
+    const { people, lastMessage, sender, senderId, anteultimoSegmento } = messageData;
     const addressee = people.find(
       (people) => people.person.username !== sender
     );
@@ -301,7 +301,7 @@ io.on("connection", (socket) => {
             data: {
               title: store.nombre,
               text: messageNotificationText,
-              path: url
+              path: anteultimoSegmento,
             },
             token: user.FCMtoken,
           };

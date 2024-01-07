@@ -324,12 +324,14 @@ function App() {
       clearInterval(connectionSpeedChecker);
     };
   }, []);
-
+  const url = new URL(window.location.href);
+  const segments = url.pathname.split("/");
+  const anteultimoSegmento = segments[segments.length - 1];
   useEffect(() => {
     onMessage(messaging, (message) => {
-      const { title, text, path } = message.data;
+      const { title, text, path } = message.data
       console.log(path);
-      if (!path.includes("#/mensajes")) {
+      if (path !== anteultimoSegmento) {
         toast(
         <div>
           <strong>{title}</strong>
