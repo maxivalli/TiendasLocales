@@ -50,8 +50,8 @@ let SWregistration;
 
 function App() {
   const dispatch = useDispatch();
- axios.defaults.baseURL = "http://localhost:3001/";
- //axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/";
+ //axios.defaults.baseURL = "http://localhost:3001/";
+ axios.defaults.baseURL = "https://tiendaslocales-production.up.railway.app/";
   const { user, isAuthenticated: isAuthenticatedAuth0, isLoading } = useAuth0();
 
   const handleUserGoogle = async () => {
@@ -213,8 +213,8 @@ function App() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      //socket = io("https://tiendaslocales-production.up.railway.app/");
-      socket = io("http://localhost:3001/");
+      socket = io("https://tiendaslocales-production.up.railway.app/");
+      //socket = io("http://localhost:3001/");
       setShouldConnectSocket(true);
     }
   }, [isAuthenticated]);
@@ -324,12 +324,15 @@ function App() {
       clearInterval(connectionSpeedChecker);
     };
   }, []);
-
+  const url = new URL(window.location.href);
+  const segments = url.pathname.split("/");
+  const anteultimoSegmento = segments[segments.length - 1];
+ console.log(url.hash);
   useEffect(() => {
     onMessage(messaging, (message) => {
-      const { title, text, path } = message.data;
+      const { title, text, path } = message.data
       console.log(path);
-      if (!path.includes("#/mensajes")) {
+      if (path !== anteultimoSegmento) {
         toast(
         <div>
           <strong>{title}</strong>

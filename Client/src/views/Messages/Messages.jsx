@@ -34,6 +34,7 @@ const Messages = ({ SWregistration }) => {
   }, [userStore]);
 
   const url = new URL(window.location.href);
+  console.log(url.hash);
   const lastPathSegment = url.href.split("/").pop();
   const isUserAccount = lastPathSegment == "usuario";
   const chatUserName = isUserAccount
@@ -59,7 +60,6 @@ const Messages = ({ SWregistration }) => {
             "/firebase-messaging-sw.js"
           );
           SWregistration = registration;
-        
         } catch (error) {
           console.error("Error al registrar el Service Worker:", error);
           return;
@@ -70,12 +70,9 @@ const Messages = ({ SWregistration }) => {
         vapidKey:
           "BNY5OiGgDKe6EVWr76IohPCDDrKwCdr48QVhp9K5T1CdCDYkJ3dUbUl2ciToadj8OPGO2JTpPaEA7kwXe4w0aMA",
         serviceWorkerRegistration: SWregistration,
-      }).catch((error) => {
-        
-      });
+      }).catch((error) => {});
 
       if (token) {
-       
         userData.FCMtoken = token;
         const id = userData.id;
         dispatch(updateUser(id, userData));
@@ -122,11 +119,8 @@ const Messages = ({ SWregistration }) => {
 
   const [chats, setChats] = useState();
 
-  
   if (loading) {
-    return (
-      <Spinner/>
-    );
+    return <Spinner />;
   }
   return (
     <>
@@ -140,11 +134,20 @@ const Messages = ({ SWregistration }) => {
           }}
           onNewMessage={(chatId, message) => {
             const url = new URL(window.location.href);
+            const segments = url.pathname.split("/");
+            const anteultimoSegmento = segments[segments.length - 1];
+            console.log(anteultimoSegmento);
             const chat = chats?.find((chat) => chat?.id === chatId);
             const people = chat.people;
             const lastMessage = message.text.replace(/<\/?p>/g, "");
             const sender = message.sender_username;
-            const messageData = { people, lastMessage, sender, userData, url: url.hash };
+            const messageData = {
+              people,
+              lastMessage,
+              sender,
+              userData,
+              anteultimoSegmento,
+            };
             socket?.emit("newMessage", messageData);
           }}
           height="calc(100vh - 60px)"
