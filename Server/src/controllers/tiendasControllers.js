@@ -62,7 +62,10 @@ exports.createStore = async (storeData) => {
           rol: 'admin'
         }
       });
-      await transporter.sendMail(waitingStoreMail(admins, newStore));
+      const mailResponse = await transporter.sendMail(waitingStoreMail(admins, newStore));
+      if (!mailResponse){
+        throw new Error("Error al enviar mail de waitingStore")
+      }
 
       const imageBlob = await getImageBlobFromURL(storeData.image);
 
