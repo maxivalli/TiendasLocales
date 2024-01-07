@@ -238,7 +238,7 @@ const Dashboard = () => {
     }
   
     const data = { titulo: mensaje.titulo, texto: mensaje.texto };
-    socket?.emit("mensajeGeneral", data).then(() => {
+    socket?.emit("mensajeGeneral", data)
       setMensaje({
         titulo: "",
         texto: "",
@@ -249,7 +249,6 @@ const Dashboard = () => {
         title: `¡Notificación enviada!`,
         text: "Su mensaje fue enviado con éxito a todos los usuarios",
       });
-    });
   };
 
   return (
