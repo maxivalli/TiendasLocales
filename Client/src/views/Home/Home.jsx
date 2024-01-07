@@ -4,6 +4,7 @@ import Banner from "../../components/Banners/Banners";
 import Cards from "../../components/Cards/Cards";
 import CardsStore from "../../components/CardsStore/CardsStore";
 import SearchBar from "../../components/SearchBar/SearchBar";
+import Footer from '../../components/Footer/Footer'
 import style from "./Home.module.css";
 import Head from "../../components/Head/Head";
 import b1 from "../../assets/Banner1.jpg";
@@ -122,7 +123,9 @@ const Home = () => {
             <CardsStore key={index} {...store} />
           ))}
         </div>
+        <Footer/>
       </div>
+      
     </>
   );
 };
