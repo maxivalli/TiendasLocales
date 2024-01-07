@@ -244,8 +244,8 @@ const Store = () => {
                 selectedStore?.horarios.horario_de_cierre2 && (
                   <>
                     {" y "}
-                    {selectedStore.horarios.horario_de_apertura2}hs a{" "}
-                    {selectedStore.horarios.horario_de_cierre2}hs
+                    {selectedStore?.horarios.horario_de_apertura2}hs a{" "}
+                    {selectedStore?.horarios.horario_de_cierre2}hs
                   </>
                 )}
             </p>
