@@ -100,10 +100,6 @@ const CardSquare = ({
           />
         </div>
 
-        {onDelete && (
-          <button onClick={() => handleEliminado(id)}>Eliminar</button>
-        )}
-
         <Link to={`/post/${id}`}>
           <img src={image} alt="image" />
           <h2>{title}</h2>
@@ -121,6 +117,17 @@ const CardSquare = ({
               <img width="30" height="30" src={edit} alt="edit--v1" />
             </button>
             <button className={style.delete} onClick={() => handleDelete(id)}>
+              <img width="24" height="24" src={del} alt="filled-trash" />
+            </button>
+          </div>
+        )}
+
+        {onDelete && (
+          <div className={style.prodBut}>
+            <button
+              onClick={() => handleEliminado(id)}
+              className={style.delete}
+            >
               <img width="24" height="24" src={del} alt="filled-trash" />
             </button>
           </div>
