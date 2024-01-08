@@ -1,43 +1,34 @@
 import {useEffect, useState} from 'react'
 
 const PwaButton = () => {
-    const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
 
   useEffect(() => {
-    const handleBeforeInstallPrompt = (event) => {
-      // Prevent Chrome 67 and earlier from automatically showing the prompt
-      event.preventDefault();
-      // Stash the event so it can be triggered later
-      setDeferredPrompt(event);
+    const beforeInstallPromptHandler = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
     };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('beforeinstallprompt', beforeInstallPromptHandler);
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('beforeinstallprompt', beforeInstallPromptHandler);
     };
   }, []);
 
-  const handleDownloadClick = async () => {
-    if (deferredPrompt) {
-      // Show the install prompt
+  const handleInstallClick = async () => {
+    if (deferredPrompt !== null) {
       deferredPrompt.prompt();
-      // Wait for the user to respond to the prompt
-      const choiceResult = await deferredPrompt.userChoice;
-
-      if (choiceResult.outcome === 'accepted') {
-        console.log('Usuario aceptó la instalación');
-      } else {
-        console.log('Usuario canceló la instalación');
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setDeferredPrompt(null);
       }
-
-      setDeferredPrompt(null);
-    } else {
-      console.log('La instalación no está disponible');
     }
   };
+
   return (
-    <button onClick={handleDownloadClick}>Descargar PWA</button>
+    <button id="installApp" onClick={handleInstallClick}>Instalar</button>
   )
 }
 
