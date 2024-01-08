@@ -36,12 +36,12 @@ const Messages = ({ SWregistration }) => {
   const url = new URL(window.location.href);
   const lastPathSegment = url.href.split("/").pop();
   const isUserAccount = lastPathSegment == "usuario";
-  const chatUserName = isUserAccount
+  const chatUserName = userName && isUserAccount
     ? userName
     : storeName
     ? storeName
     : savedStoreData.nombre;
-  const userSecret = isUserAccount
+  const userSecret = userEmail && isUserAccount
     ? userEmail
     : storeEmail
     ? storeEmail
@@ -49,7 +49,7 @@ const Messages = ({ SWregistration }) => {
 
   useEffect(() => {
     const loginNotifications = () => {
-      signInAnonymously(getAuth()).then((usuario) => console.log(usuario));
+      signInAnonymously(getAuth())
     };
 
     const activarMensajes = async () => {
@@ -121,8 +121,6 @@ const Messages = ({ SWregistration }) => {
   if (loading) {
     return <Spinner />;
   }
-  console.log(chatUserName);
-  console.log(userSecret);
   return (
     <>
       <div className="chat">
