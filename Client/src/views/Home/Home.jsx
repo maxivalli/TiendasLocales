@@ -4,17 +4,22 @@ import Banner from "../../components/Banners/Banners";
 import Cards from "../../components/Cards/Cards";
 import CardsStore from "../../components/CardsStore/CardsStore";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import Footer from '../../components/Footer/Footer'
+import Footer from "../../components/Footer/Footer";
+import PwaButton from "../../components/PWA/PwaButton";
 import style from "./Home.module.css";
 import Head from "../../components/Head/Head";
 import b1 from "../../assets/Banner1.jpg";
 import b2 from "../../assets/Banner2.jpg";
 import b3 from "../../assets/Banner3.jpg";
-import food from '../../assets/food.png'
-import icecream from '../../assets/icecream.png'
-import constr from '../../assets/constr.png'
-import ropa from '../../assets/ropa.png'
-import { getAllStores, getStores2ByCategory, selectCategory } from "../../redux/actions";
+import food from "../../assets/food.png";
+import icecream from "../../assets/icecream.png";
+import constr from "../../assets/constr.png";
+import ropa from "../../assets/ropa.png";
+import {
+  getAllStores,
+  getStores2ByCategory,
+  selectCategory,
+} from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
@@ -40,33 +45,32 @@ const Home = () => {
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .slice(0, 12);
 
-
-    const handleCategoriaClick = (categoria) => {
-      switch (categoria) {
-        case "🍕 Rotisería y restaurantes":
-          dispatch(selectCategory(categoria));
-          dispatch(getStores2ByCategory(categoria));
-          navigate("/resultados");
-          break;
-        case "🍦 Heladerías":
-          dispatch(selectCategory(categoria));
-          dispatch(getStores2ByCategory(categoria));
-          navigate("/resultados");
-          break;
-        case "🚧 Construcción":
-          dispatch(selectCategory(categoria));
-          dispatch(getStores2ByCategory(categoria));
-          navigate("/resultados");
-          break;
-        case "👕 Ropa e indumentaría":
-          dispatch(selectCategory(categoria));
-          dispatch(getStores2ByCategory(categoria));
-          navigate("/resultados");
-          break;
-        default:
-          break;
-      }
-    };
+  const handleCategoriaClick = (categoria) => {
+    switch (categoria) {
+      case "🍕 Rotisería y restaurantes":
+        dispatch(selectCategory(categoria));
+        dispatch(getStores2ByCategory(categoria));
+        navigate("/resultados");
+        break;
+      case "🍦 Heladerías":
+        dispatch(selectCategory(categoria));
+        dispatch(getStores2ByCategory(categoria));
+        navigate("/resultados");
+        break;
+      case "🚧 Construcción":
+        dispatch(selectCategory(categoria));
+        dispatch(getStores2ByCategory(categoria));
+        navigate("/resultados");
+        break;
+      case "👕 Ropa e indumentaría":
+        dispatch(selectCategory(categoria));
+        dispatch(getStores2ByCategory(categoria));
+        navigate("/resultados");
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <>
@@ -78,6 +82,8 @@ const Home = () => {
         </div>
 
         <div className={style.title}>
+         <PwaButton/>
+
           <h2>Recién llegados</h2>
           <p>Mira los últimos productos que publicaron</p>
         </div>
@@ -89,27 +95,39 @@ const Home = () => {
         <div className={style.catDest}>
           <h2>Categotías destacadas</h2>
           <div className={style.cat}>
-
-            <div className={style.roti} onClick={() => handleCategoriaClick("🍕 Rotisería y restaurantes")}>
+            <div
+              className={style.roti}
+              onClick={() =>
+                handleCategoriaClick("🍕 Rotisería y restaurantes")
+              }
+            >
               <h4>Rotiserías</h4>
               <img src={food} alt="comida" />
             </div>
 
-            <div className={style.helad} onClick={() => handleCategoriaClick("🍦 Heladerías")}>
+            <div
+              className={style.helad}
+              onClick={() => handleCategoriaClick("🍦 Heladerías")}
+            >
               <h4>Heladerías</h4>
               <img src={icecream} alt="healdos" />
             </div>
 
-            <div className={style.const} onClick={() => handleCategoriaClick("🚧 Construcción")}>
+            <div
+              className={style.const}
+              onClick={() => handleCategoriaClick("🚧 Construcción")}
+            >
               <h4>Construcción</h4>
               <img src={constr} alt="construccion" />
             </div>
 
-            <div className={style.ropa} onClick={() => handleCategoriaClick("👕 Ropa e indumentaría")}>
+            <div
+              className={style.ropa}
+              onClick={() => handleCategoriaClick("👕 Ropa e indumentaría")}
+            >
               <h4>Ropa e indumentaria</h4>
               <img src={ropa} alt="ropa" />
             </div>
-
           </div>
         </div>
 
@@ -123,9 +141,8 @@ const Home = () => {
             <CardsStore key={index} {...store} />
           ))}
         </div>
-        <Footer/>
+        <Footer />
       </div>
-      
     </>
   );
 };
