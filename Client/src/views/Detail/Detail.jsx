@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ProductImages from "../../components/productImages/ProductImages";
-import Spinner from '../../components/Spinner/Spinner'
+import Spinner from "../../components/Spinner/Spinner";
 import Head from "../../components/Head/Head";
 import likeG from "../../assets/likeG.png";
 import likeR from "../../assets/likeR.png";
@@ -32,19 +32,17 @@ const Detail = () => {
   const [buyButton, setBuyButton] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [buyDirButton, setBuyDirButton] = useState(false);
- 
+
   const userId = userData?.id;
   const postId = parseInt(id);
 
   useEffect(() => {
-    dispatch(getPostById(postId))
-    .then(() => setIsLoading(false))
+    dispatch(getPostById(postId)).then(() => setIsLoading(false));
   }, [dispatch, postId]);
 
   const selectedStore = stores?.find(
     (store) => store.id == selectedPost.storeId
   );
-
 
   useEffect(() => {
     const fetchDataAcct = async () => {
@@ -83,8 +81,6 @@ const Detail = () => {
     setTotalPrice(selectedPost.price * quantity);
   }, [quantity, selectedPost.price]);
 
- 
-
   const handleBuy = async () => {
     try {
       if (quantity > 0 && quantity <= selectedPost.stock) {
@@ -114,7 +110,6 @@ const Detail = () => {
 
       if (response) {
         window.open(response.data.response.body.init_point);
-        
       } else {
         console.error("Init point not found in the response");
       }
@@ -124,12 +119,13 @@ const Detail = () => {
   };
 
   useEffect(() => {
-    selectedStore && dispatch(
-      isStoreOpenSwitch(
-        isStoreOpen(selectedStore?.dias, selectedStore?.horarios),
-        selectedStore?.id
-      )
-    );
+    selectedStore &&
+      dispatch(
+        isStoreOpenSwitch(
+          isStoreOpen(selectedStore?.dias, selectedStore?.horarios),
+          selectedStore?.id
+        )
+      );
   }, [dispatch]);
 
   const isPostFavorite =
@@ -195,9 +191,7 @@ const Detail = () => {
   };
 
   if (isLoading) {
-    return (
-      <Spinner/>
-    );
+    return <Spinner />;
   }
   return (
     <>
@@ -216,7 +210,7 @@ const Detail = () => {
               {" "}
               <span
                 style={{
-                  color:isStoreOpen(
+                  color: isStoreOpen(
                     selectedStore?.dias,
                     selectedStore?.horarios
                   )
@@ -257,10 +251,6 @@ const Detail = () => {
         </div>
 
         <div className={style.images}>
-          <ProductImages images={selectedPost.image} />
-        </div>
-
-        <div className={style.info}>
           <div className={style.favorite} onClick={toggleFavorite}>
             <img
               src={isFavorite ? likeR : likeG}
@@ -268,6 +258,10 @@ const Detail = () => {
               className={style.fav}
             />
           </div>
+          <ProductImages images={selectedPost.image} />
+        </div>
+
+        <div className={style.info}>
           <h2>{selectedPost.title}</h2>
           <div className={style.precio}>
             <span>Precio:</span>

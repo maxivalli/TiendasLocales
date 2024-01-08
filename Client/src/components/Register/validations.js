@@ -5,8 +5,8 @@ export function validateUsername(username) {
   if (username.length < 3) {
     return "El nombre de usuario debe tener al menos 3 caracteres";
   }
-  if (username.length > 30) {
-    return "El nombre del usuario no debe superar los 30 caracteres";
+  if (username.length > 20) {
+    return "El nombre del usuario no debe superar los 20 caracteres";
   }
   return null;
 }

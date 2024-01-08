@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/TLlogoAlpha.png";
 import home from "../../assets/home.png";
 import heart from "../../assets/heart.png";
@@ -12,8 +12,8 @@ import { getUserStore } from "../../redux/actions";
 
 const Navbar = ({ isAuthenticated }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
-  
+  const dispatch = useDispatch();
+
   const userData = useSelector((state) => state.userData);
   const userStore = useSelector((state) => state.userStore);
   const [showAccounts, setShowAccounts] = useState();
@@ -24,20 +24,20 @@ const Navbar = ({ isAuthenticated }) => {
 
   const url = new URL(window.location.href);
 
-  useEffect(()=>{
-    userData && dispatch(getUserStore(userData?.id))
-  }, [url.hash])
+  useEffect(() => {
+    userData && dispatch(getUserStore(userData?.id));
+  }, [url.hash]);
 
   const goUserChat = () => {
-      navigate("/mensajes/usuario")
+    navigate("/mensajes/usuario");
     setShowAccounts(false);
-    window.location.reload();
+    
   };
 
   const goStoreChat = () => {
-    navigate("/mensajes/tienda")
+    navigate("/mensajes/tienda");
     setShowAccounts(false);
-      window.location.reload();
+    
   };
 
   const {
