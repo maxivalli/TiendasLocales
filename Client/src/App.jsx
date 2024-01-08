@@ -130,7 +130,7 @@ function App() {
     setUserData(user);
     dispatch(saveUserData(user));
     dispatch(getUserStore(user?.id));
-    dispatch(getUserNotif(user?.id));
+    user && dispatch(getUserNotif(user?.id));
     dispatch(getAllStores());
   };
 
@@ -185,7 +185,7 @@ function App() {
                 dispatch(getUserStore(userDataResponse?.data.id));
                 dispatch(getAllPosts());
                 dispatch(getAllUsers());
-                dispatch(getUserNotif(userDataResponse?.data.id));
+                userDataResponse && dispatch(getUserNotif(userDataResponse?.data.id));
                 dispatch(getAllStores());
               })
               .catch((userDataError) => {
