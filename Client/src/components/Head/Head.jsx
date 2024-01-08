@@ -4,6 +4,7 @@ import { socket } from "../../App";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteUserNotif,
+  getAllStores,
   getUserNotif,
   markNotiAsRead,
 } from "../../redux/actions";
@@ -115,6 +116,11 @@ const Head = () => {
     socket?.on("compraRealizada", (data) => {
       handleNuevaCompra(data);
     });
+
+    return () => {
+      socket?.off("compraRealizada", handleNuevaCompra);
+    };
+ 
   }, [stores]);
 
   useEffect(() => {
@@ -124,9 +130,9 @@ const Head = () => {
       const title = allData.payUserData.title;
       const image = post?.image;
       const compradorName = comprador?.username;
-
+  
       dispatch(getUserNotif(userId));
-
+  
       setHasUnreadNotification(true);
       const DBdata = {
         cantidad: cantidad,
@@ -141,10 +147,14 @@ const Head = () => {
       };
       socket?.emit("ventaRealizadaToDB", DBdata);
     };
-
+  
     socket?.on("ventaRealizada", (data) => {
       handleNuevaVenta(data);
     });
+  
+    return () => {
+      socket?.off("ventaRealizada", handleNuevaVenta);
+    };
   }, [stores]);
 
   useEffect(() => {
@@ -177,6 +187,7 @@ const Head = () => {
   useEffect(() => {
     const handleApprovedStore = () => {
       dispatch(getUserNotif(userId));
+      dispatch(getAllStores())
       setHasUnreadNotification(true);
     };
 
