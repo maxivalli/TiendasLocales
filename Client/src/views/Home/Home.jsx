@@ -5,7 +5,6 @@ import Cards from "../../components/Cards/Cards";
 import CardsStore from "../../components/CardsStore/CardsStore";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Footer from "../../components/Footer/Footer";
-import PwaButton from "../../components/PWA/PwaButton";
 import style from "./Home.module.css";
 import Head from "../../components/Head/Head";
 import b1 from "../../assets/Banner1.jpg";
@@ -82,8 +81,6 @@ const Home = () => {
         </div>
 
         <div className={style.title}>
-         <PwaButton/>
-
           <h2>Recién llegados</h2>
           <p>Mira los últimos productos que publicaron</p>
         </div>
