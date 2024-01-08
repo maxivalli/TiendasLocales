@@ -5,12 +5,19 @@
 }
 
 .favorite {
+  display: grid;
   justify-self: center;
   align-self: center;
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
 }
 
 .favorite .fav {
   width: 30px;
+  justify-self: center;
+  align-self: center;
 }
 
 .store {
