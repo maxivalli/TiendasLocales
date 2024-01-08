@@ -121,8 +121,6 @@ const Messages = ({ SWregistration }) => {
   if (loading) {
     return <Spinner />;
   }
-  console.log(chatUserName);
-  console.log(userSecret);
   return (
     <>
       <div className="chat">
