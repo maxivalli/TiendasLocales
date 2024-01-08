@@ -26,7 +26,7 @@ const Store = () => {
   const dispatch = useDispatch();
   const { linkName } = useParams();
 
-  const userData = useSelector((state) => state.userData)
+  const userData = useSelector((state) => state.userData);
   const stores = useSelector((state) => state.allStoresCopy);
   const storePosts = useSelector((state) => state.storePosts);
   const favorites = useSelector((state) => state.favorites);
@@ -52,7 +52,7 @@ const Store = () => {
         }
       }
     }
-  
+
     if (userId && userData && userData.id) {
       fetchData();
     }
@@ -61,7 +61,7 @@ const Store = () => {
   useEffect(() => {
     dispatch(setSelectedStore(selectedStore));
     storeId && dispatch(getStorePosts(storeId));
-    userId && dispatch(getFavorites(userId))
+    userId && dispatch(getFavorites(userId));
     dispatch(getAllStores()).then(() => {
       setLoading(false);
     });
@@ -148,9 +148,7 @@ const Store = () => {
   };
 
   if (loading) {
-    return (
-      <Spinner/>
-    );
+    return <Spinner />;
   }
 
   return (
@@ -159,13 +157,6 @@ const Store = () => {
       <Head />
       <div className={style.viewStore}>
         <div className={style.store}>
-          <div className={style.favorite} onClick={toggleFavorite}>
-            <img
-              src={isFavorite ? likeR : likeG}
-              alt="like"
-              className={style.fav}
-            />
-          </div>
           <div className={style.avatar}>
             <img src={selectedStore?.image} alt="avatar" />
             {selectedStore?.averageRating && (
@@ -253,6 +244,13 @@ const Store = () => {
             </p>
 
             <p>{selectedStore?.categoria}</p>
+          </div>
+          <div className={style.favorite} onClick={toggleFavorite}>
+            <img
+              src={isFavorite ? likeR : likeG}
+              alt="like"
+              className={style.fav}
+            />
           </div>
         </div>
 
