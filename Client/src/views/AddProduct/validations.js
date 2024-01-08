@@ -3,7 +3,7 @@ export const validateProductForm = (newProduct) => {
 
 
     const MIN_TITLE_LENGTH = 3;
-    const MAX_TITLE_LENGTH = 50;
+    const MAX_TITLE_LENGTH = 20;
 if (!newProduct.title.trim()) {
     errors.title = "El título del producto es requerido";
   }
