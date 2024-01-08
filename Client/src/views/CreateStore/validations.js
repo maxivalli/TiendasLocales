@@ -54,7 +54,7 @@ export const validateStoreForm = (formData) => {
 
   
   const MIN_NOMBRE_TIENDA_LENGTH = 3;
-  const MAX_NOMBRE_TIENDA_LENGTH = 50;
+  const MAX_NOMBRE_TIENDA_LENGTH = 20;
   if (!formData.nombre.trim()) {
     errors.nombre = "El nombre de la tienda es requerido";
   }
