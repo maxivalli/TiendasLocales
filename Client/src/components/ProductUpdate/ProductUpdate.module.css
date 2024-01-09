@@ -7,6 +7,10 @@
   border-radius: 10px;
 }
 
+.container span {
+  margin: 0;
+}
+
 .container h3 {
   padding: 0;
   margin: 20px;
@@ -74,6 +78,10 @@
 
 .imagePreview {
   display: grid;
+  width: 60px;
+  height: 60px;
+  justify-self: center;
+  margin-bottom: 20px;
 }
 
 .imagePreview button {
@@ -88,10 +96,7 @@
 }
 
 .imgUser {
-  width: 60px;
-  height: 60px;
   border-radius: 10px;
-  justify-self: center;
 }
 
 .error {
@@ -114,6 +119,12 @@
 }
 
 @media (max-width: 768px) {
+  .container {
+    height: 550px;
+    width: 330px;
+    overflow: scroll;
+  }
+
   .create {
     grid-template-columns: 1fr;
   }
