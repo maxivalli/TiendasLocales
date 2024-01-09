@@ -102,11 +102,11 @@ export default defineConfig({
     minify: "terser",
     terserOptions: {
       compress: {
-        drop_console: false,
+        drop_console: true,
         passes: 2,
       },
       format: {
-        comments: true,
+        comments: false,
       },
     },
     chunkSizeWarningLimit: 200000,

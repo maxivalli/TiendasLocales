@@ -121,7 +121,6 @@ const Messages = ({ SWregistration }) => {
   if (loading) {
     return <Spinner />;
   }
-  
   return (
     <>
       <div className="chat">
@@ -129,7 +128,7 @@ const Messages = ({ SWregistration }) => {
           projectID="236f9c42-06cc-414f-98cd-b7465ea5c29e"
           userName={chatUserName}
           userSecret={userSecret}
-          /* onGetChats={(chats) => {
+          onGetChats={(chats) => {
             setChats(chats);
           }}
           onNewMessage={(chatId, message) => {
@@ -148,7 +147,7 @@ const Messages = ({ SWregistration }) => {
               anteultimoSegmento,
             };
             socket?.emit("newMessage", messageData);
-          }} */
+          }}
           height="calc(100vh - 60px)"
           offset={-3}
         />
