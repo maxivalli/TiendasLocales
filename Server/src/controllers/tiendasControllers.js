@@ -75,7 +75,7 @@ exports.createStore = async (storeData) => {
           throw new Error("Error al enviar mail de waitingStore");
         }
       }
-      
+
       const imageBlob = await getImageBlobFromURL(storeData.image);
 
       const formData = new FormData();
@@ -280,17 +280,18 @@ exports.habStore = async (id) => {
 
     store.habilitado = "habilitado";
     await store.save();
+    if (store) {
+      const user = await User.findOne({
+        where: {
+          id: store.userId,
+        },
+      });
+      user.vendedor = "vendedor";
+      await user.save();
 
-    const user = await User.findOne({
-      where: {
-        id: store.userId,
-      },
-    });
-    user.vendedor = "vendedor";
-    await user.save();
-
-    await transporter.sendMail(habStoreMail(user));
-    return store;
+      await transporter.sendMail(habStoreMail(user));
+      return store;
+    }
   } catch (error) {
     throw error;
   }
