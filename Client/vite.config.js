@@ -106,7 +106,7 @@ export default defineConfig({
         passes: 2,
       },
       format: {
-        comments: false,
+        comments: true,
       },
     },
     chunkSizeWarningLimit: 200000,

@@ -254,9 +254,7 @@ const Store = () => {
           </div>
         </div>
 
-        <div className={style.title}>
-      
-        </div>
+        <div className={style.title}></div>
 
         <div className={style.store2}>
           {filteredPostsPaginado &&
