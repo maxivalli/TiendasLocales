@@ -111,9 +111,12 @@ const Head = () => {
         userData: userData,
       };
       socket?.emit("compraRealizadaToDB", DBdata);
+      console.log("socket de compra enviado a server:", DBdata);
+
     };
 
     socket?.on("compraRealizada", (data) => {
+      console.log("socket de compra recibido");
       handleNuevaCompra(data);
     });
 
@@ -130,6 +133,7 @@ const Head = () => {
       const title = allData.payUserData.title;
       const image = post?.image;
       const compradorName = comprador?.username;
+      console.log("Vendedor: ", vendedor);
   
       dispatch(getUserNotif(userId));
   
@@ -146,9 +150,11 @@ const Head = () => {
         image: image,
       };
       socket?.emit("ventaRealizadaToDB", DBdata);
+      console.log("socket de venta enviado a server:", DBdata);
     };
   
     socket?.on("ventaRealizada", (data) => {
+      console.log("socket de venta recibido");
       handleNuevaVenta(data);
     });
   

@@ -10,7 +10,7 @@ exports.getUserNotif = async (userId) => {
       if (notifications) {
       return notifications;
       } else {
-        return null
+        return []
       }
     } catch (error) {
       console.error("Error al obtener notificaciones del usuario:", error);

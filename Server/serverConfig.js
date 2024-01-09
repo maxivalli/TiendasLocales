@@ -418,8 +418,8 @@ io.on("connection", (socket) => {
   });
 
   socket.on("ventaRealizadaToDB", async (data) => {
-    console.log("VENTAREALIZADA", data);
     const {comprador, cantidad, store, vendedor, post, allData, title, compradorName, image} = data;
+    try {
     
 
     if (vendedor?.FCMtoken) {
@@ -443,7 +443,6 @@ io.on("connection", (socket) => {
     }
 
     const compraText = `¡${compradorName} te ha comprado ${cantidad} ${title}!`
-    try {
       await Notifications.create({
         content: compraText,
         userId: vendedor?.id,
