@@ -126,7 +126,7 @@ const Messages = ({ SWregistration }) => {
     <>
       <div className="chat">
         <ChatEngine
-          publicKey="236f9c42-06cc-414f-98cd-b7465ea5c29e"
+          projectID="236f9c42-06cc-414f-98cd-b7465ea5c29e"
           userName={chatUserName}
           userSecret={userSecret}
           /* onGetChats={(chats) => {
