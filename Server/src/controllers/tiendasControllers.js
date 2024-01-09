@@ -251,6 +251,12 @@ exports.enviado = async (itemId) => {
       },
     });
 
+    const tienda = await Tienda.findOne({
+      where: {
+        id: compra.storeId,
+      },
+    });
+
     const post = await Post.findOne({
       where: {
         id: compra.postId,
@@ -260,7 +266,7 @@ exports.enviado = async (itemId) => {
     const infoMail = {
       email: user.email,
       productName: post.title,
-      userEnvia: compra.storeId,
+      userEnvia: tienda.nombre,
     };
     await transporter.sendMail(enviadoMail(infoMail));
 
