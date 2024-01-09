@@ -194,7 +194,7 @@ const MyStore = () => {
           </div>
         </Link>
         <div className={style.title}>
-          <h2>Productos disponibles</h2>
+  
         </div>
 
         <div className={style.store2}>
