@@ -12,9 +12,9 @@ const CardSale = ({
   adress,
   enviado,
   fn,
-  userStore
+  userStore,
 }) => {
-const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleChatButtonClick = async () => {
     const projectID = "236f9c42-06cc-414f-98cd-b7465ea5c29e";
@@ -53,7 +53,6 @@ const navigate = useNavigate()
     }
   };
 
-
   return (
     <>
       <div className={style.cardSale}>
@@ -84,18 +83,17 @@ const navigate = useNavigate()
 
           <div className={style.adress}>
             <span>Dirección:</span>
-            {adress && (<p>{adress.direccion}</p>)}
+            {adress && <p>{adress.direccion}</p>}
           </div>
 
           <div className={style.phone}>
             <span>Teléfono:</span>
-            {adress && adress.direccion && ( <p>{adress.direccion.celular}</p>)}
+            {adress && adress.direccion && <p>{adress.direccion.celular}</p>}
           </div>
-
         </div>
 
         <div className={style.button}>
-            <button onClick={handleChatButtonClick}>Comunicarse</button>
+          <button onClick={handleChatButtonClick}>Comunicarse</button>
         </div>
 
         <div className={style.button}>

@@ -22,8 +22,8 @@ const Queries = () => {
         </div>
 
         <div className={style.link}>
-        <span>📞</span>
-        <p>Teléfono: 03408 - 421234</p>
+        <p>📞</p>
+        <a>Teléfono: 03408 - 421234</a>
         </div>
 
       </div>
@@ -41,8 +41,8 @@ const Queries = () => {
         </div>
 
         <div className={style.link}>
-        <span>📞</span>
-        <p>Teléfono: 03408 - 421234</p>
+        <p>📞</p>
+        <a>Teléfono: 03408 - 421234</a>
         </div>
 
       </div>
