@@ -3,7 +3,7 @@ export const validateAddressForm = (formData) => {
 
 
   const MIN_CALLE_LENGTH = 3;
-  const MAX_CALLE_LENGTH = 30;
+  const MAX_CALLE_LENGTH = 20;
   const VALID_CALLE_FORMAT = /^[A-Za-z\s]+$/;
   if (!formData.calle.trim()) {
     errors.calle = "La calle es requerida";

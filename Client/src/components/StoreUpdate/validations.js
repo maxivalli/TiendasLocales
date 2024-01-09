@@ -2,7 +2,7 @@ export const validateStoreForm = (formData) => {
   let errors = {};
 
   const MIN_CALLE_LENGTH = 3;
-  const MAX_CALLE_LENGTH = 50;
+  const MAX_CALLE_LENGTH = 20;
   const VALID_CALLE_REGEX = /^[a-zA-Z0-9\s]+$/;
   if (formData.calle.trim() === "") {
     errors.calle = "";
@@ -69,7 +69,7 @@ export const validateStoreForm = (formData) => {
   }
 
   const MIN_NOMBRE_TIENDA_LENGTH = 3;
-  const MAX_NOMBRE_TIENDA_LENGTH = 50;
+  const MAX_NOMBRE_TIENDA_LENGTH = 20;
   if (formData.nombre.trim() === "") {
     errors.nombre = "";
   } else {

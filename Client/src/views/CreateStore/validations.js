@@ -2,7 +2,7 @@ export const validateStoreForm = (formData) => {
   let errors = {};
 
   const MIN_CALLE_LENGTH = 3;
-  const MAX_CALLE_LENGTH = 50;
+  const MAX_CALLE_LENGTH = 20;
   const VALID_CALLE_REGEX = /^[a-zA-Z0-9\s]+$/;
   if (!formData.calle.trim()) {
     errors.calle = "La calle es requerida";
@@ -18,7 +18,7 @@ export const validateStoreForm = (formData) => {
   }
 
   const MIN_NUMERO_LENGTH = 1;
-  const MAX_NUMERO_LENGTH = 4;
+  const MAX_NUMERO_LENGTH = 5;
   const VALID_NUMERO_REGEX = /^[0-9]+$/;
   if (!formData.numero.trim()) {
     errors.numero = "El número es requerido";

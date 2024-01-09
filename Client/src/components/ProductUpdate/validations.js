@@ -2,7 +2,7 @@ export const validateProductForm = (productData) => {
   let errors = {};
 
   const MIN_TITLE_LENGTH = 3;
-  const MAX_TITLE_LENGTH = 30;
+  const MAX_TITLE_LENGTH = 20;
   if (productData.title.trim() === "") {
     errors.title = "";
   } else {
